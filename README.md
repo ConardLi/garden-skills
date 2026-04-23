@@ -8,7 +8,7 @@
 
 ## What Is This?
 
-This is a reusable **Skill** (structured system prompt) for AI coding agents — such as [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Cursor](https://cursor.com), and other tools that support the `SKILL.md` format — that dramatically improves the design quality of AI-generated HTML/CSS/JavaScript artifacts.
+This is a reusable **Skill** (structured system prompt) for AI coding agents — such as [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Cursor](https://cursor.com), Google DeepMind's Antigravity, and other tools that support the `SKILL.md` format — that dramatically improves the design quality of AI-generated HTML/CSS/JavaScript artifacts.
 
 It distills the core design philosophy from [Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs)'s system prompt into an open, portable, and customizable skill file that you can drop into any project.
 
@@ -31,7 +31,7 @@ This skill injects **design taste** into the AI's decision-making process throug
 
 ## Quick Start
 
-### For Claude Code / Cursor / AI Agents
+### For Claude Code / Cursor / Antigravity / AI Agents
 
 Copy the skill directory into your project:
 
@@ -41,12 +41,16 @@ your-project/
 │   ├── SKILL.md                          # Main skill file (~400 lines)
 │   └── references/
 │       └── advanced-patterns.md          # Code template library (~520 lines)
+├── .gemini/antigravity/skills/web-design-engineer/
+│   ├── SKILL.md                          # Main skill file for Antigravity
+│   └── references/
+│       └── advanced-patterns.md          # Code template library
 └── ...
 ```
 
 The agent will automatically pick up the skill when your request involves visual/interactive front-end work.
 
-> **Note**: Some tools use `.claude/skills/` instead of `.agents/skills/`. Place the files in whichever directory your tool expects. The content is identical.
+> **Note**: Some tools use `.claude/skills/` or `.gemini/antigravity/skills/` instead of `.agents/skills/`. Place the files in whichever directory your tool expects. The content is identical.
 
 ### What It Covers
 
@@ -139,6 +143,10 @@ The `demo/` directory contains side-by-side comparisons of pages generated with 
 ├── README.zh-CN.md                              # Chinese documentation
 ├── .agents/skills/web-design-engineer/
 │   ├── SKILL.md                                 # Main skill definition
+│   └── references/
+│       └── advanced-patterns.md                 # Code templates & patterns
+├── .gemini/antigravity/skills/web-design-engineer/
+│   ├── SKILL.md                                 # Main skill for Antigravity
 │   └── references/
 │       └── advanced-patterns.md                 # Code templates & patterns
 ├── demo/

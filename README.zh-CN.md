@@ -8,7 +8,7 @@
 
 ## 这是什么？
 
-这是一个面向 AI 编程代理（如 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)、[Cursor](https://cursor.com) 以及其他支持 `SKILL.md` 格式的工具）的可复用 **Skill**（结构化系统提示词），能显著提升 AI 生成的 HTML/CSS/JavaScript 产物的设计品质。
+这是一个面向 AI 编程代理（如 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)、[Cursor](https://cursor.com)、Google DeepMind Antigravity 以及其他支持 `SKILL.md` 格式的工具）的可复用 **Skill**（结构化系统提示词），能显著提升 AI 生成的 HTML/CSS/JavaScript 产物的设计品质。
 
 它将 [Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs) 系统提示词中的核心设计理念提炼为一个开放、可移植、可自定义的技能文件，可以直接放进任何项目中使用。
 
@@ -31,7 +31,7 @@
 
 ## 快速上手
 
-### 用于 Claude Code / Cursor / AI Agent
+### 用于 Claude Code / Cursor / Antigravity / AI Agent
 
 将技能目录复制到你的项目中：
 
@@ -41,12 +41,16 @@ your-project/
 │   ├── SKILL.md                          # 主技能文件（约 400 行）
 │   └── references/
 │       └── advanced-patterns.md          # 代码模板库（约 520 行）
+├── .gemini/antigravity/skills/web-design-engineer/
+│   ├── SKILL.md                          # 面向 Antigravity 的主技能文件
+│   └── references/
+│       └── advanced-patterns.md          # 代码模板库
 └── ...
 ```
 
 当你的请求涉及可视化/交互式前端工作时，Agent 会自动启用此技能。
 
-> **注意**：部分工具使用 `.claude/skills/` 目录。将文件放在你的工具所需的目录中即可，内容完全相同。
+> **注意**：部分工具使用 `.claude/skills/` 或 `.gemini/antigravity/skills/` 目录。将文件放在你的工具所需的目录中即可，内容完全相同。
 
 ### 覆盖范围
 
@@ -139,6 +143,10 @@ your-project/
 ├── README.zh-CN.md                              # 本文件（中文）
 ├── .agents/skills/web-design-engineer/
 │   ├── SKILL.md                                 # 主技能定义
+│   └── references/
+│       └── advanced-patterns.md                 # 代码模板与模式
+├── .gemini/antigravity/skills/web-design-engineer/
+│   ├── SKILL.md                                 # 面向 Antigravity 的主技能定义
 │   └── references/
 │       └── advanced-patterns.md                 # 代码模板与模式
 ├── demo/
