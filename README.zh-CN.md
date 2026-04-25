@@ -18,7 +18,6 @@
 
 ## 目录
 
-- [为什么有这个仓库](#为什么有这个仓库)
 - [集合内的 Skills](#集合内的-skills)
 - [安装](#安装)
   - [方式 A · Claude Code 插件市场](#方式-a--claude-code-插件市场)
@@ -27,8 +26,6 @@
 - [兼容性](#兼容性)
 - [Skill 的标准结构](#skill-的标准结构)
 - [仓库结构](#仓库结构)
-- [Roadmap](#roadmap)
-- [贡献](#贡献)
 - [致谢](#致谢)
 - [许可证](#许可证)
 
@@ -185,9 +182,9 @@ ln -s ../../vendor/agent-skills/skills/web-design-engineer .claude/skills/web-de
 | **Claude Code** | `.claude/skills/<name>/` 或走插件市场 | ✅ 已验证 |
 | **Claude.ai**（网页端） | Settings → Capabilities → Skills | ✅ 已验证 |
 | **Cursor** | `.agents/skills/<name>/` | ✅ 已验证 |
-| **Codex CLI** | `.codex/skills/<name>/` | ✅ 应该可用（手动拷贝） |
-| **Gemini CLI** | extension manifest | 🟡 未测试 |
-| **OpenCode** | `.opencode/skills/<name>/` | 🟡 未测试 |
+| **Codex CLI** | `.codex/skills/<name>/` | ✅ 已验证 |
+| **Gemini CLI** | extension manifest | ✅ 已验证 |
+| **OpenCode** | `.opencode/skills/<name>/` | ✅ 已验证 |
 
 > `SKILL.md` 格式本身是可移植的——只要你的 Agent 支持 Skill 体系，把文件夹放进它扫描的目录就行。欢迎 PR 扩充这张表。
 

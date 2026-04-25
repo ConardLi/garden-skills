@@ -18,7 +18,6 @@
 
 ## Table of contents
 
-- [Why this exists](#why-this-exists)
 - [What's inside](#whats-inside)
 - [Install](#install)
   - [Option A · Claude Code plugin marketplace](#option-a--claude-code-plugin-marketplace)
@@ -27,8 +26,6 @@
 - [Compatibility](#compatibility)
 - [Anatomy of a Skill](#anatomy-of-a-skill)
 - [Repository layout](#repository-layout)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
 - [Acknowledgments](#acknowledgments)
 - [License](#license)
 
@@ -185,9 +182,9 @@ ln -s ../../vendor/agent-skills/skills/web-design-engineer .claude/skills/web-de
 | **Claude Code** | `.claude/skills/<name>/` or via plugin marketplace | ✅ Tested |
 | **Claude.ai** (web) | Settings → Capabilities → Skills | ✅ Tested |
 | **Cursor** | `.agents/skills/<name>/` | ✅ Tested |
-| **Codex CLI** | `.codex/skills/<name>/` | ✅ Should work (manual copy) |
-| **Gemini CLI** | extension manifest | 🟡 Untested |
-| **OpenCode** | `.opencode/skills/<name>/` | 🟡 Untested |
+| **Codex CLI** | `.codex/skills/<name>/` | ✅ Tested |
+| **Gemini CLI** | extension manifest | ✅ Tested |
+| **OpenCode** | `.opencode/skills/<name>/` | ✅ Tested |
 
 > The `SKILL.md` format is portable by design — if your agent supports skills, copy the folder into the directory it scans, and it should work. PRs welcome to extend this matrix.
 
