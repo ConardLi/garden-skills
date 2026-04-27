@@ -136,10 +136,10 @@ A focused image-gen skill for GPT Image 2 (and OpenAI-compatible image APIs).
 The fastest path if you use [Claude Code](https://docs.anthropic.com/en/docs/claude-code):
 
 ```bash
-/plugin marketplace add ConardLi/web-design-skill
-/plugin install web-design-skills@agent-skills
-/plugin install knowledge-base-skills@agent-skills
-/plugin install image-generation-skills@agent-skills
+/plugin marketplace add ConardLi/garden-skills
+/plugin install web-design-skills@garden-skills
+/plugin install knowledge-base-skills@garden-skills
+/plugin install image-generation-skills@garden-skills
 ```
 
 Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
@@ -169,8 +169,8 @@ The agent will discover the skill the next time it scans the workspace.
 If you want to track upstream updates inside a larger project:
 
 ```bash
-git submodule add https://github.com/ConardLi/web-design-skill.git vendor/agent-skills
-ln -s ../../vendor/agent-skills/skills/web-design-engineer .claude/skills/web-design-engineer
+git submodule add https://github.com/ConardLi/web-design-skill.git vendor/garden-skills
+ln -s ../../vendor/garden-skills/skills/web-design-engineer .claude/skills/web-design-engineer
 ```
 
 ---

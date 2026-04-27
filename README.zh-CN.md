@@ -136,10 +136,10 @@
 如果你用 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)，这是最快的路径：
 
 ```bash
-/plugin marketplace add ConardLi/web-design-skill
-/plugin install web-design-skills@agent-skills
-/plugin install knowledge-base-skills@agent-skills
-/plugin install image-generation-skills@agent-skills
+/plugin marketplace add ConardLi/garden-skills
+/plugin install web-design-skills@garden-skills
+/plugin install knowledge-base-skills@garden-skills
+/plugin install image-generation-skills@garden-skills
 ```
 
 插件包定义在 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)：
@@ -169,8 +169,8 @@ Agent 在下次扫描工作区时会自动发现。
 如果你想在更大的项目里跟踪上游更新：
 
 ```bash
-git submodule add https://github.com/ConardLi/web-design-skill.git vendor/agent-skills
-ln -s ../../vendor/agent-skills/skills/web-design-engineer .claude/skills/web-design-engineer
+git submodule add https://github.com/ConardLi/web-design-skill.git vendor/garden-skills
+ln -s ../../vendor/garden-skills/skills/web-design-engineer .claude/skills/web-design-engineer
 ```
 
 ---
