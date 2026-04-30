@@ -4,6 +4,8 @@
 
 [English](./README.md) · [返回集合首页](../../README.zh-CN.md)
 
+![GPT Image 2 Skill](../../dist/imgs/gpt-image-2-skill.png)
+
 ---
 
 ## 这个 Skill 干什么

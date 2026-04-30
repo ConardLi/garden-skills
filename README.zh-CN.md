@@ -33,100 +33,66 @@
 
 ## 集合内的 Skills
 
-<table>
-<tr>
-<th width="22%">Skill</th>
-<th width="14%">类别</th>
-<th>亮点</th>
-<th width="14%">文档</th>
-</tr>
+### [`web-design-engineer`](./skills/web-design-engineer)
 
-<tr>
-<td>
+![Web Design Skill](./dist/imgs/web-design-skill.png)
 
-**[`web-design-engineer`](./skills/web-design-engineer)**
+**类别：** 设计 / 前端  
+**适合：** 网页、落地页、仪表盘、交互原型、HTML 幻灯片、动画、UI 样机、数据可视化和设计系统探索。
 
-</td>
-<td>
+`web-design-engineer` 把 AI 生成的 Web 产物从“能用”推进到“精致、克制、真正有设计判断”。它把 Agent 当作设计工程师来约束：先理解产品上下文，再声明设计系统，尽早展示 v0，然后完整构建并验证结果。
 
-设计&nbsp;/&nbsp;前端
+亮点：
 
-</td>
-<td>
+- 定义六步设计工作流：需求 → 上下文 → 设计系统 → v0 → 完整构建 → 验证
+- 用反 AI 俗套清单和更强的视觉判断，避免千篇一律的生成式 UI
+- 覆盖 HTML / CSS / JavaScript / React 原型，以及响应式布局、动效和交互细节
+- 包含 inline React + Babel、CSS tokens、`oklch()` 配色、container queries、reduced-motion 等实现规则
+- 提供高级模式参考，覆盖设备框、幻灯片引擎、动画时间线、仪表盘等常见 Web 产物
 
-把 AI 生成的网页从"能用"升级到"惊艳"。
+链接：[README](./skills/web-design-engineer/README.zh-CN.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Demo](./demo/web-design-demo)
 
-- 反 AI 俗套清单（紫粉渐变、Inter、emoji 当图标都禁用）
-- `oklch` 色彩理论 + 6 套精选配色 × 字体组合
-- 六步工作流：需求 → 上下文 → 设计系统 → v0 → 完整构建 → 验证
-- ~520 行的高级模式库
+---
 
-</td>
-<td>
+### [`gpt-image-2`](./skills/gpt-image-2)
 
-[README](./skills/web-design-engineer/README.zh-CN.md) · [SKILL](./skills/web-design-engineer/SKILL.md) · [Demo](./demo/web-design-demo)
+![GPT Image 2 Skill](./dist/imgs/gpt-image-2-skill.png)
 
-</td>
-</tr>
+**类别：** 图像生成 / Prompt 工程  
+**适合：** 海报、UI 样机、产品图、信息图、学术图、技术架构图、漫画、头像、分镜、品牌板和图像编辑工作流。
 
-<tr>
-<td>
+`gpt-image-2` 是面向 GPT Image 2 与 OpenAI 兼容图像接口的聚焦型图像生成 Skill。它能适配不同 Agent 环境：Garden 本地完整出图、委托宿主原生图像工具、或在没有图像工具时退化为纯提示词顾问。
 
-**[`gpt-image-2`](./skills/gpt-image-2)**
+亮点：
 
-</td>
-<td>
+- 支持三种运行模式：**Mode A Garden 本地生图**、**Mode B 委托宿主出图**、**Mode C 纯提示词顾问**
+- 每次任务先做模式探测，避免静默走错执行路径
+- 在 `references/` 下提供 18 大类、80+ 个结构化提示词模板
+- 同时覆盖图像生成和图像编辑，并配套专门工作流与脚本
+- Garden 模式下会把 prompt 与生成图片保存到 `garden-gpt-image-2/`，方便复用、审查和版本管理
 
-图像生成&nbsp;/&nbsp;Prompt
+链接：[README](./skills/gpt-image-2/README.zh-CN.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md)
 
-</td>
-<td>
+---
 
-聚焦的 GPT Image 2 图像生成 / 编辑 Skill，兼容 OpenAI 兼容图像 API。
+### [`kb-retriever`](./skills/kb-retriever)
 
-- **三种运行模式**：A&nbsp;Garden 本地直出 · B&nbsp;委托宿主出图 · C&nbsp;纯提示词顾问
-- 18 大类、70+ 个结构化提示词模板
-- 自动归档 prompt + image 到 `garden-gpt-image-2/`
-- 自带模式探测脚本，永不静默失败
+![Kb Retriever Skill](./dist/imgs/kb-retriever-skill.png)
 
-</td>
-<td>
+**类别：** 检索 / 本地知识库  
+**适合：** 从本地 `knowledge/` 目录回答问题，检索结构化文档，并在不撑爆上下文的前提下从 Markdown、文本、PDF、Excel 中提取证据。
 
-[README](./skills/gpt-image-2/README.zh-CN.md) · [SKILL](./skills/gpt-image-2/SKILL.md)
+`kb-retriever` 是一个本地知识库检索 Skill，核心是谨慎、渐进、可溯源。它不会直接加载整文件，而是先走分层索引，缩小候选范围，按文件类型正确处理，再带来源回答问题。
 
-</td>
-</tr>
+亮点：
 
-<tr>
-<td>
+- 通过分层 `data_structure.md` 文件先导航知识库，再进入内容检索
+- 对 PDF 和 Excel 强制执行 **先学习再处理**，必须先阅读内置 reference 文档
+- 组合关键词检索、局部窗口读取、同义词扩展和多轮迭代
+- 最多 5 轮检索，让探索过程有边界
+- 内置 `grep`、`pdftotext`、`pdfplumber`、`pandas` 工作流，并强调答案来源
 
-**[`rag-skill`](./skills/rag-skill)**
-<br/><sub>frontmatter `name: kb-retriever`</sub>
-
-</td>
-<td>
-
-检索&nbsp;/&nbsp;文档
-
-</td>
-<td>
-
-本地知识库检索 Skill，永远不会把整文件塞进 context。
-
-- 分层 `data_structure.md` 索引导航
-- PDF / Excel **强制先学习再处理**
-- 渐进式 `grep` + 窗口读取，最多 5 轮迭代
-- 自带 `pdftotext` / `pdfplumber` / `pandas` 工作流的参考文档
-
-</td>
-<td>
-
-[README](./skills/rag-skill/README.zh-CN.md) · [SKILL](./skills/rag-skill/SKILL.md)
-
-</td>
-</tr>
-
-</table>
+链接：[README](./skills/kb-retriever/README.zh-CN.md) · [SKILL.md](./skills/kb-retriever/SKILL.md)
 
 ---
 
@@ -148,7 +114,7 @@
 | 插件包 | 包含的 Skills |
 |---|---|
 | `web-design-skills` | `web-design-engineer` |
-| `knowledge-base-skills` | `rag-skill` |
+| `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
 
 ### 方式 B · 手动拷贝到项目
@@ -233,7 +199,7 @@ description: 用一句话清楚说明这个 Skill 是干什么的、什么时候
 │   │   ├── README.md  /  README.zh-CN.md
 │   │   └── references/advanced-patterns.md
 │   │
-│   ├── rag-skill/                       ← frontmatter name: kb-retriever
+│   ├── kb-retriever/
 │   │   ├── SKILL.md
 │   │   ├── README.md  /  README.zh-CN.md
 │   │   ├── references/  (pdf_reading.md、excel_reading.md、excel_analysis.md)
@@ -256,6 +222,10 @@ description: 用一句话清楚说明这个 Skill 是干什么的、什么时候
 │           └── demo2-with-skill.html
 │
 ├── dist/                                ← 参考资料与展示站
+│   ├── imgs/                            ← README Skill 海报
+│   │   ├── web-design-skill.png
+│   │   ├── gpt-image-2-skill.png
+│   │   └── kb-retriever-skill.png
 │   ├── prompt/
 │   │   └── claude-design-system-prompt.md   （Claude Design 原始系统提示词）
 │   └── web/                             （Vite + React 展示站，可选）

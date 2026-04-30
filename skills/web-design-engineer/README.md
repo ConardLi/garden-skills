@@ -4,6 +4,8 @@
 
 [中文文档](./README.zh-CN.md) · [Back to collection root](../../README.md)
 
+![Web Design Skill](../../dist/imgs/web-design-skill.png)
+
 ---
 
 ## What Is This?

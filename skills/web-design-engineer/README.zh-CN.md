@@ -4,6 +4,8 @@
 
 [English](./README.md) · [返回集合首页](../../README.zh-CN.md)
 
+![Web Design Skill](../../dist/imgs/web-design-skill.png)
+
 ---
 
 ## 这是什么？

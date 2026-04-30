@@ -23,7 +23,7 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/rag-skill"
+        "./skills/kb-retriever"
       ]
     },
     {

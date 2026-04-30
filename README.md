@@ -33,100 +33,66 @@
 
 ## What's inside
 
-<table>
-<tr>
-<th width="22%">Skill</th>
-<th width="14%">Category</th>
-<th>Highlights</th>
-<th width="14%">Docs</th>
-</tr>
+### [`web-design-engineer`](./skills/web-design-engineer)
 
-<tr>
-<td>
+![Web Design Skill](./dist/imgs/web-design-skill.png)
 
-**[`web-design-engineer`](./skills/web-design-engineer)**
+**Category:** Design / Frontend  
+**Best for:** web pages, landing pages, dashboards, interactive prototypes, HTML slide decks, animations, UI mockups, data visualizations, and design-system explorations.
 
-</td>
-<td>
+`web-design-engineer` turns AI-generated web artifacts from merely functional into polished, deliberate, and visually memorable front-end work. It treats the agent as a design engineer: first understanding product context, then declaring a design system, showing an early v0, building the full experience, and verifying the result.
 
-Design&nbsp;/&nbsp;Frontend
+Highlights:
 
-</td>
-<td>
+- Defines a six-step design workflow: requirements → context → design system → v0 → full build → verification
+- Pushes beyond generic AI UI patterns with an anti-cliché blocklist and stronger visual judgment
+- Covers HTML / CSS / JavaScript / React prototypes, with guidance for responsive layout, motion, and interaction polish
+- Includes practical implementation rules for inline React + Babel, CSS tokens, `oklch()` color work, container queries, and reduced-motion handling
+- Ships an advanced patterns reference for device frames, slide engines, animation timelines, dashboards, and other reusable web artifacts
 
-Turns AI-generated web pages from "functional" into "stunning."
+Links: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Demo](./demo/web-design-demo)
 
-- Anti-cliché blocklist (no purple-pink gradients, no Inter, no emoji icons)
-- `oklch` color theory + 6 curated color × font pairings
-- Six-step workflow: requirements → context → design system → v0 → build → verify
-- ~520-line advanced patterns library
+---
 
-</td>
-<td>
+### [`gpt-image-2`](./skills/gpt-image-2)
 
-[README](./skills/web-design-engineer/README.md) · [SKILL](./skills/web-design-engineer/SKILL.md) · [Demo](./demo/web-design-demo)
+![GPT Image 2 Skill](./dist/imgs/gpt-image-2-skill.png)
 
-</td>
-</tr>
+**Category:** Image Generation / Prompt Engineering  
+**Best for:** posters, UI mockups, product visuals, infographics, academic figures, technical diagrams, comics, avatars, storyboards, branding boards, and image-editing workflows.
 
-<tr>
-<td>
+`gpt-image-2` is a focused image-generation skill for GPT Image 2 and OpenAI-compatible image APIs. It is designed to work across different agent environments: fully local Garden generation, host-native image-tool delegation, or prompt-only advisor mode when no image tool is available.
 
-**[`gpt-image-2`](./skills/gpt-image-2)**
+Highlights:
 
-</td>
-<td>
+- Supports three runtime modes: **Mode A Garden local**, **Mode B host-native delegation**, and **Mode C advisor-only prompt writing**
+- Starts every task with mode detection so the skill does not silently choose the wrong execution path
+- Provides 18 visual categories and 80+ structured prompt templates under `references/`
+- Covers both image generation and image editing through dedicated workflows and scripts
+- Saves prompts and generated images under `garden-gpt-image-2/` in Garden mode for reuse, review, and versioning
 
-Image&nbsp;Gen&nbsp;/&nbsp;Prompting
+Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md)
 
-</td>
-<td>
+---
 
-A focused image-gen skill for GPT Image 2 (and OpenAI-compatible image APIs).
+### [`kb-retriever`](./skills/kb-retriever)
 
-- **Three runtime modes**: A&nbsp;Garden local · B&nbsp;Host-native delegate · C&nbsp;Advisor-only
-- 18 categories, 70+ structured prompt templates
-- Auto prompt + image archival under `garden-gpt-image-2/`
-- Mode-detection script so the skill never silently fails
+![Kb Retriever Skill](./dist/imgs/kb-retriever-skill.png)
 
-</td>
-<td>
+**Category:** Retrieval / Local Knowledge Base  
+**Best for:** answering questions from a local `knowledge/` directory, searching structured documentation, and extracting evidence from Markdown, text, PDF, and Excel files without flooding the agent context.
 
-[README](./skills/gpt-image-2/README.md) · [SKILL](./skills/gpt-image-2/SKILL.md)
+`kb-retriever` is a local knowledge-base retriever built around careful, progressive search. Instead of loading whole files, it navigates hierarchical index files, narrows the candidate set, processes complex file types correctly, and answers with sources.
 
-</td>
-</tr>
+Highlights:
 
-<tr>
-<td>
+- Uses layered `data_structure.md` files to navigate the knowledge base before searching content
+- Enforces a **learn-before-process** rule for PDF and Excel files, using the included reference docs before extraction or analysis
+- Combines precise keyword search, local windowed reads, synonyms, and iterative refinement
+- Bounds retrieval to at most 5 search rounds so exploration stays controlled
+- Includes workflows for `grep`, `pdftotext`, `pdfplumber`, and `pandas`, with source-aware answer formatting
 
-**[`rag-skill`](./skills/rag-skill)**
-<br/><sub>frontmatter `name: kb-retriever`</sub>
-
-</td>
-<td>
-
-Retrieval&nbsp;/&nbsp;Docs
-
-</td>
-<td>
-
-A local knowledge-base retriever that never loads whole files into context.
-
-- Hierarchical `data_structure.md` index navigation
-- Mandatory **learn-before-process** for PDF / Excel
-- Progressive `grep` + windowed reads, bounded to 5 rounds
-- Reference docs for `pdftotext` / `pdfplumber` / `pandas` workflows
-
-</td>
-<td>
-
-[README](./skills/rag-skill/README.md) · [SKILL](./skills/rag-skill/SKILL.md)
-
-</td>
-</tr>
-
-</table>
+Links: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retriever/SKILL.md)
 
 ---
 
@@ -148,7 +114,7 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 | Plugin pack | Skills included |
 |---|---|
 | `web-design-skills` | `web-design-engineer` |
-| `knowledge-base-skills` | `rag-skill` |
+| `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
 
 ### Option B · Manual copy into your project
@@ -233,7 +199,7 @@ For the full spec, see [agentskills.io](https://agentskills.io) and the [officia
 │   │   ├── README.md  /  README.zh-CN.md
 │   │   └── references/advanced-patterns.md
 │   │
-│   ├── rag-skill/                       ← frontmatter name: kb-retriever
+│   ├── kb-retriever/
 │   │   ├── SKILL.md
 │   │   ├── README.md  /  README.zh-CN.md
 │   │   ├── references/  (pdf_reading.md, excel_reading.md, excel_analysis.md)
@@ -256,6 +222,10 @@ For the full spec, see [agentskills.io](https://agentskills.io) and the [officia
 │           └── demo2-with-skill.html
 │
 ├── dist/                                ← reference assets and showcase site
+│   ├── imgs/                            ← README skill posters
+│   │   ├── web-design-skill.png
+│   │   ├── gpt-image-2-skill.png
+│   │   └── kb-retriever-skill.png
 │   ├── prompt/
 │   │   └── claude-design-system-prompt.md   (original Claude Design system prompt)
 │   └── web/                             (Vite + React showcase site, optional)

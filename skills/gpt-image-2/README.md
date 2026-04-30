@@ -4,6 +4,8 @@
 
 [中文文档](./README.zh-CN.md) · [Back to collection root](../../README.md)
 
+![GPT Image 2 Skill](../../dist/imgs/gpt-image-2-skill.png)
+
 ---
 
 ## What it does
