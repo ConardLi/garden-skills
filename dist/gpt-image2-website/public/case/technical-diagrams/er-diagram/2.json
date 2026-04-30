@@ -1,6 +1,6 @@
 {
-  "type": "工程感 ER 图 / 数据模型图",
-  "goal": "生成一张多作者技术博客的 ER 位图，突出分类树、标签与互动表",
+  "type": "工程感 ER 圖 / 資料模型圖",
+  "goal": "生成一張多作者技術部落格的 ER 點陣圖，突出分類樹、標籤與互動表",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
@@ -302,13 +302,13 @@
   },
   "constraints": {
     "must_keep": [
-      "自关联 categories.parent_id 用曲线或正交线绕开实体",
-      "post_tags / likes 为 join 灰色",
-      "legend 必画"
+      "自關聯 categories.parent_id 用曲線或正交線繞開實體",
+      "post_tags / likes 為 join 灰色",
+      "legend 必畫"
     ],
     "avoid": [
-      "超过 12 个实体本图未要求则勿增加",
-      "字段不用 mono 对齐"
+      "超過 12 個實體本圖未要求則勿增加",
+      "欄位不用 mono 對齊"
     ]
   }
 }

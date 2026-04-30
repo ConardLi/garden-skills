@@ -1,57 +1,57 @@
 {
-  "type": "高密度因果链 / 系谱式信息图海报",
-  "goal": "用一张高饱和图展示 2017–2026 大语言模型与多模态里程碑，读者可扫视获得阶段划分",
+  "type": "高密度因果鏈 / 系譜式資訊圖海報",
+  "goal": "用一張高飽和圖展示 2017–2026 大語言模型與多模態里程碑，讀者可掃視獲得階段劃分",
   "style": {
-    "aesthetic": "时间轴为粗发光管线，节点为品牌圆点 + 型号缩写，辅以微型芯片/数据卷轴线稿，整体偏深空蓝+电紫科技风但保持可读",
-    "color_palette": "深空靛、电紫、信号青、警示琥珀、白字",
-    "language": "中文主叙述 + 英文缩写作副标"
+    "aesthetic": "時間軸為粗發光管線，節點為品牌圓點 + 型號縮寫，輔以微型晶片/資料卷軸線稿，整體偏深空藍+電紫科技風但保持可讀",
+    "color_palette": "深空靛、電紫、訊號青、警示琥珀、白字",
+    "language": "中文主敘述 + 英文縮寫作副標"
   },
   "header": {
-    "main_title_cn": "从 Transformer 到推理模型：大语言模型 2017–2026 演化地图",
+    "main_title_cn": "從 Transformer 到推理模型：大語言模型 2017–2026 演化地圖",
     "main_title_en": "LANDMARKS IN LLM AND MULTIMODAL RESEARCH (2017–2026)",
-    "subtitle": "非穷尽清单：聚焦公开论文与主流路线，不暗示商业排名"
+    "subtitle": "非窮盡清單：聚焦公開論文與主流路線，不暗示商業排名"
   },
   "centerpiece": {
-    "description": "中央为蛇形分岔时间管，左侧 2017「Attention is All You Need」，向右分支 GPT 系、BART/T5 系、开源 LLaMA/Mistral 系、多模态 CLIP-Flamingo-Gemini-类，末端 2025–2026 标「on-device / memory / 长上下文 / test-time compute 推理体」小问号",
-    "highlight": "青绿色脉冲沿主线流动，在「2018 GPT-1」「2019 BERT 双向」「2020 GPT-3」「2022 Instruct/RLHF」「2023 长上下文+工具使用」「2024 开源 MoE+多模态」「2025–2026 推理+代理」等节点有亮标"
+    "description": "中央為蛇形分岔時間管，左側 2017「Attention is All You Need」，向右分支 GPT 系、BART/T5 系、開源 LLaMA/Mistral 系、多模態 CLIP-Flamingo-Gemini-類，末端 2025–2026 標「on-device / memory / 長上下文 / test-time compute 推理體」小問號",
+    "highlight": "青綠色脈衝沿主線流動，在「2018 GPT-1」「2019 BERT 雙向」「2020 GPT-3」「2022 Instruct/RLHF」「2023 長上下文+工具使用」「2024 開源 MoE+多模態」「2025–2026 推理+代理」等節點有亮標"
   },
   "sections": {
     "count": "10",
     "items": [
-      "01 2017 Transformer 自注意力 取代 RNN 序列瓶颈",
-      "02 2018 预训练语言模型 BERT / GPT-1 范式成型",
-      "03 2019 双向上下文与 T5 文本到文本统一",
-      "04 2020 175B 量级的提示学习（in-context）",
-      "05 2021 指令调优+RLHF 人机对齐主线（概念）",
-      "06 2022 Chat 上线 工具链与插件生态前夜",
-      "07 2023 长上下文+检索（RAG） 工程上普及",
-      "08 2024 开源 7B–70B 与 MoE/端侧 推理",
-      "09 多模态对齐：文-图-音 统一 token 化",
-      "10 2025+ test-time 推理+代理+代码执行：SWE-bench 等硬基准"
+      "01 2017 Transformer 自注意力 取代 RNN 序列瓶頸",
+      "02 2018 預訓練語言模型 BERT / GPT-1 正規化成型",
+      "03 2019 雙向上下文與 T5 文字到文字統一",
+      "04 2020 175B 量級的提示學習（in-context）",
+      "05 2021 指令調優+RLHF 人機對齊主線（概念）",
+      "06 2022 Chat 上線 工具鏈與外掛生態前夜",
+      "07 2023 長上下文+檢索（RAG） 工程上普及",
+      "08 2024 開源 7B–70B 與 MoE/端側 推理",
+      "09 多模態對齊：文-圖-音 統一 token 化",
+      "10 2025+ test-time 推理+代理+程式碼執行：SWE-bench 等硬基準"
     ]
   },
   "section_block_style": {
     "components": [
-      "编号",
-      "中文标题",
+      "編號",
+      "中文標題",
       "英文一行",
-      "极短备注（人名/机构用缩写）",
-      "1 个小图标（键盘、权重块、眼形）"
+      "極短備註（人名/機構用縮寫）",
+      "1 個小圖示（鍵盤、權重塊、眼形）"
     ],
-    "alignment": "时间轴上侧奇数、下侧偶数，避免文字跨越主干"
+    "alignment": "時間軸上側奇數、下側偶數，避免文字跨越主幹"
   },
   "footer": {
-    "core_message": "技术史不是「一个模型更聪明」，而是算力、数据、算法与产品反馈同时迁移。",
+    "core_message": "技術史不是「一個模型更聰明」，而是算力、資料、演演算法與產品反饋同時遷移。",
     "core_message_en": "Progress couples capacity, data, alignment, and deployment — not a single FLOP number."
   },
   "constraints": {
     "must_keep": [
-      "不虚构具体市占率或未公开参数量，仅阶段定性描述",
-      "年份节点与主标题 2017–2026 一致"
+      "不虛構具體市佔率或未公開引數量，僅階段定性描述",
+      "年份節點與主標題 2017–2026 一致"
     ],
     "avoid": [
-      "用真实可识别商标作为整图主视觉",
-      "超过 4 种主色造成印刷脏"
+      "用真實可識別商標作為整圖主視覺",
+      "超過 4 種主色造成印刷髒"
     ]
   }
 }

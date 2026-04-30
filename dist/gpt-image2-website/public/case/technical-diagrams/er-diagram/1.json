@@ -1,6 +1,6 @@
 {
-  "type": "工程感 ER 图 / 数据模型图",
-  "goal": "生成一张电商核心 PostgreSQL 逻辑模型位图，用于表结构评审与跨团队对齐",
+  "type": "工程感 ER 圖 / 資料模型圖",
+  "goal": "生成一張電商核心 PostgreSQL 邏輯模型點陣圖，用於表結構評審與跨團隊對齊",
   "canvas": {
     "aspect_ratio": "4:3",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
@@ -8,7 +8,7 @@
   },
   "title_strip": {
     "title": "E-commerce Core Schema",
-    "subtitle": "PostgreSQL 16 · 逻辑 ER",
+    "subtitle": "PostgreSQL 16 · 邏輯 ER",
     "position": "top-left, JetBrains Mono / SF Mono, light gray"
   },
   "entities": {
@@ -412,15 +412,15 @@
   },
   "constraints": {
     "must_keep": [
-      "实体框 header + 字段区",
-      "FK 行标明 FK→table.field",
+      "實體框 header + 欄位區",
+      "FK 行標明 FK→table.field",
       "crow's foot 或 UML 多重性",
       "暗色 grid + mono"
     ],
     "avoid": [
-      "用菱形当实体",
-      "join 表与主表同色",
-      "声称可编辑 dbdiagram 工程文件"
+      "用菱形當實體",
+      "join 表與主表同色",
+      "聲稱可編輯 dbdiagram 工程檔案"
     ]
   }
 }

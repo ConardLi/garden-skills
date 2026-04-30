@@ -1,0 +1,383 @@
+.prompt-studio-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.badge {
+  background-color: var(--primary-accent);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.archive-toggle-button {
+  background-color: var(--secondary-button-bg);
+  color: var(--secondary-button-text);
+  border: 1px solid var(--secondary-button-border);
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 1.5rem;
+}
+
+.archive-toggle-button:hover {
+  background-color: var(--secondary-button-hover-bg);
+  border-color: var(--secondary-button-hover-border);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.category-card {
+  background-color: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.category-card h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  color: var(--heading-color);
+}
+
+.category-card p {
+  font-size: 0.9rem;
+  color: var(--text-color-secondary);
+}
+
+.template-list {
+  margin-top: 2rem;
+}
+
+.template-list-title {
+  color: var(--heading-color);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.template-card {
+  display: flex;
+  align-items: center;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.template-card:hover {
+  background-color: var(--card-hover-bg);
+}
+
+.template-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 1rem;
+}
+
+.template-card h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--heading-color);
+}
+
+.template-card p {
+  font-size: 0.85rem;
+  color: var(--text-color-secondary);
+  flex-grow: 1;
+}
+
+.template-card .badge.ready {
+  background-color: #28a745;
+  margin-left: 1rem;
+}
+
+.argument-form {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.argument-form h2 {
+  color: var(--heading-color);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.primary-button {
+  background-color: var(--primary-accent);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.primary-button:hover {
+  background-color: var(--primary-accent-hover);
+}
+
+.secondary-button {
+  background-color: var(--secondary-button-bg);
+  color: var(--secondary-button-text);
+  border: 1px solid var(--secondary-button-border);
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.secondary-button:hover {
+  background-color: var(--secondary-button-hover-bg);
+  border-color: var(--secondary-button-hover-border);
+}
+
+.prompt-preview-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.prompt-preview-container h2 {
+  color: var(--heading-color);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.preview-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.preview-controls select {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+}
+
+.tag-input {
+  flex-grow: 1;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+}
+
+.prompt-content-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.prompt-section h3 {
+  color: var(--heading-color);
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+}
+
+.code-block {
+  background-color: var(--code-block-bg);
+  color: var(--code-block-text);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--code-block-border);
+}
+
+.token-estimate {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-color-secondary);
+  text-align: right;
+}
+
+.archive-browser-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: flex-end; /* Push sidebar to the right */
+  z-index: 1000;
+}
+
+.archive-browser-sidebar {
+  width: 400px; /* Adjust width as needed */
+  background-color: var(--sidebar-bg);
+  color: var(--text-color);
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  color: var(--heading-color);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-color-secondary);
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: var(--heading-color);
+}
+
+.sidebar-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.archive-entry-item {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+/* Basic CSS Variables for theming (should ideally come from a tokens.css) */
+:root {
+  --bg-color: #f8f8f8;
+  --text-color: #333;
+  --text-color-secondary: #666;
+  --heading-color: #1a1a1a;
+  --primary-accent: #007bff;
+  --primary-accent-hover: #0056b3;
+  --card-bg: #ffffff;
+  --card-border: #e0e0e0;
+  --card-hover-bg: #f0f0f0;
+  --input-bg: #ffffff;
+  --input-border: #cccccc;
+  --input-text: #333;
+  --secondary-button-bg: #e0e0e0;
+  --secondary-button-text: #333;
+  --secondary-button-border: #cccccc;
+  --secondary-button-hover-bg: #d0d0d0;
+  --secondary-button-hover-border: #bbbbbb;
+  --code-block-bg: #eeeeee;
+  --code-block-text: #333;
+  --code-block-border: #cccccc;
+  --sidebar-bg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --text-color-secondary: #aaaaaa;
+    --heading-color: #ffffff;
+    --primary-accent: #66b3ff;
+    --primary-accent-hover: #3385ff;
+    --card-bg: #2a2a2a;
+    --card-border: #3a3a3a;
+    --card-hover-bg: #3a3a3a;
+    --input-bg: #2a2a2a;
+    --input-border: #444444;
+    --input-text: #e0e0e0;
+    --secondary-button-bg: #3a3a3a;
+    --secondary-button-text: #e0e0e0;
+    --secondary-button-border: #555555;
+    --secondary-button-hover-bg: #4a4a4a;
+    --secondary-button-hover-border: #666666;
+    --code-block-bg: #222222;
+    --code-block-text: #cccccc;
+    --code-block-border: #444444;
+    --sidebar-bg: #222222;
+  }
+}

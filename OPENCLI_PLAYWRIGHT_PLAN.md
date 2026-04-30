@@ -13,7 +13,7 @@
 以下命令专门给你本地路径：
 
 ```bash
-cd /Users/christianwu/.config/skillshare/skills/report-to-web-pipeline/dist/gpt-image2-website
+cd /Users/christianwu/garden-skills/dist/gpt-image2-website
 
 git remote -v
 git fetch --all --prune
@@ -29,7 +29,7 @@ git status
 如果你只想快速同步（不管本地改动，直接覆盖）：
 
 ```bash
-cd /Users/christianwu/.config/skillshare/skills/report-to-web-pipeline/dist/gpt-image2-website
+cd /Users/christianwu/garden-skills/dist/gpt-image2-website
 git fetch origin
 
 git reset --hard origin/main
@@ -122,7 +122,7 @@ config/
 ## 5.4 本地执行顺序（你可直接照跑）
 
 ```bash
-cd /Users/christianwu/.config/skillshare/skills/report-to-web-pipeline/dist/gpt-image2-website
+cd /Users/christianwu/garden-skills/dist/gpt-image2-website
 
 npm install
 npm run auto:doctor
@@ -166,11 +166,12 @@ npm run dev
 4. 优先下载原图链接，失败时退化为截图。
 5. 处理 rate limit / 网络异常并支持续跑。
 
-## 7. 实施阶段计划（建议 4 周）
-- Phase 0（1-2 天）：最小可行验证（3 条 prompt）
-- Phase 1（3-5 天）：抽象接口与 `run-single`
-- Phase 2（5-7 天）：批处理与数据回写
-- Phase 3（3-5 天）：回归检查、checkpoint、失败重放
+## 7. 实施阶段计划与当前进度
+- ✅ **Phase 0：最小可行验证**（已完成：验证 Playwright 可作为主力稳定自动化工具）
+- ✅ **Phase 1：抽象接口与 `run-single`**（已完成：创建 `playwright-adapter.mjs` 和 `run-single.mjs`）
+- ✅ **Phase 2：批处理与数据回写**（已完成：创建 `run-batch.mjs` 和 `persist-result.mjs`，并在 `package.json` 配置 `auto:batch:pw` 等脚本）
+- 🚧 **Phase 3：本地 UI 桥接与体验优化**（进行中：为静态网站开发提供本地 Server / Vite Middleware，让前端 UI 能直接调用这些本地脚本生成图片并展示）
+- ⏳ **Phase 4：回归检查、checkpoint、失败重放**（待实施）
 
 ## 8. 风险与对策
 - UI 变动：语义选择器 + 冒烟测试

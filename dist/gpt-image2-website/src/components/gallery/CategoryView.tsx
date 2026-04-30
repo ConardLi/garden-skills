@@ -30,8 +30,8 @@ export function CategoryView({ all, filter, query, navigate }: Props) {
   if (cats.length === 0) {
     return (
       <div className="gal-empty">
-        <div className="serif gal-empty-title">暂无匹配的案例</div>
-        <div className="gal-empty-hint">试试其他关键词或切换到「全部」筛选。</div>
+        <div className="serif gal-empty-title">暫無匹配的案例</div>
+        <div className="gal-empty-hint">試試其他關鍵詞或切換到「全部」篩選。</div>
       </div>
     );
   }

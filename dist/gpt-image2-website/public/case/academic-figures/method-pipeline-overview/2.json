@@ -1,6 +1,6 @@
 {
-  "type": "学术论文方法 Pipeline 总览图（method overview figure）",
-  "goal": "生成一张可直接放进顶会论文或 SIGGRAPH 附件的 diffusion training pipeline 总览图，白底、几何精确、可单色印刷",
+  "type": "學術論文方法 Pipeline 總覽圖（method overview figure）",
+  "goal": "生成一張可直接放進頂會論文或 SIGGRAPH 附件的 diffusion training pipeline 總覽圖，白底、幾何精確、可單色印刷",
   "canvas": {
     "aspect_ratio": "2:1",
     "background": "pure white #FFFFFF",

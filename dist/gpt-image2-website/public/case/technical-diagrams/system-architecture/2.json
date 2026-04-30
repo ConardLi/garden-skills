@@ -1,38 +1,38 @@
 {
-  "type": "技术系统架构图（暗色工程感）",
-  "goal": "生成一张 618 大促期秒杀与下单链路的总览位图，强调 CDN/边缘、业务微服务、消息与数据层的分层，以及主从与缓存的职责边界",
+  "type": "技術系統架構圖（暗色工程感）",
+  "goal": "生成一張 618 大促期秒殺與下單鏈路的總覽點陣圖，強調 CDN/邊緣、業務微服務、訊息與資料層的分層，以及主從與快取的職責邊界",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "deep slate #0F172A with subtle 1px grid lines #1E293B at 32px spacing",
     "outer_padding": "60px"
   },
   "title_strip": {
-    "title": "NimbusMart 电商 · 秒杀下单 · 技术架构",
-    "subtitle": "sharded + cache-aside + async settle · 华东生产",
+    "title": "NimbusMart 電商 · 秒殺下單 · 技術架構",
+    "subtitle": "sharded + cache-aside + async settle · 華東生產",
     "position": "top-left, large mono font (JetBrains Mono / SF Mono), light gray text"
   },
   "color_semantics": {
-    "rule": "颜色按'角色'编码，不按'技术'编码",
+    "rule": "顏色按'角色'編碼，不按'技術'編碼",
     "palette": [
       {
         "role": "User / Client / Edge",
         "color": "cyan #22D3EE",
-        "use_for": "终端用户、Web、Mobile、CLI"
+        "use_for": "終端使用者、Web、Mobile、CLI"
       },
       {
         "role": "Gateway / API / BFF",
         "color": "blue #60A5FA",
-        "use_for": "API 网关、负载均衡、CDN、BFF"
+        "use_for": "API 閘道器、負載均衡、CDN、BFF"
       },
       {
         "role": "Business Services",
         "color": "emerald #34D399",
-        "use_for": "微服务、应用层、业务逻辑"
+        "use_for": "微服務、應用層、業務邏輯"
       },
       {
         "role": "Data / Persistence",
         "color": "violet #A78BFA",
-        "use_for": "数据库、缓存、对象存储、搜索"
+        "use_for": "資料庫、快取、物件儲存、搜尋"
       },
       {
         "role": "Middleware / Queue",
@@ -42,12 +42,12 @@
       {
         "role": "Infra / Platform",
         "color": "amber #FBBF24",
-        "use_for": "K8s、容器运行时、云平台"
+        "use_for": "K8s、容器執行時、雲平臺"
       },
       {
         "role": "Security / Auth",
         "color": "rose #FB7185",
-        "use_for": "鉴权、密钥、审计、防火墙"
+        "use_for": "鑑權、金鑰、審計、防火牆"
       },
       {
         "role": "External / 3rd Party",
@@ -57,21 +57,21 @@
     ]
   },
   "regions": {
-    "rule": "用大虚线框包围属于同一'部署单元'的节点，框上方有 region label",
+    "rule": "用大虛線框包圍屬於同一'部署單元'的節點，框上方有 region label",
     "items": [
       {
         "id": "R1",
-        "label": "Edge · CDN 与 L7 入口",
+        "label": "Edge · CDN 與 L7 入口",
         "color_border": "cyan dashed"
       },
       {
         "id": "R2",
-        "label": "Service Mesh · 订单 / 库存 / 支付",
+        "label": "Service Mesh · 訂單 / 庫存 / 支付",
         "color_border": "emerald dashed"
       },
       {
         "id": "R3",
-        "label": "Data · 主从、缓存、消息",
+        "label": "Data · 主從、快取、訊息",
         "color_border": "violet dashed"
       }
     ]
@@ -81,13 +81,13 @@
     "items": [
       {
         "id": "N1",
-        "label": "顾客终端 (H5/小程序)",
+        "label": "顧客終端 (H5/小程式)",
         "role": "User / Client / Edge",
         "region": "R1"
       },
       {
         "id": "N2",
-        "label": "阿里云 CDN (静态 + 防刷)",
+        "label": "阿里雲 CDN (靜態 + 防刷)",
         "role": "Gateway / API / BFF",
         "region": "R1"
       },
@@ -129,7 +129,7 @@
       },
       {
         "id": "N9",
-        "label": "Redis Cluster (库存热点)",
+        "label": "Redis Cluster (庫存熱點)",
         "role": "Data / Persistence",
         "region": "R3"
       },
@@ -141,13 +141,13 @@
       },
       {
         "id": "N11",
-        "label": "MySQL 8 从 (只读)",
+        "label": "MySQL 8 從 (只讀)",
         "role": "Data / Persistence",
         "region": "R3"
       },
       {
         "id": "N12",
-        "label": "微信支付网关回调入口",
+        "label": "微信支付閘道器回撥入口",
         "role": "External / 3rd Party",
         "region": "R1"
       }
@@ -221,7 +221,7 @@
         "from": "N5",
         "to": "N10",
         "style": "sync",
-        "label": "行锁扣减"
+        "label": "行鎖釦減"
       },
       {
         "from": "N6",
@@ -233,7 +233,7 @@
         "from": "N11",
         "to": "N4",
         "style": "sync",
-        "label": "SELECT 订单快照"
+        "label": "SELECT 訂單快照"
       },
       {
         "from": "N12",
@@ -244,16 +244,16 @@
     ],
     "sync_call": {
       "style": "solid line 1.5px in slate #64748B, with small filled triangle arrowhead at the target end",
-      "use_for": "同步请求 / 调用"
+      "use_for": "同步請求 / 呼叫"
     },
     "async_event": {
       "style": "dashed line 1.5px in slate #64748B, with hollow triangle arrowhead",
-      "use_for": "异步事件 / 消息发布订阅 / 回调"
+      "use_for": "非同步事件 / 訊息釋出訂閱 / 回撥"
     },
     "data_flow_label": {
-      "rule": "edges 上可选标小标签，用 mono 字体 9pt，背景与画布融合"
+      "rule": "edges 上可選標小標籤，用 mono 字型 9pt，背景與畫布融合"
     },
-    "rule_routing": "尽量正交（水平 / 垂直）走线；如果必须斜线，控制在 ≤ 30°；边不要穿过节点"
+    "rule_routing": "儘量正交（水平 / 垂直）走線；如果必須斜線，控制在 ≤ 30°；邊不要穿過節點"
   },
   "legend": {
     "enabled": true,
@@ -263,20 +263,20 @@
   },
   "constraints": {
     "must_keep": [
-      "暗色背景 + 细 grid",
-      "颜色按 role 编码",
-      "节点统一圆角和尺寸基线",
-      "等宽字体（mono）贯穿全图",
-      "edges 不穿过节点，标签不与边重叠",
-      "区域虚线框颜色与区域含义匹配",
-      "legend 必须画出"
+      "暗色背景 + 細 grid",
+      "顏色按 role 編碼",
+      "節點統一圓角和尺寸基線",
+      "等寬字型（mono）貫穿全圖",
+      "edges 不穿過節點，標籤不與邊重疊",
+      "區域虛線框顏色與區域含義匹配",
+      "legend 必須畫出"
     ],
     "avoid": [
-      "彩虹色 / 高饱和霓虹色",
-      "用 emoji 当节点图标",
-      "3D 立方体 / 透视效果 / 玻璃质感",
-      "节点超过 15 个",
-      "声称可导出 SVG"
+      "彩虹色 / 高飽和霓虹色",
+      "用 emoji 當節點圖示",
+      "3D 立方體 / 透視效果 / 玻璃質感",
+      "節點超過 15 個",
+      "聲稱可匯出 SVG"
     ]
   }
 }

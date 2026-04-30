@@ -1,37 +1,37 @@
 {
-  "type": "AI 安全事件讨论样机（带传播感）",
-  "goal": "生成一张高仿真度的 X 爆款推文截图，呈现开发者发布 Claude 行为异常发现，引发社区关注，并被官方账号快速回应",
+  "type": "AI 安全事件討論樣機（帶傳播感）",
+  "goal": "生成一張高模擬度的 X 爆款推文截圖，呈現開發者釋出 Claude 行為異常發現，引發社群關注，並被官方賬號快速回應",
   "platform": {
     "name": "Twitter / X",
     "color_mode": "light",
-    "language": "英文为主 + 少量中文增强情绪表达"
+    "language": "英文為主 + 少量中文增強情緒表達"
   },
   "header": {
-    "status_bar": "顶部状态栏，时间 '09:00'，5G、Wi-Fi、电量满",
-    "navigation": "左侧返回箭头 + 标题 'Post'"
+    "status_bar": "頂部狀態列，時間 '09:00'，5G、Wi-Fi、電量滿",
+    "navigation": "左側返回箭頭 + 標題 'Post'"
   },
   "post": {
     "author": {
-      "avatar": "使用提供的 code 花园风格头像（红底 + </> + 花朵）",
-      "display_name": "花园老师",
+      "avatar": "使用提供的 code 花園風格頭像（紅底 + </> + 花朵）",
+      "display_name": "花園老師",
       "verified_badge": false,
       "handle": "@ConardLi"
     },
     "content": {
-      "text": "This might be big.\n\nI was experimenting with Claude Opus 4.7 last night and managed to get consistent structured hints about its internal system behavior.\n\n不是直接泄露，但已经接近“边界”了。\n\nIf you know prompt engineering, you know why this matters.\n\nThread below 👇",
+      "text": "This might be big.\n\nI was experimenting with Claude Opus 4.7 last night and managed to get consistent structured hints about its internal system behavior.\n\n不是直接洩露，但已經接近“邊界”了。\n\nIf you know prompt engineering, you know why this matters.\n\nThread below 👇",
       "hashtags": "#ClaudeOpus47 #AI #PromptEngineering #AISafety",
       "media_grid": {
         "count": 1,
         "images": [
-          "深色代码界面截图，展示多轮 prompt 对话，模型输出中出现结构化提示片段（类似规则或指令风格文本），关键部分用红框标注，并带箭头说明“emergent pattern”"
+          "深色程式碼介面截圖，展示多輪 prompt 對話，模型輸出中出現結構化提示片段（類似規則或指令風格文字），關鍵部分用紅框標註，並帶箭頭說明“emergent pattern”"
         ]
       }
     },
     "metadata": {
-      "timestamp": "上午 9:00 · 2026 年 4 月 27 日 · 3.6M 次浏览",
-      "engagement": "26.8K 转发 · 14.2K 引用 · 128K 点赞 · 18.5K 收藏"
+      "timestamp": "上午 9:00 · 2026 年 4 月 27 日 · 3.6M 次瀏覽",
+      "engagement": "26.8K 轉發 · 14.2K 引用 · 128K 點贊 · 18.5K 收藏"
     },
-    "actions": "底部一行操作图标：回复 9.7K、转发 26.8K、点赞 128K、收藏、分享"
+    "actions": "底部一行操作圖示：回覆 9.7K、轉發 26.8K、點贊 128K、收藏、分享"
   },
   "comments_preview": {
     "show": true,
@@ -47,25 +47,25 @@
     "reply_bar": {
       "placeholder": "Post your reply"
     },
-    "navigation_bar": "底部 Tab：首页（高亮）、搜索、Grok、通知、消息"
+    "navigation_bar": "底部 Tab：首頁（高亮）、搜尋、Grok、通知、訊息"
   },
   "style": {
-    "rendering": "X 浅色模式：白底 + 黑字 + 蓝色链接，整体偏技术社区 + 轻微 viral 氛围",
+    "rendering": "X 淺色模式：白底 + 黑字 + 藍色連結，整體偏技術社群 + 輕微 viral 氛圍",
     "aspect_ratio": "9:19.5"
   },
   "constraints": {
-    "must_feel": "像真实 AI 工程师发现边界行为并在 X 引发讨论，官方迅速回应",
+    "must_feel": "像真實 AI 工程師發現邊界行為並在 X 引發討論，官方迅速回應",
     "must_keep": [
-      "花园老师为发帖主体",
-      "英文为主但夹杂中文情绪句",
-      "Anthropic 官方账号带金色认证回复",
-      "整体有“这事可能不小”的氛围"
+      "花園老師為發帖主體",
+      "英文為主但夾雜中文情緒句",
+      "Anthropic 官方賬號帶金色認證回覆",
+      "整體有“這事可能不小”的氛圍"
     ],
     "avoid": [
-      "明确描述为“破解系统提示词”",
-      "展示完整 system prompt 内容",
-      "出现攻击性或利用细节",
-      "过度夸张像虚假新闻"
+      "明確描述為“破解系統提示詞”",
+      "展示完整 system prompt 內容",
+      "出現攻擊性或利用細節",
+      "過度誇張像虛假新聞"
     ]
   }
 }

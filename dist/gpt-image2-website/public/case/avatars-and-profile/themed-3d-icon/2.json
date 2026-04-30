@@ -1,25 +1,25 @@
 {
-  "type": "Minecraft 风个性化皮肤立绘",
-  "goal": "生成 1:1 方形图，Minecraft 体素 3D 感全身或半身角色，可联想到 Jensen Huang 的签名造型，用于游戏社区或技术梗图头像",
+  "type": "Minecraft 風個性化皮膚立繪",
+  "goal": "生成 1:1 方形圖，Minecraft 體素 3D 感全身或半身角色，可聯想到 Jensen Huang 的簽名造型，用於遊戲社群或技術梗圖頭像",
   "character": {
-    "subject": "方头身比约 1:1.5 的体素人，方脸、黑发分线、下颚略方",
-    "outfit": "亮黑色皮夹克大翻领（方塊面构成）、深灰 T 无字、深牛仔裤无品牌、立方体化皮鞋",
-    "pose": "一手握立方体化 GPU 长方块道具（无真型号丝印），另一手微抬作讲解手势",
-    "expression": "方眼微笑、眉骨两块较暗体素作浓眉"
+    "subject": "方頭身比約 1:1.5 的體素人，方臉、黑髮分線、下顎略方",
+    "outfit": "亮黑色皮夾克大翻領（方塊面構成）、深灰 T 無字、深牛仔褲無品牌、立方體化皮鞋",
+    "pose": "一手握立方體化 GPU 長方塊道具（無真型號絲印），另一手微抬作講解手勢",
+    "expression": "方眼微笑、眉骨兩塊較暗體素作濃眉"
   },
   "style": {
-    "rendering": "Minecraft 体素 3D，可带轻微 isometric 视角，方块 16px 级可读",
-    "color_palette": "Minecraft 常见 16 色扩展绿草地、浅蓝天、深灰体素人服装"
+    "rendering": "Minecraft 體素 3D，可帶輕微 isometric 視角，方塊 16px 級可讀",
+    "color_palette": "Minecraft 常見 16 色擴充套件綠草地、淺藍天、深灰體素人服裝"
   },
   "background": {
-    "type": "体素草方块地台与远处简化橡树、低多边形白云"
+    "type": "體素草方塊地臺與遠處簡化橡樹、低多邊形白雲"
   },
   "format": {
-    "shape": "圆角方形容器内嵌体素小场景，或整幅即体素无 UI",
+    "shape": "圓角方形容器內嵌體素小場景，或整幅即體素無 UI",
     "aspect_ratio": "1:1"
   },
   "constraints": {
-    "must_feel": "一眼 Minecraft 风且人物气质接近公众认知中的 Jensen Huang 发布会形象、非换脸",
-    "avoid": "NVIDIA 绿标或真实公司 logo 像素块"
+    "must_feel": "一眼 Minecraft 風且人物氣質接近公眾認知中的 Jensen Huang 釋出會形象、非換臉",
+    "avoid": "NVIDIA 綠標或真實公司 logo 畫素塊"
   }
 }

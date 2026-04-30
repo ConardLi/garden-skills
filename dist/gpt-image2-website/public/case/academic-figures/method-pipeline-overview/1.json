@@ -1,6 +1,6 @@
 {
-  "type": "学术论文方法 Pipeline 总览图（method overview figure）",
-  "goal": "生成一张可直接放进顶会论文 method 章节首页的 pipeline 总览图，要求极简、白底、几何精确、出版物级可读",
+  "type": "學術論文方法 Pipeline 總覽圖（method overview figure）",
+  "goal": "生成一張可直接放進頂會論文 method 章節首頁的 pipeline 總覽圖，要求極簡、白底、幾何精確、出版物級可讀",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "pure white #FFFFFF or very light gray #FAFAFA",

@@ -1,6 +1,6 @@
 {
-  "type": "学术多工况结果对比图（multi-condition comparison figure）",
-  "goal": "生成一张燃烧工程论文 results 章节使用的 2x2 多工况温度场对比图，所有 panel 严格统一、白底、定性渲染、不含任何虚构数值",
+  "type": "學術多工況結果對比圖（multi-condition comparison figure）",
+  "goal": "生成一張燃燒工程論文 results 章節使用的 2x2 多工況溫度場對比圖，所有 panel 嚴格統一、白底、定性渲染、不含任何虛構數值",
   "canvas": {
     "aspect_ratio": "4:3",
     "background": "pure white #FFFFFF",

@@ -1,38 +1,38 @@
 {
-  "type": "技术系统架构图（暗色工程感）",
-  "goal": "生成一张用于多租户 AI 客服 SaaS 产线技术评审的架构总览位图，强调公网入口、应用 VPC、数据与消息平面及外部 API 的 trust boundary 划分",
+  "type": "技術系統架構圖（暗色工程感）",
+  "goal": "生成一張用於多租戶 AI 客服 SaaS 產線技術評審的架構總覽點陣圖，強調公網入口、應用 VPC、資料與訊息平面及外部 API 的 trust boundary 劃分",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "deep slate #0F172A with subtle 1px grid lines #1E293B at 32px spacing",
     "outer_padding": "60px"
   },
   "title_strip": {
-    "title": "AuroraDesk AI 客服平台 · 生产架构",
+    "title": "AuroraDesk AI 客服平臺 · 生產架構",
     "subtitle": "v2.3 · ap-southeast-1 · 2026-Q2",
     "position": "top-left, large mono font (JetBrains Mono / SF Mono), light gray text"
   },
   "color_semantics": {
-    "rule": "颜色按'角色'编码，不按'技术'编码",
+    "rule": "顏色按'角色'編碼，不按'技術'編碼",
     "palette": [
       {
         "role": "User / Client / Edge",
         "color": "cyan #22D3EE",
-        "use_for": "终端用户、Web、Mobile、CLI"
+        "use_for": "終端使用者、Web、Mobile、CLI"
       },
       {
         "role": "Gateway / API / BFF",
         "color": "blue #60A5FA",
-        "use_for": "API 网关、负载均衡、CDN、BFF"
+        "use_for": "API 閘道器、負載均衡、CDN、BFF"
       },
       {
         "role": "Business Services",
         "color": "emerald #34D399",
-        "use_for": "微服务、应用层、业务逻辑"
+        "use_for": "微服務、應用層、業務邏輯"
       },
       {
         "role": "Data / Persistence",
         "color": "violet #A78BFA",
-        "use_for": "数据库、缓存、对象存储、搜索"
+        "use_for": "資料庫、快取、物件儲存、搜尋"
       },
       {
         "role": "Middleware / Queue",
@@ -42,12 +42,12 @@
       {
         "role": "Infra / Platform",
         "color": "amber #FBBF24",
-        "use_for": "K8s、容器运行时、云平台"
+        "use_for": "K8s、容器執行時、雲平臺"
       },
       {
         "role": "Security / Auth",
         "color": "rose #FB7185",
-        "use_for": "鉴权、密钥、审计、防火墙"
+        "use_for": "鑑權、金鑰、審計、防火牆"
       },
       {
         "role": "External / 3rd Party",
@@ -57,7 +57,7 @@
     ]
   },
   "regions": {
-    "rule": "用大虚线框包围属于同一'部署单元'的节点，框上方有 region label",
+    "rule": "用大虛線框包圍屬於同一'部署單元'的節點，框上方有 region label",
     "items": [
       {
         "id": "R1",
@@ -66,12 +66,12 @@
       },
       {
         "id": "R2",
-        "label": "EKS 工作负载 · 业务与编排平面",
+        "label": "EKS 工作負載 · 業務與編排平面",
         "color_border": "amber dashed"
       },
       {
         "id": "R3",
-        "label": "Data Plane · 持久化与消息",
+        "label": "Data Plane · 持久化與訊息",
         "color_border": "violet dashed"
       }
     ]
@@ -129,7 +129,7 @@
       },
       {
         "id": "N9",
-        "label": "PostgreSQL 16 (主从)",
+        "label": "PostgreSQL 16 (主從)",
         "role": "Data / Persistence",
         "region": "R3"
       },
@@ -197,7 +197,7 @@
         "from": "N4",
         "to": "N5",
         "style": "sync",
-        "label": "Bearer 校验"
+        "label": "Bearer 校驗"
       },
       {
         "from": "N4",
@@ -262,16 +262,16 @@
     ],
     "sync_call": {
       "style": "solid line 1.5px in slate #64748B, with small filled triangle arrowhead at the target end",
-      "use_for": "同步请求 / 调用"
+      "use_for": "同步請求 / 呼叫"
     },
     "async_event": {
       "style": "dashed line 1.5px in slate #64748B, with hollow triangle arrowhead",
-      "use_for": "异步事件 / 消息发布订阅 / 回调"
+      "use_for": "非同步事件 / 訊息釋出訂閱 / 回撥"
     },
     "data_flow_label": {
-      "rule": "edges 上可选标小标签（如 'POST /orders' / 'order.created event'），用 mono 字体 9pt，背景与画布融合"
+      "rule": "edges 上可選標小標籤（如 'POST /orders' / 'order.created event'），用 mono 字型 9pt，背景與畫布融合"
     },
-    "rule_routing": "尽量正交（水平 / 垂直）走线；如果必须斜线，控制在 ≤ 30°；边不要穿过节点"
+    "rule_routing": "儘量正交（水平 / 垂直）走線；如果必須斜線，控制在 ≤ 30°；邊不要穿過節點"
   },
   "legend": {
     "enabled": true,
@@ -281,23 +281,23 @@
   },
   "constraints": {
     "must_keep": [
-      "暗色背景 + 细 grid",
-      "颜色按 role 编码，不要按技术品牌（如 PostgreSQL 用 violet 因它是 data，不是因为 PG 官方蓝）",
-      "节点统一圆角和尺寸基线",
-      "等宽字体（mono）贯穿全图",
-      "edges 不穿过节点，标签不与边重叠",
-      "区域虚线框颜色与区域含义匹配",
-      "legend 必须画出（即使简化）"
+      "暗色背景 + 細 grid",
+      "顏色按 role 編碼，不要按技術品牌（如 PostgreSQL 用 violet 因它是 data，不是因為 PG 官方藍）",
+      "節點統一圓角和尺寸基線",
+      "等寬字型（mono）貫穿全圖",
+      "edges 不穿過節點，標籤不與邊重疊",
+      "區域虛線框顏色與區域含義匹配",
+      "legend 必須畫出（即使簡化）"
     ],
     "avoid": [
-      "彩虹色 / 高饱和霓虹色（除 cyan 之外其它色都要 muted）",
-      "用 emoji 当节点图标（用极简几何 glyph）",
-      "技术 logo 直接贴上去（除非是商标对照说明）",
-      "3D 立方体 / 透视效果 / 玻璃质感",
-      "同一种颜色既表'安全'又表'业务'",
-      "节点超过 15 个（请拆分到多张子图）",
-      "声称这张图可编辑 / 可导出 SVG（它是位图）",
-      "用花哨字体 / 手写体（破坏工程感）"
+      "彩虹色 / 高飽和霓虹色（除 cyan 之外其它色都要 muted）",
+      "用 emoji 當節點圖示（用極簡幾何 glyph）",
+      "技術 logo 直接貼上去（除非是商標對照說明）",
+      "3D 立方體 / 透視效果 / 玻璃質感",
+      "同一種顏色既表'安全'又表'業務'",
+      "節點超過 15 個（請拆分到多張子圖）",
+      "聲稱這張圖可編輯 / 可匯出 SVG（它是點陣圖）",
+      "用花哨字型 / 手寫體（破壞工程感）"
     ]
   }
 }

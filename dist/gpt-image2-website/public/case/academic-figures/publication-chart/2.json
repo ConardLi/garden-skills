@@ -1,6 +1,6 @@
 {
-  "type": "Publication-Ready Line Chart（学术出版级折线图，log–log）",
-  "goal": "生成 scaling law 风格训练曲线图：x 为 log10(compute in FLOP), y 为 log10(test cross-entropy), 2–3 model families with different markers, shaded ±std band (illustrative)",
+  "type": "Publication-Ready Line Chart（學術出版級折線圖，log–log）",
+  "goal": "生成 scaling law 風格訓練曲線圖：x 為 log10(compute in FLOP), y 為 log10(test cross-entropy), 2–3 model families with different markers, shaded ±std band (illustrative)",
   "canvas": {
     "aspect_ratio": "4:3",
     "background": "white #FFFFFF",

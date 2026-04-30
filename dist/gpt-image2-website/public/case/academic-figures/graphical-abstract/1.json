@@ -1,6 +1,6 @@
 {
-  "type": "学术期刊图形摘要（Graphical Abstract）",
-  "goal": "生成一张可直接用于期刊投稿的 Graphical Abstract，要求极简、白底、工程化克制配色、几秒内可读、绝无营销海报感",
+  "type": "學術期刊圖形摘要（Graphical Abstract）",
+  "goal": "生成一張可直接用於期刊投稿的 Graphical Abstract，要求極簡、白底、工程化剋制配色、幾秒內可讀、絕無營銷海報感",
   "canvas": {
     "aspect_ratio": "2:1",
     "background": "pure white #FFFFFF",

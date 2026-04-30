@@ -1,46 +1,46 @@
 {
-  "type": "中英对照文化海报",
-  "goal": "生成 3:4 竖版文化展览主视觉，可用于主海报、请柬、线上首图，双语不是简单机翻要语气体面",
+  "type": "中英對照文化海報",
+  "goal": "生成 3:4 豎版文化展覽主視覺，可用於主海報、請柬、線上首圖，雙語不是簡單機翻要語氣體面",
   "languages": {
     "primary": "中文",
     "secondary": "英文"
   },
   "title_block": {
-    "main_zh": "照见之间",
+    "main_zh": "照見之間",
     "main_en": "BETWEEN THE TWO HANDS",
-    "subtitle_zh": "当代东方与西方工艺互鉴年展",
+    "subtitle_zh": "當代東方與西方工藝互鑑年展",
     "subtitle_en": "A Contemporary Survey of East-West Craft",
-    "alignment": "左上与左中分块左对齐，主标题在竖向黄金分割偏上，英文副行宽度不超过中文标题宽",
-    "hierarchy_rule": "中文主标题 > 英文主行 > 中文副题 > 英文副题 > 元信息行"
+    "alignment": "左上與左中分塊左對齊，主標題在豎向黃金分割偏上，英文副行寬度不超過中文標題寬",
+    "hierarchy_rule": "中文主標題 > 英文主行 > 中文副題 > 英文副題 > 元資訊行"
   },
   "meta": {
     "date": "2026.5.1 - 2026.6.15",
-    "venue": "西岸美术馆 · 上海",
-    "presenter": "X MUSEUM ALLIANCE 联合策展"
+    "venue": "西岸美術館 · 上海",
+    "presenter": "X MUSEUM ALLIANCE 聯合策展"
   },
   "main_visual": {
-    "description": "右下 45% 区域为低多边形山水剪影与直尺圆规线条叠压，不模仿任何单一艺术家 signature，用朱砂色块、墨线、留白呼吸",
-    "position": "右下大区，上缘与主标题中轴大致齐平、不穿过标题字"
+    "description": "右下 45% 區域為低多邊形山水剪影與直尺圓規線條疊壓，不模仿任何單一藝術家 signature，用硃砂色塊、墨線、留白呼吸",
+    "position": "右下大區，上緣與主標題中軸大致齊平、不穿過標題字"
   },
   "design": {
-    "primary_color": "#9B2B2A 朱砂",
-    "background_color": "#F0E6D4 古纸",
-    "zh_font": "现代宋体，标题用字重 700，正文 400",
-    "en_font": "Cormorant Garamond 或等气质 modern serif 仅用于主副英文行，元信息可换为 Source Serif 4 小号",
-    "grid": "12 栏栅格，主标题站 1-6 栏，主视觉 7-12 栏，终稿不显示格线"
+    "primary_color": "#9B2B2A 硃砂",
+    "background_color": "#F0E6D4 古紙",
+    "zh_font": "現代宋體，標題用字重 700，正文 400",
+    "en_font": "Cormorant Garamond 或等氣質 modern serif 僅用於主副英文行，元資訊可換為 Source Serif 4 小號",
+    "grid": "12 欄柵格，主標題站 1-6 欄，主視覺 7-12 欄，終稿不顯示格線"
   },
   "aspect_ratio": "3:4",
   "constraints": {
     "must_keep": [
-      "中文字体与拉丁字体形态明显不同源，不共用同一文件混排",
-      "英译在语义上与中文展览名呼应而不是硬译每个字",
-      "留白不低于画面 20%",
-      "色数 ≤3 大面积色"
+      "中文字型與拉丁字型形態明顯不同源，不共用同一檔案混排",
+      "英譯在語義上與中文展覽名呼應而不是硬譯每個字",
+      "留白不低於畫面 20%",
+      "色數 ≤3 大面積色"
     ],
     "avoid": [
-      "中文标题用西文无衬线直接充当",
-      "英副题字号接近中文主题",
-      "在角落堆二维码与六个赞助 logo（如需要可另做物料）"
+      "中文標題用西文無襯線直接充當",
+      "英副題字號接近中文主題",
+      "在角落堆二維碼與六個贊助 logo（如需要可另做物料）"
     ]
   }
 }

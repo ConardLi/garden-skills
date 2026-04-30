@@ -1,6 +1,6 @@
 {
-  "type": "便当格 / Bento grid 高密度模块化信息图",
-  "goal": "单张 3:4 竖图把 iPhone 16 Pro 的屏幕、SoC、摄像、机身材质与起售价讲清楚，像 iOS widget 满屏但文案克制",
+  "type": "便當格 / Bento grid 高密度模組化資訊圖",
+  "goal": "單張 3:4 豎圖把 iPhone 16 Pro 的螢幕、SoC、攝像、機身材質與起售價講清楚，像 iOS widget 滿屏但文案剋制",
   "canvas": {
     "aspect_ratio": "3:4 portrait",
     "background": "warm off-white #F5F2EC",
@@ -9,7 +9,7 @@
   },
   "header": {
     "main_title": "iPhone 16 Pro 全方位解析：手感、算力、影像一次看懂",
-    "subtitle": "钛金属 · A18 Pro · 三摄系统 · iOS 18 同步亮点（参数以 Apple 公开展示为口径，图内数字为设计示意）",
+    "subtitle": "鈦金屬 · A18 Pro · 三攝系統 · iOS 18 同步亮點（引數以 Apple 公開展示為口徑，圖內數字為設計示意）",
     "title_position": "top-left, large bold sans-serif"
   },
   "palette": {
@@ -21,79 +21,79 @@
       "dusty blue #B4C5D6",
       "warm peach #F2D4C4"
     ],
-    "rule": "module_tints 轮换，accent 仅用于大数字与 CTA 级关键词"
+    "rule": "module_tints 輪換，accent 僅用於大數字與 CTA 級關鍵詞"
   },
   "layout": {
     "style": "asymmetric bento with one 2x2 hero",
     "module_count": "8",
-    "grid": "1 hero 2x2 左上; 右列上下各一 1x2+1x1; 下区两排填满",
+    "grid": "1 hero 2x2 左上; 右列上下各一 1x2+1x1; 下區兩排填滿",
     "alignment": "invisible 12-column grid, strict gap"
   },
   "modules": [
     {
       "id": "M1-hero",
       "size": "large (2x2)",
-      "role": "TOP 1 / 主推荐",
-      "content": "左侧钛金属原色 Pro 产品侧视 + 主摄模组特写; 三行加粗: 「更轻的钛框」「5 倍长焦可日常」「4K/120 杜比视界」; 星评五星; 小字: 建议容量 256 GB 起"
+      "role": "TOP 1 / 主推薦",
+      "content": "左側鈦金屬原色 Pro 產品側視 + 主攝模組特寫; 三行加粗: 「更輕的鈦框」「5 倍長焦可日常」「4K/120 杜比視界」; 星評五星; 小字: 建議容量 256 GB 起"
     },
     {
       "id": "M2",
       "size": "medium (1x2 vertical)",
-      "role": "屏幕与显示",
-      "content": "标题「ProMotion 与峰值亮度」: 极细示意曲线表示刷新率, 大数字 120 Hz 与 2000+ nit 样例标注（示意）+ 小字: 常亮显示、文字锐度"
+      "role": "螢幕與顯示",
+      "content": "標題「ProMotion 與峰值亮度」: 極細示意曲線表示重新整理率, 大數字 120 Hz 與 2000+ nit 樣例標註（示意）+ 小字: 常亮顯示、文字銳度"
     },
     {
       "id": "M3",
       "size": "small (1x1)",
-      "role": "关键数字",
-      "content": "巨大数字「A18 Pro」+ 小标签「3 nm 级 第二代」+ 小图标 CPU/GPU/NE"
+      "role": "關鍵數字",
+      "content": "巨大數字「A18 Pro」+ 小標籤「3 nm 級 第二代」+ 小圖示 CPU/GPU/NE"
     },
     {
       "id": "M4",
       "size": "small (1x1)",
-      "role": "接口 / 体验",
-      "content": "四个迷你图标+标签: ProRes / USB-C / 空间视频 / 操作按钮(示意)"
+      "role": "介面 / 體驗",
+      "content": "四個迷你圖示+標籤: ProRes / USB-C / 空間影片 / 操作按鈕(示意)"
     },
     {
       "id": "M5",
       "size": "medium (2x1 wide)",
-      "role": "多摄对比条",
-      "content": "横向三枚镜头剪影 + 0.5× / 1× / 5× 小字, 用浅灰条表示焦段, 高亮 5× 日常可用人像"
+      "role": "多攝對比條",
+      "content": "橫向三枚鏡頭剪影 + 0.5× / 1× / 5× 小字, 用淺灰條表示焦段, 高亮 5× 日常可用人像"
     },
     {
       "id": "M6",
       "size": "small (1x1)",
-      "role": "起售价提示",
-      "content": "人民币「¥7,999 起(示意)」+ 行小字: 以官网实时为准 + 以旧换新可再减"
+      "role": "起售價提示",
+      "content": "人民幣「¥7,999 起(示意)」+ 行小字: 以官網實時為準 + 以舊換新可再減"
     },
     {
       "id": "M7",
       "size": "medium (1x2)",
-      "role": "iOS 18 同屏要点",
-      "content": "列表 3 条: 锁屏/控制项自定义; 与 Mac/iPad 连续互通小图标; 端侧与云端 AI 用隐私图标点到为止"
+      "role": "iOS 18 同屏要點",
+      "content": "列表 3 條: 鎖屏/控制項自定義; 與 Mac/iPad 連續互通小圖示; 端側與雲端 AI 用隱私圖示點到為止"
     },
     {
       "id": "M8",
       "size": "small (1x1)",
       "role": "Footer",
-      "content": "小字: 配壳膜更保值 · 下一张滑看配件清单 →; 不放入真实 URL"
+      "content": "小字: 配殼膜更保值 · 下一張滑看配件清單 →; 不放入真實 URL"
     }
   ],
   "module_internal_style": {
     "padding": "20px",
-    "typography": "Inter / 思源黑; module 内小标题 14px 粗, 正文 12px",
-    "rule": "每格必有 micro-title 与至少一个小图形或数字",
-    "imagery": "产品为示意渲染风, 非实拍商标特写"
+    "typography": "Inter / 思源黑; module 內小標題 14px 粗, 正文 12px",
+    "rule": "每格必有 micro-title 與至少一個小圖形或數字",
+    "imagery": "產品為示意渲染風, 非實拍商標特寫"
   },
   "constraints": {
     "must_keep": [
-      "统一 24px 圆角",
-      "8 个模块都填实",
-      "至少一格里含类条形对比或大数字"
+      "統一 24px 圓角",
+      "8 個模組都填實",
+      "至少一格里含類條形對比或大數字"
     ],
     "avoid": [
-      "全图渐变玻璃拟态破坏 bento 简洁",
-      "与 Apple 官方图逐像素复刻"
+      "全圖漸變玻璃擬態破壞 bento 簡潔",
+      "與 Apple 官方圖逐畫素復刻"
     ]
   }
 }

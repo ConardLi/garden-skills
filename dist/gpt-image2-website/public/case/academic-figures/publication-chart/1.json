@@ -1,6 +1,6 @@
 {
-  "type": "Publication-Ready Bar Chart（学术出版级条形图）",
-  "goal": "生成一张论文中常见的 SWE-bench 风格方法对比 bar chart 的视觉版，白底、误差棒、数值顶标",
+  "type": "Publication-Ready Bar Chart（學術出版級條形圖）",
+  "goal": "生成一張論文中常見的 SWE-bench 風格方法對比 bar chart 的視覺版，白底、誤差棒、數值頂標",
   "canvas": {
     "aspect_ratio": "4:3",
     "background": "white #FFFFFF",

@@ -523,13 +523,36 @@
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-mute);
   padding: 6px 0;
-  border-bottom: 1px dashed transparent;
   transition: color var(--t-fast) var(--ease-out);
 }
 .sp-cat-tpl:hover { color: var(--paper); }
+
+.sp-cat-tpl-label {
+  flex: 1;
+}
+
+.sp-cat-tpl-wb {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all var(--t-fast) var(--ease-out);
+  border-radius: 4px;
+}
+
+.sp-cat-tpl:hover .sp-cat-tpl-wb {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sp-cat-tpl-wb:hover {
+  background: rgba(244, 239, 230, 0.1);
+}
 .sp-cat-tpl-bullet {
   width: 4px;
   height: 4px;

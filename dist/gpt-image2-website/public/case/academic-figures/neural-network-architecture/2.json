@@ -1,6 +1,6 @@
 {
-  "type": "神经网络架构图（neural network architecture diagram）",
-  "goal": "生成 ViT 架构的论文级示意：PatchEmbed、196 tokens、L=12 自注意力、MLP 头，形状链完整",
+  "type": "神經網路架構圖（neural network architecture diagram）",
+  "goal": "生成 ViT 架構的論文級示意：PatchEmbed、196 tokens、L=12 自注意力、MLP 頭，形狀鏈完整",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "white #FFFFFF",

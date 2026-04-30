@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Route } from '../../types';
 import { cases } from '../../lib/data';
 import { ModelCard } from './ModelCard';
+import { AutomationPanel } from '../shared/AutomationPanel';
 import './Hero.css';
 
 interface Props {
@@ -10,11 +11,11 @@ interface Props {
 
 const TICKER = [
   'TEXT RENDERING',
-  '多语言版式',
+  '多語言版式',
   'IMAGE EDITING',
-  '高保真参考图',
+  '高保真參考圖',
   'POSTER · UI · INFOGRAPHIC',
-  '4K 输出',
+  '4K 輸出',
   'API · CHATGPT · LOVART',
   '70+ STRUCTURED TEMPLATES',
 ];
@@ -318,9 +319,9 @@ export function Hero({ navigate }: Props) {
           </h1>
 
           <p className="hero-lede">
-            从「猜一张好看的图」走到「理解一个视觉任务，并交付成品」。
+            從「猜一張好看的圖」走到「理解一個視覺任務，並交付成品」。
             <span className="hero-lede-em">GPT‑Image‑2</span>{' '}
-            把文字渲染、指令遵循、参考图编辑与跨语言版式打包成一个可被工作流真正使用的视觉模型。
+            把文字渲染、指令遵循、參考圖編輯與跨語言版式打包成一個可被工作流真正使用的視覺模型。
           </p>
 
           <div className="hero-stats">
@@ -351,47 +352,51 @@ export function Hero({ navigate }: Props) {
           <div className="hero-cta">
             <button
               className="btn btn-primary"
+              onClick={() => navigate({ name: 'promptStudio' })}
+            >
+              <span>進入 Prompt Studio</span>
+              <span className="btn-arrow" aria-hidden="true">
+                →
+              </span>
+            </button>
+            <button
+              className="btn btn-ghost"
+              onClick={() => navigate({ name: 'workbench' })}
+            >
+              <span>進入提示詞工作台 (Legacy)</span>
+              <span className="btn-arrow" aria-hidden="true">
+                →
+              </span>
+            </button>
+            <button
+              className="btn btn-ghost"
               onClick={() => {
                 document
                   .getElementById('gallery')
                   ?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              <span>浏览图集</span>
+              <span>瀏覽圖集</span>
               <span className="btn-arrow" aria-hidden="true">
                 ↓
-              </span>
-            </button>
-            <button
-              className="btn btn-ghost"
-              onClick={() => setExpanded((x) => !x)}
-              aria-expanded={expanded}
-            >
-              <span>{expanded ? '收起模型卡片' : '展开模型详情'}</span>
-              <span
-                className="btn-arrow"
-                aria-hidden="true"
-                style={{
-                  transform: expanded ? 'rotate(45deg)' : 'rotate(0deg)',
-                }}
-              >
-                +
               </span>
             </button>
             <button
               className="btn btn-ghost-2"
               onClick={() => navigate({ name: 'skills' })}
             >
-              <span>查看 Skill 工程</span>
+              <span>檢視技能知識庫</span>
               <span className="btn-arrow" aria-hidden="true">
                 →
               </span>
             </button>
           </div>
 
+          {expanded && <AutomationPanel />}
+
           <div className="hero-scroll-hint mono" aria-hidden="true">
             <span className="hero-scroll-line" />
-            SCROLL · 滚动浏览
+            SCROLL · 滾動瀏覽
           </div>
         </div>
 

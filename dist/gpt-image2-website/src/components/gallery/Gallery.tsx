@@ -40,7 +40,7 @@ export function Gallery({ navigate }: Props) {
     <section className="gal" id="gallery">
       <header className="gal-head">
         <div className="gal-head-left">
-          <div className="eyebrow">02 / GALLERY · 案例图集</div>
+          <div className="eyebrow">02 / GALLERY · 案例圖集</div>
           <h2 className="gal-title serif">
             <span>{cases.summary.cases}</span>
             <span className="serif-italic gal-title-em"> handcrafted </span>
@@ -48,8 +48,8 @@ export function Gallery({ navigate }: Props) {
             <span className="gal-title-acc">.</span>
           </h2>
           <p className="gal-sub">
-            每个案例都对应 Skill 中的一份模板，参数已经填好；可以直接交给图像
-            模型出图，也可以拿来比较模板的边界。
+            每個案例都對應 Skill 中的一份模板，引數已經填好；可以直接交給影象
+            模型出圖，也可以拿來比較模板的邊界。
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export function Gallery({ navigate }: Props) {
               className={`gal-toggle-btn ${mode === 'category' ? 'gal-toggle-on' : ''}`}
               onClick={() => setMode('category')}
             >
-              <ToggleIcon kind="category" /> 分类查看
+              <ToggleIcon kind="category" /> 分類檢視
             </button>
           </div>
 
@@ -116,7 +116,7 @@ export function Gallery({ navigate }: Props) {
             <SearchIcon />
             <input
               type="search"
-              placeholder="搜索标题 / 模板 / 分类…"
+              placeholder="搜尋標題 / 模板 / 分類…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />

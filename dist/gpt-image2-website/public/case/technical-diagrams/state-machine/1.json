@@ -1,13 +1,13 @@
 {
-  "type": "工程感状态机 / 生命周期图（UML state diagram）",
-  "goal": "生成一张 B2C 主单从 CREATED 到各终态的 UML 状态位图，终态用靶心、过渡边标事件与 guard，自循环只用于支付重试",
+  "type": "工程感狀態機 / 生命週期圖（UML state diagram）",
+  "goal": "生成一張 B2C 主單從 CREATED 到各終態的 UML 狀態點陣圖，終態用靶心、過渡邊標事件與 guard，自迴圈只用於支付重試",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
     "outer_padding": "60px"
   },
   "title_strip": {
-    "title": "Nimbus OMS · Order 状态机",
+    "title": "Nimbus OMS · Order 狀態機",
     "subtitle": "CREATED → PAID → FULFILLING → SHIPPED → DELIVERED / REFUNDED / CANCELLED",
     "position": "top-left, JetBrains Mono / SF Mono, light gray"
   },
@@ -82,7 +82,7 @@
       "fill": "category color × 12% opacity",
       "border": "1.5px solid in category color",
       "label": "state name in mono 12pt, centered, light text on dark fill",
-      "optional_internal_label": "可在大状态内部底部加 'entry: persist_status'"
+      "optional_internal_label": "可在大狀態內部底部加 'entry: persist_status'"
     }
   },
   "category_color_map": {
@@ -134,12 +134,12 @@
       {
         "from": "S3",
         "to": "S4",
-        "label": "handover_carrier [运单已获取] / write tracking_no"
+        "label": "handover_carrier [運單已獲取] / write tracking_no"
       },
       {
         "from": "S3",
         "to": "S6",
-        "label": "refund_before_ship [风控] / cancel_pick"
+        "label": "refund_before_ship [風控] / cancel_pick"
       },
       {
         "from": "S4",
@@ -149,7 +149,7 @@
       {
         "from": "S4",
         "to": "S6",
-        "label": "return_to_sender [7d 无签收] / partial_refund"
+        "label": "return_to_sender [7d 無簽收] / partial_refund"
       },
       {
         "from": "S5",
@@ -170,9 +170,9 @@
     "transition_style": {
       "default": "thin solid arrow 1.5px slate #94A3B8 with filled triangle arrowhead",
       "self_loop": "small loop curving above the state, returning to itself",
-      "label_format": "<event> [guard] / <action>，mono 9-10pt 标在边的中间，背景与 canvas 融合避免重叠"
+      "label_format": "<event> [guard] / <action>，mono 9-10pt 標在邊的中間，背景與 canvas 融合避免重疊"
     },
-    "rule_routing": "尽量正交或 ≤ 30° 斜线，避免边穿过节点"
+    "rule_routing": "儘量正交或 ≤ 30° 斜線，避免邊穿過節點"
   },
   "composite_states": {
     "enabled": false,
@@ -181,20 +181,20 @@
   "legend": {
     "enabled": true,
     "position": "bottom-right",
-    "content": "category color → 进行中 / 等待 / 成功终态 / 失败终态；initial / final 形状；self-loop 为 pay_retry",
+    "content": "category color → 進行中 / 等待 / 成功終態 / 失敗終態；initial / final 形狀；self-loop 為 pay_retry",
     "style": "small panel, semi-transparent bg, mono 10pt"
   },
   "constraints": {
     "must_keep": [
-      "initial 是实心圆 / final 是靶心",
+      "initial 是實心圓 / final 是靶心",
       "transitions 含 event [guard] / action 格式",
-      "自循环为 loop 形",
-      "legend 必画"
+      "自迴圈為 loop 形",
+      "legend 必畫"
     ],
     "avoid": [
-      "用菱形当 state",
-      "终态画成普通矩形",
-      "声称可编辑 xstate 源"
+      "用菱形當 state",
+      "終態畫成普通矩形",
+      "聲稱可編輯 xstate 源"
     ]
   }
 }

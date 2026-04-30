@@ -1,6 +1,6 @@
 {
-  "type": "横向 1×N 多工况对比",
-  "goal": "生成一张材料学论文 results 章节用的 1×4 横向多工况微观组织对比图，所有 panel 严格统一、白底、定性渲染，不含任何虚构尺寸数值",
+  "type": "橫向 1×N 多工況對比",
+  "goal": "生成一張材料學論文 results 章節用的 1×4 橫向多工況微觀組織對比圖，所有 panel 嚴格統一、白底、定性渲染，不含任何虛構尺寸數值",
   "canvas": {
     "aspect_ratio": "4:1",
     "background": "pure white #FFFFFF",

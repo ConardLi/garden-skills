@@ -1,6 +1,6 @@
 {
-  "type": "工程感时序图（UML sequence diagram）",
-  "goal": "生成一张微信支付 JSAPI/Native 混合视角的时序位图，突出商户系统、微信支付平台与手机微信客户端三方的同步调用与 notify_url 回调",
+  "type": "工程感時序圖（UML sequence diagram）",
+  "goal": "生成一張微信支付 JSAPI/Native 混合視角的時序點陣圖，突出商戶系統、微信支付平臺與手機微信客戶端三方的同步呼叫與 notify_url 回撥",
   "canvas": {
     "aspect_ratio": "4:3",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
@@ -8,7 +8,7 @@
   },
   "title_strip": {
     "title": "WeChat Pay · unified order to notify",
-    "subtitle": "mchid 1900006XXX · H5/公众号场景",
+    "subtitle": "mchid 1900006XXX · H5/公眾號場景",
     "position": "top-left, JetBrains Mono / SF Mono, light gray"
   },
   "actors": {
@@ -16,13 +16,13 @@
     "items": [
       {
         "id": "A1",
-        "name": "Payer (WeChat 内用户)",
+        "name": "Payer (WeChat 內使用者)",
         "type": "user",
         "icon_glyph": "stick figure outline"
       },
       {
         "id": "A2",
-        "name": "商户后端 order-svc (Python)",
+        "name": "商戶後端 order-svc (Python)",
         "type": "client",
         "icon_glyph": "server rack outline"
       },
@@ -34,7 +34,7 @@
       },
       {
         "id": "A4",
-        "name": "手机微信 (客户端)",
+        "name": "手機微信 (客戶端)",
         "type": "client",
         "icon_glyph": "phone outline"
       }
@@ -55,8 +55,8 @@
     }
   },
   "lifelines": {
-    "rule": "每个 actor header 下方画垂直虚线 lifeline",
-    "spacing": "lifelines 之间等距，间距 ≥ 200px"
+    "rule": "每個 actor header 下方畫垂直虛線 lifeline",
+    "spacing": "lifelines 之間等距，間距 ≥ 200px"
   },
   "messages": {
     "count": 12,
@@ -72,7 +72,7 @@
         "id": "M2",
         "from": "A2",
         "to": "A2",
-        "label": "2. 生成 out_trade_no、attach、notify_url 幂等 key",
+        "label": "2. 生成 out_trade_no、attach、notify_url 冪等 key",
         "type": "self"
       },
       {
@@ -93,49 +93,49 @@
         "id": "M5",
         "from": "A2",
         "to": "A1",
-        "label": "5. 200 { timeStamp, nonceStr, package: prepay_id=..., signType, paySign } 给 H5/JS",
+        "label": "5. 200 { timeStamp, nonceStr, package: prepay_id=..., signType, paySign } 給 H5/JS",
         "type": "return"
       },
       {
         "id": "M6",
         "from": "A1",
         "to": "A4",
-        "label": "6. wx.chooseWXPay / 调起收银台",
+        "label": "6. wx.chooseWXPay / 調起收銀臺",
         "type": "sync"
       },
       {
         "id": "M7",
         "from": "A4",
         "to": "A3",
-        "label": "7. 用户确认指纹/密码，扣款",
+        "label": "7. 使用者確認指紋/密碼，扣款",
         "type": "sync"
       },
       {
         "id": "M8",
         "from": "A3",
         "to": "A2",
-        "label": "8. POST notify_url? 签名 X-Wechatpay-Signature, body { out_trade_no, transaction_id, trade_state: SUCCESS }",
+        "label": "8. POST notify_url? 簽名 X-Wechatpay-Signature, body { out_trade_no, transaction_id, trade_state: SUCCESS }",
         "type": "async"
       },
       {
         "id": "M9",
         "from": "A2",
         "to": "A3",
-        "label": "9. 200 应答 { code: SUCCESS }（必须在 5s 内）",
+        "label": "9. 200 應答 { code: SUCCESS }（必須在 5s 內）",
         "type": "return"
       },
       {
         "id": "M10",
         "from": "A1",
         "to": "A2",
-        "label": "10. 前端轮询或 WebSocket 收到 order_status=PAID",
+        "label": "10. 前端輪詢或 WebSocket 收到 order_status=PAID",
         "type": "sync"
       },
       {
         "id": "M11",
         "from": "A2",
         "to": "A3",
-        "label": "11. 补偿：GET /v3/pay/transactions/out-trade-no/{out_trade_no} 若 notify 未达",
+        "label": "11. 補償：GET /v3/pay/transactions/out-trade-no/{out_trade_no} 若 notify 未達",
         "type": "sync"
       },
       {
@@ -152,39 +152,39 @@
       "return": "dashed line 1.5px slate #64748B, hollow triangle arrowhead",
       "self": "bracket on lifeline"
     },
-    "label_format": "编号 + 消息摘要，含关键 HTTP / 字段名"
+    "label_format": "編號 + 訊息摘要，含關鍵 HTTP / 欄位名"
   },
   "activation_bars": {
     "enabled": true,
-    "rule": "商户后端与 pay API 在请求处理段画激活条",
+    "rule": "商戶後端與 pay API 在請求處理段畫啟用條",
     "vertical_extent": "自收到至返回"
   },
   "annotations": {
     "notes": {
       "enabled": true,
-      "rule": "在 M3 侧注释：mTLS/平台证书 与 APIv3 密钥用于验签与加密敏感字段"
+      "rule": "在 M3 側註釋：mTLS/平臺證書 與 APIv3 金鑰用於驗籤與加密敏感欄位"
     },
     "loops_alts": {
       "enabled": true,
-      "rule": "alt 框：notify 重试 与 查询单补偿"
+      "rule": "alt 框：notify 重試 與 查詢單補償"
     }
   },
   "legend": {
     "enabled": true,
     "position": "bottom-right",
-    "content": "sync vs return vs notify(callback)；external actor 为 slate",
+    "content": "sync vs return vs notify(callback)；external actor 為 slate",
     "style": "small panel, mono 10pt"
   },
   "constraints": {
     "must_keep": [
-      "messages 时间序自上而下",
-      "编号连续",
-      "return 为虚线",
-      "legend 必画"
+      "messages 時間序自上而下",
+      "編號連續",
+      "return 為虛線",
+      "legend 必畫"
     ],
     "avoid": [
-      "用 emoji 当图标",
-      "声称可编辑 PlantUML 源"
+      "用 emoji 當圖示",
+      "聲稱可編輯 PlantUML 源"
     ]
   }
 }

@@ -1,6 +1,6 @@
 {
-  "type": "KPI 仪表盘信息图",
-  "goal": "把一 company's 2025 年度核心数字以 dashboard 排布, 一屏可截图至路演附录",
+  "type": "KPI 儀表盤資訊圖",
+  "goal": "把一 company's 2025 年度核心數字以 dashboard 排布, 一屏可截圖至路演附錄",
   "canvas": {
     "aspect_ratio": "3:4 portrait",
     "background": "vertical gradient #0B1220 to #1E293B",
@@ -8,7 +8,7 @@
   },
   "header": {
     "main_title": "Northwind AI 2025 Year in Numbers",
-    "subtitle": "企业级检索与 RAG 平台 · 内部复盘稿(示意数据)",
+    "subtitle": "企業級檢索與 RAG 平臺 · 內部覆盤稿(示意資料)",
     "period": "2025.01 – 2025.12 (FY25)"
   },
   "palette": {
@@ -16,25 +16,25 @@
     "accent_main": "#22D3EE",
     "accent_secondary": "#A78BFA",
     "accent_alert": "#FB7185",
-    "rule": "主数字用 accent_main, 负向/流失类用 alert 但不滥用"
+    "rule": "主數字用 accent_main, 負向/流失類用 alert 但不濫用"
   },
   "hero_metrics": {
     "count": "3",
-    "rule": "第一行 3 张等宽大数字卡+同比小箭头(示意)",
+    "rule": "第一行 3 張等寬大數字卡+同比小箭頭(示意)",
     "examples_filled": [
       {
-        "value": "¥1.28 亿",
-        "label": "ARR(年度经常性收入, 概算)",
+        "value": "¥1.28 億",
+        "label": "ARR(年度經常性收入, 概算)",
         "delta": "↑ 同比 +42% (illustrative)"
       },
       {
         "value": "128%",
-        "label": "净留存 NRR(概算, 大客拉动)",
+        "label": "淨留存 NRR(概算, 大客拉動)",
         "delta": "↑ +6 pts vs 2024"
       },
       {
         "value": "312",
-        "label": "年付费企业客户(PO 口径)",
+        "label": "年付費企業客戶(PO 口徑)",
         "delta": "↑ +58 家"
       }
     ]
@@ -49,65 +49,65 @@
       "ranked_list",
       "big_number_card"
     ],
-    "rule": "每卡有标题+一主视觉+一行注",
+    "rule": "每卡有標題+一主視覺+一行注",
     "examples_filled": [
       {
         "type": "trend_line",
-        "title": "MRR(示意曲线)",
-        "delta": "高峰: 2025-11 大客上云集中交付"
+        "title": "MRR(示意曲線)",
+        "delta": "高峰: 2025-11 大客上雲集中交付"
       },
       {
         "type": "donut_split",
-        "title": "行业占比",
-        "values": "金融 32% / 制造 24% / 互网 20% / 其他 24%"
+        "title": "行業佔比",
+        "values": "金融 32% / 製造 24% / 互網 20% / 其他 24%"
       },
       {
         "type": "bar_mini",
-        "title": "前三大区域(ARR)",
+        "title": "前三大區域(ARR)",
         "items": [
-          "华东",
+          "華東",
           "北美西海岸",
-          "华北"
+          "華北"
         ]
       },
       {
         "type": "progress_ring",
-        "title": "企业微信服务号线索 SLAs",
-        "value": "92% 24h 内响应(示意)"
+        "title": "企業微信服務號線索 SLAs",
+        "value": "92% 24h 內響應(示意)"
       },
       {
         "type": "ranked_list",
-        "title": "Top 3 新签 logo(虚构)",
+        "title": "Top 3 新籤 logo(虛構)",
         "items": [
-          "Aurum Bank 集团",
+          "Aurum Bank 集團",
           "Lumen Motors",
           "Harbor MedTech"
         ]
       },
       {
         "type": "big_number_card",
-        "title": "人均支持工单(closed)",
+        "title": "人均支援工單(closed)",
         "value": "7.1 件/人/周"
       }
     ]
   },
   "layout": {
-    "structure": "hero 1×3 横排, 下方 2×3 卡网, 底条 footer",
-    "card_styling": "16px 圆角, 半透明 fill rgba(15,23,42,0.6), 1px #334155 边"
+    "structure": "hero 1×3 橫排, 下方 2×3 卡網, 底條 footer",
+    "card_styling": "16px 圓角, 半透明 fill rgba(15,23,42,0.6), 1px #334155 邊"
   },
   "footer": {
-    "tagline": "2026: 多区域部署 + 与国产算力更紧耦合(战略口号式, 非承诺)",
-    "credit": "Internal deck · 勿外传 · Northwind (fictional)"
+    "tagline": "2026: 多區域部署 + 與國產算力更緊耦合(戰略口號式, 非承諾)",
+    "credit": "Internal deck · 勿外傳 · Northwind (fictional)"
   },
   "constraints": {
     "must_keep": [
-      "数字醒目",
-      "至少一张 trend 或 progress 表示变化",
-      "文中多处标注 illustrative / 概算, 不冒充审计数字"
+      "數字醒目",
+      "至少一張 trend 或 progress 表示變化",
+      "文中多處標註 illustrative / 概算, 不冒充審計數字"
     ],
     "avoid": [
-      "与真实某上市公司报表逐字雷同",
-      "超过 5 主色"
+      "與真實某上市公司報表逐字雷同",
+      "超過 5 主色"
     ]
   }
 }

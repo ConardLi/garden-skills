@@ -1,6 +1,6 @@
 {
-  "type": "Qualitative Comparison Grid（论文级多方法多样本对比网格）",
-  "goal": "生成语义分割定性对比图：5 列 × 4 行，类调色板一致、Ours 列高亮，英文图题",
+  "type": "Qualitative Comparison Grid（論文級多方法多樣本對比網格）",
+  "goal": "生成語義分割定性對比圖：5 列 × 4 行，類調色盤一致、Ours 列高亮，英文圖題",
   "canvas": {
     "aspect_ratio": "4:3",
     "background": "white #FFFFFF",

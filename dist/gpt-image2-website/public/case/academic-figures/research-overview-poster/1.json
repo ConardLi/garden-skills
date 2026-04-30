@@ -1,6 +1,6 @@
 {
-  "type": "学术研究总览图（research overview / framework figure for thesis defense）",
-  "goal": "生成一张可直接放进硕士开题答辩 PPT 首页的研究总览图，主题为锂电池热失控早期预警，要求正式克制、白底、工程化配色、明显论文图感，绝无商业路演感",
+  "type": "學術研究總覽圖（research overview / framework figure for thesis defense）",
+  "goal": "生成一張可直接放進碩士開題答辯 PPT 首頁的研究總覽圖，主題為鋰電池熱失控早期預警，要求正式剋制、白底、工程化配色、明顯論文圖感，絕無商業路演感",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "pure white #FFFFFF",
@@ -8,20 +8,20 @@
     "render_quality": "vector-clean look, anti-aliased edges, sharp text"
   },
   "title_block": {
-    "main_title": "锂离子电池热失控早期预警方法研究",
+    "main_title": "鋰離子電池熱失控早期預警方法研究",
     "subtitle": "Early Warning of Thermal Runaway in Lithium-ion Batteries",
-    "occasion_label": "硕士学位论文开题答辩",
+    "occasion_label": "碩士學位論文開題答辯",
     "position": "top-center, main_title in bold sans-serif 22pt, subtitle in regular 13pt below in gray, occasion_label in italic gray 10pt at top-right"
   },
   "background_section": {
-    "label": "研究背景与问题",
-    "summary": "动力电池热失控具有突发性与高破坏性，现有预警手段以单一温度阈值为主，对早期征兆识别不足",
-    "key_question": "如何从多源传感数据中提取热失控早期可分辨特征，实现分钟级提前预警？",
+    "label": "研究背景與問題",
+    "summary": "動力電池熱失控具有突發性與高破壞性，現有預警手段以單一溫度閾值為主，對早期徵兆識別不足",
+    "key_question": "如何從多源感測資料中提取熱失控早期可分辨特徵，實現分鐘級提前預警？",
     "position": "upper-middle band, full width, visually anchored as 'context'"
   },
   "objective_section": {
-    "label": "研究目标",
-    "summary": "构建可在分钟级提前期内稳定预警热失控的多模态早期识别方法",
+    "label": "研究目標",
+    "summary": "構建可在分鐘級提前期內穩定預警熱失控的多模態早期識別方法",
     "position": "directly below background, narrower than background, centered"
   },
   "research_modules": {
@@ -29,28 +29,28 @@
     "items": [
       {
         "id": "RM1",
-        "name": "机理分析",
-        "summary": "梳理热-电-气三场耦合下的早期征兆链路",
-        "method_hint": "ARC 量热实验 + 多场耦合分析"
+        "name": "機理分析",
+        "summary": "梳理熱-電-氣三場耦合下的早期徵兆鏈路",
+        "method_hint": "ARC 量熱實驗 + 多場耦合分析"
       },
       {
         "id": "RM2",
-        "name": "预警模型",
-        "summary": "构建多源传感融合的早期识别模型",
-        "method_hint": "LSTM + 多模态特征对齐"
+        "name": "預警模型",
+        "summary": "構建多源感測融合的早期識別模型",
+        "method_hint": "LSTM + 多模態特徵對齊"
       },
       {
         "id": "RM3",
-        "name": "工况验证",
-        "summary": "在多工况电芯与小模组上完成方法验证",
-        "method_hint": "针刺 / 过充 / 高温箱实验台架"
+        "name": "工況驗證",
+        "summary": "在多工況電芯與小模組上完成方法驗證",
+        "method_hint": "針刺 / 過充 / 高溫箱實驗臺架"
       }
     ],
     "layout": "horizontal row of three equal-width modules in the central band, all modules identical size and identical style"
   },
   "expected_outcome_section": {
-    "label": "预期成果",
-    "items": "热失控早期征兆特征库、可在线运行的早期预警模型、面向工况台架验证的方法学报告",
+    "label": "預期成果",
+    "items": "熱失控早期徵兆特徵庫、可線上執行的早期預警模型、面向工況臺架驗證的方法學報告",
     "position": "bottom band, full width, visually distinct from research_modules but stylistically consistent"
   },
   "module_block_style": {

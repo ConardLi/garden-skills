@@ -1,18 +1,18 @@
 {
-  "type": "工程感网络拓扑图",
-  "goal": "生成一张 ap-northeast-1 上双 AZ 生产 VPC 网络拓扑位图，含 IGW、public ALB+WAF、private ECS、NAT、RDS Multi-AZ、ElastiCache 集群与 S3/CloudFront 外缘，大虚线框内写 CIDR 与 AZ",
+  "type": "工程感網路拓撲圖",
+  "goal": "生成一張 ap-northeast-1 上雙 AZ 生產 VPC 網路拓撲點陣圖，含 IGW、public ALB+WAF、private ECS、NAT、RDS Multi-AZ、ElastiCache 叢集與 S3/CloudFront 外緣，大虛線框內寫 CIDR 與 AZ",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
     "outer_padding": "60px"
   },
   "title_strip": {
-    "title": "AWS 多可用区生产网络 · Nimbus Storefront",
+    "title": "AWS 多可用區生產網路 · Nimbus Storefront",
     "subtitle": "VPC 10.20.0.0/16 · ap-northeast-1a/1b · TLS1.2+",
     "position": "top-left, JetBrains Mono / SF Mono, light gray"
   },
   "device_glyphs": {
-    "rule": "每种设备使用统一的极简几何 glyph，不贴真实云厂商位图",
+    "rule": "每種裝置使用統一的極簡幾何 glyph，不貼真實雲廠商點陣圖",
     "types": [
       {
         "type": "load_balancer",
@@ -67,7 +67,7 @@
       },
       {
         "id": "Z1",
-        "label": "VPC 生产\\n10.20.0.0/16",
+        "label": "VPC 生產\\n10.20.0.0/16",
         "color_border": "amber #FBBF24 dashed",
         "cidr": "10.20.0.0/16"
       },
@@ -85,31 +85,31 @@
       },
       {
         "id": "Z4",
-        "label": "Private 10.20.32.0/19 · AZ-1a/1b 合并数据面",
+        "label": "Private 10.20.32.0/19 · AZ-1a/1b 合併資料面",
         "color_border": "emerald #34D399 dashed",
         "parent": "Z1"
       }
     ],
-    "zone_label_position": "每框左上 mono 11pt，第二行 CIDR 与 AZ"
+    "zone_label_position": "每框左上 mono 11pt，第二行 CIDR 與 AZ"
   },
   "nodes": {
     "items": [
       {
         "id": "N1",
         "type": "user",
-        "label": "顾客浏览器 / 手机 App",
+        "label": "顧客瀏覽器 / 手機 App",
         "zone": "Z0"
       },
       {
         "id": "N2",
         "type": "cloud_service",
-        "label": "CloudFront\\n(静态+边缘缓存)",
+        "label": "CloudFront\\n(靜態+邊緣快取)",
         "zone": "Z0"
       },
       {
         "id": "N3",
         "type": "firewall",
-        "label": "WAFv2 托管规则集",
+        "label": "WAFv2 託管規則集",
         "zone": "Z2"
       },
       {
@@ -121,7 +121,7 @@
       {
         "id": "N5",
         "type": "load_balancer",
-        "label": "ALB 备节点 (AZ-1b)",
+        "label": "ALB 備節點 (AZ-1b)",
         "zone": "Z3"
       },
       {
@@ -157,11 +157,11 @@
       {
         "id": "N11",
         "type": "cloud_service",
-        "label": "S3 存储桶\\n(原始商品图)",
+        "label": "S3 儲存桶\\n(原始商品圖)",
         "zone": "Z0"
       }
     ],
-    "node_label_format": "第一行服务名、第二行规格或角色，mono 10pt 在 glyph 下"
+    "node_label_format": "第一行服務名、第二行規格或角色，mono 10pt 在 glyph 下"
   },
   "connections": {
     "items": [
@@ -187,7 +187,7 @@
         "from": "N3",
         "to": "N5",
         "type": "encrypted",
-        "label": "跨 AZ 健康检查"
+        "label": "跨 AZ 健康檢查"
       },
       {
         "from": "N4",
@@ -199,7 +199,7 @@
         "from": "N5",
         "to": "N8",
         "type": "physical",
-        "label": "Target group (备用 path)"
+        "label": "Target group (備用 path)"
       },
       {
         "from": "N8",
@@ -217,19 +217,19 @@
         "from": "N8",
         "to": "N6",
         "type": "physical",
-        "label": "outbound 依赖"
+        "label": "outbound 依賴"
       },
       {
         "from": "N8",
         "to": "N7",
         "type": "physical",
-        "label": "outbound 依赖 (AZ-1b 任务)"
+        "label": "outbound 依賴 (AZ-1b 任務)"
       },
       {
         "from": "N6",
         "to": "N2",
         "type": "physical",
-        "label": "SNAT 访问 S3/STS"
+        "label": "SNAT 訪問 S3/STS"
       },
       {
         "from": "N2",
@@ -243,34 +243,34 @@
       "logical": "dashed line 1.5px slate #64748B",
       "encrypted": "solid line 2px emerald #34D399 + lock glyph"
     },
-    "label_format": "协议/端口/方向用 mono 9pt 放在连线中央"
+    "label_format": "協議/埠/方向用 mono 9pt 放在連線中央"
   },
   "annotations": {
     "ip_cidr_labels": {
       "enabled": true,
-      "rule": "Z1~Z4 内框顶角重复印 CIDR；关键路由注明 route table: 0.0.0.0/0 → IGW/ NAT"
+      "rule": "Z1~Z4 內框頂角重影印 CIDR；關鍵路由註明 route table: 0.0.0.0/0 → IGW/ NAT"
     },
     "az_labels": {
       "enabled": true,
-      "rule": "Public 两框分写 ap-northeast-1a 与 1b；Private 可写 双列 AZ"
+      "rule": "Public 兩框分寫 ap-northeast-1a 與 1b；Private 可寫 雙列 AZ"
     }
   },
   "legend": {
     "enabled": true,
     "position": "bottom-right",
-    "content": "glyph 类型、physical vs logical/encrypted 线、zone 边框色",
+    "content": "glyph 型別、physical vs logical/encrypted 線、zone 邊框色",
     "style": "small panel, mono 10pt"
   },
   "constraints": {
     "must_keep": [
-      "大虚线框分 Internet / VPC / 子网",
-      "连线侧写清 TLS / 端口 / 回源",
-      "不使用官方 AWS 彩色商标块",
-      "legend 必画"
+      "大虛線框分 Internet / VPC / 子網",
+      "連線側寫清 TLS / 埠 / 回源",
+      "不使用官方 AWS 彩色商標塊",
+      "legend 必畫"
     ],
     "avoid": [
-      "同类型 glyph 不同造型",
-      "节点超过 16 个导致糊在一起"
+      "同型別 glyph 不同造型",
+      "節點超過 16 個導致糊在一起"
     ]
   }
 }

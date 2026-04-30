@@ -1,42 +1,42 @@
 {
-  "type": "西式现代精酿瓶标设计",
-  "goal": "生成 4:5 竖版，突出纸标专色与烫印层次，可拆正背一体展开想象",
+  "type": "西式現代精釀瓶標設計",
+  "goal": "生成 4:5 豎版，突出紙標專色與燙印層次，可拆正背一體展開想象",
   "brand": {
-    "name": "雾港酿造 Mist Harbor",
-    "positioning": "小型城市连锁精酿、主打西海岸 IPA",
-    "product_name": "雾港印度淡色艾尔",
+    "name": "霧港釀造 Mist Harbor",
+    "positioning": "小型城市連鎖精釀、主打西海岸 IPA",
+    "product_name": "霧港印度淡色艾爾",
     "product_subtitle": "MIST HARBOR WEST COAST IPA",
     "volume": "470ml"
   },
   "bottle": {
-    "form": "深琥珀长颈啤酒瓶，瓶颈印一次性促销环「新鲜灌装」小字",
-    "material": "玻璃 + 凝结冷水珠、液面 2cm 酒头泡"
+    "form": "深琥珀長頸啤酒瓶，瓶頸印一次性促銷環「新鮮灌裝」小字",
+    "material": "玻璃 + 凝結冷水珠、液麵 2cm 酒頭泡"
   },
   "label_design": {
-    "style": "木刻版画海浪 + 矢量灯塔光束，橙黄与靛蓝专色，边缘粗白描刀切感",
-    "primary_color": "橙黄、深靛、米纸底",
-    "background_color": "主标纸芯 #EEE3CE",
-    "illustration": "灯塔、涌浪、一行迁徙海鸟、远处城廓剪影",
-    "typography": "主标题为紧凑西文 slab serif，中文副行黑体，酒精度 6.5% vol 与 IBU 68 在正面下三角排布",
-    "info_strip_bottom": "背标（画面可见一侧卷角示意）：原麦汁浓度、保质期、厂名、过量饮酒提示、扫码溯源框线"
+    "style": "木刻版畫海浪 + 向量燈塔光束，橙黃與靛藍專色，邊緣粗白描刀切感",
+    "primary_color": "橙黃、深靛、米紙底",
+    "background_color": "主標紙芯 #EEE3CE",
+    "illustration": "燈塔、湧浪、一行遷徙海鳥、遠處城廓剪影",
+    "typography": "主標題為緊湊西文 slab serif，中文副行黑體，酒精度 6.5% vol 與 IBU 68 在正面下三角排布",
+    "info_strip_bottom": "背標（畫面可見一側卷角示意）：原麥汁濃度、保質期、廠名、過量飲酒提示、掃碼溯源框線"
   },
   "scene": {
-    "background": "老橡木条、黄铜开瓶器、两只空杯一倒扣现冷凝",
-    "lighting": "单灯侧顶硬光、强调瓶标浮雕烫边"
+    "background": "老橡木條、黃銅開瓶器、兩隻空杯一倒扣現冷凝",
+    "lighting": "單燈側頂硬光、強調瓶標浮雕燙邊"
   },
   "format": {
     "aspect_ratio": "4:5",
-    "composition": "瓶略偏左，右侧留白给长投影，纸标不跨越瓶肩合缝线错位"
+    "composition": "瓶略偏左，右側留白給長投影，紙標不跨越瓶肩合縫線錯位"
   },
   "constraints": {
     "must_keep": [
-      "正面保留清晰品牌名、品类、度数字号",
-      "西文与中文层级分明，不互抢",
-      "酒液颜色与「西海岸 IPA 琥珀清亮」一致"
+      "正面保留清晰品牌名、品類、度數字號",
+      "西文與中文層級分明，不互搶",
+      "酒液顏色與「西海岸 IPA 琥珀清亮」一致"
     ],
     "avoid": [
-      "国潮云纹与木刻版画风混搭",
-      "信息法规字过小不可读"
+      "國潮雲紋與木刻版畫風混搭",
+      "資訊法規字過小不可讀"
     ]
   }
 }

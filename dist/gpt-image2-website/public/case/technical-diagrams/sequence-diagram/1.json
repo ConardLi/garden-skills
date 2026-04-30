@@ -1,6 +1,6 @@
 {
-  "type": "工程感时序图（UML sequence diagram）",
-  "goal": "生成一张 OAuth 2.0 授权码 + PKCE 时序位图，用于安全评审与移动/Web 公钥客户对接说明，消息编号完整、sync/return 风格区分",
+  "type": "工程感時序圖（UML sequence diagram）",
+  "goal": "生成一張 OAuth 2.0 授權碼 + PKCE 時序點陣圖，用於安全評審與移動/Web 公鑰客戶對接說明，訊息編號完整、sync/return 風格區分",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
@@ -55,8 +55,8 @@
     }
   },
   "lifelines": {
-    "rule": "每个 actor header 下方画一条垂直虚线 (1px dashed slate #475569)，从 header 底部一直延伸到画布底部",
-    "spacing": "lifelines 之间等距，间距 ≥ 200px"
+    "rule": "每個 actor header 下方畫一條垂直虛線 (1px dashed slate #475569)，從 header 底部一直延伸到畫布底部",
+    "spacing": "lifelines 之間等距，間距 ≥ 200px"
   },
   "messages": {
     "count": 10,
@@ -65,14 +65,14 @@
         "id": "M1",
         "from": "A1",
         "to": "A2",
-        "label": "1. 点击「使用企业账户登录」",
+        "label": "1. 點選「使用企業賬戶登入」",
         "type": "sync"
       },
       {
         "id": "M2",
         "from": "A2",
         "to": "A2",
-        "label": "2. 生成 code_verifier，推导 code_challenge=S256(verifier)",
+        "label": "2. 生成 code_verifier，推導 code_challenge=S256(verifier)",
         "type": "self"
       },
       {
@@ -86,7 +86,7 @@
         "id": "M4",
         "from": "A3",
         "to": "A1",
-        "label": "4. 302 → 展示登录/ MFA 页",
+        "label": "4. 302 → 展示登入/ MFA 頁",
         "type": "return"
       },
       {
@@ -138,21 +138,21 @@
       "return": "dashed line 1.5px slate #64748B, hollow triangle arrowhead",
       "self": "horizontal arrow that loops out to the right and back to the same lifeline (bracket shape)"
     },
-    "label_format": "<编号>. <消息内容>，mono 10pt，标在 arrow 上方居中"
+    "label_format": "<編號>. <訊息內容>，mono 10pt，標在 arrow 上方居中"
   },
   "activation_bars": {
     "enabled": true,
-    "rule": "在 actor lifeline 上画细长矩形（4-6px 宽）覆盖该 actor 处理消息的时间段；颜色用 actor 的 type color，半透明",
-    "vertical_extent": "从该 actor 收到一个 message 开始，到它发出 return 结束"
+    "rule": "在 actor lifeline 上畫細長矩形（4-6px 寬）覆蓋該 actor 處理訊息的時間段；顏色用 actor 的 type color，半透明",
+    "vertical_extent": "從該 actor 收到一個 message 開始，到它發出 return 結束"
   },
   "annotations": {
     "notes": {
       "enabled": true,
-      "rule": "在 M3 旁附便签：PKCE 防止 code 被截获后换 token；state 与 OIDC nonce 需校验"
+      "rule": "在 M3 旁附便籤：PKCE 防止 code 被截獲後換 token；state 與 OIDC nonce 需校驗"
     },
     "loops_alts": {
       "enabled": false,
-      "rule": "如失败分支可用 alt 框，本次仅主路径"
+      "rule": "如失敗分支可用 alt 框，本次僅主路徑"
     }
   },
   "legend": {
@@ -163,18 +163,18 @@
   },
   "constraints": {
     "must_keep": [
-      "actor headers 等大小、等间距、水平对齐",
-      "lifelines 垂直、等间距",
-      "messages 严格按时间从上到下",
-      "每条 message 有编号 + 简洁标签",
-      "sync / return 用不同箭头风格",
-      "暗色 grid + 等宽字体",
-      "legend 必画"
+      "actor headers 等大小、等間距、水平對齊",
+      "lifelines 垂直、等間距",
+      "messages 嚴格按時間從上到下",
+      "每條 message 有編號 + 簡潔標籤",
+      "sync / return 用不同箭頭風格",
+      "暗色 grid + 等寬字型",
+      "legend 必畫"
     ],
     "avoid": [
-      "return 用实线箭头",
-      "用 emoji 当 actor 图标",
-      "声称可编辑 SVG"
+      "return 用實線箭頭",
+      "用 emoji 當 actor 圖示",
+      "聲稱可編輯 SVG"
     ]
   }
 }

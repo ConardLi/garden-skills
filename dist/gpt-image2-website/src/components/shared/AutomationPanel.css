@@ -1,0 +1,69 @@
+.automation-panel {
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 16px;
+  margin: 40px auto;
+  max-width: 600px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.automation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.status-badge {
+  background: rgba(0, 255, 100, 0.1);
+  color: #00ff64;
+  padding: 4px 8px;
+  font-size: 10px;
+  border-radius: 4px;
+}
+
+.automation-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.field label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+
+.field textarea, .field input {
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.field-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.automation-status {
+  margin-top: 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  padding: 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+
+.btn.loading {
+  opacity: 0.7;
+  cursor: wait;
+}
