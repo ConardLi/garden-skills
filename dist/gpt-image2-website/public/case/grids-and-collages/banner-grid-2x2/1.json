@@ -1,62 +1,62 @@
 {
-  "type": "2x2 课程 banner 套装",
-  "goal": "生成一组 4 张统一风格的硬件 campaign banner，整体 1:1 外框，2×2 等分，白缝分隔",
+  "type": "2x2 課程 banner 套裝",
+  "goal": "生成一組 4 張統一風格的硬體 campaign banner，整體 1:1 外框，2×2 等分，白縫分隔",
   "brand": {
     "name": "Apple · Vision 系列",
-    "logo_position": "每格左上角小苹果符号 + 次行小字 'Vision Pro 2'（非官方、仅为视觉演练）",
+    "logo_position": "每格左上角小蘋果符號 + 次行小字 'Vision Pro 2'（非官方、僅為視覺演練）",
     "primary_color": "#F5F5F7",
     "secondary_color": "#1D1D1F"
   },
   "layout": {
     "format": "2x2 grid",
     "panel_count": 4,
-    "gap": "16px 冷白微分隔 + 1px 发丝线",
+    "gap": "16px 冷白微分隔 + 1px 髮絲線",
     "panel_aspect_ratio": "4:5",
     "overall_aspect_ratio": "1:1"
   },
   "panels": [
     {
       "position": "top-left",
-      "course": "空间办公",
-      "headline": "多窗协作，一抬眼就对齐",
-      "visual": "用户佩戴头显的剪影，半空中悬浮多枚半透明窗口，一支 Apple Pencil 状指针虚影",
-      "cta": "了解效率"
+      "course": "空間辦公",
+      "headline": "多窗協作，一抬眼就對齊",
+      "visual": "使用者佩戴頭顯的剪影，半空中懸浮多枚半透明視窗，一支 Apple Pencil 狀指標虛影",
+      "cta": "瞭解效率"
     },
     {
       "position": "top-right",
-      "course": "空间音频创作",
-      "headline": "把混音台放进客厅空气里",
-      "visual": "抽象环形声场与发光推子轨道围绕沙发场景",
-      "cta": "观看短片"
+      "course": "空間音訊創作",
+      "headline": "把混音臺放進客廳空氣裡",
+      "visual": "抽象環形聲場與發光推子軌道圍繞沙發場景",
+      "cta": "觀看短片"
     },
     {
       "position": "bottom-left",
-      "course": "空间健身",
-      "headline": "教练在面前一米处示范",
-      "visual": "客厅地毯上的人做深蹲，AR 等身教练轮廓线稿叠在前方",
-      "cta": "预约体验"
+      "course": "空間健身",
+      "headline": "教練在面前一米處示範",
+      "visual": "客廳地毯上的人做深蹲，AR 等身教練輪廓線稿疊在前方",
+      "cta": "預約體驗"
     },
     {
       "position": "bottom-right",
-      "course": "远程在场",
-      "headline": "对方的目光方向，对得上你",
-      "visual": "多人 FaceTime 风格圆角卡片悬浮成弧形墙，主视角人物眼神交会强调",
-      "cta": "加入候补名单"
+      "course": "遠端在場",
+      "headline": "對方的目光方向，對得上你",
+      "visual": "多人 FaceTime 風格圓角卡片懸浮成弧形牆，主視角人物眼神交會強調",
+      "cta": "加入候補名單"
     }
   ],
   "style": {
-    "art_style": "苹果风极简 3D 渲染 + 亚光金属与磨砂玻璃 + 大留白",
-    "typography": "中文西文统一使用类似 SF 的无衬线，标题 10 字内"
+    "art_style": "蘋果風極簡 3D 渲染 + 亞光金屬與磨砂玻璃 + 大留白",
+    "typography": "中文西文統一使用類似 SF 的無襯線，標題 10 字內"
   },
   "constraints": {
     "must_keep": [
-      "四格白底/浅灰与深字对比一致，CTA 药丸按钮同位置（右下或下中）",
-      "每格可独立成稿，不依赖其他三格才读懂",
-      "标题每行 ≤ 12 字"
+      "四格白底/淺灰與深字對比一致，CTA 藥丸按鈕同位置（右下或下中）",
+      "每格可獨立成稿，不依賴其他三格才讀懂",
+      "標題每行 ≤ 12 字"
     ],
     "avoid": [
-      "四格用四种无关插画语言",
-      "单格出现超过 1 个主 CTA 文案"
+      "四格用四種無關插畫語言",
+      "單格出現超過 1 個主 CTA 文案"
     ]
   }
 }

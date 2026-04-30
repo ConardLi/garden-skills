@@ -1,64 +1,64 @@
 {
-  "type": "品牌识别系统板",
-  "goal": "生成一张社区咖啡馆视觉识别单页，偏温暖工业风，3:4",
+  "type": "品牌識別系統板",
+  "goal": "生成一張社群咖啡館視覺識別單頁，偏溫暖工業風，3:4",
   "brand": {
-    "name": "砖缝光 Bricklight",
-    "tagline": "在裂缝里，借一道日常的光",
-    "industry": "独立精品咖啡与烘焙",
-    "personality": "实在、好聊、不装"
+    "name": "磚縫光 Bricklight",
+    "tagline": "在裂縫裡，借一道日常的光",
+    "industry": "獨立精品咖啡與烘焙",
+    "personality": "實在、好聊、不裝"
   },
   "regions": {
     "logo": {
       "position": "左上",
-      "primary_logo": "B 与 L 共用笔触形成砖缝，一道斜向光束负形从缝中穿过；下排小字「BRICKLIGHT COFFEE」",
+      "primary_logo": "B 與 L 共用筆觸形成磚縫，一道斜向光束負形從縫中穿過；下排小字「BRICKLIGHT COFFEE」",
       "secondary_logos": [
-        "仅光束 + 砖线图标",
-        "横排长字标去图标",
-        "单黑版反白在烧橙色底"
+        "僅光束 + 磚線圖示",
+        "橫排長字標去圖示",
+        "單黑版反白在燒橙色底"
       ],
-      "background_test": "浅暖灰 + 深燧石黑"
+      "background_test": "淺暖灰 + 深燧石黑"
     },
     "color_palette": {
       "position": "右上",
       "primary": [
         "#1E1E1E 燧石黑",
-        "#D36135 窑变橙"
+        "#D36135 窯變橙"
       ],
       "secondary": [
-        "#EDE6DB 米窑白",
-        "#5C6670 钢蓝灰"
+        "#EDE6DB 米窯白",
+        "#5C6670 鋼藍灰"
       ],
-      "swatch_design": "长条色带 + HEX + 用途小字如「主背景」「强强调」"
+      "swatch_design": "長條色帶 + HEX + 用途小字如「主背景」「強強調」"
     },
     "typography": {
       "position": "左下",
-      "headline_font": "无衬线类似 Space Grotesk 的略几何英文 + 中文黑体",
-      "body_font": "中文小字号说明体",
-      "demo_block": "Menu · 今日手冲 · 01234，三行假菜单价目"
+      "headline_font": "無襯線類似 Space Grotesk 的略幾何英文 + 中文黑體",
+      "body_font": "中文小字號說明體",
+      "demo_block": "Menu · 今日手衝 · 01234，三行假選單價目"
     },
     "applications": {
       "position": "右下",
       "mockups": [
-        "外带纸杯 + 热杯套，logo 不绕杯过满一圈",
-        "门头发光字夜间 mockup 小方图",
-        "微信小程序码立牌，上方一行「点单取号」小字，整体留白 40%"
+        "外帶紙杯 + 熱杯套，logo 不繞杯過滿一圈",
+        "門頭髮光字夜間 mockup 小方圖",
+        "微信小程式碼立牌，上方一行「點單取號」小字，整體留白 40%"
       ]
     }
   },
   "style": {
-    "art_style": "水泥质感浅底 + 极轻划痕纹理",
-    "grid": "仅用于 logo 与 app 区对齐的淡灰 12 列"
+    "art_style": "水泥質感淺底 + 極輕劃痕紋理",
+    "grid": "僅用於 logo 與 app 區對齊的淡灰 12 列"
   },
   "aspect_ratio": "3:4",
   "constraints": {
     "must_keep": [
-      "HEX 与圆角色块对应",
-      "四区呼吸感，避免色块糊满",
-      "杯上 logo 不跨越杯缝可识别区"
+      "HEX 與圓角色塊對應",
+      "四區呼吸感，避免色塊糊滿",
+      "杯上 logo 不跨越杯縫可識別區"
     ],
     "avoid": [
-      "过强锈迹与脏渍纹理",
-      "超过 6 个品牌色点"
+      "過強鏽跡與髒漬紋理",
+      "超過 6 個品牌色點"
     ]
   }
 }

@@ -1,6 +1,6 @@
 {
-  "type": "Qualitative Comparison Grid（论文级多方法多样本对比网格）",
-  "goal": "生成一张可直接放进论文 qualitative results 章节的文生图对比网格，严格对齐、Ours 列深红细边框、英文列首",
+  "type": "Qualitative Comparison Grid（論文級多方法多樣本對比網格）",
+  "goal": "生成一張可直接放進論文 qualitative results 章節的文生圖對比網格，嚴格對齊、Ours 列深紅細邊框、英文列首",
   "canvas": {
     "aspect_ratio": "4:3",
     "background": "white #FFFFFF",

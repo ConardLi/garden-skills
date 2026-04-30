@@ -1,14 +1,14 @@
 {
-  "type": "KPI 仪表盘信息图 (personal wrapped)",
-  "goal": "把个人 2025 年读书数据做成一张有情绪的数据海报, 数字可虚构但自洽, 不冒充豆瓣官方",
+  "type": "KPI 儀表盤資訊圖 (personal wrapped)",
+  "goal": "把個人 2025 年讀書資料做成一張有情緒的資料海報, 數字可虛構但自洽, 不冒充豆瓣官方",
   "canvas": {
     "aspect_ratio": "3:4 portrait",
     "background": "sunrise gradient #FFECD2 to #FCB69F at 20% opacity, upper half lighter",
     "alt_background_light": "主用此亮色方案"
   },
   "header": {
-    "main_title": "我的 2025 读书小年报",
-    "subtitle": "纸书+电子书混合 · 以读完为准",
+    "main_title": "我的 2025 讀書小年報",
+    "subtitle": "紙書+電子書混合 · 以讀完為準",
     "period": "2025.01 – 2025.12"
   },
   "palette": {
@@ -16,25 +16,25 @@
     "accent_main": "#7C3AED",
     "accent_secondary": "#EC4899",
     "accent_alert": "#9CA3AF",
-    "rule": "负面如弃读用 alert, 不刺眼"
+    "rule": "負面如棄讀用 alert, 不刺眼"
   },
   "hero_metrics": {
     "count": "3",
     "examples_filled": [
       {
         "value": "48",
-        "label": "本·读完(含2本重读)",
+        "label": "本·讀完(含2本重讀)",
         "delta": "↑ 比 2024 多 9 本"
       },
       {
         "value": "16,200",
-        "label": "总页(粗估, 按纸质+Kindle 同步)",
-        "delta": "↑ 页数 +18%"
+        "label": "總頁(粗估, 按紙質+Kindle 同步)",
+        "delta": "↑ 頁數 +18%"
       },
       {
         "value": "4.1",
-        "label": "自评均分(5 分制, 非平台官方)",
-        "delta": "→ 与上年持平"
+        "label": "自評均分(5 分制, 非平臺官方)",
+        "delta": "→ 與上年持平"
       }
     ]
   },
@@ -43,55 +43,55 @@
     "examples_filled": [
       {
         "type": "bar_mini",
-        "title": "体裁 TOP5",
-        "items": "科幻 / 历史 / 社科 / 网文(严肃向) / 技术"
+        "title": "體裁 TOP5",
+        "items": "科幻 / 歷史 / 社科 / 網文(嚴肅向) / 技術"
       },
       {
         "type": "donut_split",
-        "title": "纸 vs 电子",
-        "values": "58% 纸 / 42% 电子"
+        "title": "紙 vs 電子",
+        "values": "58% 紙 / 42% 電子"
       },
       {
         "type": "trend_line",
-        "title": "2025 各月「读完本数」",
-        "delta": "8 月、11 月是小高峰(示意曲线)"
+        "title": "2025 各月「讀完本數」",
+        "delta": "8 月、11 月是小高峰(示意曲線)"
       },
       {
         "type": "ranked_list",
-        "title": "年度 TOP3(虚构书名)",
+        "title": "年度 TOP3(虛構書名)",
         "items": [
-          "《未来引擎》(科幻)",
-          "《盐铁论》新注(史)",
-          "《设计模式》重读(技)"
+          "《未來引擎》(科幻)",
+          "《鹽鐵論》新注(史)",
+          "《設計模式》重讀(技)"
         ]
       },
       {
         "type": "progress_ring",
-        "title": "想读清货架完成度",
-        "value": "37/100(示意, 不精确)"
+        "title": "想讀清貨架完成度",
+        "value": "37/100(示意, 不精確)"
       },
       {
         "type": "big_number_card",
-        "title": "单本最长(页)",
-        "value": "842 页"
+        "title": "單本最長(頁)",
+        "value": "842 頁"
       }
     ]
   },
   "layout": {
-    "structure": "顶部 hero+一句 slogan, 中部 2×3, 底条",
-    "card_styling": "白底圆角 20px+浅影, 大数字混排等宽体"
+    "structure": "頂部 hero+一句 slogan, 中部 2×3, 底條",
+    "card_styling": "白底圓角 20px+淺影, 大數字混排等寬體"
   },
   "footer": {
-    "tagline": "明年: 多啃两本非虚构+减少囤书(自我期许)",
-    "credit": "导出长图可发微信读书动态 / 朋友圈 · @本人昵称占位"
+    "tagline": "明年: 多啃兩本非虛構+減少囤書(自我期許)",
+    "credit": "匯出長圖可發微信讀書動態 / 朋友圈 · @本人暱稱佔位"
   },
   "constraints": {
     "must_keep": [
-      "卡片内一图一数据, 拒绝纯文",
-      "与豆瓣/微信官方无关的声明可在角落灰字: 本图为自整理"
+      "卡片內一圖一資料, 拒絕純文",
+      "與豆瓣/微信官方無關的宣告可在角落灰字: 本圖為自整理"
     ],
     "avoid": [
-      "与 Spotify Wrapped 商标逐像素复刻"
+      "與 Spotify Wrapped 商標逐畫素復刻"
     ]
   }
 }

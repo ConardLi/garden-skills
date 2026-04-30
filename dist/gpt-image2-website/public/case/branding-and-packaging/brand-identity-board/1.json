@@ -1,65 +1,65 @@
 {
-  "type": "品牌识别系统板",
-  "goal": "生成一张可作为 VI summary 的品牌板，3:4 竖版，四宫格分区清晰",
+  "type": "品牌識別系統板",
+  "goal": "生成一張可作為 VI summary 的品牌板，3:4 豎版，四宮格分割槽清晰",
   "brand": {
-    "name": "清篱",
-    "tagline": "一味草木，半日清欢",
-    "industry": "新中式冲饮与草本小罐茶",
-    "personality": "克制、温润、可信赖、略文人气质"
+    "name": "清籬",
+    "tagline": "一味草木，半日清歡",
+    "industry": "新中式衝飲與草本小罐茶",
+    "personality": "剋制、溫潤、可信賴、略文人氣質"
   },
   "regions": {
     "logo": {
-      "position": "左上大区 约 40% 宽",
-      "primary_logo": "「清」字作行书骨架，与三片简笔篱叶组成圆形章；横排字标为「清篱」二字 + 英文 CHING LI 全大写 3pt 行",
+      "position": "左上大區 約 40% 寬",
+      "primary_logo": "「清」字作行書骨架，與三片簡筆籬葉組成圓形章；橫排字標為「清籬」二字 + 英文 CHING LI 全大寫 3pt 行",
       "secondary_logos": [
-        "纯图形圆形章（无字）",
-        "竖排「清 / 篱」与圆章左右组合",
-        "深绿底反白一版"
+        "純圖形圓形章（無字）",
+        "豎排「清 / 籬」與圓章左右組合",
+        "深綠底反白一版"
       ],
-      "background_test": "左半浅米底 + 右半深松绿底各放一版主组合"
+      "background_test": "左半淺米底 + 右半深松綠底各放一版主組合"
     },
     "color_palette": {
       "position": "右上",
       "primary": [
-        "#2F4F4F 松烟绿",
-        "#C7B89E 米汤白"
+        "#2F4F4F 松煙綠",
+        "#C7B89E 米湯白"
       ],
       "secondary": [
-        "#8C9A8E 鼠尾草灰绿",
-        "#1A1A1A 墨点黑"
+        "#8C9A8E 鼠尾草灰綠",
+        "#1A1A1A 墨點黑"
       ],
-      "swatch_design": "圆角色块 + HEX + 中文名 + 5% 白细边"
+      "swatch_design": "圓角色塊 + HEX + 中文名 + 5% 白細邊"
     },
     "typography": {
       "position": "左下",
-      "headline_font": "中文为类似思源宋的 modern serif 横排，英文衬线为 Cormorant 气质",
-      "body_font": "中文为类似 PingFang 的 clean sans 正文 9pt 演示",
-      "demo_block": "Aa 清茶回甘 · Brew calm，0123456789，一行长条款假文占位"
+      "headline_font": "中文為類似思源宋的 modern serif 橫排，英文襯線為 Cormorant 氣質",
+      "body_font": "中文為類似 PingFang 的 clean sans 正文 9pt 演示",
+      "demo_block": "Aa 清茶回甘 · Brew calm，0123456789，一行長條款假文佔位"
     },
     "applications": {
       "position": "右下",
       "mockups": [
-        "名片正反面，正面大面积留白 + 松烟绿细边，反面小圆章",
-        "牛皮纸小罐茶包装筒顶视 + 标贴",
-        "微信公众号封面图 16:9 缩略：茶汤显微距 + 一句话标题位"
+        "名片正反面，正面大面積留白 + 松煙綠細邊，反面小圓章",
+        "牛皮紙小罐茶包裝筒頂視 + 標貼",
+        "微信公眾號封面圖 16:9 縮略：茶湯顯微距 + 一句話標題位"
       ]
     }
   },
   "style": {
-    "art_style": "现代极简品牌板，浅米背景 + 5% 噪点，细灰 8px 基线格作为装饰",
-    "grid": "淡灰 1pt 线仅出现在 logo 与色板区外沿"
+    "art_style": "現代極簡品牌板，淺米背景 + 5% 噪點，細灰 8px 基線格作為裝飾",
+    "grid": "淡灰 1pt 線僅出現在 logo 與色板區外沿"
   },
   "aspect_ratio": "3:4",
   "constraints": {
     "must_keep": [
-      "色板内 HEX 数字清晰可读，≤6 主色",
-      "四个区块边界不糊在一起",
-      "mockup 光照统一为左上 45° 软光"
+      "色板內 HEX 數字清晰可讀，≤6 主色",
+      "四個區塊邊界不糊在一起",
+      "mockup 光照統一為左上 45° 軟光"
     ],
     "avoid": [
-      "书法字与几何 logo 在 mockup 上乱缩放变形",
-      "同屏 >2 个字体家族",
-      "国潮红金大面积喧宾"
+      "書法字與幾何 logo 在 mockup 上亂縮放變形",
+      "同屏 >2 個字型家族",
+      "國潮紅金大面積喧賓"
     ]
   }
 }

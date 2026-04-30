@@ -6,6 +6,11 @@
   "scripts": {
     "build:data": "node scripts/build-data.mjs",
     "clean:case-images": "node scripts/delete-case-images.mjs",
+    "auto:doctor": "node scripts/automation/doctor.mjs",
+    "auto:single:opencli": "ADAPTER=opencli node scripts/automation/run-single.mjs",
+    "auto:single:pw": "ADAPTER=playwright node scripts/automation/run-single.mjs",
+    "auto:batch:opencli": "ADAPTER=opencli node scripts/automation/run-batch.mjs",
+    "auto:batch:pw": "ADAPTER=playwright node scripts/automation/run-batch.mjs",
     "predev": "npm run build:data",
     "prebuild": "npm run build:data",
     "dev": "vite",
@@ -14,6 +19,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
+    "playwright": "^1.59.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },

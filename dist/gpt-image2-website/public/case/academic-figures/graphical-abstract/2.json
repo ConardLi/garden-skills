@@ -1,6 +1,6 @@
 {
-  "type": "方形 Graphical Abstract（ACS / Wiley 风格）",
-  "goal": "生成一张严格 1:1 方形的期刊 Graphical Abstract，四象限严格等大，工程化克制配色，内容关于硅碳复合负极循环稳定性",
+  "type": "方形 Graphical Abstract（ACS / Wiley 風格）",
+  "goal": "生成一張嚴格 1:1 方形的期刊 Graphical Abstract，四象限嚴格等大，工程化剋制配色，內容關於矽碳複合負極迴圈穩定性",
   "canvas": {
     "aspect_ratio": "1:1",
     "background": "pure white #FFFFFF",

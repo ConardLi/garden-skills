@@ -1,100 +1,100 @@
 {
-  "type": "4x4 同一人物表情与微动作集合",
-  "goal": "一张图内 4×4 格，每格为 Sam Altman 在办公环境中的一种开发者日常瞬间，作专栏插图或播客封面元素拼盘",
+  "type": "4x4 同一人物表情與微動作集合",
+  "goal": "一張圖內 4×4 格，每格為 Sam Altman 在辦公環境中的一種開發者日常瞬間，作專欄插圖或播客封面元素拼盤",
   "subject": {
-    "description": "Sam Altman，短发、清瘦、略放松坐姿或站姿、常穿灰色或深蓝圆领针织衫或轻薄夹克",
-    "consistency": "十六格中五官比例、发际线、胡茬感一致，仅眼眉嘴角度与手势变化"
+    "description": "Sam Altman，短髮、清瘦、略放鬆坐姿或站姿、常穿灰色或深藍圓領針織衫或輕薄夾克",
+    "consistency": "十六格中五官比例、髮際線、胡茬感一致，僅眼眉嘴角度與手勢變化"
   },
-  "style": "高分辨率写实棚拍+自然顶侧柔光，背景统一为浅灰墙与橡木色桌面、一台合盖笔记本与一杯黑咖啡的轻微位移",
+  "style": "高解析度寫實棚拍+自然頂側柔光，背景統一為淺灰牆與橡木色桌面、一臺合蓋筆記本與一杯黑咖啡的輕微位移",
   "layout": {
     "format": "4x4 grid",
     "panel_count": 16,
-    "gap": "2px 白线分隔",
+    "gap": "2px 白線分隔",
     "panels": [
       {
-        "expression": "微笑解释",
-        "action": "双手掌心向上摊开",
-        "outfit": "灰针织套头衫"
+        "expression": "微笑解釋",
+        "action": "雙手掌心向上攤開",
+        "outfit": "灰針織套頭衫"
       },
       {
-        "expression": "专注皱眉",
-        "action": "俯看笔记本屏幕",
+        "expression": "專注皺眉",
+        "action": "俯看筆記本螢幕",
         "outfit": "同左"
       },
       {
         "expression": "恍然大悟",
-        "action": "食指轻敲太阳穴",
+        "action": "食指輕敲太陽穴",
         "outfit": "同左"
       },
       {
-        "expression": "轻笑",
-        "action": "举杯咖啡未饮",
+        "expression": "輕笑",
+        "action": "舉杯咖啡未飲",
         "outfit": "同左"
       },
       {
-        "expression": "略疲惫",
-        "action": "双掌揉眼",
-        "outfit": "深蓝开领衬衫"
+        "expression": "略疲憊",
+        "action": "雙掌揉眼",
+        "outfit": "深藍開領襯衫"
       },
       {
         "expression": "思考",
-        "action": "下巴抵交叠指节",
+        "action": "下巴抵交疊指節",
         "outfit": "同左"
       },
       {
-        "expression": "听对方说话",
-        "action": "头微偏、耳朝画外",
+        "expression": "聽對方說話",
+        "action": "頭微偏、耳朝畫外",
         "outfit": "同左"
       },
       {
-        "expression": "小惊讶",
-        "action": "身体后仰",
+        "expression": "小驚訝",
+        "action": "身體後仰",
         "outfit": "同左"
       },
       {
-        "expression": "肯定点头",
-        "action": "竖拇指低角度",
-        "outfit": "灰套头+薄夹克肩搭椅背"
+        "expression": "肯定點頭",
+        "action": "豎拇指低角度",
+        "outfit": "灰套頭+薄夾克肩搭椅背"
       },
       {
-        "expression": "浅愁",
-        "action": "视线朝窗外",
+        "expression": "淺愁",
+        "action": "視線朝窗外",
         "outfit": "同左"
       },
       {
         "expression": "被逗笑",
-        "action": "低头捂嘴",
+        "action": "低頭捂嘴",
         "outfit": "同左"
       },
       {
-        "expression": "认真否定",
-        "action": "单掌向前轻推",
+        "expression": "認真否定",
+        "action": "單掌向前輕推",
         "outfit": "同左"
       },
       {
-        "expression": "松一口气",
-        "action": "靠椅背仰颈",
-        "outfit": "同灰套头衫"
+        "expression": "鬆一口氣",
+        "action": "靠椅背仰頸",
+        "outfit": "同灰套頭衫"
       },
       {
-        "expression": "疑问",
-        "action": "侧头+单侧挑眉",
+        "expression": "疑問",
+        "action": "側頭+單側挑眉",
         "outfit": "同左"
       },
       {
-        "expression": "鼓励",
-        "action": "双掌合十轻击",
+        "expression": "鼓勵",
+        "action": "雙掌合十輕擊",
         "outfit": "同左"
       },
       {
         "expression": "收工",
-        "action": "合盖笔电、视线看镜头",
+        "action": "合蓋筆電、視線看鏡頭",
         "outfit": "同左"
       }
     ]
   },
   "constraints": {
-    "must_keep": "十六格是同一可识别个人，无换脸、无增龄夸张",
-    "avoid": "单格与相邻格构图像复制粘贴、桌面杂物超过三件"
+    "must_keep": "十六格是同一可識別個人，無換臉、無增齡誇張",
+    "avoid": "單格與相鄰格構影象複製貼上、桌面雜物超過三件"
   }
 }

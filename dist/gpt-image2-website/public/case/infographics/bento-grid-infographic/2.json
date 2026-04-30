@@ -1,6 +1,6 @@
 {
-  "type": "便当格 / Bento grid 高密度模块化信息图",
-  "goal": "3:4 一图说清 Model Y 改款在续航、三电、座舱与辅助驾驶上的关注维度，带一条『适合谁』的 hero",
+  "type": "便當格 / Bento grid 高密度模組化資訊圖",
+  "goal": "3:4 一圖說清 Model Y 改款在續航、三電、座艙與輔助駕駛上的關注維度，帶一條『適合誰』的 hero",
   "canvas": {
     "aspect_ratio": "3:4 portrait",
     "background": "cool gray #ECEEEF",
@@ -8,8 +8,8 @@
     "module_gap": "16px"
   },
   "header": {
-    "main_title": "Tesla Model Y 改款：续航·空间·智驾一图收齐",
-    "subtitle": "长续航 / 高性能差异、家用充电与官方标称值解读（图内为示意数字，以交付中心为准）",
+    "main_title": "Tesla Model Y 改款：續航·空間·智駕一圖收齊",
+    "subtitle": "長續航 / 高效能差異、家用充電與官方標稱值解讀（圖內為示意數字，以交付中心為準）",
     "title_position": "top-left"
   },
   "palette": {
@@ -21,77 +21,77 @@
       "#C8D8F0",
       "#F2E4D0"
     ],
-    "rule": "accent 用于强调「长续航后驱」和「家充」"
+    "rule": "accent 用於強調「長續航後驅」和「家充」"
   },
   "layout": {
-    "style": "asymmetric bento, hero 右下 2x2 银灰车侧",
+    "style": "asymmetric bento, hero 右下 2x2 銀灰車側",
     "module_count": "8",
-    "grid": "左列 3 条窄条 + 右下 hero, 中区填充对比与表格式数据",
+    "grid": "左列 3 條窄條 + 右下 hero, 中區填充對比與表格式資料",
     "alignment": "strict grid"
   },
   "modules": [
     {
       "id": "M1-hero",
       "size": "large (2x2)",
-      "role": "主视觉+人群",
-      "content": "低角度 Model Y 侧影 + 一句「家第二台车 / 首台纯电 都可谈」+ 4.8/5 示意评分 + 3 个关键词: 空间 / 电耗 / OTA"
+      "role": "主視覺+人群",
+      "content": "低角度 Model Y 側影 + 一句「家第二臺車 / 首臺純電 都可談」+ 4.8/5 示意評分 + 3 個關鍵詞: 空間 / 電耗 / OTA"
     },
     {
       "id": "M2",
       "size": "small (1x1)",
-      "role": "CLTC 标称",
-      "content": "大数字 600+ km(示意) + 小字: CLTC, 实路受气温与脚法影响"
+      "role": "CLTC 標稱",
+      "content": "大數字 600+ km(示意) + 小字: CLTC, 實路受氣溫與腳法影響"
     },
     {
       "id": "M3",
       "size": "small (1x1)",
-      "role": "百千米电耗",
-      "content": "13–15 kWh/100 km 带区间条, 小字: 城快 vs 高速"
+      "role": "百千米電耗",
+      "content": "13–15 kWh/100 km 帶區間條, 小字: 城快 vs 高速"
     },
     {
       "id": "M4",
       "size": "medium (1x2)",
-      "role": "前备箱+后排放倒",
-      "content": "简笔容积条 + 露营模式关键词 + 1 个婴儿车示意图标"
+      "role": "前備箱+後排放倒",
+      "content": "簡筆容積條 + 露營模式關鍵詞 + 1 個嬰兒車示意圖示"
     },
     {
       "id": "M5",
       "size": "medium (2x1)",
-      "role": "后驱长续航 vs 双电机",
-      "content": "两列对勾/叉或星级: 加速、雨雪抓地、预算; 不贬损竞品, 只陈述配置差"
+      "role": "後驅長續航 vs 雙電機",
+      "content": "兩列對勾/叉或星級: 加速、雨雪抓地、預算; 不貶損競品, 只陳述配置差"
     },
     {
       "id": "M6",
       "size": "small (1x1)",
       "role": "家充",
-      "content": "7 kW(示意) + 「谷电预约」+ 小插头图标"
+      "content": "7 kW(示意) + 「谷電預約」+ 小插頭圖示"
     },
     {
       "id": "M7",
       "size": "medium (1x2)",
-      "role": "驾驶辅助",
-      "content": "AP/EAP 与 FSD(若购买) 分条; 用中文「辅助驾驶, 非自动驾驶」"
+      "role": "駕駛輔助",
+      "content": "AP/EAP 與 FSD(若購買) 分條; 用中文「輔助駕駛, 非自動駕駛」"
     },
     {
       "id": "M8",
       "size": "small (1x1)",
       "role": "Footer",
-      "content": "微信读书式提示: 保存长图, 发家族群讨论"
+      "content": "微信讀書式提示: 儲存長圖, 發家族群討論"
     }
   ],
   "module_internal_style": {
     "padding": "18-22px",
-    "typography": "sans, clear hierarchy, numbers 等宽",
-    "rule": "每格 micro-title, 无空白贴纸格",
-    "imagery": "车影为简洁矢量剪影"
+    "typography": "sans, clear hierarchy, numbers 等寬",
+    "rule": "每格 micro-title, 無空白貼紙格",
+    "imagery": "車影為簡潔向量剪影"
   },
   "constraints": {
     "must_keep": [
-      "价格与官方权益若出现须注明示意",
-      "不与其他品牌实车对比拼贴真实前脸"
+      "價格與官方權益若出現須註明示意",
+      "不與其他品牌實車對比拼貼真實前臉"
     ],
     "avoid": [
-      "全模块等高栅格"
+      "全模組等高柵格"
     ]
   }
 }

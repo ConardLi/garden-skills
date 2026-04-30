@@ -7,7 +7,7 @@ import { spawn } from 'node:child_process';
 
 const PUBLIC_DIR = resolve(__dirname, 'public');
 const CASES_DIR = resolve(PUBLIC_DIR, 'case');
-const SKILL_DIR = resolve(__dirname, '..', '.claude', 'skills', 'gpt-image-2');
+const SKILL_DIR = resolve(__dirname, '..', '..', 'skills', 'gpt-image-2');
 
 // Skip these names anywhere in the public/ tree when copying to dist/. The
 // case folder is a snapshot of an upstream repo, so it carries a `.git/`
@@ -54,6 +54,116 @@ function safePublicCopy(): Plugin {
           await rm(stale, { recursive: true, force: true });
         }
       }
+    },
+  };
+}
+
+// API Middleware to bridge local UI with Playwright/OpenCLI runner scripts
+function generationApiMiddleware(): Plugin {
+  return {
+    name: 'generation-api-middleware',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (req.url === '/api/generate' && req.method === 'POST') {
+          let body = '';
+          req.on('data', chunk => {
+            body += chunk.toString();
+          });
+          req.on('end', () => {
+            try {
+              const payload = JSON.parse(body);
+              const { prompt, category, template, idx } = payload;
+              
+              if (!prompt) {
+                res.statusCode = 400;
+                res.end(JSON.stringify({ error: 'Prompt is required' }));
+                return;
+              }
+
+              const args = ['run', 'auto:single:pw', '--', '--prompt', prompt];
+              if (category) args.push('--category', category);
+              if (template) args.push('--template', template);
+              if (idx) args.push('--idx', idx);
+
+              const child = spawn('npm', args, {
+                cwd: __dirname,
+                stdio: ['ignore', 'pipe', 'pipe'],
+                shell: true // Ensure cross-platform shell support
+              });
+
+              child.on('error', (spawnErr) => {
+                console.error('[vite] Spawn error:', spawnErr);
+                res.statusCode = 500;
+                res.end(JSON.stringify({ success: false, error: 'Failed to start automation script' }));
+              });
+
+              let stdout = '';
+              let stderr = '';
+              child.stdout.on('data', data => (stdout += data.toString()));
+              child.stderr.on('data', data => (stderr += data.toString()));
+
+              child.on('close', code => {
+                if (code === 0) {
+                  res.statusCode = 200;
+                  res.end(JSON.stringify({ success: true, message: 'Image generated successfully', stdout }));
+                } else {
+                  res.statusCode = 500;
+                  res.end(JSON.stringify({ success: false, error: 'Generation failed', stderr }));
+                }
+              });
+            } catch (err: any) {
+              res.statusCode = 500;
+              res.end(JSON.stringify({ error: err.message }));
+            }
+          });
+          return;
+        }
+        if (req.url === '/api/archive' && req.method === 'POST') {
+          let body = '';
+          req.on('data', chunk => {
+            body += chunk.toString();
+          });
+          req.on('end', async () => {
+            try {
+              const payload = JSON.parse(body);
+              const { category, template, filename, content, args } = payload;
+              
+              if (!content || !category || !template) {
+                res.statusCode = 400;
+                res.end(JSON.stringify({ error: 'Missing required fields' }));
+                return;
+              }
+
+              // Archive path: archives/<category>/<template>/<timestamp>_<filename>.json
+              const archiveDir = resolve(__dirname, 'archives', category, template);
+              if (!existsSync(archiveDir)) {
+                const { mkdir } = await import('node:fs/promises');
+                await mkdir(archiveDir, { recursive: true });
+              }
+
+              const { writeFile } = await import('node:fs/promises');
+              const finalFilename = `${Date.now()}_${filename || 'custom'}.json`;
+              const filePath = resolve(archiveDir, finalFilename);
+              
+              await writeFile(filePath, JSON.stringify({
+                generated_at: new Date().toISOString(),
+                category,
+                template,
+                args,
+                content
+              }, null, 2));
+
+              res.statusCode = 200;
+              res.end(JSON.stringify({ success: true, path: filePath }));
+            } catch (err: any) {
+              res.statusCode = 500;
+              res.end(JSON.stringify({ error: err.message }));
+            }
+          });
+          return;
+        }
+        next();
+      });
     },
   };
 }
@@ -132,7 +242,7 @@ function casesDataWatcher(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), safePublicCopy(), casesDataWatcher()],
+  plugins: [react(), safePublicCopy(), casesDataWatcher(), generationApiMiddleware()],
   server: {
     fs: {
       allow: ['..', '../..'],

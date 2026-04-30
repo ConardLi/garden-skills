@@ -1,6 +1,6 @@
 {
-  "type": "学术机理示意图（mechanism / pathway figure）",
-  "goal": "生成一张可直接放进电池材料类论文正文的机制示意图，强调硅碳负极循环过程中的体积演化与 SEI 演化路径，学术克制、工程化配色、可单色印刷可读",
+  "type": "學術機理示意圖（mechanism / pathway figure）",
+  "goal": "生成一張可直接放進電池材料類論文正文的機制示意圖，強調矽碳負極迴圈過程中的體積演化與 SEI 演化路徑，學術剋制、工程化配色、可單色印刷可讀",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "pure white #FFFFFF",

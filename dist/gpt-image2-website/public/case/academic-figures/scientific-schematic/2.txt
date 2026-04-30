@@ -32,7 +32,7 @@ LAYOUT
 STYLE ENFORCEMENT
 - Geometrically precise: parallel rays, 90° cube faces, symmetric BS.
 - NO gradient fills on backgrounds; no decorative stars.
-- English labels; optional 中文 caption line under the figure: “本图为概念示意，非等比例量测。”
+- English labels; optional 中文 caption line under the figure: “本圖為概念示意，非等比例量測。”
 
 CAPTION (optional, drawn below figure)
 Figure. Simplified BBO down-conversion setup: pump photons are converted into orthogonally polarized entangled photon pairs, routed through a 50/50 BS for interference or coincidence; delay τ in one arm enables temporal overlap scans.

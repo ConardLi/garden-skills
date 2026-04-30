@@ -5,6 +5,13 @@ function parseHash(): Route {
   const h = window.location.hash.replace(/^#\/?/, '');
   if (!h) return { name: 'home' };
   if (h === 'skills') return { name: 'skills' };
+  if (h === 'workbench') return { name: 'workbench' };
+  if (h.startsWith('workbench/')) {
+    const templateId = decodeURIComponent(h.slice('workbench/'.length));
+    return { name: 'workbench', templateId };
+  }
+  if (h === 'prompt-studio') return { name: 'promptStudio' };
+  if (h === 'prompt-studio/uiux') return { name: 'uiuxStudio' };
   if (h.startsWith('case/')) {
     const id = decodeURIComponent(h.slice('case/'.length));
     return { name: 'case', id };
@@ -18,6 +25,12 @@ function routeToHash(route: Route): string {
       return '';
     case 'skills':
       return '#/skills';
+    case 'workbench':
+      return route.templateId ? `#/workbench/${encodeURIComponent(route.templateId)}` : '#/workbench';
+    case 'promptStudio':
+      return '#/prompt-studio';
+    case 'uiuxStudio':
+      return '#/prompt-studio/uiux';
     case 'case':
       return `#/case/${encodeURIComponent(route.id)}`;
   }

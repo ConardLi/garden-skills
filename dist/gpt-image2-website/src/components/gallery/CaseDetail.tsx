@@ -55,7 +55,7 @@ export function CaseDetail({ id, navigate }: Props) {
         <div className="cd-card">
           <p>找不到案例 {id}</p>
           <button className="btn btn-primary" onClick={() => navigate({ name: 'home' })}>
-            返回首页
+            返回首頁
           </button>
         </div>
       </div>
@@ -131,10 +131,10 @@ export function CaseDetail({ id, navigate }: Props) {
               </div>
             ) : (
               <div className="cd-media-empty">
-                <div className="serif cd-media-empty-title">提示词已就绪 · 图片待生成</div>
+                <div className="serif cd-media-empty-title">提示詞已就緒 · 圖片待生成</div>
                 <p className="cd-media-empty-hint">
-                  这条案例的最终 prompt 已经写好，但还没有跑过一次生成。
-                  你可以把右侧 prompt 直接喂给 GPT‑Image‑2 / DALL·E 3 / Midjourney 等任意工具。
+                  這條案例的最終 prompt 已經寫好，但還沒有跑過一次生成。
+                  你可以把右側 prompt 直接餵給 GPT‑Image‑2 / DALL·E 3 / Midjourney 等任意工具。
                 </p>
               </div>
             )}
@@ -227,7 +227,7 @@ export function CaseDetail({ id, navigate }: Props) {
               className={`cd-tab ${tab === 'template' ? 'cd-tab-on' : ''}`}
               onClick={() => setTab('template')}
             >
-              <span className="mono cd-tab-num">02</span> 模板说明
+              <span className="mono cd-tab-num">02</span> 模板說明
             </button>
             <button
               role="tab"
@@ -244,14 +244,42 @@ export function CaseDetail({ id, navigate }: Props) {
               <div className="cd-prompt">
                 <div className="cd-prompt-head">
                   <span className="mono cd-prompt-label">
-                    {c.format === 'json' ? 'JSON · 渲染后的提示词' : 'TEXT · 自然语言提示词'}
+                    {c.format === 'json' ? 'JSON · 渲染後的提示詞' : 'TEXT · 自然語言提示詞'}
                   </span>
                   <div className="cd-prompt-actions">
+                    <button 
+                      className="cd-act"
+                      style={{ background: '#34D399', color: '#0F172A', fontWeight: 600 }}
+                      onClick={async () => {
+                        const btn = document.getElementById('gen-btn-' + c.id);
+                        if (btn) btn.innerText = 'Generating...';
+                        try {
+                          const res = await fetch('/api/generate', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                              prompt: c.prompt_content, 
+                              category: c.category, 
+                              template: c.template_key, 
+                              idx: c.idx 
+                            })
+                          });
+                          if (!res.ok) throw new Error('Generation failed');
+                          if (btn) btn.innerText = '✅ Success';
+                        } catch (err) {
+                          if (btn) btn.innerText = '❌ Error';
+                        }
+                      }}
+                      id={'gen-btn-' + c.id}
+                    >
+                      <span aria-hidden="true">✨</span>
+                      Run in Browser (Playwright)
+                    </button>
                     <button className="cd-act" onClick={onCopy}>
                       <span aria-hidden="true">
                         {copied ? '✓' : '⧉'}
                       </span>
-                      {copied ? '已复制' : '复制'}
+                      {copied ? '已複製' : '複製'}
                     </button>
                     <a
                       className="cd-act"
@@ -260,13 +288,45 @@ export function CaseDetail({ id, navigate }: Props) {
                       rel="noopener noreferrer"
                     >
                       <span aria-hidden="true">↗</span>
-                      源文件
+                      原始檔
                     </a>
                   </div>
                 </div>
                 <pre className="cd-code mono">
-                  <code>{c.prompt_content || '— 加载失败 —'}</code>
+                  <code>{c.prompt_content || '— 載入失敗 —'}</code>
                 </pre>
+
+                {/* CLI Command Section */}
+                <div className="cd-prompt-head" style={{ marginTop: '24px' }}>
+                  <span className="mono cd-prompt-label" style={{ color: '#38BDF8' }}>
+                    CLI COMMAND · 終端直接執行命令
+                  </span>
+                  <div className="cd-prompt-actions">
+                    <button 
+                      className="cd-act" 
+                      onClick={() => {
+                        const cmd = `ADAPTER=playwright node scripts/automation/run-single.mjs --prompt ${JSON.stringify(c.prompt_content)} --category "${c.category}" --template "${c.template_key}" --idx "${c.idx}"`;
+                        navigator.clipboard.writeText(cmd);
+                        const btn = document.getElementById('copy-cmd-btn-' + c.id);
+                        if (btn) {
+                          btn.innerText = '已複製';
+                          setTimeout(() => { btn.innerText = '複製命令'; }, 1800);
+                        }
+                      }}
+                      id={'copy-cmd-btn-' + c.id}
+                    >
+                      <span aria-hidden="true">⧉</span>
+                      複製命令
+                    </button>
+                  </div>
+                </div>
+                <p className="cd-media-empty-hint" style={{ marginTop: 0, marginBottom: '12px' }}>
+                  如果您希望在終端直接執行此任務，可複製以下命令並在 <code>dist/gpt-image2-website</code> 目錄下執行。確保您的 Playwright/OpenCLI 環境已配置。
+                </p>
+                <pre className="cd-code mono" style={{ background: '#0F172A', border: '1px solid #1E293B', color: '#94A3B8' }}>
+                  <code>{`ADAPTER=playwright node scripts/automation/run-single.mjs \\\n  --category "${c.category}" \\\n  --template "${c.template_key}" \\\n  --idx "${c.idx}" \\\n  --prompt ${JSON.stringify(c.prompt_content)}`}</code>
+                </pre>
+
               </div>
             )}
 
@@ -280,7 +340,7 @@ export function CaseDetail({ id, navigate }: Props) {
                       href={`https://github.com/ConardLi/garden-skills/blob/main/skills/gpt-image-2/${tpl.md_path}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      title="在 garden-skills 仓库中查看模板原文"
+                      title="在 garden-skills 倉庫中檢視模板原文"
                     >
                       <span aria-hidden="true">↗</span>
                       GitHub
@@ -289,7 +349,7 @@ export function CaseDetail({ id, navigate }: Props) {
                       className="cd-act"
                       onClick={() => navigate({ name: 'skills' })}
                     >
-                      完整 Skill 文档 →
+                      完整 Skill 檔案 →
                     </button>
                   </div>
                 </div>
@@ -303,14 +363,14 @@ export function CaseDetail({ id, navigate }: Props) {
                   </div>
                 )}
                 <div className="cd-template-summary">
-                  <Bullet n="01" k="分类">
+                  <Bullet n="01" k="分類">
                     {c.category_label} · {cases.categories[c.category]?.label}
                   </Bullet>
-                  <Bullet n="02" k="模板路径">
+                  <Bullet n="02" k="模板路徑">
                     <code className="mono">{tpl.md_path}</code>
                   </Bullet>
                   <Bullet n="03" k="同模板案例">
-                    {tpl.cases_count} 条（含本条）
+                    {tpl.cases_count} 條（含本條）
                   </Bullet>
                 </div>
               </div>
@@ -319,12 +379,12 @@ export function CaseDetail({ id, navigate }: Props) {
             {tab === 'usage' && (
               <div className="cd-usage">
                 <div className="cd-usage-head">
-                  <span className="mono cd-usage-label">如何在 Skill 中复现这张图</span>
+                  <span className="mono cd-usage-label">如何在 Skill 中復現這張圖</span>
                 </div>
                 <p className="cd-usage-intro">
-                  这是一段你可以直接对带 GPT‑Image‑2 Skill 的 Agent 说的话——
-                  它会自动从 <code className="mono">references/</code> 找到对应模板，
-                  把参数填进去，渲染最终 prompt 并出图。
+                  這是一段你可以直接對帶 GPT‑Image‑2 Skill 的 Agent 說的話——
+                  它會自動從 <code className="mono">references/</code> 找到對應模板，
+                  把引數填進去，渲染最終 prompt 並出圖。
                 </p>
                 <div className="cd-chat">
                   {usageDialog.map((m, i) => (
@@ -332,11 +392,11 @@ export function CaseDetail({ id, navigate }: Props) {
                   ))}
                 </div>
                 <div className="cd-usage-tips">
-                  <div className="mono cd-usage-tips-label">三种运行模式</div>
+                  <div className="mono cd-usage-tips-label">三種執行模式</div>
                   <div className="cd-usage-tips-list">
-                    <ModeRow tag="A" name="Garden 本地" body="完整跑通：渲染 prompt → 调 generate.js → 出图落盘" />
-                    <ModeRow tag="B" name="Host-Native" body="渲染 prompt → 调用宿主自带的图像工具（ChatGPT / Cursor / Codex / Gemini）" />
-                    <ModeRow tag="C" name="Advisor 顾问" body="只渲染 prompt 给你；你拿去任意 GPT-Image-2 / DALL·E 3 / Midjourney 中执行" />
+                    <ModeRow tag="A" name="Garden 本地" body="完整跑通：渲染 prompt → 調 generate.js → 出圖落盤" />
+                    <ModeRow tag="B" name="Host-Native" body="渲染 prompt → 呼叫宿主自帶的影象工具（ChatGPT / Cursor / Codex / Gemini）" />
+                    <ModeRow tag="C" name="Advisor 顧問" body="只渲染 prompt 給你；你拿去任意 GPT-Image-2 / DALL·E 3 / Midjourney 中執行" />
                   </div>
                 </div>
               </div>
@@ -422,9 +482,9 @@ function buildUsageDialog(c: { title: string; brief: string; template_label: str
       role: 'user',
       body: (
         <>
-          帮我用 gpt-image-2 Skill 出一张图：<strong>{c.title}</strong>。
+          幫我用 gpt-image-2 Skill 出一張圖：<strong>{c.title}</strong>。
           <br />
-          风格 / 场景参考你的 <code className="mono">{c.category_label}</code> 分类下的{' '}
+          風格 / 場景參考你的 <code className="mono">{c.category_label}</code> 分類下的{' '}
           <code className="mono">{tplLabel}</code> 模板。
         </>
       ),
@@ -433,33 +493,33 @@ function buildUsageDialog(c: { title: string; brief: string; template_label: str
       role: 'agent',
       body: (
         <>
-          收到。第一步先跑 <code className="mono">scripts/check-mode.js</code> 确认运行模式，
-          然后从 <code className="mono">references/{c.category_label}/</code>
-          下读取 <code className="mono">{tplLabel}.md</code> 模板。
+          收到。第一步先跑 <code className="mono">scripts/check-mode.js</code> 確認執行模式，
+          然後從 <code className="mono">references/{c.category_label}/</code>
+          下讀取 <code className="mono">{tplLabel}.md</code> 模板。
           <br />
           <br />
-          目标识别为：<em>{c.brief}</em>
+          目標識別為：<em>{c.brief}</em>
           <br />
-          模板里有几个关键字段需要确认（主体 / 文案 / 配色 / 比例…），
-          这些都已经在右侧 JSON 中填好。
+          模板裡有幾個關鍵欄位需要確認（主體 / 文案 / 配色 / 比例…），
+          這些都已經在右側 JSON 中填好。
         </>
       ),
     },
     {
       role: 'user',
-      body: <>就用现成的 JSON，直接出图。</>,
+      body: <>就用現成的 JSON，直接出圖。</>,
     },
     {
       role: 'agent',
       body: (
         <>
-          好。三种模式分支：
+          好。三種模式分支：
           <ul>
-            <li><strong>Mode A</strong>：保存 prompt → 调 <code className="mono">generate.js</code> → 图片落到 <code className="mono">garden-gpt-image-2/image/</code>。</li>
-            <li><strong>Mode B</strong>：把 JSON 渲染成最终 prompt，调用我自己环境里的 image 工具。</li>
-            <li><strong>Mode C</strong>：只把 prompt 写好交给你，由你拿去任意 GPT-Image-2 / DALL·E 3 / Midjourney 中执行。</li>
+            <li><strong>Mode A</strong>：儲存 prompt → 調 <code className="mono">generate.js</code> → 圖片落到 <code className="mono">garden-gpt-image-2/image/</code>。</li>
+            <li><strong>Mode B</strong>：把 JSON 渲染成最終 prompt，呼叫我自己環境裡的 image 工具。</li>
+            <li><strong>Mode C</strong>：只把 prompt 寫好交給你，由你拿去任意 GPT-Image-2 / DALL·E 3 / Midjourney 中執行。</li>
           </ul>
-          完成后会用一句话告诉你：当前模式、prompt 落在哪、图（如有）落在哪。
+          完成後會用一句話告訴你：當前模式、prompt 落在哪、圖（如有）落在哪。
         </>
       ),
     },

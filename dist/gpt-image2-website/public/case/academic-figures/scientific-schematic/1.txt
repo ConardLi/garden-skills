@@ -40,4 +40,4 @@ STYLE ENFORCEMENT
 - Read like TikZ + Illustrator, peer-review quality.
 
 CAPTION (optional, drawn below figure)
-Figure. CRISPR-Cas9 (spCas9) RNP cleaves a genomic target 3′ of the PAM, enabling indel formation via NHEJ or precise editing via HDR when a homologous donor is supplied.（中文注：PAM 依赖性的靶向切割是 Cas9 编辑的核心约束。）
+Figure. CRISPR-Cas9 (spCas9) RNP cleaves a genomic target 3′ of the PAM, enabling indel formation via NHEJ or precise editing via HDR when a homologous donor is supplied.（中文注：PAM 依賴性的靶向切割是 Cas9 編輯的核心約束。）

@@ -13,13 +13,13 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..', '..');
+const ROOT = resolve(__dirname, '..', '..', '..');
 const WEBSITE_ROOT = resolve(__dirname, '..');
 // Case assets now live under website/public/case so they get bundled into
 // the static site automatically. URLs are served at /case/<...>.
 const CASES_ROOT = resolve(WEBSITE_ROOT, 'public', 'case');
 const CASES_URL_PREFIX = '/case';
-const SKILL_ROOT = resolve(ROOT, '.claude', 'skills', 'gpt-image-2');
+const SKILL_ROOT = resolve(ROOT, 'skills', 'gpt-image-2');
 const OUT = resolve(__dirname, '..', 'src', 'data', 'cases.json');
 
 // Thumbnail spec — gallery cards / hero mosaic / related strip never need
@@ -32,23 +32,23 @@ const THUMB_QUALITY = 78;
 const THUMB_CONCURRENCY = 6;
 
 const CATEGORY_META = {
-  'ui-mockups': { label: 'UI Mockups', cn: '界面样机', accent: '#1F6FB2' },
-  'product-visuals': { label: 'Product Visuals', cn: '产品视觉', accent: '#C7522A' },
-  'maps': { label: 'Maps', cn: '地图', accent: '#3B7A57' },
-  'slides-and-visual-docs': { label: 'Slides & Docs', cn: '视觉文档', accent: '#6A4C93' },
-  'poster-and-campaigns': { label: 'Posters & Campaigns', cn: '海报营销', accent: '#E8472C' },
-  'portraits-and-characters': { label: 'Portraits', cn: '人物视觉', accent: '#8B4513' },
-  'scenes-and-illustrations': { label: 'Scenes', cn: '氛围插画', accent: '#5E8B7E' },
-  'editing-workflows': { label: 'Editing', cn: '图像编辑', accent: '#4A6FA5' },
-  'avatars-and-profile': { label: 'Avatars', cn: '头像人设', accent: '#D08C60' },
-  'storyboards-and-sequences': { label: 'Storyboards', cn: '叙事序列', accent: '#A23E48' },
-  'grids-and-collages': { label: 'Grids & Collages', cn: '网格拼贴', accent: '#2E7D8B' },
-  'branding-and-packaging': { label: 'Branding', cn: '品牌包装', accent: '#B8860B' },
-  'typography-and-text-layout': { label: 'Typography', cn: '字体版式', accent: '#4F4F4F' },
-  'assets-and-props': { label: 'Assets & Props', cn: '素材资产', accent: '#6B5B95' },
-  'academic-figures': { label: 'Academic', cn: '学术配图', accent: '#1A4E8A' },
-  'infographics': { label: 'Infographics', cn: '信息图', accent: '#D4665A' },
-  'technical-diagrams': { label: 'Technical Diagrams', cn: '技术图示', accent: '#0A6E96' },
+  'ui-mockups': { label: 'UI Mockups', cn: '介面樣機', accent: '#1F6FB2' },
+  'product-visuals': { label: 'Product Visuals', cn: '產品視覺', accent: '#C7522A' },
+  'maps': { label: 'Maps', cn: '地圖', accent: '#3B7A57' },
+  'slides-and-visual-docs': { label: 'Slides & Docs', cn: '視覺檔案', accent: '#6A4C93' },
+  'poster-and-campaigns': { label: 'Posters & Campaigns', cn: '海報營銷', accent: '#E8472C' },
+  'portraits-and-characters': { label: 'Portraits', cn: '人物視覺', accent: '#8B4513' },
+  'scenes-and-illustrations': { label: 'Scenes', cn: '氛圍插畫', accent: '#5E8B7E' },
+  'editing-workflows': { label: 'Editing', cn: '影象編輯', accent: '#4A6FA5' },
+  'avatars-and-profile': { label: 'Avatars', cn: '頭像人設', accent: '#D08C60' },
+  'storyboards-and-sequences': { label: 'Storyboards', cn: '敘事序列', accent: '#A23E48' },
+  'grids-and-collages': { label: 'Grids & Collages', cn: '網格拼貼', accent: '#2E7D8B' },
+  'branding-and-packaging': { label: 'Branding', cn: '品牌包裝', accent: '#B8860B' },
+  'typography-and-text-layout': { label: 'Typography', cn: '字型版式', accent: '#4F4F4F' },
+  'assets-and-props': { label: 'Assets & Props', cn: '素材資產', accent: '#6B5B95' },
+  'academic-figures': { label: 'Academic', cn: '學術配圖', accent: '#1A4E8A' },
+  'infographics': { label: 'Infographics', cn: '資訊圖', accent: '#D4665A' },
+  'technical-diagrams': { label: 'Technical Diagrams', cn: '技術圖示', accent: '#0A6E96' },
 };
 
 async function readSafe(path) {
@@ -160,7 +160,7 @@ async function main() {
     };
 
     const tplKey = `${cat}/${item.template_basename}`;
-    const tplMd = await readSafe(resolve(ROOT, '.claude', 'skills', 'gpt-image-2', 'references', cat, `${item.template_basename}.md`));
+    const tplMd = await readSafe(resolve(SKILL_ROOT, 'references', cat, `${item.template_basename}.md`));
     const summary = extractTemplateSummary(tplMd);
 
     out.templates[tplKey] = {

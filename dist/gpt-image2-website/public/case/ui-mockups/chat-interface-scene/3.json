@@ -1,101 +1,101 @@
 {
-  "type": "AI 助手对话界面样机",
-  "goal": "生成一张高仿真度的 Claude AI 助手对话界面截图，用户视角是 Elon Musk，正在让 Claude 帮他整理硅谷 CEO 群的周报，整体像真实 Claude 桌面应用截图",
+  "type": "AI 助手對話介面樣機",
+  "goal": "生成一張高模擬度的 Claude AI 助手對話介面截圖，使用者視角是 Elon Musk，正在讓 Claude 幫他整理矽谷 CEO 群的週報，整體像真實 Claude 桌面應用截圖",
   "platform": {
     "name": "Claude",
     "color_mode": "light",
     "language": "中英文混排"
   },
   "header": {
-    "title": "硅谷周报草稿 - 4/26",
+    "title": "矽谷週報草稿 - 4/26",
     "model_label": "Claude Opus 4.7",
     "right_actions": [
-      "+ 新建对话",
-      "🕘 历史",
-      "⚙ 设置"
+      "+ 新建對話",
+      "🕘 歷史",
+      "⚙ 設定"
     ]
   },
   "sidebar": {
-    "logo": "左上 Anthropic 'A' logo + 'Claude' 字样",
+    "logo": "左上 Anthropic 'A' logo + 'Claude' 字樣",
     "items": [
-      "📌 硅谷周报草稿 - 4/26（当前对话，高亮）",
-      "Cybertruck 路演脚本",
-      "Starship 发布会演讲稿",
+      "📌 矽谷週報草稿 - 4/26（當前對話，高亮）",
+      "Cybertruck 路演指令碼",
+      "Starship 釋出會演講稿",
       "X 政策更新公告",
       "—— 昨天 ——",
-      "Grok 3.5 prompt 调试",
-      "Tesla 财报电话稿润色"
+      "Grok 3.5 prompt 除錯",
+      "Tesla 財報電話稿潤色"
     ],
-    "user_block": "底部用户卡片：'Elon Musk' + 头像 + 'Pro Plan'"
+    "user_block": "底部使用者卡片：'Elon Musk' + 頭像 + 'Pro Plan'"
   },
   "conversation": {
     "messages": [
       {
         "role": "user",
-        "avatar": "Elon Musk 圆形头像，黑色棒球帽 + Cybertruck 背景",
+        "avatar": "Elon Musk 圓形頭像，黑色棒球帽 + Cybertruck 背景",
         "name": "Elon Musk",
-        "text": "把刚才微信「Tech CEO 互助会」这一段对话整理成本周硅谷 drama 周报，要求：\n\n1. 按热度排序，每条带一句吐槽\n2. 别提名字，用代号（the Apple guy / the GPU guy 这种）\n3. 最后给我一段适合发到 X 的总结，限 280 字符以内\n\n粘贴聊天上下文：\n———\n23:50 Sam: 求 H100 加单，GPT-5.5 跑不动\n23:51 Jensen: 排队，前面还有微软、Meta、xAI、特斯拉\n23:52 Tim: Vision Pro 退货率冲 21%\n23:53 Zuck: Quest 3 欢迎抄作业（已撤回）\n23:54 Sundar: Gemini 3 发布会再推一周\n23:55 Satya: Copilot 又被 X 上喷\n23:56 Bezos 发红包"
+        "text": "把剛才微信「Tech CEO 互助會」這一段對話整理成本週矽谷 drama 週報，要求：\n\n1. 按熱度排序，每條帶一句吐槽\n2. 別提名字，用代號（the Apple guy / the GPU guy 這種）\n3. 最後給我一段適合發到 X 的總結，限 280 字元以內\n\n貼上聊天上下文：\n———\n23:50 Sam: 求 H100 加單，GPT-5.5 跑不動\n23:51 Jensen: 排隊，前面還有微軟、Meta、xAI、特斯拉\n23:52 Tim: Vision Pro 退貨率衝 21%\n23:53 Zuck: Quest 3 歡迎抄作業（已撤回）\n23:54 Sundar: Gemini 3 釋出會再推一週\n23:55 Satya: Copilot 又被 X 上噴\n23:56 Bezos 發紅包"
       },
       {
         "role": "assistant",
-        "avatar": "Anthropic 橙色 'A' 头像",
+        "avatar": "Anthropic 橙色 'A' 頭像",
         "type": "structured",
-        "header": "🌉 硅谷 CEO 群周报 · Apr 26 凌晨版",
+        "header": "🌉 矽谷 CEO 群週報 · Apr 26 凌晨版",
         "content": [
-          "**🥇 Top 1 — the GPU guy 一统江湖**\n排队论再次胜利：H100 供不应求，前排是微软、Meta、xAI、特斯拉。\n吐槽：地球上唯一不缺 GPU 的人，是发 GPU 的那个人。\n\n**🥈 Top 2 — the Apple guy 在线求安慰**\nVision Pro 退货率据称冲到 21%。\n吐槽：'最棒的产品'升级成'最棒的产品体验店'。\n\n**🥉 Top 3 — the Meta guy 撤回了一条消息**\n刚说完 'Quest 3 欢迎抄作业'，立刻撤回。\n吐槽：硅谷最快撤回速度纪录刷新。\n\n**🏅 Top 4 — the Search guy 推迟发布**\nGemini 3 发布会再往后推一周。\n吐槽：'倒计时图先别发了' = 我们也没准备好。\n\n**🏅 Top 5 — the Cloud guy 心态需要安抚**\nCopilot 又上 X 热搜，被群嘲。\n吐槽：每次出问题都先怪'前端'，再怪'底模'。\n\n**🌟 神补刀 — the Books guy 发红包**\n'熬夜辛苦费' 红包，金色封面。被领走 3/8，剩下 5 位 CEO 估计已经睡了。"
+          "**🥇 Top 1 — the GPU guy 一統江湖**\n排隊論再次勝利：H100 供不應求，前排是微軟、Meta、xAI、特斯拉。\n吐槽：地球上唯一不缺 GPU 的人，是發 GPU 的那個人。\n\n**🥈 Top 2 — the Apple guy 線上求安慰**\nVision Pro 退貨率據稱衝到 21%。\n吐槽：'最棒的產品'升級成'最棒的產品體驗店'。\n\n**🥉 Top 3 — the Meta guy 撤回了一條訊息**\n剛說完 'Quest 3 歡迎抄作業'，立刻撤回。\n吐槽：矽谷最快撤回速度紀錄重新整理。\n\n**🏅 Top 4 — the Search guy 推遲釋出**\nGemini 3 釋出會再往後推一週。\n吐槽：'倒計時圖先別發了' = 我們也沒準備好。\n\n**🏅 Top 5 — the Cloud guy 心態需要安撫**\nCopilot 又上 X 熱搜，被群嘲。\n吐槽：每次出問題都先怪'前端'，再怪'底模'。\n\n**🌟 神補刀 — the Books guy 發紅包**\n'熬夜辛苦費' 紅包，金色封面。被領走 3/8，剩下 5 位 CEO 估計已經睡了。"
         ],
         "trailing_actions": [
-          "📋 复制",
+          "📋 複製",
           "🔄 再生成",
-          "📤 导出 Markdown"
+          "📤 匯出 Markdown"
         ]
       },
       {
         "role": "user",
         "name": "Elon Musk",
-        "text": "OK 现在帮我把这份周报压成一条 X 推文，280 字符以内，要带点 emoji，结尾问粉丝最 emo 的是哪条"
+        "text": "OK 現在幫我把這份週報壓成一條 X 推文，280 字元以內，要帶點 emoji，結尾問粉絲最 emo 的是哪條"
       },
       {
         "role": "assistant",
         "type": "code-block",
         "language": "text",
-        "preview": "🌉 Silicon Valley CEO group chat, 4/26:\n\n🚀 GPU guy: 排队\n🍎 Apple guy: Vision Pro 退货 21%\n🐦 Meta guy: 发完撤回\n🔍 Search guy: Gemini 又推迟\n☁ Cloud guy: Copilot 又被骂\n📦 Books guy: 红包安慰大家\n\n你觉得最 emo 的是哪条？👇"
+        "preview": "🌉 Silicon Valley CEO group chat, 4/26:\n\n🚀 GPU guy: 排隊\n🍎 Apple guy: Vision Pro 退貨 21%\n🐦 Meta guy: 發完撤回\n🔍 Search guy: Gemini 又推遲\n☁ Cloud guy: Copilot 又被罵\n📦 Books guy: 紅包安慰大家\n\n你覺得最 emo 的是哪條？👇"
       }
     ]
   },
   "footer": {
     "input_bar": {
-      "placeholder": "继续问 Claude...",
-      "right_button": "↑ 发送（橙色圆形按钮）"
+      "placeholder": "繼續問 Claude...",
+      "right_button": "↑ 傳送（橙色圓形按鈕）"
     },
     "tools_row": [
       "📎 附件",
-      "🌐 网页",
-      "🐍 代码",
-      "🖼 图像",
-      "🧠 项目"
+      "🌐 網頁",
+      "🐍 程式碼",
+      "🖼 影象",
+      "🧠 專案"
     ]
   },
   "style": {
-    "rendering": "Claude 桌面应用浅色模式，米色 #FAF9F5 底 + Anthropic 橙色品牌色，信息层级清晰",
-    "aspect_ratio": "16:10 桌面截图比例",
-    "celebrity_likeness": "用户头像与昵称对应 Elon Musk，但 Claude 输出文本中已用代号化 (the Apple guy / the GPU guy 等) 体现脱敏处理"
+    "rendering": "Claude 桌面應用淺色模式，米色 #FAF9F5 底 + Anthropic 橙色品牌色，資訊層級清晰",
+    "aspect_ratio": "16:10 桌面截圖比例",
+    "celebrity_likeness": "使用者頭像與暱稱對應 Elon Musk，但 Claude 輸出文字中已用代號化 (the Apple guy / the GPU guy 等) 體現脫敏處理"
   },
   "constraints": {
-    "must_feel": "像真实 Elon Musk 用 Claude 写推文的产品截图，而不是设计稿或概念图",
+    "must_feel": "像真實 Elon Musk 用 Claude 寫推文的產品截圖，而不是設計稿或概念圖",
     "must_keep": [
-      "顶部模型标签 'Claude Opus 4.7' 可见",
-      "侧边栏当前对话标题 '硅谷周报草稿 - 4/26' 高亮",
-      "用户名字 'Elon Musk' 与对应头像出现在底部用户卡片",
-      "结构化回答带 emoji + 排序，整洁可读",
-      "推文 preview 看起来真的像 ≤ 280 字符"
+      "頂部模型標籤 'Claude Opus 4.7' 可見",
+      "側邊欄當前對話標題 '矽谷週報草稿 - 4/26' 高亮",
+      "使用者名稱字 'Elon Musk' 與對應頭像出現在底部使用者卡片",
+      "結構化回答帶 emoji + 排序，整潔可讀",
+      "推文 preview 看起來真的像 ≤ 280 字元"
     ],
     "avoid": [
-      "出现 ChatGPT 绿色 / 紫色或 Gemini 蓝紫色品牌元素",
-      "模型名拼写错误（Claude / Opus / Anthropic 严禁出现错别字）",
-      "代码块预览不可读或乱码",
-      "在助手回答里使用任何具名 CEO 真名（必须代号化）",
-      "Elon Musk 头像出现明显 AI 变形 artifact"
+      "出現 ChatGPT 綠色 / 紫色或 Gemini 藍紫色品牌元素",
+      "模型名拼寫錯誤（Claude / Opus / Anthropic 嚴禁出現錯別字）",
+      "程式碼塊預覽不可讀或亂碼",
+      "在助手回答裡使用任何具名 CEO 真名（必須代號化）",
+      "Elon Musk 頭像出現明顯 AI 變形 artifact"
     ]
   }
 }

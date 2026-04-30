@@ -19,15 +19,15 @@ const MODES = [
       <>
         <code>ENABLE_GARDEN_IMAGEGEN=1</code>
         <span className="and">AND</span>
-        <code>OPENAI_API_KEY</code>
+        <code>Playwright / OpenCLI</code>
       </>
     ),
-    body: '完整跑通 选模板 → 渲染 prompt → 调脚本 → 出图落盘。Skill 是真正的图像工具持有者。',
+    body: '完整跑通 選模板 → 渲染 prompt → 調自動化指令碼（無 API Key，由 Playwright 自動操作瀏覽器抓取） → 出圖落盤。',
     flow: [
       'scripts/check-mode.js',
       'references/<cat>/<tpl>.md',
-      'scripts/generate.js · scripts/edit.js',
-      'garden-gpt-image-2/image/*.png',
+      'npm run auto:single:pw',
+      'public/case/<cat>/<tpl>/*.png',
     ],
   },
   {
@@ -37,37 +37,37 @@ const MODES = [
     trigger: (
       <>
         <code>ENABLE_GARDEN_IMAGEGEN</code>
-        <span className="and">未启用</span>
+        <span className="and">未啟用</span>
         <span>·</span>
-        <span>宿主自带 image_generation</span>
+        <span>宿主自帶 image_generation</span>
       </>
     ),
-    body: '本 Skill 退化成提示词工程指引；最终 prompt 交给 ChatGPT / Codex / Gemini / Cursor 等宿主自己的 image 工具。',
+    body: '本 Skill 退化成提示詞工程指引；最終 prompt 交給 ChatGPT / Codex / Gemini / Cursor 等宿主自己的 image 工具。',
     flow: [
       'scripts/check-mode.js',
       'references/<cat>/<tpl>.md',
       '宿主 image_generation()',
-      '由宿主决定保存位置',
+      '由宿主決定儲存位置',
     ],
   },
   {
     tag: 'C',
-    name: 'Advisor 顾问',
+    name: 'Advisor 顧問',
     eyebrow: 'PROMPT ONLY',
     trigger: (
       <>
         <code>ENABLE_GARDEN_IMAGEGEN</code>
-        <span className="and">未启用</span>
+        <span className="and">未啟用</span>
         <span>·</span>
-        <span>宿主无图像工具</span>
+        <span>宿主無影象工具</span>
       </>
     ),
-    body: '退化成 prompt 顾问。最终 prompt 写好后，交给用户在 ChatGPT / Midjourney / DALL·E / Sora / Nano Banana 等任意工具中执行。',
+    body: '退化成 prompt 顧問。最終 prompt 寫好後，交給使用者在 ChatGPT / Midjourney / DALL·E / Sora / Nano Banana 等任意工具中執行。',
     flow: [
       'scripts/check-mode.js',
       'references/<cat>/<tpl>.md',
-      '渲染后的 prompt（保存 + 展示）',
-      '由用户拿去执行',
+      '渲染後的 prompt（儲存 + 展示）',
+      '由使用者拿去執行',
     ],
   },
 ];
@@ -75,38 +75,38 @@ const MODES = [
 const STEPS = [
   {
     n: '01',
-    title: '探测运行模式',
-    body: '任何任务的第一步：跑 check-mode.js，得到 A / B / C，决定后续走哪条分支。',
+    title: '探測執行模式',
+    body: '任何任務的第一步：跑 check-mode.js，得到 A / B / C，決定後續走哪條分支。',
     code: 'node skills/gpt-image-2/scripts/check-mode.js --json',
   },
   {
     n: '02',
-    title: '识别视觉类型',
-    body: '判断任务属于 18 个分类中的哪一个（海报 / UI / 产品 / 学术图 / 信息图 / 编辑工作流 …）。',
+    title: '識別視覺型別',
+    body: '判斷任務屬於 18 個分類中的哪一個（海報 / UI / 產品 / 學術圖 / 資訊圖 / 編輯工作流 …）。',
     code: null,
   },
   {
     n: '03',
-    title: '只读最近的一份模板',
-    body: '从 references/ 中按 <category>/<template>.md 的层级，仅打开当前任务最贴近的那一份模板。',
+    title: '只讀最近的一份模板',
+    body: '從 references/ 中按 <category>/<template>.md 的層級，僅開啟當前任務最貼近的那一份模板。',
     code: 'references/poster-and-campaigns/banner-hero.md',
   },
   {
     n: '04',
-    title: '把用户输入映射到字段',
-    body: 'JSON 模板里 {argument …} 是可填空位；用户给了什么填什么，default 可兜底，关键信息缺失时才发起精确询问。',
+    title: '把使用者輸入對映到欄位',
+    body: 'JSON 模板裡 {argument …} 是可填空位；使用者給了什麼填什麼，default 可兜底，關鍵資訊缺失時才發起精確詢問。',
     code: null,
   },
   {
     n: '05',
-    title: '渲染最终 prompt',
-    body: '拍平 JSON 或保留结构化自然语言段落（部分 hand-drawn / scientific 模板），输出可直接喂给图像模型的字符串。',
+    title: '渲染最終 prompt',
+    body: '拍平 JSON 或保留結構化自然語言段落（部分 hand-drawn / scientific 模板），輸出可直接餵給影象模型的字串。',
     code: null,
   },
   {
     n: '06',
-    title: '按模式分叉执行',
-    body: 'Mode A 调脚本出图、Mode B 调宿主工具、Mode C 把 prompt 给用户。一句话总结：当前模式 / prompt 落点 / 图片落点。',
+    title: '按模式分叉執行',
+    body: 'Mode A 調指令碼出圖、Mode B 調宿主工具、Mode C 把 prompt 給使用者。一句話總結：當前模式 / prompt 落點 / 圖片落點。',
     code: null,
   },
 ];
@@ -114,23 +114,23 @@ const STEPS = [
 const CONSTRAINTS = [
   {
     eyebrow: '保持',
-    title: '严格按模板格式渲染',
-    body: 'JSON 模板就按 JSON 输出；结构化自然语言模板按段落输出。不要把 SKILL.md 里的"模式说明"塞进最终 prompt——那是给 Agent 看的元信息。',
+    title: '嚴格按模板格式渲染',
+    body: 'JSON 模板就按 JSON 輸出；結構化自然語言模板按段落輸出。不要把 SKILL.md 裡的"模式說明"塞進最終 prompt——那是給 Agent 看的元資訊。',
   },
   {
     eyebrow: '禁止',
-    title: '虚构定量数据',
-    body: '学术配图 / 技术图示中，数值、坐标轴、等值线、色标范围、公式必须真实，没有数据就直接交白图、不杜撰。',
+    title: '虛構定量資料',
+    body: '學術配圖 / 技術圖示中，數值、座標軸、等值線、色標範圍、公式必須真實，沒有資料就直接交白圖、不杜撰。',
   },
   {
-    eyebrow: '推荐',
-    title: '只读取最近的一份模板',
-    body: '不要一次性读整个 references/。按 <category>/<template>.md 的两级层级，只打开当前任务最贴近的那一份。',
+    eyebrow: '推薦',
+    title: '只讀取最近的一份模板',
+    body: '不要一次性讀整個 references/。按 <category>/<template>.md 的兩級層級，只開啟當前任務最貼近的那一份。',
   },
   {
-    eyebrow: '推荐',
-    title: 'Prompt 永远落盘',
-    body: 'A 必须、B 推荐、C 必须，命名形如 garden-gpt-image-2/prompt/<task-slug>-<YYYYMMDD-HHMMSS>.md，方便复用与版本管理。',
+    eyebrow: '推薦',
+    title: 'Prompt 永遠落盤',
+    body: 'A 必須、B 推薦、C 必須，命名形如 garden-gpt-image-2/prompt/<task-slug>-<YYYYMMDD-HHMMSS>.md，方便複用與版本管理。',
   },
 ];
 
@@ -145,9 +145,9 @@ export function SkillsPage({ navigate }: Props) {
   }, []);
 
   const tplsByCat = useMemo(() => {
-    const map: Record<string, string[]> = {};
+    const map: Record<string, { label: string; key: string }[]> = {};
     for (const t of Object.values(cases.templates)) {
-      (map[t.category] ||= []).push(t.label);
+      (map[t.category] ||= []).push({ label: t.label, key: t.key });
     }
     return map;
   }, []);
@@ -195,11 +195,11 @@ export function SkillsPage({ navigate }: Props) {
         </h1>
 
         <p className="sp-hero-lede">
-          这是一个面向 GPT‑Image‑2 的<strong>聚焦型</strong>技能。它只做两件事——
-          生成 (<code className="mono">/images/generations</code>) 和编辑
+          這是一個面向 GPT‑Image‑2 的<strong>聚焦型</strong>技能。它只做兩件事——
+          生成 (<code className="mono">/images/generations</code>) 和編輯
           (<code className="mono">/images/edits</code>)；
-          但能在 Garden 本地、Host‑Native 委托、Advisor 顾问 三种环境下自适应地工作，
-          并把 {Object.keys(cases.categories).length} 大类、{cases.summary.templates}+ 个结构化模板沉淀到 <code className="mono">references/</code> 里。
+          但能在 Garden 本地、Host‑Native 委託、Advisor 顧問 三種環境下自適應地工作，
+          並把 {Object.keys(cases.categories).length} 大類、{cases.summary.templates}+ 個結構化模板沉澱到 <code className="mono">references/</code> 裡。
         </p>
 
         <dl className="sp-hero-stats">
@@ -224,8 +224,8 @@ export function SkillsPage({ navigate }: Props) {
         <div className="sp-hero-divider" />
 
         <p className="sp-hero-quote serif-italic">
-          “最终交给图像模型的，永远是渲染后的 prompt 字符串本身——
-          可以是拍平的 JSON，也可以是结构化自然语言段落。”
+          “最終交給影象模型的，永遠是渲染後的 prompt 字串本身——
+          可以是拍平的 JSON，也可以是結構化自然語言段落。”
         </p>
       </header>
 
@@ -233,10 +233,10 @@ export function SkillsPage({ navigate }: Props) {
       <section className="sp-section sp-modes">
         <div className="sp-section-head">
           <span className="eyebrow">01 · RUNTIME MODES</span>
-          <h2 className="serif sp-section-title">第一步永远是 check‑mode.js</h2>
+          <h2 className="serif sp-section-title">第一步永遠是 check‑mode.js</h2>
           <p className="sp-section-sub">
-            同一份 Skill，在三种环境下行为差异显著。模式由两个环境变量与宿主能力共同决定，
-            check‑mode.js 给出 <code className="mono">mode = A / A? / B-or-C</code> 与建议下一步。
+            同一份 Skill，在三種環境下行為差異顯著。模式由兩個環境變數與宿主能力共同決定，
+            check‑mode.js 給出 <code className="mono">mode = A / A? / B-or-C</code> 與建議下一步。
           </p>
         </div>
 
@@ -279,6 +279,15 @@ export function SkillsPage({ navigate }: Props) {
                   </li>
                 ))}
               </ol>
+              {m.tag === 'C' && (
+                <button 
+                  className="sp-mode-card-try-it-btn"
+                  onClick={() => navigate({ name: 'promptStudio' })}
+                >
+                  <span>立即試用 Prompt Studio</span>
+                  <span className="btn-arrow" aria-hidden="true">→</span>
+                </button>
+              )}
             </article>
           ))}
         </div>
@@ -290,8 +299,8 @@ export function SkillsPage({ navigate }: Props) {
           <span className="eyebrow">02 · WORKFLOW</span>
           <h2 className="serif sp-section-title">六步通用 · 第七步分叉</h2>
           <p className="sp-section-sub">
-            无论 A / B / C，前 6 步完全一致；区别只在第 7‑8 步如何把渲染好的 prompt
-            送进图像模型，以及落盘到哪里。
+            無論 A / B / C，前 6 步完全一致；區別只在第 7‑8 步如何把渲染好的 prompt
+            送進影象模型，以及落盤到哪裡。
           </p>
         </div>
 
@@ -316,23 +325,23 @@ export function SkillsPage({ navigate }: Props) {
         <div className="sp-fork">
           <div className="sp-fork-head">
             <span className="eyebrow">FORK · STEP 07</span>
-            <h3 className="serif sp-fork-title">prompt 渲染好之后，按模式分发</h3>
+            <h3 className="serif sp-fork-title">prompt 渲染好之後，按模式分發</h3>
           </div>
           <div className="sp-fork-grid">
             <div className="sp-fork-cell">
               <span className="mono sp-fork-tag">07‑A</span>
-              <h4 className="serif sp-fork-name">保存 + 调脚本</h4>
-              <p>把最终 prompt 保存到 <code className="mono">prompt/</code>，调 <code className="mono">generate.js</code> / <code className="mono">edit.js</code>，图片落到 <code className="mono">image/</code>。</p>
+              <h4 className="serif sp-fork-name">儲存 + 調指令碼</h4>
+              <p>把最終 prompt 儲存到 <code className="mono">prompt/</code>，調 <code className="mono">generate.js</code> / <code className="mono">edit.js</code>，圖片落到 <code className="mono">image/</code>。</p>
             </div>
             <div className="sp-fork-cell">
               <span className="mono sp-fork-tag">07‑B</span>
-              <h4 className="serif sp-fork-name">交给宿主工具</h4>
-              <p>不要调 <code className="mono">generate.js</code>（必失败）。直接把 prompt 喂进宿主自带的 <code className="mono">image_generation</code> 类工具。</p>
+              <h4 className="serif sp-fork-name">交給宿主工具</h4>
+              <p>不要調 <code className="mono">generate.js</code>（必失敗）。直接把 prompt 喂進宿主自帶的 <code className="mono">image_generation</code> 類工具。</p>
             </div>
             <div className="sp-fork-cell">
               <span className="mono sp-fork-tag">07‑C</span>
-              <h4 className="serif sp-fork-name">写给用户</h4>
-              <p>必须保存 prompt 到 <code className="mono">prompt/</code> 并在对话中完整展示，附一句"如何使用 / 推荐工具"。</p>
+              <h4 className="serif sp-fork-name">寫給使用者</h4>
+              <p>必須儲存 prompt 到 <code className="mono">prompt/</code> 並在對話中完整展示，附一句"如何使用 / 推薦工具"。</p>
             </div>
           </div>
         </div>
@@ -343,11 +352,11 @@ export function SkillsPage({ navigate }: Props) {
         <div className="sp-section-head">
           <span className="eyebrow">03 · TEMPLATE INDEX</span>
           <h2 className="serif sp-section-title">
-            {Object.keys(cases.categories).length} 个分类 · {cases.summary.templates} 个结构化模板
+            {Object.keys(cases.categories).length} 個分類 · {cases.summary.templates} 個結構化模板
           </h2>
           <p className="sp-section-sub">
-            每个模板都是一份 Markdown 文件，里面定义了 JSON / 结构化自然语言模板、
-            参数表、变体说明、典型案例。点任意模板可以跳到使用了它的图集。
+            每個模板都是一份 Markdown 檔案，裡面定義了 JSON / 結構化自然語言模板、
+            引數列、變體說明、典型案例。點任意模板可以跳到使用了它的圖集。
           </p>
         </div>
 
@@ -378,9 +387,16 @@ export function SkillsPage({ navigate }: Props) {
                 </header>
                 <ul className="sp-cat-tpls">
                   {tpls.map((t) => (
-                    <li key={t} className="sp-cat-tpl">
+                    <li key={t.key} className="sp-cat-tpl">
                       <span className="sp-cat-tpl-bullet" />
-                      {t}
+                      <span className="sp-cat-tpl-label">{t.label}</span>
+                      <button 
+                        className="sp-cat-tpl-wb" 
+                        onClick={() => navigate({ name: 'workbench', templateId: t.key })}
+                        title="在工作台中開啟"
+                      >
+                        🛠️
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -394,7 +410,7 @@ export function SkillsPage({ navigate }: Props) {
       <section className="sp-section sp-rules">
         <div className="sp-section-head">
           <span className="eyebrow">04 · GUARDRAILS</span>
-          <h2 className="serif sp-section-title">让 Skill 始终保持稳定的几条硬约束</h2>
+          <h2 className="serif sp-section-title">讓 Skill 始終保持穩定的幾條硬約束</h2>
         </div>
         <div className="sp-rules-grid">
           {CONSTRAINTS.map((c, i) => (
@@ -411,10 +427,10 @@ export function SkillsPage({ navigate }: Props) {
       <section className="sp-cta">
         <div className="sp-cta-text">
           <h3 className="serif sp-cta-title">
-            准备好了？回去看 <span className="serif-italic">{cases.summary.cases} 张</span> 已经跑通的图。
+            準備好了？回去看 <span className="serif-italic">{cases.summary.cases} 張</span> 已經跑通的圖。
           </h3>
           <p className="sp-cta-sub">
-            想自己跑这个 Skill？源码 / 模板 / 三种运行模式都开源在 <code className="mono">ConardLi/garden-skills</code>。
+            想自己跑這個 Skill？原始碼 / 模板 / 三種執行模式都開源在 <code className="mono">ConardLi/garden-skills</code>。
           </p>
         </div>
         <div className="sp-cta-actions">
@@ -422,7 +438,7 @@ export function SkillsPage({ navigate }: Props) {
             className="sp-cta-btn"
             onClick={() => navigate({ name: 'home' })}
           >
-            <span>浏览图集</span>
+            <span>瀏覽圖集</span>
             <span className="sp-cta-btn-arrow" aria-hidden="true">→</span>
           </button>
           <a

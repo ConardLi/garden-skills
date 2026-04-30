@@ -1,6 +1,6 @@
 {
-  "type": "左右双栏研究总览（研究内容 + 时间表）",
-  "goal": "生成一张博士中期答辩首页用的研究总览图，左侧展示 4 个研究内容模块，右侧展示按学期划分的进度路线，主题为多模态大模型辅助医疗影像诊断，要求正式克制、白底、工程化配色",
+  "type": "左右雙欄研究總覽（研究內容 + 時間表）",
+  "goal": "生成一張博士中期答辯首頁用的研究總覽圖，左側展示 4 個研究內容模組，右側展示按學期劃分的進度路線，主題為多模態大模型輔助醫療影像診斷，要求正式剋制、白底、工程化配色",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "pure white #FFFFFF",
@@ -9,19 +9,19 @@
   },
   "title_block": {
     "main_title": "Multimodal Foundation Models for Clinical Imaging Diagnosis",
-    "subtitle": "面向临床影像诊断的多模态大模型",
-    "occasion_label": "博士学位论文中期答辩",
+    "subtitle": "面向臨床影像診斷的多模態大模型",
+    "occasion_label": "博士學位論文中期答辯",
     "position": "top-center, main_title in bold sans-serif 22pt, subtitle in regular 13pt below in gray, occasion_label in italic gray 10pt at top-right"
   },
   "background_section": {
     "label": "Background & Problem",
-    "summary": "现有医疗影像诊断系统多为单模态、专科专用，难以适配多模态场景与长尾病种",
-    "key_question": "如何在多模态影像-文本-报告联合表征下，实现可解释、可信的辅助诊断？",
+    "summary": "現有醫療影像診斷系統多為單模態、專科專用，難以適配多模態場景與長尾病種",
+    "key_question": "如何在多模態影像-文字-報告聯合表徵下，實現可解釋、可信的輔助診斷？",
     "position": "compact strip across the upper band, full width"
   },
   "objective_section": {
     "label": "Objective",
-    "summary": "构建跨模态、跨任务的医疗影像基础模型，并形成临床可用诊断辅助方案",
+    "summary": "構建跨模態、跨任務的醫療影像基礎模型，並形成臨床可用診斷輔助方案",
     "position": "compact strip directly below background, centered, narrower than background"
   },
   "research_modules": {
@@ -30,25 +30,25 @@
       {
         "id": "RM1",
         "name": "Data & Pretraining",
-        "summary": "构建影像-报告大规模配对语料并完成跨模态预训练",
+        "summary": "構建影像-報告大規模配對語料並完成跨模態預訓練",
         "method_hint": "CT / MRI / X-ray + report alignment"
       },
       {
         "id": "RM2",
         "name": "Diagnostic Tasks",
-        "summary": "针对病灶检测、报告生成、鉴别诊断等任务进行下游适配",
+        "summary": "針對病灶檢測、報告生成、鑑別診斷等任務進行下游適配",
         "method_hint": "instruction tuning + LoRA"
       },
       {
         "id": "RM3",
         "name": "Reliability",
-        "summary": "研究幻觉缓解、不确定性表征与可解释证据链",
+        "summary": "研究幻覺緩解、不確定性表徵與可解釋證據鏈",
         "method_hint": "evidence alignment + calibration"
       },
       {
         "id": "RM4",
         "name": "Clinical Validation",
-        "summary": "联合医院在真实门诊与急诊场景完成可控临床试用",
+        "summary": "聯合醫院在真實門診與急診場景完成可控臨床試用",
         "method_hint": "multi-center retrospective + prospective trial"
       }
     ],
@@ -56,7 +56,7 @@
   },
   "expected_outcome_section": {
     "label": "Expected Outcomes",
-    "items": "多模态医疗影像基础模型权重、面向 5 类临床任务的诊断辅助系统、可解释证据链评估方法学",
+    "items": "多模態醫療影像基礎模型權重、面向 5 類臨床任務的診斷輔助系統、可解釋證據鏈評估方法學",
     "position": "below the left column, full-left-column width, visually distinct from research_modules but stylistically consistent"
   },
   "module_block_style": {

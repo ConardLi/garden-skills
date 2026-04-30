@@ -50,7 +50,7 @@ export function Header({ route, navigate }: Props) {
               }, 50);
             }}
           >
-            概览
+            概覽
           </button>
           <button
             className="hdr-link"
@@ -63,7 +63,7 @@ export function Header({ route, navigate }: Props) {
               }, 60);
             }}
           >
-            图集
+            圖集
           </button>
           <button
             className={`hdr-link ${route.name === 'skills' ? 'hdr-link-active' : ''}`}

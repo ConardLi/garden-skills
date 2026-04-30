@@ -1,65 +1,65 @@
 {
-  "type": "Y2K 水晶图标包",
-  "goal": "8 个图标，2 行 4 列，统一为透明水晶 + 折射与内部气泡感，服务音乐与播客类桌面小组件或封面拼贴",
-  "theme": "电子音乐与耳机文化",
+  "type": "Y2K 水晶圖示包",
+  "goal": "8 個圖示，2 行 4 列，統一為透明水晶 + 折射與內部氣泡感，服務音樂與播客類桌面小元件或封面拼貼",
+  "theme": "電子音樂與耳機文化",
   "style": {
-    "rendering": "透明玻璃+强烈菲涅尔边光+小彩虹折射斑",
-    "material": "水晶主体 + 镀铬薄圈 + 内部悬浮音符几何",
-    "color_palette": "高饱和品红#FF2D95 + 电青#00C8FF + 银白高光",
-    "shape_base": "超椭圆或圆角方，内图标可略凸透镜鼓包"
+    "rendering": "透明玻璃+強烈菲涅爾邊光+小彩虹折射斑",
+    "material": "水晶主體 + 鍍鉻薄圈 + 內部懸浮音符幾何",
+    "color_palette": "高飽和品紅#FF2D95 + 電青#00C8FF + 銀白高光",
+    "shape_base": "超橢圓或圓角方，內圖示可略凸透鏡鼓包"
   },
   "layout": {
     "grid": "2x4",
     "icon_count": 8,
     "spacing": "20px",
-    "background": "径向深紫到黑的 glossy 底，带轻微星尘颗粒",
+    "background": "徑向深紫到黑的 glossy 底，帶輕微星塵顆粒",
     "label_below": true,
-    "label_style": "细白 8pt 全大写无衬线，下发光"
+    "label_style": "細白 8pt 全大寫無襯線，下發光"
   },
   "icons": [
     {
       "id": 1,
-      "concept": "水晶耳机罩交叉",
+      "concept": "水晶耳機罩交叉",
       "label": "AUX"
     },
     {
       "id": 2,
-      "concept": "五线谱折线穿过水晶心",
+      "concept": "五線譜折線穿過水晶心",
       "label": "WAVE"
     },
     {
       "id": 3,
-      "concept": "播放三角浮雕在玻璃圆柱体顶",
+      "concept": "播放三角浮雕在玻璃圓柱體頂",
       "label": "PLAY"
     },
     {
       "id": 4,
-      "concept": "麦克风头网水晶球",
+      "concept": "麥克風頭網水晶球",
       "label": "MIC"
     },
     {
       "id": 5,
-      "concept": "黑胶外圈与内标水晶双层",
+      "concept": "黑膠外圈與內標水晶雙層",
       "label": "VINYL"
     },
     {
       "id": 6,
-      "concept": "合成器滑条与发光旋钮",
+      "concept": "合成器滑條與發光旋鈕",
       "label": "SYNTH"
     },
     {
       "id": 7,
-      "concept": "音叉与波纹干涉条纹",
+      "concept": "音叉與波紋干涉條紋",
       "label": "TUNE"
     },
     {
       "id": 8,
-      "concept": "立方体里悬浮八分音符",
+      "concept": "立方體裡懸浮八分音符",
       "label": "NOTE"
     }
   ],
   "constraints": {
-    "must_feel": "整体像 2000 年代中期多媒体皮肤宣传图，不混入 Metro 风扁平块",
-    "avoid": "文字描边过粗、水晶内部元素超过主形三层深度"
+    "must_feel": "整體像 2000 年代中期多媒體皮膚宣傳圖，不混入 Metro 風扁平塊",
+    "avoid": "文字描邊過粗、水晶內部元素超過主形三層深度"
   }
 }

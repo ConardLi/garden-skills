@@ -1,0 +1,165 @@
+{
+  "cookies": [
+    {
+      "name": "__Host-next-auth.csrf-token",
+      "value": "f070351b1bea4fd33dc0f55535d9a276e0fdd68f30c3ef8f091a3df3b65cf8f5%7Cc53835417b787310c63f0d8d72457418ee42765b03ea10353892cafa9da76fe3",
+      "domain": "chatgpt.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__Secure-next-auth.callback-url",
+      "value": "https%3A%2F%2Fchatgpt.com",
+      "domain": "chatgpt.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "oai-did",
+      "value": "048e19ee-7032-4677-9eca-c755cb783b93",
+      "domain": ".chatgpt.com",
+      "path": "/",
+      "expires": 1808642156.304357,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "oai-chat-web-route",
+      "value": "\"ChIxMC4xMzAuNTMuMjQ0OjMwMDAQ2eFM\"",
+      "domain": "chatgpt.com",
+      "path": "/",
+      "expires": 1778142956.30438,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__cflb",
+      "value": "04dTofELUVCxHqRn2XeT2wwLNeTKJAKg88JBhGdcaf",
+      "domain": "chatgpt.com",
+      "path": "/",
+      "expires": 1777541756.304459,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "jyJTktZuodaYYyd7ZpFsaKPkdIe0BdCMFd3dSy8.t48-1777538160.1211195-1.0.1.1-CsQk0thdJGaziRU6hOHKiNrus0ctLQozxfctnqNljkc",
+      "domain": ".chatgpt.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "cf_clearance",
+      "value": "gw3_by_Lu34EWKEq_coKxiblxnqjrSgsI3EiweGP59Y-1777538161-1.2.1.1-Zz0O7wX2c18bbvbU8pGHtgW5hbcv_tTgU7vGGXOc4F.xXxV2gr14Q9mOE8Meph12KPhroNaexlrbZWQTiab6osjQh_tVCSrrodm5ZFYOaOa0t9T1bmW578JehKrB6UbboMZ27r3AUCWNexjBn0OxHa2YtElPq6SWnnOoKVikQuo7Cxia3rdH.YgpCJXlJ_7ZpjEmbnDNRHi2EkhN8ae_iZLrgeBzdupJnw0I5Qcu4JjGrLuaKynV4tJwo3ZSuIcGU6Ma_Pg2mEJgOaC.pP2zc5aocNupMnzVgSzGt2c._Y5FRElBj_bNIQeEK48hdGhmz_BDadExFUXiSwyuSw0HuA",
+      "domain": ".chatgpt.com",
+      "path": "/",
+      "expires": 1809074157.748723,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://chatgpt.com",
+      "_crHasCrossSiteAncestor": false
+    },
+    {
+      "name": "__cf_bm",
+      "value": "QKU_LdZYmkxADEULUCgJ5NHrXkpSMSfhOQ44p9W.D6Y-1777538161.8316085-1.0.1.1-J76F5zug7qyUX1dlEu5UyagdY5xNfDVWELLClJ_WH4mrFmepnBZTAIOqxoQuJoM4MrEi0OSgeY4jnSOeo_33NkXj8PoeqH8MEdss1pVNeWvnq_vnJFFk8nsSqMt9Q_eX",
+      "domain": ".chatgpt.com",
+      "path": "/",
+      "expires": 1777539957.74943,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "oai-asli",
+      "value": "c26d2479-4b13-424f-a931-97c196b39dfb",
+      "domain": "chatgpt.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_dd_s",
+      "value": "aid=e0ce49ca-3c18-4cf9-a8ae-2cd994233b40&rum=0&expire=1777539058814&logs=1&id=8e93f616-44ca-4fb2-9e3c-511a8f3102fc&created=1777538157793",
+      "domain": "chatgpt.com",
+      "path": "/",
+      "expires": 1809074158,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://chatgpt.com",
+      "localStorage": [
+        {
+          "name": "oai-did",
+          "value": "\"048e19ee-7032-4677-9eca-c755cb783b93\""
+        },
+        {
+          "name": "oai/apps/capExpiresAt",
+          "value": "{\"state\":{\"isoDate\":\"\"},\"version\":0}"
+        },
+        {
+          "name": "statsig.session_id.1792610830",
+          "value": "{\"sessionID\":\"21d91acf-2aae-43f5-aa51-8f6660a48ea5\",\"startTime\":1777538157754,\"lastUpdate\":1777538157754}"
+        },
+        {
+          "name": "oai/apps/hasSeenNoAuthImagegenNux",
+          "value": "false"
+        },
+        {
+          "name": "oai/apps/lastPageLoadDate",
+          "value": "\"2026-04-30T08:35:58.352Z\""
+        },
+        {
+          "name": "client-correlated-secret",
+          "value": "{\"alg\":\"HS512\",\"ext\":true,\"k\":\"UR-0vuFypi9B1ptHN6qee0JEhQ40LDRshzrUpFysSAXVOsI0m6AynULQGkrJOCinvYRojCy5S_dmdGxT7NzSJEKQYBLH5jIkyjVQoTS8ZzvGimhLXsrA4Lp-clJUbUd1MABCSsnmgcBTzovhsnG5J6-Qiyoc1gjy1b7m5yZXAV8\",\"key_ops\":[\"sign\",\"verify\"],\"kty\":\"oct\"}"
+        },
+        {
+          "name": "statsig.stable_id.1792610830",
+          "value": "\"048e19ee-7032-4677-9eca-c755cb783b93\""
+        },
+        {
+          "name": "oai/apps/lastUtmCampaign",
+          "value": "\"\""
+        },
+        {
+          "name": "oai/apps/debugSettings",
+          "value": "{\"state\":{\"fConversationEndpoint\":\"default\",\"jsonViewerFilters\":{},\"recordRendering\":false,\"recordTransformedConvoJson\":false,\"showDebugConversationTurns\":false,\"showPerformanceOverlay\":false},\"version\":0}"
+        },
+        {
+          "name": "oai/apps/subscriptionFailedBanner",
+          "value": "null"
+        },
+        {
+          "name": "oai/apps/tatertotInContextUpsellBannerV2",
+          "value": "null"
+        },
+        {
+          "name": "search.attributions-settings",
+          "value": "{\"state\":{\"debugMode\":false,\"viewModelPredictedFallback\":false,\"disableSegmentReplacement\":false,\"useSigmoid\":true,\"influenceTemperature\":0.2,\"probThreshold\":0.45,\"probBaseline\":0.02},\"version\":8}"
+        },
+        {
+          "name": "oai/apps/connectorInContextUpsellBannerV1",
+          "value": "null"
+        }
+      ]
+    }
+  ]
+}

@@ -1,48 +1,48 @@
 {
-  "type": "化妆品系列套装",
-  "goal": "生成 4:5 竖版，四件包装系统统一，可单独上详情页分切",
+  "type": "化妝品系列套裝",
+  "goal": "生成 4:5 豎版，四件包裝系統統一，可單獨上詳情頁分切",
   "brand": {
-    "name": "锋序 EDGE ORDER",
-    "positioning": "专业男士理容、无性别营销花词"
+    "name": "鋒序 EDGE ORDER",
+    "positioning": "專業男士理容、無性別營銷花詞"
   },
   "product": {
-    "name": "四步晨理套装",
+    "name": "四步晨理套裝",
     "subtitle": "CLEANSE · LATHER · SHAVE · CALM",
-    "volume": "洁面膏 100g 软管 + 须泡 150ml 压力罐 + 须后水 100ml 细雾瓶 + 直柄三片刀 + 皮套",
-    "form": "全系列同直径圆柱家族感，高矮错落；刀柄拉丝不锈钢与深蓝树脂拼接",
-    "key_ingredient": "低刺激甜菜碱表活 + 薄荷乳酸须后复配"
+    "volume": "潔面膏 100g 軟管 + 須泡 150ml 壓力罐 + 鬚後水 100ml 細霧瓶 + 直柄三片刀 + 皮套",
+    "form": "全系列同直徑圓柱家族感，高矮錯落；刀柄拉絲不鏽鋼與深藍樹脂拼接",
+    "key_ingredient": "低刺激甜菜鹼表活 + 薄荷乳酸須後復配"
   },
   "design": {
-    "bottle_material": "雾面 PETG 与金属铝罐混搭，外盒为海军蓝细条纹纸",
-    "label_material": "白底大标题 + 细横线分栏，烫银小字",
-    "primary_color": "#0A1628 海军靛",
-    "accent_color": "拉丝银 + 白字",
-    "typography": "类似 DIN 的窄无衬线数字 + 中文黑体",
-    "consistency_rule": "四件同一 logo 高宽、同一行距与端盖色系"
+    "bottle_material": "霧面 PETG 與金屬鋁罐混搭，外盒為海軍藍細條紋紙",
+    "label_material": "白底大標題 + 細橫線分欄，燙銀小字",
+    "primary_color": "#0A1628 海軍靛",
+    "accent_color": "拉絲銀 + 白字",
+    "typography": "類似 DIN 的窄無襯線數字 + 中文黑體",
+    "consistency_rule": "四件同一 logo 高寬、同一行距與端蓋色系"
   },
   "outer_box": {
     "enabled": "true",
-    "shape": "长扁抽拉套盒，拉出一半可见内托 EVA 灰",
-    "finish": "击凸条纹 + 局部 UV 刀形剪影"
+    "shape": "長扁抽拉套盒，拉出一半可見內託 EVA 灰",
+    "finish": "擊凸條紋 + 區域性 UV 刀形剪影"
   },
   "scene": {
-    "background": "深灰微水泥台面，左侧一道冷色窗光硬边",
+    "background": "深灰微水泥檯面，左側一道冷色窗光硬邊",
     "props": "白毛巾一折、一枚水滴停在刀背上（CG 可）",
-    "lighting": "主光 45° 高侧、弱背轮廓光分离物体边缘"
+    "lighting": "主光 45° 高側、弱背輪廓光分離物體邊緣"
   },
   "format": {
     "aspect_ratio": "4:5",
-    "composition": "四件成轻微弧形排列、刀架略近镜头形成尺度对比"
+    "composition": "四件成輕微弧形排列、刀架略近鏡頭形成尺度對比"
   },
   "constraints": {
     "must_keep": [
-      "金属拉丝方向一致、避免乱高光花斑",
-      "同套字号阶梯一致、非随意缩放",
-      "压力罐与细雾瓶有法规感排版留白"
+      "金屬拉絲方向一致、避免亂高光花斑",
+      "同套字號階梯一致、非隨意縮放",
+      "壓力罐與細霧瓶有法規感排版留白"
     ],
     "avoid": [
-      "女性化花卉图形",
-      "色板出现嫩粉大色块"
+      "女性化花卉圖形",
+      "色板出現嫩粉大色塊"
     ]
   }
 }

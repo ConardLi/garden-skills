@@ -1,6 +1,6 @@
 {
-  "type": "神经网络架构图（neural network architecture diagram）",
-  "goal": "生成论文级别的 encoder-only Transformer 架构图：层级清晰、tensor shape 标注、残差可辨、可灰度印刷",
+  "type": "神經網路架構圖（neural network architecture diagram）",
+  "goal": "生成論文級別的 encoder-only Transformer 架構圖：層級清晰、tensor shape 標註、殘差可辨、可灰度印刷",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "white #FFFFFF",

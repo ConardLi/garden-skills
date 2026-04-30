@@ -1,13 +1,13 @@
 {
-  "type": "工程感流程图 / 决策图",
-  "goal": "生成 16:9 带泳道退款业务位图，用于财务与研发对齐",
+  "type": "工程感流程圖 / 決策圖",
+  "goal": "生成 16:9 帶泳道退款業務點陣圖，用於財務與研發對齊",
   "canvas": {
     "aspect_ratio": "16:9",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
     "outer_padding": "60px"
   },
   "title_strip": {
-    "title": "订单退款审核流程",
+    "title": "訂單退款稽核流程",
     "subtitle": "原路退 · 可部分退",
     "position": "top-left"
   },
@@ -18,73 +18,73 @@
       {
         "id": "S",
         "type": "start_end",
-        "label": "开始",
+        "label": "開始",
         "lane": "User"
       },
       {
         "id": "I1",
         "type": "io",
-        "label": "用户在订单详情点申请退款+原因码",
+        "label": "使用者在訂單詳情點申請退款+原因碼",
         "lane": "User"
       },
       {
         "id": "P1",
         "type": "process",
-        "label": "BFF 组装 refund_request DTO",
+        "label": "BFF 組裝 refund_request DTO",
         "lane": "Merchant BFF"
       },
       {
         "id": "D1",
         "type": "decision",
-        "label": "距签收 < 7d 且品类可退？",
+        "label": "距簽收 < 7d 且品類可退？",
         "lane": "order-service"
       },
       {
         "id": "P2",
         "type": "process",
-        "label": "写 refund_cases 表 PENDING",
+        "label": "寫 refund_cases 表 PENDING",
         "lane": "order-service"
       },
       {
         "id": "D2",
         "type": "decision",
-        "label": "申请额 ≤ 可退余额？",
+        "label": "申請額 ≤ 可退餘額？",
         "lane": "order-service"
       },
       {
         "id": "P3",
         "type": "process",
-        "label": "调用 payment-adapter 原路预检",
+        "label": "呼叫 payment-adapter 原路預檢",
         "lane": "payment-adapter"
       },
       {
         "id": "D3",
         "type": "decision",
-        "label": "微信 支付网关返回可退？",
+        "label": "微信 支付閘道器返回可退？",
         "lane": "payment-adapter"
       },
       {
         "id": "P4",
         "type": "process",
-        "label": "财务人工复核高风险 SKU",
+        "label": "財務人工複核高風險 SKU",
         "lane": "Finance"
       },
       {
         "id": "P5",
         "type": "process",
-        "label": "标记 APPROVED 并异步调用退款 API",
+        "label": "標記 APPROVED 並非同步呼叫退款 API",
         "lane": "payment-adapter"
       },
       {
         "id": "P6",
         "type": "process",
-        "label": "通知用户与写审计日志",
+        "label": "通知使用者與寫審計日誌",
         "lane": "Merchant BFF"
       },
       {
         "id": "E",
         "type": "start_end",
-        "label": "结束",
+        "label": "結束",
         "lane": "User"
       }
     ]
@@ -116,7 +116,7 @@
       {
         "from": "D1",
         "to": "E",
-        "label": "No (关闭)"
+        "label": "No (關閉)"
       },
       {
         "from": "D1",
@@ -149,7 +149,7 @@
       {
         "from": "D3",
         "to": "P5",
-        "label": "自动"
+        "label": "自動"
       },
       {
         "from": "P4",
@@ -176,8 +176,8 @@
   },
   "constraints": {
     "must_keep": [
-      "泳道竖列均分",
-      "微信 为对外支付品牌用语"
+      "泳道豎列均分",
+      "微信 為對外支付品牌用語"
     ],
     "avoid": [
       "decision 非菱形"

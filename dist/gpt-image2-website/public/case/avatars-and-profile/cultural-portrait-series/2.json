@@ -1,39 +1,39 @@
 {
-  "type": "神话角色系列肖像",
-  "goal": "生成单张 4×3 宫格，十二主神胸像或半身，每格下方英文神名 + 中文司职，美术馆展签式排版",
+  "type": "神話角色系列肖像",
+  "goal": "生成單張 4×3 宮格，十二主神胸像或半身，每格下方英文神名 + 中文司職，美術館展籤式排版",
   "theme": {
-    "mythology": "希腊神话奥林匹斯十二主神",
+    "mythology": "希臘神話奧林匹斯十二主神",
     "subject_count": 12
   },
   "style": {
-    "art_style": "17-18 世纪欧洲古典油画厚涂，暗背景提光人物",
-    "color_palette": "深蓝幕布+金边饰+暖棕肤色+少量红袍"
+    "art_style": "17-18 世紀歐洲古典油畫厚塗，暗背景提光人物",
+    "color_palette": "深藍幕布+金邊飾+暖棕膚色+少量紅袍"
   },
   "layout": {
     "format": "4x3 grid",
-    "background": "每格独立深褐或午夜蓝晕影，四边内框金线 1px 感",
+    "background": "每格獨立深褐或午夜藍暈影，四邊內框金線 1px 感",
     "panel_design": {
-      "label_content": "下行：英文神名（首字母大写）+ 中文短司职，例如「Zeus 天空与雷霆」「Hera 婚姻与家庭」"
+      "label_content": "下行：英文神名（首字母大寫）+ 中文短司職，例如「Zeus 天空與雷霆」「Hera 婚姻與家庭」"
     }
   },
   "subjects": {
     "user_list": [
-      "Zeus 宙斯 天空与雷霆",
-      "Hera 赫拉 婚姻与家庭",
-      "Poseidon 波塞冬 海洋与地震",
-      "Demeter 得墨忒耳 农业与丰产",
-      "Athena 雅典娜 智慧与战争",
-      "Apollo 阿波罗 光明与箭术",
-      "Artemis 阿尔忒弥斯 狩猎与月亮",
-      "Ares 阿瑞斯 战争",
-      "Aphrodite 阿佛洛狄忒 爱与美",
-      "Hephaestus 赫菲斯托斯 火与工匠",
-      "Hermes 赫尔墨斯 信使与旅者",
-      "Dionysus 狄俄尼索斯 酒与狂欢"
+      "Zeus 宙斯 天空與雷霆",
+      "Hera 赫拉 婚姻與家庭",
+      "Poseidon 波塞冬 海洋與地震",
+      "Demeter 得墨忒耳 農業與豐產",
+      "Athena 雅典娜 智慧與戰爭",
+      "Apollo 阿波羅 光明與箭術",
+      "Artemis 阿爾忒彌斯 狩獵與月亮",
+      "Ares 阿瑞斯 戰爭",
+      "Aphrodite 阿佛洛狄忒 愛與美",
+      "Hephaestus 赫菲斯托斯 火與工匠",
+      "Hermes 赫爾墨斯 信使與旅者",
+      "Dionysus 狄俄尼索斯 酒與狂歡"
     ]
   },
   "constraints": {
-    "must_feel": "博物馆陈列级统一光源自左上来、神性庄严、无现代插科打诨",
-    "avoid": "与罗马神名混排、司职文字张冠李戴、格与格画风像来自 12 位不同 AI 种子"
+    "must_feel": "博物館陳列級統一光源自左上來、神性莊嚴、無現代插科打諢",
+    "avoid": "與羅馬神名混排、司職文字張冠李戴、格與格畫風像來自 12 位不同 AI 種子"
   }
 }

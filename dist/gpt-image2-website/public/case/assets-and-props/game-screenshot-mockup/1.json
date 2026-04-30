@@ -1,54 +1,54 @@
 {
-  "type": "开放世界游戏截图",
-  "goal": "生成 16:9 横图，观感为 Unreal 级 PBR 实时画面截屏而非预渲染海报，含完整可辨中文 UI",
+  "type": "開放世界遊戲截圖",
+  "goal": "生成 16:9 橫圖，觀感為 Unreal 級 PBR 實時畫面截圖而非預渲染海報，含完整可辨中文 UI",
   "game_meta": {
-    "game_name": "霜火编年史·极北卷",
-    "engine_feel": "现代 3A（接近 Unreal 5 Nanite+Lumen 观感）",
-    "perspective": "第三人称越肩约 2.5m 距离"
+    "game_name": "霜火編年史·極北卷",
+    "engine_feel": "現代 3A（接近 Unreal 5 Nanite+Lumen 觀感）",
+    "perspective": "第三人稱越肩約 2.5m 距離"
   },
   "scene": {
-    "environment": "覆雪针叶林缘、中景冰河与断桥、远景覆雪山脉与孤塔",
-    "time_of_day": "蓝调时刻将尽、西天余暖金边",
-    "weather": "小雪与风卷雪雾",
-    "lighting": "冷青主光 + 暖金轮廓光 + 雪地次表面散射"
+    "environment": "覆雪針葉林緣、中景冰河與斷橋、遠景覆雪山脈與孤塔",
+    "time_of_day": "藍調時刻將盡、西天餘暖金邊",
+    "weather": "小雪與風捲雪霧",
+    "lighting": "冷青主光 + 暖金輪廓光 + 雪地次表面散射"
   },
   "character": {
-    "description": "女性游侠主角，银灰长辫、毛领皮甲与弓袋，背向镜头左肩微转、右手握未张弓",
-    "position": "画面下三分之一居中略左，留出右前侧空间"
+    "description": "女性遊俠主角，銀灰長辮、毛領皮甲與弓袋，背向鏡頭左肩微轉、右手握未張弓",
+    "position": "畫面下三分之一居中略左，留出右前側空間"
   },
   "ui_elements": {
     "hud": {
       "enabled": true,
       "items": [
-        "左下：红条生命+蓝条耐力+圆形简笔头像轮廓",
-        "右下：四格扇形技能图标+药水与食物快捷栏",
-        "左上：圆形小地图带指北针与当前坐标（中文区名「融雪溪谷」）",
-        "右上：任务追踪框体三行「主线：寻找春之露」「距目标 420m」「按 M 打开大地图」"
+        "左下：紅條生命+藍條耐力+圓形簡筆頭像輪廓",
+        "右下：四格扇形技能圖示+藥水與食物快捷欄",
+        "左上：圓形小地圖帶指北針與當前座標（中文區名「融雪溪谷」）",
+        "右上：任務追蹤框體三行「主線：尋找春之露」「距目標 420m」「按 M 開啟大地圖」"
       ]
     },
     "subtitle": {
       "enabled": true,
-      "speaker": "灵狐伙伴",
-      "text": "前面结冰的吊桥缺了一截，当心别滑下去。"
+      "speaker": "靈狐夥伴",
+      "text": "前面結冰的吊橋缺了一截，當心別滑下去。"
     },
     "interaction_prompt": {
       "enabled": true,
-      "text": "按 [E] 稳固绳索"
+      "text": "按 [E] 穩固繩索"
     }
   },
   "style": {
-    "rendering": "PBR + ACES 感 tonemapping + 轻胶片颗粒",
-    "color_palette": "冰蓝+月白+暖金路标"
+    "rendering": "PBR + ACES 感 tonemapping + 輕膠片顆粒",
+    "color_palette": "冰藍+月白+暖金路標"
   },
   "aspect_ratio": "16:9",
   "constraints": {
     "must_keep": [
-      "HUD 与场景透视一致、无悬浮错位",
-      "中文无乱码、无英文机翻腔"
+      "HUD 與場景透視一致、無懸浮錯位",
+      "中文無亂碼、無英文機翻腔"
     ],
     "avoid": [
-      "无任何 HUD 的纯插画感",
-      "同屏 UI 组件超过 8 个主元素"
+      "無任何 HUD 的純插畫感",
+      "同屏 UI 元件超過 8 個主元素"
     ]
   }
 }

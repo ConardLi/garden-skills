@@ -1,37 +1,37 @@
 {
-  "type": "Kawaii 3D 角色图标",
-  "goal": "生成 1:1 圆角方形主图，供社交平台小头像、播客或开发者社区展示用，主体为可联想到 Mark Zuckerberg 的拟猫化 3D 角色，不出现可读姓名文字",
+  "type": "Kawaii 3D 角色圖示",
+  "goal": "生成 1:1 圓角方形主圖，供社交平臺小頭像、播客或開發者社群展示用，主體為可聯想到 Mark Zuckerberg 的擬貓化 3D 角色，不出現可讀姓名文字",
   "character": {
-    "subject": "圆脸灰毛短毛猫、略卷发感头顶两撮、小圆眼镜片无 logo",
-    "personality": "专注、极客、轻微害羞",
-    "expression": "眯眼轻笑+嘴角一侧上扬",
-    "pose": "胸像正面微侧、右手抱一台简化无标平板",
+    "subject": "圓臉灰毛短毛貓、略捲髮感頭頂兩撮、小圓眼鏡片無 logo",
+    "personality": "專注、極客、輕微害羞",
+    "expression": "眯眼輕笑+嘴角一側上揚",
+    "pose": "胸像正面微側、右手抱一臺簡化無標平板",
     "outfit_or_accessory": [
-      "海军蓝圆领薄卫衣无商标",
-      "头顶悬浮半透明蓝色线框多面体小光环（Metaverse 暗示，非品牌标志）"
+      "海軍藍圓領薄衛衣無商標",
+      "頭頂懸浮半透明藍色線框多面體小光環（Metaverse 暗示，非品牌標誌）"
     ]
   },
   "style": {
-    "rendering": "3D Pixar 风 + 微微 toon shading，边缘光干净",
-    "color_palette": "冷灰+海军蓝+奶油白，点缀科技青",
-    "lighting": "柔光+轻微背光勾轮廓"
+    "rendering": "3D Pixar 風 + 微微 toon shading，邊緣光乾淨",
+    "color_palette": "冷灰+海軍藍+奶油白，點綴科技青",
+    "lighting": "柔光+輕微背光勾輪廓"
   },
   "background": {
-    "type": "低饱和青灰径向渐变+极淡点阵，不喧宾"
+    "type": "低飽和青灰徑向漸變+極淡點陣，不喧賓"
   },
   "format": {
-    "shape": "圆角方形，圆角约 24%",
+    "shape": "圓角方形，圓角約 24%",
     "aspect_ratio": "1:1",
-    "composition_safety": "主体占幅约 60%，四边各留 10% 空边"
+    "composition_safety": "主體佔幅約 60%，四邊各留 10% 空邊"
   },
   "constraints": {
     "must_keep": [
-      "Q 萌、单主体、主色三种以内",
-      "脸部不被道具遮挡"
+      "Q 萌、單主體、主色三種以內",
+      "臉部不被道具遮擋"
     ],
     "avoid": [
-      "写实人类皮肤、可识别真人文脸",
-      "出现 Facebook 蓝白字或真实商标"
+      "寫實人類皮膚、可識別真人文臉",
+      "出現 Facebook 藍白字或真實商標"
     ]
   }
 }

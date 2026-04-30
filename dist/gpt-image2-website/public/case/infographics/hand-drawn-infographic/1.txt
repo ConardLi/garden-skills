@@ -1,6 +1,6 @@
 A hand-drawn educational infographic in the style of a high-quality bullet journal page.
 
-Topic: 在家用全脂牛奶和少量市售酸奶作引子，12 小时做出浓稠希腊式酸奶的完整注意点。
+Topic: 在家用全脂牛奶和少量市售酸奶作引子，12 小時做出濃稠希臘式酸奶的完整注意點。
 
 Aspect ratio: 3:4 portrait.
 
@@ -14,20 +14,20 @@ Color palette:
 - Limit to 4–5 colors total. Accent color only for "注意"和食品安全提示.
 
 Title:
-- 主标题「6 步在家希腊酸奶」用顶部大号手写体花字，放在手绘波浪线边框内.
-- 副题小字：全脂牛奶 1L · 种菌 2 大勺 · 约 8–12 小时
+- 主標題「6 步在家希臘酸奶」用頂部大號手寫體花字，放在手繪波浪線邊框內.
+- 副題小字：全脂牛奶 1L · 種菌 2 大勺 · 約 8–12 小時
 
 Body:
 - 6 information items, each a hand-drawn rounded card with:
-  - 圆形编号章（1–6，线条略抖）
-  - 小标题加粗手写感
-  - 1–2 行说明（消毒容器、先加热到 85 °C 再降温到 40–45 °C、接种、密封发酵、过滤乳清、冷藏钝化）
-  - 一步一个小涂鸦：奶锅、温度计、玻璃罐、纱布滤网、玻璃碗装成品
-- Layout: 纵向蛇形，步与步之间用弯曲箭头连接，箭头旁可写「等待」
+  - 圓形編號章（1–6，線條略抖）
+  - 小標題加粗手寫感
+  - 1–2 行說明（消毒容器、先加熱到 85 °C 再降溫到 40–45 °C、接種、密封發酵、過濾乳清、冷藏鈍化）
+  - 一步一個小塗鴉：奶鍋、溫度計、玻璃罐、紗布濾網、玻璃碗裝成品
+- Layout: 縱向蛇形，步與步之間用彎曲箭頭連線，箭頭旁可寫「等待」
 
 Doodle decorations (sprinkled, not symmetric):
-- 小牛奶滴、优格勺、小星星; 在「勿频繁开盖」旁画一条可爱的禁止小手
-- 一句中文强调圈出：发酵中途不要大幅晃动罐子
+- 小牛奶滴、優格勺、小星星; 在「勿頻繁開蓋」旁畫一條可愛的禁止小手
+- 一句中文強調圈出：發酵中途不要大幅晃動罐子
 
 Style enforcement:
 - ALL lines have visible hand-drawn wobble — never perfectly straight
@@ -36,8 +36,8 @@ Style enforcement:
 - Slight imperfection is intentional; single coherent notebook page
 
 Composition:
-- Whitespace about 30–40% of canvas; title > 步骤名 > 正文 > 装饰
+- Whitespace about 30–40% of canvas; title > 步驟名 > 正文 > 裝飾
 
-Language: 中文（手写体）；温标与单位保留阿拉伯数字和 °C。
+Language: 中文（手寫體）；溫標與單位保留阿拉伯數字和 °C。
 
-Optional mascot: 一只简笔小奶牛头像在左下角，只占画面宽度的 6%，不要抢主流程。
+Optional mascot: 一隻簡筆小奶牛頭像在左下角，只佔畫面寬度的 6%，不要搶主流程。

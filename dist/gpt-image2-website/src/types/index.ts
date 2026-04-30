@@ -57,4 +57,7 @@ export interface DocsManifest {
 export type Route =
   | { name: 'home' }
   | { name: 'case'; id: string }
-  | { name: 'skills' };
+  | { name: 'skills' }
+  | { name: 'workbench'; templateId?: string }
+  | { name: 'promptStudio' }
+  | { name: 'uiuxStudio' };

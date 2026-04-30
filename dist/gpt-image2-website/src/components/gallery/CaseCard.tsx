@@ -59,7 +59,7 @@ export function CaseCard({ c, navigate, ratio }: Props) {
           </div>
           <h3 className="cc-overlay-title serif">{c.title}</h3>
           <div className="cc-overlay-cta mono">
-            <span>查看详情</span>
+            <span>檢視詳情</span>
             <span aria-hidden="true">→</span>
           </div>
         </div>

@@ -1,95 +1,95 @@
 {
-  "type": "工程感流程图 / 决策图",
-  "goal": "生成 3:4 竖版暗色位图，展示注册全链路及风控分支",
+  "type": "工程感流程圖 / 決策圖",
+  "goal": "生成 3:4 豎版暗色點陣圖，展示註冊全鏈路及風控分支",
   "canvas": {
     "aspect_ratio": "3:4",
     "background": "deep slate #0F172A with subtle 1px grid #1E293B at 32px spacing",
     "outer_padding": "60px"
   },
   "title_strip": {
-    "title": "用户注册与激活流程",
-    "subtitle": "短信 OTP + 邮箱 + 设备风控",
+    "title": "使用者註冊與啟用流程",
+    "subtitle": "簡訊 OTP + 郵箱 + 裝置風控",
     "position": "top-left, JetBrains Mono"
   },
   "flow_direction": "top-to-bottom",
-  "shape_legend": "与模板一致（起止圆/药丸、过程矩形、决策菱形、IO 平行四边形、子流程双框）",
+  "shape_legend": "與模板一致（起止圓/藥丸、過程矩形、決策菱形、IO 平行四邊形、子流程雙框）",
   "nodes": {
     "count": "15",
     "items": [
       {
         "id": "S",
         "type": "start_end",
-        "label": "开始"
+        "label": "開始"
       },
       {
         "id": "I1",
         "type": "io",
-        "label": "用户提交 手机号+密码+设备指纹 device_id"
+        "label": "使用者提交 手機號+密碼+裝置指紋 device_id"
       },
       {
         "id": "P1",
         "type": "process",
-        "label": "校验 E.164 与密码强度 (zxcvbn≥3)"
+        "label": "校驗 E.164 與密碼強度 (zxcvbn≥3)"
       },
       {
         "id": "D1",
         "type": "decision",
-        "label": "手机号已注册？"
+        "label": "手機號已註冊？"
       },
       {
         "id": "P2",
         "type": "process",
-        "label": "返回 409 并提示 微信 一键登录"
+        "label": "返回 409 並提示 微信 一鍵登入"
       },
       {
         "id": "P3",
         "type": "process",
-        "label": "创建 users 行 status= PENDING"
+        "label": "建立 users 行 status= PENDING"
       },
       {
         "id": "D2",
         "type": "decision",
-        "label": "风控分数 risk_score < 0.4？"
+        "label": "風控分數 risk_score < 0.4？"
       },
       {
         "id": "SP1",
         "type": "subprocess",
-        "label": "子流程: 进人工 queue_id 风控复核"
+        "label": "子流程: 進人工 queue_id 風控複核"
       },
       {
         "id": "P4",
         "type": "process",
-        "label": "短信网关发送 6 位 OTP (5min TTL)"
+        "label": "簡訊閘道器傳送 6 位 OTP (5min TTL)"
       },
       {
         "id": "D3",
         "type": "decision",
-        "label": "OTP 与 Redis 中 digest 一致？"
+        "label": "OTP 與 Redis 中 digest 一致？"
       },
       {
         "id": "P5",
         "type": "process",
-        "label": "发验证邮件 含 token (HKDF-SHA256)"
+        "label": "發驗證郵件 含 token (HKDF-SHA256)"
       },
       {
         "id": "D4",
         "type": "decision",
-        "label": "24h 内点击验证链接？"
+        "label": "24h 內點選驗證連結？"
       },
       {
         "id": "P6",
         "type": "process",
-        "label": "status= VERIFIED, email_verified_at 写入"
+        "label": "status= VERIFIED, email_verified_at 寫入"
       },
       {
         "id": "P7",
         "type": "process",
-        "label": "删除过期 token+软删未激活"
+        "label": "刪除過期 token+軟刪未啟用"
       },
       {
         "id": "E",
         "type": "start_end",
-        "label": "结束"
+        "label": "結束"
       }
     ]
   },
@@ -177,7 +177,7 @@
       }
     ],
     "edge_style": {
-      "default": "slate 1.5px + 三角箭头",
+      "default": "slate 1.5px + 三角箭頭",
       "yes_branch": "emerald #34D399",
       "no_branch": "slate",
       "exception_branch": {
@@ -196,11 +196,11 @@
   },
   "constraints": {
     "must_keep": [
-      "决策必有 Yes/No 或等义标签",
-      "子流程为双框"
+      "決策必有 Yes/No 或等義標籤",
+      "子流程為雙框"
     ],
     "avoid": [
-      ">15 节点"
+      ">15 節點"
     ]
   }
 }

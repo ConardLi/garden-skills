@@ -1,72 +1,72 @@
 {
-  "type": "移动端社交平台动态详情页样机",
-  "goal": "生成一张高仿真度的 X (Twitter) 帖子详情页截图，看起来像粉丝刚从手机上截下来的真实推文",
+  "type": "移動端社交平臺動態詳情頁樣機",
+  "goal": "生成一張高模擬度的 X (Twitter) 帖子詳情頁截圖，看起來像粉絲剛從手機上截下來的真實推文",
   "platform": {
     "name": "Twitter / X",
     "color_mode": "dark",
     "language": "中文"
   },
   "header": {
-    "status_bar": "顶部状态栏，时间 '23:47'，信号、5G、Wi-Fi、电量 87% 图标",
-    "navigation": "左侧返回箭头 + 标题 '帖子'，右侧三点菜单"
+    "status_bar": "頂部狀態列，時間 '23:47'，訊號、5G、Wi-Fi、電量 87% 圖示",
+    "navigation": "左側返回箭頭 + 標題 '帖子'，右側三點選單"
   },
   "post": {
     "author": {
-      "avatar": "Elon Musk 半身肖像头像，黑色 SpaceX 衬衫，背景纯黑",
+      "avatar": "Elon Musk 半身肖像頭像，黑色 SpaceX 襯衫，背景純黑",
       "display_name": "Elon Musk",
       "verified_badge": true,
       "handle": "@elonmusk",
-      "extra_badges": "金色机构认证 + 'Owner' 灰色徽章"
+      "extra_badges": "金色機構認證 + 'Owner' 灰色徽章"
     },
     "content": {
-      "text": "今晚 Starship 第十一次试飞成功回收。下一个目标：2028 年送第一批人类去火星。Make Life Multiplanetary 不再是口号。",
+      "text": "今晚 Starship 第十一次試飛成功回收。下一個目標：2028 年送第一批人類去火星。Make Life Multiplanetary 不再是口號。",
       "hashtags": "#Starship #Mars2028 #SpaceX",
       "media_grid": {
         "count": 3,
         "images": [
-          "Starship 不锈钢箭体在德州博卡奇卡发射台升空，巨大火焰尾焰",
-          "夜空中 Starship 第二级在轨道上的远景，地球边缘弧线可见",
-          "Starship 第一级被发射塔机械臂 'Mechazilla' 精准夹住的瞬间"
+          "Starship 不鏽鋼箭體在德州博卡奇卡發射臺升空，巨大火焰尾焰",
+          "夜空中 Starship 第二級在軌道上的遠景，地球邊緣弧線可見",
+          "Starship 第一級被髮射塔機械臂 'Mechazilla' 精準夾住的瞬間"
         ]
       }
     },
     "metadata": {
-      "timestamp": "晚上 11:43 · 2026 年 4 月 27 日 · 286.4M 次浏览",
-      "engagement": "84.2K 转发 · 12.6K 引用 · 952K 点赞 · 38.4K 收藏"
+      "timestamp": "晚上 11:43 · 2026 年 4 月 27 日 · 286.4M 次瀏覽",
+      "engagement": "84.2K 轉發 · 12.6K 引用 · 952K 點贊 · 38.4K 收藏"
     },
-    "actions": "底部一行操作图标：回复（带数 21.3K）、转发（带数 84.2K）、点赞（红色心形带数 952K）、收藏图标、上传图标"
+    "actions": "底部一行操作圖示：回覆（帶數 21.3K）、轉發（帶數 84.2K）、點贊（紅色心形帶數 952K）、收藏圖示、上傳圖示"
   },
   "comments_preview": {
     "show": true,
     "top_comment": {
-      "avatar": "用给你的图片作为头像",
-      "name": "花园老师",
+      "avatar": "用給你的圖片作為頭像",
+      "name": "花園老師",
       "handle": "@ConardLi",
-      "text": "见证历史，送上来自 code秘密花园 的祝福！"
+      "text": "見證歷史，送上來自 code秘密花園 的祝福！"
     }
   },
   "footer": {
     "reply_bar": {
-      "avatar": "当前登录用户的小头像（蓝色字母 J）",
-      "placeholder": "回复给 Elon Musk..."
+      "avatar": "當前登入使用者的小頭像（藍色字母 J）",
+      "placeholder": "回覆給 Elon Musk..."
     },
-    "navigation_bar": "底部 Tab：首页（高亮）、搜索、Grok、通知（红点 3）、消息"
+    "navigation_bar": "底部 Tab：首頁（高亮）、搜尋、Grok、通知（紅點 3）、訊息"
   },
   "style": {
-    "rendering": "高保真移动端 UI 截图，9:19.5 纵向比例，看起来像真实 iPhone 截屏",
-    "consistency": "X 暗色模式经典配色：纯黑底 + 白字 + 蓝色链接 + 灰色分隔线"
+    "rendering": "高保真移動端 UI 截圖，9:19.5 縱向比例，看起來像真實 iPhone 截圖",
+    "consistency": "X 暗色模式經典配色：純黑底 + 白字 + 藍色連結 + 灰色分隔線"
   },
   "constraints": {
     "must_keep": [
-      "蓝色官方认证勾正确呈现",
-      "@elonmusk handle 必须正确",
-      "中文正文与英文 hashtags 混排自然",
-      "九宫格三图明显是 SpaceX 相关画面"
+      "藍色官方認證勾正確呈現",
+      "@elonmusk handle 必須正確",
+      "中文正文與英文 hashtags 混排自然",
+      "九宮格三圖明顯是 SpaceX 相關畫面"
     ],
     "avoid": [
-      "出现小红书或微博的 UI 元素",
-      "互动数据顺序错乱",
-      "字体不像 X 官方字体"
+      "出現小紅書或微博的 UI 元素",
+      "互動資料順序錯亂",
+      "字型不像 X 官方字型"
     ]
   }
 }
