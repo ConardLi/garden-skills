@@ -21,6 +21,7 @@
 - [What's inside](#whats-inside)
   - [web-design-engineer (Design / Frontend)](#web-design-engineer)
   - [gpt-image-2 (Image Generation / Prompting)](#gpt-image-2)
+  - [web-video-presentation (Coming soon)](#web-video-presentation)
   - [kb-retriever (Local Knowledge Base Retrieval)](#kb-retriever)
 - [Install](#install)
   - [Option A · Claude Code plugin marketplace](#option-a--claude-code-plugin-marketplace)
@@ -75,6 +76,29 @@ Highlights:
 - Saves prompts and generated images under `garden-gpt-image-2/` in Garden mode for reuse, review, and versioning
 
 Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website)
+
+---
+
+### `web-video-presentation`
+
+![Web Video Presentation Skill](./dist/imgs/web-video-presentation-skill.png)
+
+**Status:** Coming soon  
+**Category:** Web Video / Presentation Engineering  
+**Best for:** turning scripts, articles, lessons, product demos, and talks into click-driven 16:9 web presentations that can be screen-recorded as cinematic videos.
+
+`web-video-presentation` is a method-driven skill for building record-ready Vite + React + TypeScript presentations. Each click advances one narration beat, each step owns the whole 1920×1080 stage, and the visible UI stays clean for recording.
+
+Preview highlights:
+
+- Fixed 16:9 stage that scales to the viewport
+- Global `(chapter, step)` cursor for click and keyboard-driven playback
+- Script beats mapped one-to-one to visual steps
+- Hidden hover-only progress controls for clean screen recordings
+- Theme-token architecture with multiple visual languages
+- Motion-first scenes designed to feel like video, not slides
+
+This skill is being prepared for the collection and will be published once its docs, templates, and packaging are finalized.
 
 ---
 
@@ -228,7 +252,8 @@ For the full spec, see [agentskills.io](https://agentskills.io) and the [officia
 │   ├── imgs/                            ← README skill posters
 │   │   ├── web-design-skill.png
 │   │   ├── gpt-image-2-skill.png
-│   │   └── kb-retriever-skill.png
+│   │   ├── kb-retriever-skill.png
+│   │   └── web-video-presentation-skill.png
 │   ├── prompt/
 │   │   └── claude-design-system-prompt.md   (original Claude Design system prompt)
 │

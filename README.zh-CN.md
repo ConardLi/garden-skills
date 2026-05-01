@@ -21,6 +21,7 @@
 - [集合内的 Skills](#集合内的-skills)
   - [web-design-engineer（设计 / 前端）](#web-design-engineer)
   - [gpt-image-2（图像生成 / Prompt）](#gpt-image-2)
+  - [web-video-presentation（即将上线）](#web-video-presentation)
   - [kb-retriever（本地知识库检索）](#kb-retriever)
 - [安装](#安装)
   - [方式 A · Claude Code 插件市场](#方式-a--claude-code-插件市场)
@@ -75,6 +76,29 @@
 - Garden 模式下会把 prompt 与生成图片保存到 `garden-gpt-image-2/`，方便复用、审查和版本管理
 
 链接：[README](./skills/gpt-image-2/README.zh-CN.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website)
+
+---
+
+### `web-video-presentation`
+
+![Web Video Presentation Skill](./dist/imgs/web-video-presentation-skill.png)
+
+**状态：** 即将上线  
+**类别：** 网页视频 / 演示工程  
+**适合：** 把口播稿、文章、课程、产品演示和 talk 做成点击驱动的 16:9 网页演示，再通过录屏产出有电影感的视频。
+
+`web-video-presentation` 是一个方法论驱动的 Skill，用于构建适合录屏的 Vite + React + TypeScript 演示。每次点击推进一个口播节拍，每一步独占 1920×1080 舞台，常驻 UI 尽量隐藏，让录屏画面保持干净。
+
+预告亮点：
+
+- 固定 16:9 舞台，并按视口缩放
+- 全局 `(chapter, step)` 游标，支持点击和键盘推进
+- 口播节拍与视觉 step 一一对应
+- 悬浮才出现的进度控制，适合干净录屏
+- 基于主题 token 的视觉架构，支持多种设计语言
+- 动效优先，每一屏更像视频而不是幻灯片
+
+这个 Skill 正在整理进入集合，等文档、模板和打包方式稳定后会正式发布。
 
 ---
 
@@ -228,7 +252,8 @@ description: 用一句话清楚说明这个 Skill 是干什么的、什么时候
 │   ├── imgs/                            ← README Skill 海报
 │   │   ├── web-design-skill.png
 │   │   ├── gpt-image-2-skill.png
-│   │   └── kb-retriever-skill.png
+│   │   ├── kb-retriever-skill.png
+│   │   └── web-video-presentation-skill.png
 │   ├── prompt/
 │   │   └── claude-design-system-prompt.md   （Claude Design 原始系统提示词）
 │
