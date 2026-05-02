@@ -1,0 +1,60 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · bauhaus-bold
+ *   Modernist / brutalist manifesto. Off-white canvas, pure ink black,
+ *   primary-blue accent. Archivo Black display, Inter body. SHARP
+ *   corners (0 radius), THICK borders (4-8px), no decoration. Motion
+ *   is sharp & quick — no overshoot, no easing tricks.
+ *
+ *   character knobs:
+ *     • hero numbers   — Archivo Black, near-zero tracking, MASSIVE
+ *     • rule           — 4px solid black (geometric heavy)
+ *     • card           — 0 radius, 4px black border
+ *     • surface        — clean (no pattern)
+ *     • motion         — quick, sharp ease-out only
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #1a1a1a;
+  --surface:      #f4f1ea;
+  --surface-2:    #ffffff;
+  --surface-3:    #e8e3d4;
+  --text:         #0a0a0a;
+  --text-2:       #1f1f1f;
+  --text-mute:    #5a5a5a;
+  --text-faint:   #8c8c8c;
+  --rule:         #0a0a0a;
+  --accent:       #2541ee;
+  --accent-soft:  rgba(37, 65, 238, 0.12);
+  --accent-glow:  rgba(37, 65, 238, 0.40);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
+  --font-display-en: "Archivo Black", "Inter", "Helvetica Neue", sans-serif;
+  --font-body:       "Inter", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01";
+
+  /* ─── motion: sharp & fast ─── */
+  --ease-overshoot: cubic-bezier(0.4, 0, 0.2, 1);     /* no overshoot in bauhaus */
+  --dur-quick:     180ms;
+  --dur-base:      400ms;
+  --dur-slow:      650ms;
+  --dur-cinematic: 1000ms;
+
+  /* ─── design identity: heavy geometry ─── */
+  --r-card:        var(--r-flat);     /* SIGNATURE — pure rectangles */
+  --r-stage:       0;
+  --rule-w:        4px;                /* SIGNATURE — heavy lines */
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   normal;
+  --hero-num-weight:  900;
+  --hero-num-track:   -0.05em;
+  --stage-pad-x:   80px;
+  --stage-pad-y:   60px;
+  --card-shadow:   8px 8px 0 var(--text);   /* SIGNATURE — offset solid shadow */
+  --shadow-stage:
+    0 60px 160px rgba(0, 0, 0, 0.55),
+    0 0 0 4px var(--text);                  /* thick black frame around stage */
+  --stage-border:  4px solid var(--text);
+}

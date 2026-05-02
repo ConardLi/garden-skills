@@ -1,0 +1,137 @@
+/* ─────────────────────────────────────────────────────────────────
+ * list-reveal · 完整章节示例样式
+ * 默认绑 newsroom 主题。零硬编码视觉属性。
+ * ───────────────────────────────────────────────────────────────── */
+
+.lr-scene {
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ── masthead ── */
+.lr-masthead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.lr-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+.lr-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--t-cue);
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── intro step ── */
+.lr-intro {
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--space-5);
+}
+.lr-intro-h {
+  margin: 0;
+  font-family: var(--font-display-cn);
+  font-size: var(--t-display-2);
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+.lr-em { color: var(--accent); }
+.lr-intro-sub {
+  font-family: var(--font-body);
+  font-size: var(--t-h3);
+  color: var(--text-2);
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+/* ── grid (3 slots, fixed layout) ── */
+.lr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+/* ── slot base ── */
+.lr-slot {
+  border-radius: var(--r-card);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 360px;
+  transition: opacity var(--dur-base) var(--ease-quart),
+              filter   var(--dur-base) var(--ease-quart),
+              border-color var(--dur-base) var(--ease-quart);
+}
+
+/* ghost: 虚线边 + 大灰序号 */
+.lr-slot-ghost {
+  border: var(--rule-w) dashed var(--rule);
+  background: transparent;
+  opacity: 0.55;
+}
+.lr-slot-ghost .lr-slot-num {
+  color: var(--text-faint);
+}
+
+/* active: 红框 + 实心面板 + 巨号砸下 */
+.lr-slot-active {
+  border: var(--rule-w) solid var(--accent);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+.lr-slot-active .lr-slot-num {
+  color: var(--accent);
+  animation: lr-num-drop var(--dur-base) var(--ease-quart) backwards;
+}
+@keyframes lr-num-drop {
+  0%   { transform: translateY(-40%) scale(1.6); opacity: 0; }
+  60%  { transform: translateY(0) scale(0.94);   opacity: 1; }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* past: 灰化 */
+.lr-slot-past {
+  border: var(--rule-w) solid var(--rule);
+  background: transparent;
+  opacity: 0.7;
+  filter: grayscale(0.4);
+}
+.lr-slot-past .lr-slot-num {
+  color: var(--text-mute);
+}
+
+/* ── slot internals ── */
+.lr-slot-num {
+  font-family: var(--hero-num-font, var(--font-display-en));
+  font-style: var(--hero-num-style, normal);
+  font-weight: var(--hero-num-weight, 700);
+  font-size: calc(var(--t-display-2) * 0.85);
+  letter-spacing: var(--hero-num-track, -0.02em);
+  line-height: 1;
+}
+.lr-slot-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.lr-slot-title {
+  font-family: var(--font-display-cn);
+  font-size: var(--t-h2);
+  letter-spacing: -0.005em;
+}
+.lr-slot-body {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 22ch;
+}

@@ -1,0 +1,19 @@
+{
+  "id": "monochrome-print",
+  "name": "Monochrome Print",
+  "nameZh": "黑白印刷",
+  "description": "Off-white paper with ink-black serif text and a single ink-blue accent. High-contrast print magazine vibe — Monocle, Wallpaper, MIT Press. Quiet, sophisticated, considered.",
+  "descriptionZh": "微暖白底 + 墨黑 serif + 单一墙墨蓝强调色. 高对比印刷杂志气质, Monocle / Wallpaper / MIT Press 那种沉静讲究.",
+  "mood": ["light", "print", "minimal", "serif", "monochrome", "sophisticated"],
+  "bestFor": ["深度阅读改编", "学术 / 思想型内容", "品牌故事", "高级感产品", "文化 / 艺术评论"],
+  "motionHints": "极简 mask reveal、文字逐字浮现、慢速 fade、克制 stagger；几乎听得见纸的声音。**禁**渐变色、霓虹光、velocity 弹簧",
+  "motionDuration": "slow",
+  "typeScale": "quiet",
+  "allowEmoji": false,
+  "preview": {
+    "shell": "#f5f3ee",
+    "surface": "#fbfaf6",
+    "text": "#0a0a0a",
+    "accent": "#1d4ed8"
+  }
+}

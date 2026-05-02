@@ -1,0 +1,60 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · monochrome-print
+ *   Quiet refined print magazine — Monocle / Wallpaper / MIT Press.
+ *   Off-white, ink-black serif body (Source Serif), single deep ink-blue
+ *   accent. Hairlines (1px) only. Generous stage padding. Hero numbers
+ *   are tabular figures in italic Source Serif. No decoration — purity.
+ *
+ *   character knobs:
+ *     • hero numbers   — italic Source Serif, tabular figures, very tight
+ *     • rule           — 1px hairline solid (refined ink)
+ *     • card           — 4px tiny radius (refined corner cue)
+ *     • surface        — clean (NO pattern, NO vignette)
+ *     • motion         — extra-quiet, longer durations
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #e8e3d8;
+  --surface:      #fbf9f4;
+  --surface-2:    #ffffff;
+  --surface-3:    #f0ebde;
+  --text:         #0e1418;
+  --text-2:       #1f2a32;
+  --text-mute:    #6b7178;
+  --text-faint:   #a8aeb4;
+  --rule:         #c9c5b8;
+  --accent:       #1a3a8c;             /* deep ink-blue */
+  --accent-soft:  rgba(26, 58, 140, 0.08);
+  --accent-glow:  rgba(26, 58, 140, 0.25);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-display-en: "Source Serif 4", "Source Serif Pro", "EB Garamond", "Times New Roman", serif;
+  --font-body:       "Source Serif 4", "Source Serif Pro", "Noto Serif SC", serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "ss01", "tnum", "lnum", "kern";
+
+  /* ─── motion: extra quiet ─── */
+  --dur-base:       750ms;
+  --dur-slow:       1200ms;
+  --dur-cinematic:  1700ms;
+
+  /* ─── design identity: refined print ─── */
+  --r-card:        var(--r-xs);        /* 4px — barely-there refinement */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   italic;
+  --hero-num-weight:  500;
+  --hero-num-track:   -0.03em;
+  --stage-pad-x:   140px;              /* generous = refined */
+  --stage-pad-y:   100px;
+  --card-shadow:
+    0 1px 0 var(--rule),
+    0 16px 40px rgba(20, 30, 40, 0.06);
+  --shadow-stage:
+    0 60px 160px rgba(20, 30, 40, 0.20),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  /* SIGNATURE: NO surface-pattern, NO vignette — purity. */
+}

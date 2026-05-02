@@ -1,0 +1,73 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · terminal-green
+ *   80s phosphor terminal. True-black backdrop, single phosphor green.
+ *   JetBrains Mono is the ONLY font. Sharp 0-2px corners. CRT scanline
+ *   overlay. Snappy motion (240ms / 480ms / 800ms) — terminal speed.
+ *
+ *   character knobs:
+ *     • hero numbers   — mono, 0 letter-spacing, glow drop-shadow
+ *     • rule           — 1px solid phosphor green
+ *     • card           — 0 radius (terminal cells)
+ *     • surface        — horizontal scanlines (2px) + soft phosphor glow
+ *     • motion         — snappy + linear (terminal not springy)
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #000000;
+  --surface:      #050a07;
+  --surface-2:    #0a1410;
+  --surface-3:    #0f1c17;
+  --text:         #41ff97;
+  --text-2:       #2ed084;
+  --text-mute:    #1a8a55;
+  --text-faint:   #0f5c39;
+  --rule:         rgba(65, 255, 151, 0.30);
+  --accent:       #41ff97;
+  --accent-soft:  rgba(65, 255, 151, 0.10);
+  --accent-glow:  rgba(65, 255, 151, 0.7);
+
+  /* ─── fonts (mono everywhere) ─── */
+  --font-display-cn: "JetBrains Mono", "Noto Sans Mono CJK SC", monospace;
+  --font-display-en: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-body:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "ss05", "zero", "tnum";
+
+  /* ─── motion: snappy terminal ─── */
+  --ease-quart:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-expo:     cubic-bezier(0.25, 0.1, 0.25, 1);
+  --dur-quick:     180ms;
+  --dur-base:      400ms;
+  --dur-slow:      650ms;
+  --dur-cinematic: 1000ms;
+
+  /* ─── design identity: terminal cells ─── */
+  --r-card:        var(--r-flat);    /* SIGNATURE — sharp corners */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-mono);
+  --hero-num-style:   normal;
+  --hero-num-weight:  500;
+  --hero-num-track:   0;
+  --stage-pad-x:   80px;
+  --stage-pad-y:   60px;
+  --text-shadow:   0 0 8px rgba(65, 255, 151, 0.4);
+  --card-shadow:   inset 0 0 0 1px var(--rule), 0 0 30px rgba(65, 255, 151, 0.05);
+  --shadow-stage:
+    0 60px 160px rgba(65, 255, 151, 0.10),
+    0 0 0 1px rgba(65, 255, 151, 0.15);
+
+  /* ─── decoration: CRT scanlines ─── */
+  --surface-pattern:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(65, 255, 151, 0.04) 2px,
+      rgba(65, 255, 151, 0.04) 3px
+    );
+  --surface-pattern-size: 100% 100%;
+  --surface-vignette:
+    radial-gradient(ellipse at center, transparent 30%, rgba(0, 30, 15, 0.6) 100%);
+}

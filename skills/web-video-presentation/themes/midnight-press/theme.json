@@ -1,0 +1,19 @@
+{
+  "id": "midnight-press",
+  "name": "Midnight Press",
+  "nameZh": "暗色印刷",
+  "description": "Warm dark backdrop with a single hot accent. Cinematic, terminal-y, developer vibe.",
+  "descriptionZh": "暖色暗底 + 单一热橙强调色。电影感、终端气质、开发者审美。",
+  "mood": ["dark", "cinematic", "terminal", "developer", "warm"],
+  "bestFor": ["开发者教程", "AI / 工具评测", "极客向产品介绍", "技术 deep dive"],
+  "motionHints": "电影感慢镜、blur clear 入场、聚光灯 mask、文字打字机、慢速 fade；克制、有重量。**禁**俏皮弹簧、糖果色",
+  "motionDuration": "slow",
+  "typeScale": "default",
+  "allowEmoji": false,
+  "preview": {
+    "shell": "#0d0b09",
+    "surface": "#1a1714",
+    "text": "#f5f0e5",
+    "accent": "#ff4a2b"
+  }
+}

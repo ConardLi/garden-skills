@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/github/license/ConardLi/web-design-skill?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/web-design-skill?style=flat-square)](https://github.com/ConardLi/web-design-skill/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-3-orange?style=flat-square)](#whats-inside)
+[![Skills count](https://img.shields.io/badge/skills-4-orange?style=flat-square)](#whats-inside)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md)
@@ -19,9 +19,9 @@
 ## Table of contents
 
 - [What's inside](#whats-inside)
+  - [web-video-presentation (Web Video / Presentation)](#web-video-presentation)
   - [web-design-engineer (Design / Frontend)](#web-design-engineer)
   - [gpt-image-2 (Image Generation / Prompting)](#gpt-image-2)
-  - [web-video-presentation (Coming soon)](#web-video-presentation)
   - [kb-retriever (Local Knowledge Base Retrieval)](#kb-retriever)
 - [Install](#install)
   - [Option A · Claude Code plugin marketplace](#option-a--claude-code-plugin-marketplace)
@@ -36,6 +36,28 @@
 ---
 
 ## What's inside
+
+### [`web-video-presentation`](./skills/web-video-presentation)
+
+![Web Video Presentation Skill](./dist/imgs/web-video-presentation-skill.png)
+
+**Category:** Web Video / Presentation Engineering  
+**Best for:** turning scripts, articles, lessons, product demos, and talks into click-driven 16:9 web presentations that can be screen-recorded as cinematic videos.
+
+`web-video-presentation` builds record-ready Vite + React + TypeScript presentations that behave like video production surfaces. The workflow turns raw articles into narration scripts, maps script beats to full-screen scenes, pauses at required checkpoints, and can optionally synthesize narration audio after the visual outline is approved.
+
+Highlights:
+
+- Fixed 1920×1080 stage that scales to the viewport for stable screen recording
+- Click / keyboard driven `(chapter, step)` cursor, with one narration beat per visual step
+- Hard collaboration checkpoints for script, theme, outline, implementation mode, and optional audio
+- Hidden hover-only progress controls so the stage stays clean while recording
+- Theme-token architecture with multiple visual languages, from `paper-press` to `terminal-green`
+- Scaffolded Vite + React + TypeScript project with reusable stage primitives and recording guidance
+
+Links: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md)
+
+---
 
 ### [`web-design-engineer`](./skills/web-design-engineer)
 
@@ -79,29 +101,6 @@ Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image
 
 ---
 
-### `web-video-presentation`
-
-![Web Video Presentation Skill](./dist/imgs/web-video-presentation-skill.png)
-
-**Status:** Coming soon  
-**Category:** Web Video / Presentation Engineering  
-**Best for:** turning scripts, articles, lessons, product demos, and talks into click-driven 16:9 web presentations that can be screen-recorded as cinematic videos.
-
-`web-video-presentation` is a method-driven skill for building record-ready Vite + React + TypeScript presentations. Each click advances one narration beat, each step owns the whole 1920×1080 stage, and the visible UI stays clean for recording.
-
-Preview highlights:
-
-- Fixed 16:9 stage that scales to the viewport
-- Global `(chapter, step)` cursor for click and keyboard-driven playback
-- Script beats mapped one-to-one to visual steps
-- Hidden hover-only progress controls for clean screen recordings
-- Theme-token architecture with multiple visual languages
-- Motion-first scenes designed to feel like video, not slides
-
-This skill is being prepared for the collection and will be published once its docs, templates, and packaging are finalized.
-
----
-
 ### [`kb-retriever`](./skills/kb-retriever)
 
 ![Kb Retriever Skill](./dist/imgs/kb-retriever-skill.png)
@@ -131,6 +130,7 @@ The fastest path if you use [Claude Code](https://docs.anthropic.com/en/docs/cla
 
 ```bash
 /plugin marketplace add ConardLi/garden-skills
+/plugin install presentation-skills@garden-skills
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
@@ -140,6 +140,7 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 
 | Plugin pack | Skills included |
 |---|---|
+| `presentation-skills` | `web-video-presentation` |
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
@@ -221,22 +222,30 @@ For the full spec, see [agentskills.io](https://agentskills.io) and the [officia
 ```text
 .
 ├── skills/                              ← all skills live here, one folder each
+│   ├── web-video-presentation/
+│   │   ├── SKILL.md
+│   │   ├── README.md  /  README.zh-CN.md
+│   │   ├── references/  (principles, outline, themes, audio, recording)
+│   │   ├── scripts/scaffold.sh
+│   │   ├── templates/
+│   │   └── themes/
+│   │
 │   ├── web-design-engineer/
 │   │   ├── SKILL.md
 │   │   ├── README.md  /  README.zh-CN.md
 │   │   └── references/advanced-patterns.md
 │   │
-│   ├── kb-retriever/
+│   ├── gpt-image-2/
 │   │   ├── SKILL.md
 │   │   ├── README.md  /  README.zh-CN.md
-│   │   ├── references/  (pdf_reading.md, excel_reading.md, excel_analysis.md)
-│   │   └── scripts/convert_pdf_to_images.py
+│   │   ├── references/  (18 categories, 70+ prompt templates)
+│   │   └── scripts/     (check-mode.js, generate.js, edit.js, shared.js)
 │   │
-│   └── gpt-image-2/
+│   └── kb-retriever/
 │       ├── SKILL.md
 │       ├── README.md  /  README.zh-CN.md
-│       ├── references/  (18 categories, 70+ prompt templates)
-│       └── scripts/     (check-mode.js, generate.js, edit.js, shared.js)
+│       ├── references/  (pdf_reading.md, excel_reading.md, excel_analysis.md)
+│       └── scripts/convert_pdf_to_images.py
 │
 ├── .claude-plugin/
 │   └── marketplace.json                 ← Claude Code plugin marketplace manifest
@@ -250,10 +259,6 @@ For the full spec, see [agentskills.io](https://agentskills.io) and the [officia
 │
 ├── dist/                                ← shared reference assets
 │   ├── imgs/                            ← README skill posters
-│   │   ├── web-design-skill.png
-│   │   ├── gpt-image-2-skill.png
-│   │   ├── kb-retriever-skill.png
-│   │   └── web-video-presentation-skill.png
 │   ├── prompt/
 │   │   └── claude-design-system-prompt.md   (original Claude Design system prompt)
 │

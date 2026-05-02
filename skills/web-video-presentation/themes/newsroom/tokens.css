@@ -1,0 +1,63 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · newsroom
+ *   NYT broadsheet / documentary. Newsprint cream, ink-black serif body
+ *   (Playfair Display + Noto Serif SC), banner-red accent. Tight stage
+ *   padding mimics newspaper density. Hero numbers are HUGE editorial
+ *   italic figures.
+ *
+ *   character knobs:
+ *     • hero numbers   — italic display serif, very tight tracking
+ *     • rule           — 1px hairline solid (broadsheet ink)
+ *     • card           — flat (newspaper has no rounded corners)
+ *     • surface        — subtle paper grain
+ *     • motion         — quiet, longer durations (printed page pace)
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #c8bca0;
+  --surface:      #f1ebd8;
+  --surface-2:    #f8f3e2;
+  --surface-3:    #ebe3cc;
+  --text:         #14110b;
+  --text-2:       #2a261a;
+  --text-mute:    #5e564a;
+  --text-faint:   #8c8473;
+  --rule:         #968e7a;
+  --accent:       #c8260d;
+  --accent-soft:  rgba(200, 38, 13, 0.10);
+  --accent-glow:  rgba(200, 38, 13, 0.30);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-display-en: "Playfair Display", "GT Sectra", "Bodoni 72", "Times New Roman", serif;
+  --font-body:       "Source Serif 4", "Source Serif Pro", "Noto Serif SC", "Times New Roman", serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "ss01", "tnum", "lnum";
+
+  /* ─── motion: quiet print pace ─── */
+  --dur-base:       650ms;
+  --dur-slow:       1000ms;
+  --dur-cinematic:  1500ms;
+
+  /* ─── design identity: broadsheet ─── */
+  --r-card:        var(--r-flat);    /* SIGNATURE — newsprint has no radius */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   italic;
+  --hero-num-weight:  400;
+  --hero-num-track:   -0.04em;
+  --stage-pad-x:   100px;
+  --stage-pad-y:   72px;
+  --shadow-stage:
+    0 60px 160px rgba(40, 30, 15, 0.30),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  /* ─── decoration: subtler paper grain (less hairy than paper-press) ─── */
+  --surface-pattern:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='8'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.45 0 0 0 0 0.35 0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  --surface-pattern-size: 320px 320px;
+  --surface-pattern-blend: multiply;
+  --surface-pattern-opacity: 0.6;
+}

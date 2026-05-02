@@ -1,0 +1,65 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · blueprint
+ *   Engineering schematic / architect's drafting board. Deep navy with
+ *   drafting-cyan accent, IBM Plex Mono everywhere, signature DASHED
+ *   2px rules + 60px drafting grid baked into the stage. Hero numbers
+ *   are mono cyan with ticks.
+ *
+ *   character knobs:
+ *     • hero numbers   — mono cyan, 0 letter-spacing
+ *     • rule           — 2px DASHED cyan (drafting line)
+ *     • card           — 2px solid border, 0 radius
+ *     • surface        — 60px drafting grid
+ *     • motion         — measured (precise drafting tools)
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #0a1224;
+  --surface:      #0e1a2e;
+  --surface-2:    #142441;
+  --surface-3:    #1c2f54;
+  --text:         #d6e5ff;
+  --text-2:       #a8c2f0;
+  --text-mute:    #6c89b8;
+  --text-faint:   #3e5680;
+  --rule:         rgba(120, 200, 255, 0.30);
+  --accent:       #4dd2ff;
+  --accent-soft:  rgba(77, 210, 255, 0.10);
+  --accent-glow:  rgba(77, 210, 255, 0.55);
+
+  /* ─── fonts (mono pairing) ─── */
+  --font-display-cn: "IBM Plex Sans", "Noto Sans SC", sans-serif;
+  --font-display-en: "IBM Plex Mono", "JetBrains Mono", monospace;
+  --font-body:       "IBM Plex Sans", "Noto Sans SC", sans-serif;
+  --font-mono:       "IBM Plex Mono", "JetBrains Mono", monospace;
+  --font-features:   "tnum", "zero", "ss01";
+
+  /* ─── motion: drafting-precise ─── */
+  --dur-base:       500ms;
+  --dur-slow:       800ms;
+  --dur-cinematic:  1200ms;
+
+  /* ─── design identity: drafting board ─── */
+  --r-card:        var(--r-flat);    /* SIGNATURE — engineering, not branding */
+  --r-stage:       0;
+  --rule-w:        2px;
+  --rule-style:    dashed;            /* SIGNATURE — drafting line */
+  --hero-num-font:    var(--font-mono);
+  --hero-num-style:   normal;
+  --hero-num-weight:  500;
+  --hero-num-track:   -0.02em;
+  --stage-pad-x:   96px;
+  --stage-pad-y:   72px;
+  --card-shadow:   inset 0 0 0 2px var(--rule);
+  --shadow-stage:
+    0 60px 160px rgba(0, 20, 60, 0.55),
+    0 0 0 1px rgba(120, 200, 255, 0.10);
+
+  /* ─── decoration: 60px drafting grid ─── */
+  --surface-pattern:
+    linear-gradient(rgba(120, 200, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 200, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(120, 200, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 200, 255, 0.04) 1px, transparent 1px);
+  --surface-pattern-size: 240px 240px, 240px 240px, 60px 60px, 60px 60px;
+}

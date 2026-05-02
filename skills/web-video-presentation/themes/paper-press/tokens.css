@@ -1,0 +1,65 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · paper-press
+ *   Editorial daylight twin of midnight-press. Warm cream paper, hot
+ *   orange accent, subtle film grain (multiply blend) so the surface
+ *   feels printed rather than digital.
+ *
+ *   character knobs:
+ *     • hero numbers   — italic editorial serif
+ *     • rule           — 1px solid faint paper line
+ *     • card           — refined, paper-lift shadow
+ *     • surface        — multiply paper grain
+ *     • motion         — slow + cinematic
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #d8cfb8;
+  --surface:      #efe7d6;
+  --surface-2:    #f5f0e5;
+  --surface-3:    #ece4d2;
+  --text:         #1a1714;
+  --text-2:       #2c2823;
+  --text-mute:    #6b685e;
+  --text-faint:   #98948a;
+  --rule:         #d4ccba;
+  --accent:       #ff4a2b;
+  --accent-soft:  rgba(255, 74, 43, 0.10);
+  --accent-glow:  rgba(255, 74, 43, 0.30);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-display-en: "Instrument Serif", "GT Sectra", "Playfair Display", Georgia, serif;
+  --font-body:       "Manrope", "Inter", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "ss01", "cv11", "tnum";
+
+  /* ─── motion: slow & cinematic ─── */
+  --dur-base:       700ms;
+  --dur-slow:       1100ms;
+  --dur-cinematic:  1600ms;
+
+  /* ─── design identity ─── */
+  --r-card:        var(--r-sm);
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   italic;
+  --hero-num-weight:  400;
+  --hero-num-track:   -0.025em;
+  --stage-pad-x:   140px;
+  --stage-pad-y:   100px;
+  --card-shadow:
+    0 1px 0 var(--rule),
+    0 24px 60px rgba(40, 30, 15, 0.18);
+  --shadow-stage:
+    0 60px 160px rgba(40, 30, 15, 0.35),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+
+  /* ─── decoration: paper grain (multiply on the stage) ─── */
+  --surface-pattern:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  --surface-pattern-size: 280px 280px;
+  --surface-pattern-blend: multiply;
+  --surface-pattern-opacity: 0.45;
+}

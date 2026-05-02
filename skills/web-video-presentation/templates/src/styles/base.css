@@ -1,0 +1,428 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * base.css — design system for the web-video-presentation skill.
+ *
+ * This file owns the "shape" of the system: type scale, spacing scale,
+ * radius / border / shadow ladders, layout primitives, and component
+ * primitives. Themes (themes/<id>/tokens.css) own COLOR, FONTS, MOTION
+ * timings, and decorative textures.
+ *
+ * Anything here marked `var(--something, default)` can be overridden by
+ * a theme. Themes that don't override get sane defaults so chapters
+ * never break on a sparsely-defined theme.
+ * ───────────────────────────────────────────────────────────────────── */
+
+/* ─── 0. Reset ─── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+img, svg, video { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; }
+
+/* ─── 1. Body defaults (theme palette + features applied here) ─── */
+body {
+  font-family: var(--font-display-cn);
+  color: var(--text);
+  background: var(--shell);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  text-wrap: pretty;
+  /* OpenType feature settings (themes can override the value) */
+  font-feature-settings: var(--font-features, "tnum", "ss01");
+  letter-spacing: var(--track-snug, -0.005em);
+  cursor: default;
+}
+::selection { background: var(--accent); color: var(--surface); }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 2. Design tokens — defaults for things themes RARELY need to change.
+ *    A theme can override any of these in its tokens.css.
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ── Type scale (clamp-based; theme can override individual sizes) ── */
+  --t-mega:        clamp(220px, 18vw, 320px);
+  --t-display-1:   clamp(140px, 11vw, 200px);
+  --t-display-2:   clamp(80px, 7vw, 128px);
+  --t-h1:          clamp(56px, 5vw, 88px);
+  --t-h2:          clamp(40px, 3.6vw, 60px);
+  --t-h3:          clamp(28px, 2.4vw, 40px);
+  --t-body-l:      28px;
+  --t-body:        20px;
+  --t-cap:         14px;
+  --t-micro:       12px;
+
+  /* ── Tracking presets (themes lean on these) ── */
+  --track-tight:   -0.025em;   /* large serif display */
+  --track-snug:    -0.005em;   /* body */
+  --track-normal:   0;
+  --track-loose:    0.04em;    /* small caps copy */
+  --track-caps:     0.22em;    /* mono uppercase labels */
+
+  /* ── Spacing scale (4-pt rhythm) ── */
+  --space-1:    4px;
+  --space-2:    8px;
+  --space-3:    12px;
+  --space-4:    16px;
+  --space-5:    24px;
+  --space-6:    32px;
+  --space-7:    48px;
+  --space-8:    64px;
+  --space-9:    96px;
+  --space-10:   120px;
+  --space-11:   160px;
+
+  /* ── Stage padding (theme can dial density) ── */
+  --stage-pad-x: 96px;
+  --stage-pad-y: 80px;
+
+  /* ── Radius scale ── */
+  --r-flat:    0;
+  --r-xs:      4px;
+  --r-sm:      8px;
+  --r-md:      16px;
+  --r-lg:      24px;
+  --r-xl:      32px;
+  --r-pill:    999px;
+  /* "default card radius" — theme sets identity (sharp / soft / blob) */
+  --r-card:    var(--r-md);
+
+  /* ── Border weights ── */
+  --bw-1:      1px;
+  --bw-2:      2px;
+  --bw-4:      4px;
+  --bw-8:      8px;
+  /* "default rule" — theme sets identity (hairline / thick / dashed) */
+  --rule-w:        1px;
+  --rule-style:    solid;
+
+  /* ── Motion (themes can retune personality) ── */
+  --ease-quart:    cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-expo:     cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-soft:     cubic-bezier(0.4, 0, 0.1, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-instant:    120ms;
+  --dur-quick:      280ms;
+  --dur-base:       600ms;
+  --dur-slow:       900ms;
+  --dur-cinematic:  1400ms;
+
+  /* ── Hero number style (themes redefine for terminal / chunky / chalk) ── */
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   italic;
+  --hero-num-weight:  400;
+  --hero-num-track:   var(--track-tight);
+
+  /* ── Shadow recipes (themes can redefine for paper / glow / flat) ── */
+  --shadow-card:
+    0 30px 80px rgba(0, 0, 0, 0.45),
+    0 6px 20px rgba(0, 0, 0, 0.35);
+  --shadow-paper:
+    0 1px 0 var(--rule),
+    0 24px 60px rgba(0, 0, 0, 0.18);
+  --shadow-glow:    0 0 40px var(--accent-glow, transparent);
+  --shadow-stage:
+    0 60px 160px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 3. Stage chrome — letterbox + 16:9 fitter + raw 1920×1080 frame.
+ *    The fitter is sized to ACTUAL visible px so flex-centering is exact.
+ * ───────────────────────────────────────────────────────────────────── */
+.app-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--shell);
+  background-image: var(--shell-pattern, none);
+  background-size: var(--shell-pattern-size, auto);
+  background-attachment: var(--shell-pattern-attachment, scroll);
+}
+.stage-fitter {
+  position: relative;
+  /* width / height are set inline by Stage.tsx (1920*scale × 1080*scale) */
+  isolation: isolate;
+  filter: var(--stage-filter, none);
+}
+.stage-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+  background: var(--surface);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-stage);
+  border: var(--stage-border, none);
+  /* radius on the LIVE stage gives editorial / keynote softness;
+     theme can disable with --r-stage: 0 */
+  border-radius: var(--r-stage, 0);
+}
+
+/* OPTIONAL pattern layer drawn ON the stage so screen recordings catch it */
+.stage-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--surface-pattern, none);
+  background-size: var(--surface-pattern-size, auto);
+  background-repeat: var(--surface-pattern-repeat, repeat);
+  mix-blend-mode: var(--surface-pattern-blend, normal);
+  opacity: var(--surface-pattern-opacity, 1);
+  z-index: 1;
+}
+/* OPTIONAL radial vignette overlay (chalkboard / cinematic edges) */
+.stage-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--surface-vignette, none);
+  z-index: 1;
+}
+
+/* every chapter root */
+.scene { position: absolute; inset: 0; z-index: 2; }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 4. Type primitives — chapters compose with these instead of hard sizes.
+ * ───────────────────────────────────────────────────────────────────── */
+.serif-cn {
+  font-family: var(--font-display-cn);
+  font-weight: 700;
+  font-style: normal;          /* prevent inherited italic on CJK */
+  letter-spacing: var(--track-tight);
+  text-shadow: var(--text-shadow, none);
+}
+.serif-it {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: var(--track-tight);
+  text-shadow: var(--text-shadow, none);
+}
+.display-en {
+  font-family: var(--font-display-en);
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: var(--track-tight);
+  text-shadow: var(--text-shadow, none);
+}
+.mono { font-family: var(--font-mono); }
+
+/* small uppercase mono label — the workhorse caption / kicker */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 500;
+}
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* hero figure / hero number — theme controls font, style, weight */
+.hero-num {
+  font-family: var(--hero-num-font);
+  font-style: var(--hero-num-style);
+  font-weight: var(--hero-num-weight);
+  letter-spacing: var(--hero-num-track);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.9;
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 5. Layout primitives.
+ * ───────────────────────────────────────────────────────────────────── */
+.scene-pad {
+  position: absolute;
+  inset: 0;
+  padding: var(--stage-pad-y) var(--stage-pad-x);
+  display: flex;
+  flex-direction: column;
+}
+.stack { display: flex; flex-direction: column; }
+.row   { display: flex; flex-direction: row; }
+.fill  { flex: 1; }
+.center { display: grid; place-items: center; }
+
+/* hairline divider — theme controls weight + style (solid / dashed) */
+.rule {
+  height: 0;
+  border: 0;
+  border-top: var(--rule-w) var(--rule-style) var(--rule);
+  width: 100%;
+  margin: 0;
+}
+.rule-accent {
+  height: 0;
+  border: 0;
+  border-top: var(--bw-2) solid var(--accent);
+  width: 100%;
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 6. Component primitives (reusable visual building blocks).
+ * ───────────────────────────────────────────────────────────────────── */
+
+/* status dot — theme can swap symbol via --accent-mark-content */
+.dot-accent {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent-glow);
+  vertical-align: middle;
+}
+
+/* corner registration mark (top-left) — film leader / magazine folio */
+.corner-mark {
+  position: absolute;
+  top: var(--space-7);
+  left: var(--space-9);
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--text-mute);
+  pointer-events: none;
+}
+.corner-mark .ord {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--text);
+}
+.corner-mark .slash { opacity: 0.3; font-size: 16px; }
+
+/* bottom-right next-step hint — fades on first step */
+.click-cue {
+  position: absolute;
+  right: var(--space-9);
+  bottom: var(--space-7);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--text-mute);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-quart);
+  pointer-events: none;
+}
+.click-cue.visible { opacity: 0.6; }
+.click-cue .arrow {
+  display: inline-block;
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 20px;
+  letter-spacing: 0;
+  animation: nudge 2.4s var(--ease-soft) infinite;
+}
+@keyframes nudge {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(6px); }
+}
+
+/* mono badge / pill */
+.badge-mono {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px 10px;
+  border: var(--bw-1) solid var(--rule);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.badge-mono.is-accent { color: var(--accent); border-color: var(--accent); }
+
+/* pull-quote — left-bordered editorial block */
+.pull-quote {
+  border-left: var(--bw-4) solid var(--accent);
+  padding: var(--space-3) 0 var(--space-3) var(--space-5);
+  font-family: var(--font-display-cn);
+  font-weight: 700;
+  font-size: var(--t-h2);
+  line-height: 1.3;
+  color: var(--text);
+}
+
+/* card surfaces — theme decides if they're paper-lifted, glass, or flat */
+.card {
+  background: var(--surface-2);
+  border: var(--bw-1) solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow: var(--card-shadow, none);
+}
+.card-glass {
+  background: var(--card-glass-bg, rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--bw-1) solid var(--card-glass-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--r-card);
+}
+
+/* table-row hairline */
+.tr-rule {
+  border-top: var(--rule-w) var(--rule-style) var(--rule);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 7. Magazine-masthead helpers (used heavily by editorial themes).
+ * ───────────────────────────────────────────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  width: 100%;
+}
+.masthead .brand {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--text);
+  letter-spacing: 0;
+}
+.masthead .issue {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 8. State helpers.
+ * ───────────────────────────────────────────────────────────────────── */
+.no-advance, [data-no-advance] { /* nothing visual; used by Stage click handler */ }
+.fade-in { animation: fade-in var(--dur-base) var(--ease-quart) both; }
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

@@ -1,0 +1,71 @@
+.pb-hover {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: auto;
+}
+.pb {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  padding: 12px 20px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity var(--dur-base) var(--ease-quart),
+    transform var(--dur-base) var(--ease-quart);
+}
+.pb-hover:hover .pb {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pb-chapter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-mute);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: color var(--dur-quick), border-color var(--dur-quick);
+}
+.pb-chapter:hover {
+  color: var(--text);
+}
+.pb-active {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.pb-num {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pb-pips {
+  display: flex;
+  gap: 3px;
+  margin-left: 8px;
+}
+.pb-pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  cursor: pointer;
+  transition: background var(--dur-quick);
+}
+.pb-pip-on {
+  background: var(--accent);
+}

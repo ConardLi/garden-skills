@@ -1,0 +1,19 @@
+{
+  "id": "terminal-green",
+  "name": "Terminal Green",
+  "nameZh": "终端绿",
+  "description": "True-black backdrop with phosphor-green accent and JetBrains Mono everywhere. Matrix / hacker / 80s terminal vibe — best for technical demos and CLI walkthroughs.",
+  "descriptionZh": "纯黑底 + 磷光绿强调色, 全程等宽字体. Matrix 黑客 / 80 年代终端感, 最适合技术演示与 CLI 教程.",
+  "mood": ["dark", "terminal", "hacker", "monospace", "phosphor", "technical"],
+  "bestFor": ["CLI 工具教程", "黑客 / 安全话题", "技术演示", "命令行实操", "复古技术致敬"],
+  "motionHints": "打字机逐字、命令行 prompt 闪烁、扫描线、磷光残影；终端味、精确、低快感。**禁**柔光、衬线字体、温暖滤镜",
+  "motionDuration": "fast",
+  "typeScale": "default",
+  "allowEmoji": false,
+  "preview": {
+    "shell": "#050a05",
+    "surface": "#0a0f0a",
+    "text": "#d3f0d3",
+    "accent": "#00ff88"
+  }
+}

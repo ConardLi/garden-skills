@@ -1,0 +1,19 @@
+{
+  "id": "chalk-garden",
+  "name": "Chalk Garden",
+  "nameZh": "粉笔花园",
+  "description": "Dark slate chalkboard backdrop with handwritten Patrick Hand typography and a chalk-yellow accent. Friendly classroom / explainer vibe.",
+  "descriptionZh": "深色石板底 + Patrick Hand 手写字体 + 粉笔黄强调色. 教室 / 课堂讲解风.",
+  "mood": ["dark", "handwritten", "classroom", "playful", "chalk", "explainer"],
+  "bestFor": ["科普讲解", "教学课堂", "知识分享", "亲切口吻视频", "面向初学者"],
+  "motionHints": "粉笔自绘下划线、手写擦除、轻微抖动、stagger 慢速；亲切、低正经、可爱。**禁**冷峻几何、机械精度、企业风渐变",
+  "motionDuration": "default",
+  "typeScale": "default",
+  "allowEmoji": false,
+  "preview": {
+    "shell": "#1a1a1a",
+    "surface": "#1e1e24",
+    "text": "#f4f4f5",
+    "accent": "#fde047"
+  }
+}

@@ -1,0 +1,67 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · warm-keynote
+ *   Modern SaaS keynote with editorial warmth: warm cream canvas + sepia
+ *   ink + teal accent + huge rounded glass slabs. Inter for everything,
+ *   font-black for hero numbers (chunky modernist).
+ *
+ *   character knobs:
+ *     • hero numbers   — chunky black sans (font-weight 900)
+ *     • rule           — 1px solid neutral hairline + 4px accent rule
+ *     • card           — large radius (24-32px), soft warm shadow
+ *     • surface        — warm 40px paper grid
+ *     • motion         — springy with slight overshoot
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #f5efe1;
+  --surface:      #fdfbf7;
+  --surface-2:    #ffffff;
+  --surface-3:    #f0e9d8;
+  --text:         #43302b;
+  --text-2:       #5b443d;
+  --text-mute:    #8a7969;
+  --text-faint:   #b8a994;
+  --rule:         #e6dcc4;
+  --accent:       #14b8a6;
+  --accent-soft:  rgba(20, 184, 166, 0.10);
+  --accent-glow:  rgba(20, 184, 166, 0.45);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
+  --font-display-en: "Inter", "SF Pro Display", -apple-system, sans-serif;
+  --font-body:       "Inter", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "cv11", "ss01", "tnum";
+
+  /* ─── motion: springy keynote ─── */
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-base:       500ms;
+  --dur-slow:       800ms;
+  --dur-cinematic:  1200ms;
+
+  /* ─── design identity: glass slabs ─── */
+  --r-card:        var(--r-xl);     /* 32px keynote slabs */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   normal;
+  --hero-num-weight:  900;
+  --hero-num-track:   -0.04em;
+  --stage-pad-x:   100px;
+  --stage-pad-y:   80px;
+  --card-shadow:
+    0 1px 2px rgba(67, 48, 43, 0.04),
+    0 24px 60px rgba(67, 48, 43, 0.10);
+  --card-glass-bg:     rgba(255, 255, 255, 0.85);
+  --card-glass-border: rgba(255, 255, 255, 0.9);
+  --shadow-stage:
+    0 60px 160px rgba(67, 48, 43, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.03);
+
+  /* ─── decoration: warm 40px grid ─── */
+  --surface-pattern:
+    linear-gradient(rgba(190, 175, 150, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(190, 175, 150, 0.18) 1px, transparent 1px);
+  --surface-pattern-size: 40px 40px;
+}

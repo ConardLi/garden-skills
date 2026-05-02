@@ -1,0 +1,56 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · midnight-press
+ *   Cinematic editorial dark. Warm espresso instead of pure black, single
+ *   hot orange accent, Instrument-Serif italic English vs Noto-Serif-SC
+ *   Chinese. Magazine-cover gravitas at night.
+ *
+ *   character knobs:
+ *     • hero numbers   — italic editorial serif
+ *     • rule           — 1px solid warm hairline
+ *     • card radius    — sharp (no radius on stage; small radius on cards)
+ *     • surface        — warm vignette only, no grain
+ *     • motion         — slow + cinematic (1100ms reveals)
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #0d0b09;
+  --surface:      #1a1714;
+  --surface-2:    #231f1a;
+  --surface-3:    #2c2823;
+  --text:         #f5f0e5;
+  --text-2:       #ece4d2;
+  --text-mute:    #7a7972;
+  --text-faint:   #4a443e;
+  --rule:         #2f2a25;
+  --accent:       #ff4a2b;
+  --accent-soft:  rgba(255, 74, 43, 0.14);
+  --accent-glow:  rgba(255, 74, 43, 0.55);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-display-en: "Instrument Serif", "GT Sectra", "Playfair Display", Georgia, serif;
+  --font-body:       "Manrope", "Inter", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "ss01", "cv11", "tnum";
+
+  /* ─── motion: slow & cinematic ─── */
+  --dur-base:       700ms;
+  --dur-slow:       1100ms;
+  --dur-cinematic:  1600ms;
+
+  /* ─── design identity ─── */
+  --r-card:        var(--r-sm);     /* refined, almost flat */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   italic;
+  --hero-num-weight:  400;
+  --hero-num-track:   -0.025em;
+  --stage-pad-x:   140px;
+  --stage-pad-y:   100px;
+
+  /* ─── decoration: warm vignette, no grain ─── */
+  --surface-vignette:
+    radial-gradient(circle at 50% 60%, transparent 0%, rgba(0, 0, 0, 0.45) 100%);
+}

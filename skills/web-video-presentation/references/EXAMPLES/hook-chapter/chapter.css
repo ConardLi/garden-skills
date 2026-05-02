@@ -1,0 +1,197 @@
+/* ─────────────────────────────────────────────────────────────────
+ * hook-chapter · 完整章节示例样式
+ * 默认绑 newsroom 主题。所有视觉属性走语义 token，零硬编码。
+ * ───────────────────────────────────────────────────────────────── */
+
+.hk-scene {
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── kicker ── */
+.hk-kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--t-cue);
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.hk-kicker-line {
+  width: 64px;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* ── step 1 三 ghost ── */
+.hk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  align-items: center;
+}
+.hk-ghost {
+  aspect-ratio: 16 / 9;
+  border: var(--rule-w) dashed var(--rule);
+  border-radius: var(--r-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: var(--space-4);
+  background: var(--surface);
+}
+.hk-ghost-num {
+  font-family: var(--font-mono);
+  font-size: var(--t-h2);
+  color: var(--text-mute);
+  letter-spacing: 0.08em;
+}
+.hk-ghost-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-cue);
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  align-self: end;
+}
+
+/* ── step 2-4 单图独占 ── */
+.hk-solo-frame {
+  width: 78%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.hk-solo-img-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  background: var(--surface-2);
+}
+.hk-solo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hk-stamp {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  border: 3px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display-en);
+  font-size: var(--t-h3);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  transform: rotate(-8deg);
+  background: color-mix(in oklch, var(--surface) 60%, transparent);
+  animation: hk-stamp-drop var(--dur-base) var(--ease-quart) backwards;
+  animation-delay: 600ms;
+}
+@keyframes hk-stamp-drop {
+  0%   { transform: rotate(-8deg) scale(2.4); opacity: 0; }
+  60%  { transform: rotate(-8deg) scale(0.92); opacity: 1; }
+  100% { transform: rotate(-8deg) scale(1); }
+}
+.hk-solo-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--t-cue);
+  color: var(--text-2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hk-solo-label  { color: var(--accent); }
+.hk-solo-caption {
+  font-family: var(--font-display-cn);
+  font-size: var(--t-body);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+/* ── step 5 takeover ── */
+.hk-takeover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  justify-content: center;
+}
+.hk-mini-row {
+  display: flex;
+  gap: var(--space-3);
+}
+.hk-mini {
+  width: 140px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: calc(var(--r-card) * 0.5);
+  box-shadow: var(--shadow-card);
+  animation: hk-mini-shrink var(--dur-base) var(--ease-quart) backwards;
+}
+@keyframes hk-mini-shrink {
+  from { transform: scale(2.4); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+.hk-accent-bar {
+  width: 60%;
+  height: 4px;
+  background: var(--accent);
+  animation: hk-bar-grow 700ms var(--ease-quart) 250ms backwards;
+}
+@keyframes hk-bar-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.hk-hero {
+  margin: 0;
+  font-family: var(--font-display-en);
+  font-size: var(--t-display-1);
+  letter-spacing: -0.025em;
+  color: var(--text);
+  line-height: 0.95;
+}
+
+/* ── step 6 close + brush ── */
+.hk-close {
+  display: grid;
+  place-items: center;
+}
+.hk-quote-wrap {
+  position: relative;
+  display: inline-block;
+}
+.hk-quote {
+  margin: 0;
+  font-family: var(--font-display-cn);
+  font-size: var(--t-display-2);
+  color: var(--text);
+}
+.hk-brush {
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: 50%;
+  height: 0.18em;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0) translateY(-50%);
+  animation: hk-brush-strike 700ms var(--ease-expo) 500ms forwards;
+}
+@keyframes hk-brush-strike {
+  to { transform: scaleX(1) translateY(-50%); }
+}

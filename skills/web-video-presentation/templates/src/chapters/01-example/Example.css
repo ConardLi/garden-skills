@@ -1,0 +1,80 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Example chapter — uses ONLY semantic tokens from the active theme.
+ * Replace this file freely; it's just demo content.
+ * ───────────────────────────────────────────────────────────────────── */
+
+.ex-scene { color: var(--text); }
+
+.ex-em { color: var(--accent); }
+
+/* ─── step 0: cover ─── */
+.ex-cover-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-5);
+  padding-top: var(--space-7);
+}
+.ex-cover-h {
+  font-size: var(--t-display-2);
+  line-height: 1.05;
+  margin: 0;
+  max-width: 24ch;
+}
+.ex-cover-foot {
+  margin-top: var(--space-7);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ─── step 1: split ─── */
+.ex-split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: var(--space-9);
+  padding-top: var(--space-7);
+  align-items: start;
+}
+.ex-split-num {
+  font-size: var(--t-display-1);
+}
+.ex-split-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.ex-split-h {
+  font-size: var(--t-h1);
+  line-height: 1.1;
+  margin: 0;
+}
+.ex-split-p {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 56ch;
+  margin: 0;
+}
+
+/* ─── step 2: close pull-quote ─── */
+.ex-close { padding: 0; }
+.ex-close-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--stage-pad-y) var(--stage-pad-x);
+  gap: var(--space-5);
+}
+.ex-quote {
+  font-size: var(--t-display-2);
+  line-height: 1.15;
+  max-width: 22ch;
+}
+.ex-close-foot {
+  margin-top: var(--space-7);
+}

@@ -4,10 +4,19 @@
     "name": "ConardLi"
   },
   "metadata": {
-    "description": "A curated collection of agent skills covering visual web design, local knowledge-base retrieval, and GPT Image 2 image generation.",
-    "version": "0.2.0"
+    "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, and GPT Image 2 image generation.",
+    "version": "0.3.0"
   },
   "plugins": [
+    {
+      "name": "presentation-skills",
+      "description": "Skills for click-driven web video presentations and screen-recorded explainers.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/web-video-presentation"
+      ]
+    },
     {
       "name": "web-design-skills",
       "description": "Skills for high-quality visual / front-end design work.",

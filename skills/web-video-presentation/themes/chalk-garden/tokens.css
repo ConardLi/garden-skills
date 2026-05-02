@@ -1,0 +1,64 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · chalk-garden
+ *   Handwritten classroom: dark slate chalkboard, Patrick Hand body,
+ *   chalk-yellow accent, faint film grain + radial vignette so the
+ *   whole stage feels like a 35mm photo of a real chalkboard.
+ *
+ *   character knobs:
+ *     • hero numbers   — chunky chalk-handwritten
+ *     • rule           — 2px DASHED chalk
+ *     • card           — soft 16px radius, slight rotation in chapter
+ *     • surface        — film grain (overlay) + edge vignette
+ *     • motion         — soft, hand-drawn pace
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #16171c;
+  --surface:      #1e1e24;
+  --surface-2:    #28282f;
+  --surface-3:    #34343c;
+  --text:         #f4f4f5;
+  --text-2:       #d4d4d8;
+  --text-mute:    #a1a1aa;
+  --text-faint:   #71717a;
+  --rule:         rgba(255, 255, 255, 0.20);
+  --accent:       #facc15;
+  --accent-soft:  rgba(250, 204, 21, 0.14);
+  --accent-glow:  rgba(250, 204, 21, 0.55);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Patrick Hand", "Noto Serif SC", cursive, serif;
+  --font-display-en: "Patrick Hand", "Caveat", cursive;
+  --font-body:       "Patrick Hand", "Noto Sans SC", sans-serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "tnum";
+
+  /* ─── motion: hand-drawn pace ─── */
+  --dur-base:       650ms;
+  --dur-slow:       950ms;
+  --dur-cinematic:  1400ms;
+
+  /* ─── design identity: chalkboard ─── */
+  --r-card:        var(--r-md);
+  --r-stage:       0;
+  --rule-w:        2px;
+  --rule-style:    dashed;       /* SIGNATURE — every divider is dashed */
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   normal;
+  --hero-num-weight:  400;
+  --hero-num-track:   0;
+  --stage-pad-x:   120px;
+  --stage-pad-y:   80px;
+  --text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 8px rgba(255, 255, 255, 0.10);
+
+  /* ─── decoration: film grain + vignette ─── */
+  --surface-pattern:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+  --surface-pattern-size: 240px 240px;
+  --surface-pattern-blend: overlay;
+  --surface-pattern-opacity: 0.20;
+  --surface-vignette:
+    radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+}
