@@ -4,27 +4,7 @@
 
 **花园老师的开源 [Agent Skills](https://support.claude.com/en/articles/12512176-what-are-skills) 集合，面向 Claude Code、Cursor、Codex 等所有支持 `SKILL.md` 格式的 AI 编程代理。**
 
-[![License: MIT](https://img.shields.io/github/license/ConardLi/web-design-skill?style=flat-square&color=blue)](./LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/ConardLi/web-design-skill?style=flat-square)](https://github.com/ConardLi/web-design-skill/stargazers)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
-[![Skills count](https://img.shields.io/badge/skills-4-orange?style=flat-square)](#集合内的-skills)
-[![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
-
-[English](./README.md) · [中文文档](./README.zh-CN.md)
-
-</div>
-
----
-
-## 目录
-
-| 总览 | Skills | 安装 |
-|---|---|---|
-| [集合内的 Skills](#集合内的-skills)<br>[兼容性](#兼容性) | [Skill 展示区](#集合内的-skills)<br>[Skill 的标准结构](#skill-的标准结构)<br>[仓库结构](#仓库结构) | [Claude Code 插件市场](#方式-a--claude-code-插件市场)<br>[手动拷贝](#方式-b--手动拷贝到项目)<br>[Git Submodule](#方式-c--git-submodule) |
-
----
-
-## 集合内的 Skills
+<a id="skills-gallery"></a>
 
 <table>
 <tr>
@@ -52,6 +32,26 @@
 </td>
 </tr>
 </table>
+
+[![License: MIT](https://img.shields.io/github/license/ConardLi/web-design-skill?style=flat-square&color=blue)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/ConardLi/web-design-skill?style=flat-square)](https://github.com/ConardLi/web-design-skill/stargazers)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
+[![Skills count](https://img.shields.io/badge/skills-4-orange?style=flat-square)](#skills-gallery)
+[![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
+
+[English](./README.md) · [中文文档](./README.zh-CN.md)
+
+</div>
+
+---
+
+## 目录
+
+| 总览 | Skills | 安装 |
+|---|---|---|
+| [Skill 展示区](#skills-gallery)<br>[兼容性](#兼容性) | [web-video-presentation](#web-video-presentation)<br>[web-design-engineer](#web-design-engineer)<br>[gpt-image-2](#gpt-image-2)<br>[kb-retriever](#kb-retriever) | [Claude Code 插件市场](#方式-a--claude-code-插件市场)<br>[手动拷贝](#方式-b--手动拷贝到项目)<br>[Git Submodule](#方式-c--git-submodule) |
+
+---
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 

@@ -4,27 +4,7 @@
 
 **A curated collection of production-ready [Agent Skills](https://support.claude.com/en/articles/12512176-what-are-skills) for Claude Code, Cursor, Codex, and other AI coding agents.**
 
-[![License: MIT](https://img.shields.io/github/license/ConardLi/web-design-skill?style=flat-square&color=blue)](./LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/ConardLi/web-design-skill?style=flat-square)](https://github.com/ConardLi/web-design-skill/stargazers)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-4-orange?style=flat-square)](#whats-inside)
-[![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
-
-[English](./README.md) · [中文文档](./README.zh-CN.md)
-
-</div>
-
----
-
-## Table of contents
-
-| Overview | Skills | Install |
-|---|---|---|
-| [What's inside](#whats-inside)<br>[Compatibility](#compatibility) | [Skill gallery](#whats-inside)<br>[Anatomy of a Skill](#anatomy-of-a-skill)<br>[Repository layout](#repository-layout) | [Claude Code plugin marketplace](#option-a--claude-code-plugin-marketplace)<br>[Manual copy](#option-b--manual-copy-into-your-project)<br>[Git submodule](#option-c--git-submodule) |
-
----
-
-## What's inside
+<a id="skills-gallery"></a>
 
 <table>
 <tr>
@@ -52,6 +32,26 @@
 </td>
 </tr>
 </table>
+
+[![License: MIT](https://img.shields.io/github/license/ConardLi/web-design-skill?style=flat-square&color=blue)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/ConardLi/web-design-skill?style=flat-square)](https://github.com/ConardLi/web-design-skill/stargazers)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
+[![Skills count](https://img.shields.io/badge/skills-4-orange?style=flat-square)](#skills-gallery)
+[![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
+
+[English](./README.md) · [中文文档](./README.zh-CN.md)
+
+</div>
+
+---
+
+## Table of contents
+
+| Overview | Skills | Install |
+|---|---|---|
+| [Skill gallery](#skills-gallery)<br>[Compatibility](#compatibility) | [web-video-presentation](#web-video-presentation)<br>[web-design-engineer](#web-design-engineer)<br>[gpt-image-2](#gpt-image-2)<br>[kb-retriever](#kb-retriever) | [Claude Code plugin marketplace](#option-a--claude-code-plugin-marketplace)<br>[Manual copy](#option-b--manual-copy-into-your-project)<br>[Git submodule](#option-c--git-submodule) |
+
+---
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 
