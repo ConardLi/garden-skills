@@ -333,10 +333,18 @@ AI 写中文时有强迫症式的整齐感。**口播比文字更怕排比** —
 
 **改完再念。直到三段念下来都自然为止**。
 
-### 5. 进入 outline
+### 5. 在同一次工作里产出 outline
 
-OK 之后进入 [`OUTLINE-FORMAT.md`](OUTLINE-FORMAT.md) 把它变成章节
-规划。
+`script.md` 落盘 + 自检通过后，**不要立即停下来等用户**——按
+[`OUTLINE-FORMAT.md`](OUTLINE-FORMAT.md) 在**同一次思考**里继续产出
+`outline.md`（章节切分 + 每步屏幕内容 + 章节级信息池），然后再进入
+Checkpoint Plan 让用户一次对齐 5 件事（稿子 / outline / 主题 / 素材
+/ 开发模式）。
+
+> **流程变化提醒**：旧流程把 script / outline 切成两个 checkpoint，
+> 新版合并为一个（详见 SKILL.md「Phase 1.2 一次产出」）。理由是 outline
+> 不再写动画后，它的依赖只剩"稿子切节拍 + article 抽信息池"，可以
+> 和稿子一起做完。
 
 ---
 

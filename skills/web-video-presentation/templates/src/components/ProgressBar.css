@@ -17,10 +17,27 @@
   border-radius: 12px 12px 0 0;
   display: flex;
   gap: 6px;
+  /* Adapt to content; if it would exceed the viewport, scroll horizontally
+     instead of squeezing chapter pills / step pips. */
+  max-width: calc(100vw - 32px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-faint) transparent;
   opacity: 0;
   transform: translateY(100%);
   transition: opacity var(--dur-base) var(--ease-quart),
     transform var(--dur-base) var(--ease-quart);
+}
+.pb::-webkit-scrollbar {
+  height: 4px;
+}
+.pb::-webkit-scrollbar-track {
+  background: transparent;
+}
+.pb::-webkit-scrollbar-thumb {
+  background: var(--text-faint);
+  border-radius: 2px;
 }
 .pb-hover:hover .pb {
   opacity: 1;
@@ -28,6 +45,7 @@
 }
 
 .pb-chapter {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -54,11 +72,13 @@
 }
 
 .pb-pips {
+  flex-shrink: 0;
   display: flex;
   gap: 3px;
   margin-left: 8px;
 }
 .pb-pip {
+  flex-shrink: 0;
   width: 6px;
   height: 6px;
   border-radius: 50%;

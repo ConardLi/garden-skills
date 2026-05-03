@@ -244,10 +244,6 @@ cp -r monochrome-print my-theme
   "descriptionZh": "一句中文描述它的气质。",
   "mood": ["dark", "moody", "futuristic"],
   "bestFor": ["<匹配场景 1>", "<匹配场景 2>"],
-  "motionHints": "<动效气质摘要 + 禁用动作>",
-  "motionDuration": "default",
-  "typeScale": "default",
-  "allowEmoji": false,
   "preview": {
     "shell": "#080808",
     "surface": "#101010",
@@ -264,18 +260,17 @@ cp -r monochrome-print my-theme
 | 字段 | 必填 | 取值 | 决定什么 |
 |---|---|---|---|
 | `id` / `name` / `nameZh` | ✓ | 字符串 | 主题标识 |
-| `description` / `descriptionZh` | ✓ | 一句话 | A1 列清单时的简介 |
+| `description` / `descriptionZh` | ✓ | 一句话 | Checkpoint Plan 列清单时的简介 |
 | `mood` | ✓ | 标签数组 | 模糊匹配用 |
-| `bestFor` | ✓ | 场景数组 | A1 智能推荐时的命中点 |
-| `motionHints` | ✓ | 一段文字 | 动效该 / 禁用什么 —— **outline 阶段动画选型必须扣这条** |
-| `motionDuration` | ✓ | `slow` / `default` / `fast` | 主导动作时长。`slow` = 3~4s（电影感）/ `default` = 0.8~1.5s / `fast` = 0.4~0.8s（砸下、终端） |
-| `typeScale` | ✓ | `loud` / `default` / `quiet` | hero 字号节奏。`loud` = hero 144px+（报头 / 包豪斯）/ `default` = ≥ 80px / `quiet` = 60px 起（极简印刷） |
-| `allowEmoji` | ✓ | bool | 装饰性 emoji 是否允许。默认 `false`；vlog / zine 风可设 `true` |
-| `preview` | ✓ | 4 色对象 | A1 列清单时的视觉预览 |
+| `bestFor` | ✓ | 场景数组 | Checkpoint Plan 智能推荐时的命中点 |
+| `preview` | ✓ | 4 色对象 | Checkpoint Plan 列清单时的视觉预览 |
 
-> **agent 在 Phase 2.4 写章节时会读这 4 个气质字段**（`motionHints` /
-> `motionDuration` / `typeScale` / `allowEmoji`），决定动作选型 + 时长
-> + 字号 + emoji 是否允许。**4 个字段都必填**，不要给空值。
+> **主题不再约束动画选型 / 时长 / 字号 / emoji**。视觉风格由 `tokens.css`
+> 的颜色 / 字体 / 字号 token 决定，动画 / 节奏 / 视觉演示完全交给 chapter
+> agent 在每章实现时按内容自由发挥，避免主题字段过早限制创造力。
+>
+> 风格审美约束（不要紫粉渐变、不要 emoji 装饰、不要假数据等）由
+> [`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md) 统一规定，与具体主题无关。
 
 ### 4. 用所有 demo 章节测试一遍
 

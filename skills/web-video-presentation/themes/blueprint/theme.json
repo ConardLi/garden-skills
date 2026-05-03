@@ -4,12 +4,21 @@
   "nameZh": "蓝图",
   "description": "Deep navy backdrop with cyan accent and IBM Plex Mono. Engineering blueprint / industrial schematic vibe — best for system architecture and technical breakdowns.",
   "descriptionZh": "深藏青底 + 青色强调色 + IBM Plex Mono. 工程蓝图 / 工业图纸气质, 适合系统架构与技术拆解.",
-  "mood": ["dark", "engineering", "blueprint", "industrial", "technical", "navy"],
-  "bestFor": ["技术架构", "系统拆解", "技术评测", "工程教程", "API / SDK 介绍"],
-  "motionHints": "蓝图线条自绘（stroke-dashoffset）、网格点亮、技术注释浮入、连线动画；理性、冷静、低弹簧。**禁**手写感、玫红、温暖滤镜",
-  "motionDuration": "default",
-  "typeScale": "default",
-  "allowEmoji": false,
+  "mood": [
+    "dark",
+    "engineering",
+    "blueprint",
+    "industrial",
+    "technical",
+    "navy"
+  ],
+  "bestFor": [
+    "技术架构",
+    "系统拆解",
+    "技术评测",
+    "工程教程",
+    "API / SDK 介绍"
+  ],
   "preview": {
     "shell": "#0a121f",
     "surface": "#0e1830",

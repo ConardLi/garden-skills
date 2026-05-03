@@ -3,12 +3,20 @@
 视频章节规划的产出文件。**用户可以直接编辑**，所以格式必须人类友好
 （用 markdown 不用 JSON / YAML）。
 
-> **写 outline 前必读两份源**（双源原则，PRINCIPLES.md 原则 10）：
-> - **`script.md`** —— 决定**节拍**：按 `---` 切节拍，每节拍 1~2 step、
->   估时、hero 标语
-> - **`article.md`** —— 决定**画面信息密度**：找到当前节拍**对应的
->   article 段落**，抽口播省略的细节（数字 / 引用 / 对比 / 案例标签
->   / 引用原话），挂到 step 的画面里
+!重要：阅读此文件后必须继续阅读 [`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md) 的全部内容，了解对网页效果的真实需求，然后再开始编写 outline
+
+> ## ⚠️ outline 是开发计划，不是视觉规划
+>
+> outline 只规划**节奏 + 内容 + 信息密度**：
+>
+> - 章节切分 / 每章 step 数 / 每步估时
+> - 每步屏幕内容（hero / 标语 / 数据 / 列表项）
+> - 章节级**信息池**（从 article 抽的数字 / 引用 / 案例 / 标签）
+
+> **写 outline 前必读**（双源原则，[CHAPTER-CRAFT.md Part 0 原则 10](CHAPTER-CRAFT.md#10-双源原则scriptmd-定节拍--articlemd-定画面密度)）：
+>
+> - **`script.md`** —— 决定**节拍**：按 `---` 切节拍，每节拍 1~2 step、估时
+> - **`article.md`**（如有）—— 决定**画面信息密度**：每章首段抽**信息池**
 
 ---
 
@@ -17,7 +25,7 @@
 ````markdown
 # Video Outline
 
-> **主题**：`<theme-id>`（A1 已选定）—— <motionHints 摘要>。**禁** <主题禁忌摘要>
+> **主题**：`<theme-id>`（Checkpoint Plan 已选定）—— <一句话风格描述>
 > **总时长**：约 <T> 分 <S> 秒（口播 ~<X> 字 ÷ 4 字/秒）
 > **章节数**：<N> 章 / <M> 步
 
@@ -25,36 +33,32 @@
 
 ## 1. <chapter-id> — <章节标题>（<S> steps · ~<T>s）
 
-- **step 1** (~<t>s) — <屏幕上有什么>
-  · 动画：<主导动作> → <伴随动作和顺序关系>；持续微动：<永不停的微动>
-  · 手段：<CSS / SVG / Canvas / filter / JS 实现要点>
-  · article 补：<从原文抽来的 1~3 个口播省略的细节 —— 数字 / 引用 / 对比 / 标签>
+**信息池**（chapter agent 按需挂角标 / 副标 / pull-quote / mono cue）：
+- <类型：数字 / 引用 / 出处 / 案例 / 词义 / 时间 / 对比 / ...>：<内容> —— <来源 article §X / Lxx>
+- ...
 
-- **step 2** (~<t>s) — <屏幕上有什么>
-  · 动画：...
-  · 手段：...
-  · article 补：...
+**开发计划**：
+
+- step 1 (~Ts) — <屏幕内容>
+- step 2 (~Ts) — <关系名前缀，可选>：<屏幕内容>
+- ...
 
 口播节选：
 > <1~3 句节选，对应到 script.md 完整文本>
 
 ---
 
-## 2. <chapter-id> — <章节标题>（<S> steps · ~<T>s）
-...
+## 2. <chapter-id> — ...
 ````
 
 > **关于时长**：outline 里**只**写 step 的 `(~Ts)` 口播估时（音画对齐
-> 用），动画行**不写**具体毫秒 / 秒数。**也不写**"错峰 0.5s"这种具体
-> 错峰量。原因 —— 一旦写死，实现时会被当成强制硬指标照抄，节奏就僵
-> 了。outline 阶段只描述**动作类型 + 顺序关系**（"先 A 再 B 同步 C"），
-> 时长由实现阶段（`CHAPTER-CRAFT.md` Part 2 时长参考）按主题 +
-> 估时综合决定。
+> 用），**绝对不写**动画时长 / 错峰量 / keyframe 数值。这些都在章节开发
+> 阶段决定（[`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md) Part 3 时长参考）。
 
 > **想看具象示例**：
-> - 科技测评类（实测 / 对比 / 跑分） → [`EXAMPLES/case-tech-review/outline-snippet.md`](EXAMPLES/case-tech-review/outline-snippet.md)
 > - 钩子型开场结构 → [`EXAMPLES/hook-chapter/`](EXAMPLES/hook-chapter/)
 > - 列举型章节结构 → [`EXAMPLES/list-reveal/`](EXAMPLES/list-reveal/)
+> - 科技测评类（实测 / 对比 / 跑分） → [`EXAMPLES/case-tech-review/`](EXAMPLES/case-tech-review/)
 
 ---
 
@@ -66,11 +70,11 @@
 
 | 字段 | 必填 | 说明 |
 |---|---|---|
-| **主题** | ✓ | A1 必须已选定。outline 里每步动画选型都要扣这个主题的 `motionHints` |
+| **主题** | ✓ | Checkpoint Plan 必须已选定。chapter agent 实现时按主题颜色 / 字体 token 走，动画 / 节奏 / 视觉演示由章节自由发挥 |
 | **总时长** | ✓ | 估算口播时长（中文 ~ 250 字 / 分钟） |
 | **章节数** | ✓ | `N 章 / M 步` |
 
-### 章节标题：`## N. <id> — <title>（<S> steps）`
+### 章节标题：`## N. <id> — <title>（<S> steps · ~<T>s）`
 
 | 部分 | 规则 |
 |---|---|
@@ -78,145 +82,141 @@
 | `<id>` | **小写 + 连字符**。会成为 React `key` / 文件夹名 (`src/chapters/0N-<id>/`) / 音频子目录 (`public/audio/<id>/`) |
 | `<title>` | 给人看的中文标题。**不会**进 React 代码 |
 | `<S> steps` | 该章 step 总数 |
+| `~<T>s` | 该章口播总估时（中文 ~ 4 字/秒） |
 
 合法 id：`coldopen`、`hook`、`why-good`、`why-good-text-render`。
 不合法：`why_good`（用连字符）、`Hook`（小写）、`第一章`（拉丁字符）。
 
-### Step 列表：每步 **3 行 + 1 行可选**
+### 章节首段「信息池」（**双源原则核心落地**）
+
+每章独立列出从 `article.md` 抽的细节集合，**让 chapter agent 实现每步
+画面时按需取用**——可能挂成右下角 mono 角标 / 副标小字 /
+pull-quote 引用 / 数据浮层。
+
+> **关键设计变化**：旧版 outline 把 article 补放在**每个 step**下。
+> 这导致 chapter agent 机械地给每步右下角都挂 mono 角标 → 装饰过度。
+> 新版降级为**章节级信息池** —— agent 在该章实现时根据每步是否真的
+> 需要才挂，**不是每步必挂**。
+
+#### 信息池条目格式
 
 ```
-- **step N** (~Ts) — <屏幕上有什么>
-  · **动画**：<内容驱动的主动作 + 顺序关系>
-  · **手段**：<SVG / Canvas / CSS filter / 自绘 / 粒子 ...>
-  · **article 补**：<从原文抽来的 1~3 个具体细节>
+- <类型>：<具体内容> —— <来源 article §X / Lxx 或简注>
+```
+
+> **没 article（用户直接给 script）**：信息池退化为"主动设计画面信息
+> 密度"——靠数字 / 对比 / 元数据等让画面比口播信息密。可以列"画面
+> 装饰元素池"而非"article 抽取池"。
+
+### Step 列表：每步 **1 行**
+
+```
+- step N (~Ts) — [关系名前缀（可选）]：<屏幕内容>
 ```
 
 | 规则 | 原因 |
 |---|---|
 | `step N` 1-indexed | agent 实现时 `if (step === N - 1) ...`（注意零基偏移） |
 | **`(~Ts)`** 必填 | 按 script.md 本步对应口播段字数 ÷ 4 估算（中文 ~ 4 字/秒）。范围 3~10s |
-| 第 1 行（屏幕内容）≤ 30 字 | 提醒"这一步要做什么"，不是文案 |
-| **第 2 行（动画）必填** | 不写动画 = 默认做成 PPT。**先找内容内在动作**（数字增、对比、流程、变形 ...），找不到才退化为入场动画。详见 PRINCIPLES.md 原则 7。**只描述动作类型 + 顺序，禁写具体 ms / s 时长**（实现阶段决定，见 CHAPTER-CRAFT.md Part 2） |
-| 第 3 行（手段）建议填 | 写明用什么技术，逼自己跳出"只会用 mask reveal"的舒适区 |
-| **第 4 行（article 补）有原文时强烈建议** | **双源原则**（PRINCIPLES.md 原则 10）。从 article 当前节拍对应段抽 1~3 个口播没念但画面能挂的细节。**没有 article**（用户直接给 script）时这一行可省，但要在第 1 行**主动设计**画面信息密度 |
+| **关系名前缀**（可选） | 让 chapter agent 知道这步内容的"语义类型"，在 CHAPTER-CRAFT.md 决策树里查推荐动作。屏幕内容里"动作 / 关系"明显时可以省略 |
+| **屏幕内容** | 一句话讲清楚这一步舞台上有什么：hero / 标语 / 数据 / 装饰元素。**≤ 1 行**，再多就该拆 step |
+| **不写动画** | 写死 = 翻译机化（详见本文件顶部框） |
+| **不写时长数值 / 错峰量** | 这些在章节开发阶段决定 |
+| **不写实现手段** | filter / SVG / Canvas 选型留给 chapter agent |
 
-**判断画面够不够密的快捷自检**：
+### 关系名前缀清单（**可选 hint**）
 
-```
-口播节选 + 画面屏幕内容 = ?
+chapter agent 看到关系名前缀，会回 [`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md)
+Part 1「关系→动作决策树」查推荐动作类型。
 
-A) 画面 = 口播原文打印                              → ❌ 信息密度 0，PPT 警报
-B) 画面 = 口播标语 + article 抽来的具体数字 / 引用  → ✓ 视频感
-C) 画面 = 完全和口播无关的素材                       → ❌ 看不懂，对不上
-```
+| 关系名 | 例 | 触发的 chapter 动作类型 |
+|---|---|---|
+| **反差对照** | 70% vs 95% / before vs after / Prompt vs Context | wipe / 双数字 ticker / 左右镜像揭示 |
+| **递进列表** | 1→2→3 / step1→step2→step3 | 节点依次点亮 / SVG path 接力 |
+| **金句** | pull-quote / 一句重磅结论 | 衬线大字停留 / 引号 stroke + 整体 ken burns |
+| **数字赛跑** | 多个数据比较 | 多 ticker 同时滚 + 横条 scaleX 同步 |
+| **流程 / 流水线** | 6 层架构 / 5 步流程 | SVG 节点 + 连线 stroke-dashoffset |
+| **否定 / 划掉** | "这不再是答案" | 红色横条 wipe / FAKE 印章 / brush stroke |
+| **揭示 / 反转** | 隐藏内容露出 / 答案揭晓 | mask reveal / 聚光灯 / brand takeover |
+| **桥接 / 转场** | A → B / 章节衔接 | 箭头 path stroke + 沿路 motion dot |
+| **铺垫 / 旁白** | 一行陪衬 / 设问 | typewriter 慢速 / 整体 fade |
+| **chip / 标识** | 章节小标 / section badge | 小标签 fade-up + 下划线 stroke |
+| **品牌 / takeover** | "答案就是 X" / 巨字落下 | 字符 stagger 缩入 + accent 横条 |
+| **总结 / 收束** | 一句结论 / 章末小结 | 主导动作慢落定 + 微微 ken burns（可选） |
 
-### 写动画的核心心法
-
-> 详细原则在 [`PRINCIPLES.md`](PRINCIPLES.md) 原则 7（内容驱动动画）。
-> 这里给 outline 阶段的**思考流程**。
-
-每写一个 step，按这个顺序思考：
-
-**1. 先问"这一步的内容里，有什么本身就是动作 / 变化 / 关系 / 比较，
-我可以把它演出来"**：
-
-| 内容 → 动作 | 例子 |
-|---|---|
-| 有数字 / 分数 / 排名 → **数字 ticker 递增** | "1512 分" → 数字从 0 滚到 1512 |
-| 有比较 → **横条 / 散点 racing** 或 **wipe 切开** | "1512 vs 1270" → 双横条赛跑 |
-| 有公式 / 计算 → **真的演出加减** | "1512 − 1270 = 242" → 旧字符飞走、新字符落入 |
-| 有流程 / 步骤 → **节点依次点亮 + 连线生长** | 5 节点流水线 → SVG path 接力描边 |
-| 有 before / after → **slider drag 或 wipe 切换** | "上一代 vs GPT-Image-2" → clip-path 推进 |
-| 有转换 / 变形 → **morph** | 形状 A → B |
-| 有揭示 → **mask reveal / 聚光灯** | 隐藏的截图 → radial mask 扫开 |
-| 有引用 / 标语 → **typewriter / split-char** | pull-quote → 逐字浮入 |
-
-**2. 找不到内在动作（slug 元数据 / 章节 chip / 品牌名 reveal 等
-"信息很轻"的步骤），才退化用入场动画**（blur clear / fade-up / 
-slide-in）。这种 step 全片**不能超过 30%**。
-
-**3. 主题 `motionHints` 决定动作的"质感"**（运动曲线、颜色、装饰
-搭配），但**不决定动作的"类型"**。例如同一个"数字 ticker"，
-`bauhaus-bold` 里数字 hard-cut 翻屏、`midnight-press` 里数字 blur
-clear 锁定，是同一种内容动作的两种主题质感。
-
-**4. 持续微动**（ken burns / breath / pulse / sweep）**不是必填**。
-不要每步无脑挂 —— 装饰过度比 PPT 化更糟。只在该步**停留很久且确实
-画面太静**时，挂**一层**低强度的（详见 PRINCIPLES.md 原则 7 反模式）。
-
-> **主题动画词速查**（仅作风格定调，不替代上面"内容动作"的优先级）：
->
-> | 主题 | 风格关键词 |
-> |---|---|
-> | `newsroom` | 印刷盖章 / 报头平移 / pull-quote 砸下 |
-> | `chalk-garden` | 粉笔自绘 / 手写擦除 / 慢速 stagger |
-> | `terminal-green` | 打字机 / 光标 blink / 扫描线 |
-> | `bauhaus-bold` | hard-cut / 巨字 overshoot / 几何位移 |
-> | `blueprint` | SVG 蓝图自绘 / 网格点亮 |
-> | `midnight-press` | blur clear / 慢 fade / 聚光灯 mask |
->
-> **禁止**：拿一个主题的动画词描述另一个主题（`bauhaus-bold` 里出现
-> "粉笔自绘" = 主题不一致警报）。
-
-> **outline 不写时长**：动作具体跑多少 ms / 错峰多少 ms 都在
-> [`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md) Part 2 决定。outline 只写
-> "数字 ticker 滚到 1512"、"先 A 再 B 同步 C"这种**类型 + 顺序**描述。
+> **没合适的关系名**：直接省略前缀，把内容描述清楚就行。chapter agent
+> 在 [`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md) 的"开工 5 问"里会自己识别
+> 内容关系。**不要**强行硬塞关系名。
 
 ### Step 描述抽象示例
 
-```
-- **step 1** (~6s) — <hero 内容>，<装饰元素>
-  · 动画：<主导动作类型，符合主题气质> → <伴随动作和顺序关系>；持续微动：<永不停的层>
-  · 手段：<具体技术 stack：CSS filter / SVG path / Canvas / JS ...>
-  · article 补：<左下角 mono cue / 角标 / pull-quote 内容，来自 article §X>
-```
-
-**正例（内容驱动）**：
+**正例 1**（关系明确，关系名前缀帮 agent 选动作类型）：
 
 ```
-- **step 1** (~5s) — 双数字对照：1512（GPT-Image-2）vs 1270（Nano-Banana 2）
-  · 动画：两个数字同时从 0 ticker 递增，1512 跑得更快更远 → 收尾时 1512 下方一道 accent 横线短促 stroke 描边标记胜者
-  · 手段：rAF 数字 ticker / 横条 scaleX 同步 / SVG stroke-dashoffset
-  · article 补：1512 上方 "#1"、1270 上方 "#2"；底部 mono "Source: arena.ai/leaderboard"
+- step 5 (~9s) — 反差对照：左侧 <70%（v1.x）/ 中线贯穿 / 右侧 95%+（v2.x），底部脚注「同样的模型 同样的提示词」
 ```
 
-→ 这一步内容里**自带"分数对比"动作**，所以演**数字 ticker + 横条
-赛跑**，不用 blur clear。
+→ chapter agent 看到"反差对照"会回决策树查 → 推荐 wipe / 双数字 ticker
+/ 左右镜像揭示。具体选哪个由 agent 在主题禁区内决定。
 
-**反例 1**（无脑套入场动画 + 装饰微动）：
+**正例 2**（无明确关系，纯 hero step，省略关系名）：
 
 ```
-- **step 1** (~5s) — 双数字 1512 vs 1270
-  · 动画：1512 blur clear 入场 → 1270 错峰 blur clear 入场；持续微动：1512 下方 accent 横线呼吸
+- step 1 (~5s) — 中央巨字 "HARNESS"，下方 small caps 副标 "ENGINEERING"，左下 mono cue "n. 缰绳·马具·约束装置"
 ```
 
-→ 内容明明是"分数对比"，应该把比较演出来，而不是把两个数字"出场"
-就完事。"持续微动"是装饰，无意义堆叠。
+→ 这是 takeover 类，chapter agent 在 [`CHAPTER-CRAFT.md`](CHAPTER-CRAFT.md)
+（含原则 + 决策树 + 反 AI 味反模式）约束下自由设计字符入场效果。
+
+**正例 3**（多元素 step，描述清晰但留实现空间）：
+
+```
+- step 3 (~7s) — 三个名词水平展开：Prompt → Context → Harness，每词下方 mono 标年份
+```
+
+→ 描述了"三个词水平展开"和"每词下方挂年份"。具体如何"展开"（依次
+blur clear？还是 typewriter？还是 stagger 缩入？）由 chapter agent 决定。
+
+**反例 1**（违反"outline 不写动画"）：
+
+```
+- step 5 — 反差画面
+  · 动画：左 70% blur clear → 中线 stroke 描边 → 右 95%+ filter blur 转为 drop-shadow
+  · 手段：filter blur transition + SVG stroke-dashoffset
+```
+
+→ ❌ 把 CSS 实现搬进 outline。chapter agent 会照搬，失去思考机会。
+**移到章节开发阶段决定**。
 
 **反例 2**（动画行写了具体时长 —— 不可接受）：
 
 ```
-- **step 1** (~6s) — hero 进场
-  · 动画：blur clear（~2.5s）→ 副标错峰 0.5s 浮入（~1.2s）；持续微动：4s loop
+- step 1 (~6s) — hero 进场（blur clear ~2.5s + 副标错峰 0.5s）
 ```
 
-→ 写死 ms 数字会强制实现时按这个跑，节奏僵。**outline 只描述类型 +
-顺序，不描述时长**。
+→ ❌ 写死 ms 数字会让实现僵化。**outline 只写口播估时 (~Ts)，不写动画
+时长**。
 
-**反例 3**（屏幕内容 / 动画 / 手段全部太抽象）：
+**反例 3**（屏幕内容太抽象）：
 
 ```
-- **step 1** (~6s) — 标题入场
-  · 动画：fade in
-  · 手段：CSS
+- step 1 (~6s) — 标题入场
 ```
 
-→ 屏幕内容太抽象（"标题"是什么标题？）；动画只有 fade；手段没说清。
-**这种 step 实现时一定做成 PPT**。
+→ ❌ 是什么标题？hero 文案是什么？信息池要不要挂角标？这种 step
+chapter agent 不知道画什么，**一定做成 PPT**。
+
+**反例 4**（多个想法塞同一 step）：
+
+```
+- step 1 (~6s) — hero 进场 + 三个特性 stagger + 数据浮出
+```
+
+→ ❌ 违反 [CHAPTER-CRAFT.md Part 0 原则 8](CHAPTER-CRAFT.md#8-多点内容必须逐个揭示绝不同时上)（多点逐个揭示）。每个并列项 1 step。
 
 ### 口播节选（每章末尾，可选但推荐）
 
-精炼 1~3 句，**不是完整稿子**，仅供视觉规划阶段对照"这章在讲什么"。
+精炼 1~3 句，**不是完整稿子**，仅供章节规划阶段对照"这章在讲什么"。
 完整文本回 `script.md`。`outline.md` 章节 = `script.md` 中两个明显
 主题切换之间的段落。
 
@@ -232,6 +232,7 @@ clear 锁定，是同一种内容动作的两种主题质感。
 | 章节 id | 小写 + 连字符 | `coldopen`, `why-good` |
 | 章节文件夹 | `0N-<id>` | `src/chapters/01-coldopen/` |
 | 章节组件 | PascalCase | `Coldopen.tsx`, `WhyGood.tsx` |
+| 章节 CSS 类前缀 | 章节缩写（避免跨章冲突） | `.cd-` / `.wg-` / `.mg-` |
 | 音频子目录 | `<id>/` | `public/audio/coldopen/` |
 | 音频文件 | `<step-N>.mp3` (1-indexed) | `public/audio/coldopen/1.mp3` |
 
@@ -259,32 +260,16 @@ clear 锁定，是同一种内容动作的两种主题质感。
 - ⚠️ <资源 2 描述>（待提供）
 - ⚠️ <资源 3 描述>（待提供）
 
-### 2. <chapter-id>
-...
-```
+---
 
-| 标记 | 含义 |
-|---|---|
-| ✓ | 素材已在 `presentation/public/<chapter>/` 里 |
-| ⚠️ | 待用户提供 —— 章节实现时用 `[image: 16:9 描述]` 占位卡 |
+## 自检（写完 outline 必过）
 
-> **不要**用 SVG 画假图、不要用 emoji 凑、不要拿不相关的图凑。
-> Placeholder 是 "需要真材料" 的信号，fake 是 "我偷懒" 的信号。
+- [ ] 每个 step 都是**单一句屏幕内容描述**，没有"动画"行 / "手段"行
+- [ ] 没有任何 step 写了具体毫秒 / 秒数（除 `(~Ts)` 口播估时）
+- [ ] 每章首段都有「信息池」block，至少 3 条 article 抽取项
+- [ ] 章节切分符合"每章 3~8 步 / 30~60s 一聚焦主题"经验
+- [ ] 末尾「素材清单」分章节列出，✓ / ⚠️ 标注清楚
+- [ ] 关系名前缀（如有）来自上方清单，没造新词
 
-## 反例（拒绝 PPT 化的 outline）
-
-❌ **每 step 只写一行屏幕内容，没写动画 / 没写 article 补**：
-```
-- step 1 — 标题入场
-- step 2 — 三个特性
-```
-→ 实现时一定做成 PPT。
-
-❌ **动画词跨主题混用**（`bauhaus-bold` 里出现"粉笔自绘"）：
-→ 主题不一致，气质会撕裂。
-
-❌ **多个想法塞同一 step**："hero 进场 + 三个特性 stagger + 数据浮出"：
-→ 违反原则 8（多点逐个揭示）。每个并列项 1 step。
-
-❌ **画面内容 = 口播原文照抄**：
-→ 违反原则 10（双源）。回 article 抽细节挂上去。
+写完看一眼：**outline 是不是干净到 chapter agent 看了能立刻开工 + 还有
+设计空间**？是 = 合格。如果你看了都觉得"太空，agent 不知道动画选什么"

@@ -4,12 +4,21 @@
   "nameZh": "报社",
   "description": "Newsprint cream backdrop with ink-black serif type and a banner red accent. Old-school broadsheet / documentary feel — feels like a New York Times feature article.",
   "descriptionZh": "报纸奶油底 + 墨黑 serif + 报头红强调色. 老派大报 / 纪录片气质, 像一篇 NYT 特稿.",
-  "mood": ["light", "newspaper", "editorial", "serif", "documentary", "warm"],
-  "bestFor": ["纪录片 / 报道", "深度评测", "时事评论", "AI 产品分析", "热点解读"],
-  "motionHints": "印刷盖章砸下、报头大字平移、引文 pull-quote 浮入、masthead 露出；纪实、克制、有报纸味。**禁**渐变 / 玻璃 / 霓虹 / 弹簧动画",
-  "motionDuration": "default",
-  "typeScale": "loud",
-  "allowEmoji": false,
+  "mood": [
+    "light",
+    "newspaper",
+    "editorial",
+    "serif",
+    "documentary",
+    "warm"
+  ],
+  "bestFor": [
+    "纪录片 / 报道",
+    "深度评测",
+    "时事评论",
+    "AI 产品分析",
+    "热点解读"
+  ],
   "preview": {
     "shell": "#ebe5d6",
     "surface": "#f4ede0",

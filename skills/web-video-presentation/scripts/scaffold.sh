@@ -168,26 +168,25 @@ cat <<EOF
   • 鼠标移到底部边缘可显出进度条。
   • 把 src/chapters/01-example/ 替换成你自己的章节
     （流程见 SKILL.md "Phase 2.4 实现单章" —— 每章一次到位完整版本，
-     不分骨架 / 精修两步，3 层动作齐全）。
+     不分骨架 / 精修两步；动画选型由 chapter agent 按 CHAPTER-CRAFT.md
+     Part 0 原则 7 + Part 1 五问决定）。
   • 在 src/registry/chapters.ts 注册每个新章节。
   • 章节改了就 bump src/hooks/useStepper.ts 的 STORAGE_KEY 末尾版本号。
 
-写章节时必读（路径都是 SKILL 仓库内）：
+写章节时必读（单一入口，路径在 SKILL 仓库内）：
 
-  • $SKILL_DIR/references/PRINCIPLES.md
-      十条不可妥协的原则（唯一展开点，写章节时回这里查）
   • $SKILL_DIR/references/CHAPTER-CRAFT.md
-      代码硬规则 + 视觉手段全栈工具箱 + checklist + 反馈速查
+      Part 0 十条原则 / Part 1 开工 5 问 / Part 2 关系→动作决策树 /
+      Part 3 视觉工具箱 / Part 4 时长 / Part 5 反 AI 味反模式 /
+      Part 6 代码硬规则 / Part 7 完工自检 / Part 8 反馈速查
   • $SKILL_DIR/themes/$THEME/theme.json
-      看 motionHints / motionDuration / typeScale / allowEmoji
-      —— 决定本主题该 / 禁用什么动画 + 时长 + 字号 + emoji
+      看 descriptionZh / mood / bestFor —— 参考主题气质
+      （动画 / 时长 / 字号 / emoji 由 chapter agent 在每章自由决定）
 
 卡壳时可翻：
 
   • $SKILL_DIR/references/EXAMPLES/
-      完整章节 anchor（钩子型 / 列举型）
-  • $SKILL_DIR/references/PATTERNS.md
-      11 个常用视觉原语，可选灵感库
+      完整章节 anchor（钩子型 / 列举型）—— 看"形"，不要照搬
 
 要换一个主题，覆盖 tokens.css 即可：
   cp $SKILL_DIR/themes/<id>/tokens.css src/styles/tokens.css

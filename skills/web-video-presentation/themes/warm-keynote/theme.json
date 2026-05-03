@@ -4,12 +4,20 @@
   "nameZh": "暖色 Keynote",
   "description": "Cream paper backdrop with a single teal accent and a soft warm grid drawn on the stage. SaaS keynote / editorial vibe.",
   "descriptionZh": "奶油纸底 + 单一青色强调色 + 舞台上的暖色网格. SaaS Keynote 与编辑器气质.",
-  "mood": ["light", "keynote", "editorial", "warm", "spring", "saas"],
-  "bestFor": ["SaaS 产品 keynote", "B 端产品发布", "工具产品讲解", "团队对外汇报"],
-  "motionHints": "舒展 ease-out、柔和 stagger、暖色聚光、网格点亮；专业、温润、不冷峻。**禁**霓虹、丝网印错位、终端打字机",
-  "motionDuration": "default",
-  "typeScale": "default",
-  "allowEmoji": false,
+  "mood": [
+    "light",
+    "keynote",
+    "editorial",
+    "warm",
+    "spring",
+    "saas"
+  ],
+  "bestFor": [
+    "SaaS 产品 keynote",
+    "B 端产品发布",
+    "工具产品讲解",
+    "团队对外汇报"
+  ],
   "preview": {
     "shell": "#FDFBF7",
     "surface": "#FFFFFF",

@@ -1,5 +1,11 @@
 # Anchor: hook-chapter（钩子型开场）
 
+> ⚠️ **这是结构示意，不是抄袭模板**。先走 [`../../CHAPTER-CRAFT.md`](../../CHAPTER-CRAFT.md)
+> Part 0 五问。本 anchor 给的是"钩子型开场的结构骨架"——你要保留它的
+> step 切分逻辑、字号关系、布局原则，**按本项目的主题 + 内容换动作
+> 选型**。倒过来照抄 = [`../../CHAPTER-CRAFT.md`](../../CHAPTER-CRAFT.md)
+> Part 5 第 8 条「整章只用一种入场动画」同质化反模式。
+
 ## 定位
 
 视频开头最常用的章节类型：**抛 N 张可疑图 / 反例 / 截图 → 引出主题 →
@@ -35,7 +41,7 @@
 
 ## 为什么 2-N 不能 stagger 同时上
 
-口播会**逐个念出来** —— 必须 1 项 = 1 step（PRINCIPLES.md 原则 8）。
+口播会**逐个念出来** —— 必须 1 项 = 1 step（[CHAPTER-CRAFT.md Part 0 原则 8](../../CHAPTER-CRAFT.md#8-多点内容必须逐个揭示绝不同时上)）。
 同时 stagger 上 = 观众扫一眼看完，讲者还在念第一张 = PPT 直觉。
 
 ## 文件结构
@@ -59,8 +65,10 @@ hook-chapter/
 | 卡片样式 | drop-shadow + 微旋转 1deg |
 | takeover | 三张图缩入 + hero 巨字爆出 + accent 红条贯穿 |
 
-> **新写章节时**：抄结构和字号关系，按本主题 `motionHints` /
-> `motionDuration` 换主导 + 伴随的形式。**持续微动一定要做**，不能省。
+> **新写章节时**：抄结构和字号关系，按本章内容 + 本主题气质自由
+> 设计动画形式。**持续微动按需挂**，不强求 —— 详见
+> [`../../CHAPTER-CRAFT.md`](../../CHAPTER-CRAFT.md)「避免 AI 味」一节
+> 关于「每步都挂 ken burns / 持续闪烁」的反模式。
 
 ## 切到其它主题时
 

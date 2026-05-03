@@ -4,12 +4,21 @@
   "nameZh": "日落 Zine",
   "description": "Warm peach paper backdrop with a magenta accent and chunky Fraunces serif. Indie magazine / risograph zine vibe — playful, expressive, character-forward.",
   "descriptionZh": "暖蜗色纸底 + 玫红强调色 + 厚体 Fraunces serif. 独立杂志 / 丝网印 zine 风, 俏皮有人情味.",
-  "mood": ["light", "magazine", "zine", "playful", "warm", "expressive"],
-  "bestFor": ["生活向 vlog", "创意分享", "趣味评测", "小红书 / 抖音风", "文化 / 表达型"],
-  "motionHints": "丝网印套色错位、手写 brush 划掉、俏皮 stagger、轻微 wiggle；松弛、有人味。**禁**企业风、严肃报头、技术蓝图感",
-  "motionDuration": "default",
-  "typeScale": "loud",
-  "allowEmoji": true,
+  "mood": [
+    "light",
+    "magazine",
+    "zine",
+    "playful",
+    "warm",
+    "expressive"
+  ],
+  "bestFor": [
+    "生活向 vlog",
+    "创意分享",
+    "趣味评测",
+    "小红书 / 抖音风",
+    "文化 / 表达型"
+  ],
   "preview": {
     "shell": "#f7d8b5",
     "surface": "#fbe8d3",

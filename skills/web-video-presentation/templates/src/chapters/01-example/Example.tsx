@@ -96,7 +96,7 @@ export default function ExampleChapter({ step }: ChapterStepProps) {
           </MaskReveal>
         </div>
         <div className="ex-close-foot label-mono">
-          See SKILL.md / PATTERNS.md / THEMES.md
+          See SKILL.md / CHAPTER-CRAFT.md / THEMES.md
         </div>
       </div>
     </div>

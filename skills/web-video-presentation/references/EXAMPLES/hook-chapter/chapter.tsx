@@ -15,11 +15,11 @@ import "./chapter.css";
  * 关键手段：
  * - 真素材：<img src="/hook/{name}.png" /> 而不是 placeholder
  * - 字号狠对比：hero 用 --t-display-1（≥ 144px）+ 微微负字距
- * - 主导动作：mask reveal + 印章砸下（newsroom motionHints 走印刷气质）
+ * - 主导动作：mask reveal + 印章砸下（贴 newsroom 印刷气质）
  * - takeover：三张图缩入 + 巨字爆出 + accent 红条贯穿
  * - 收束：brush 划掉旧概念
  *
- * 切其它主题时只换"印章砸下 / brush"为对应 motionHints 的等效动作，
+ * 切其它主题时按那个主题的气质自由换"印章砸下 / brush"等效动作，
  * 结构和字号节奏保持。
  */
 export default function HookChapter({ step }: ChapterStepProps) {

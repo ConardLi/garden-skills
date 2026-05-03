@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { ChapterDef } from "../registry/types";
 import "./ProgressBar.css";
 
@@ -10,8 +11,23 @@ interface Props {
 /**
  * Hidden-on-hover progress bar, fixed to the bottom of the viewport.
  * Click chapter pill or pip to jump.
+ *
+ * Width is content-adaptive and capped at `100vw - 32px`; if total chapters
+ * (or an active chapter's step pips) overflow, the bar scrolls horizontally
+ * instead of squeezing items. The active chapter is auto-scrolled into view
+ * on chapter change so it's visible the moment hover reveals the bar.
  */
 export function ProgressBar({ chapters, cursor, onJumpChapter }: Props) {
+  const activeRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [cursor.chapter]);
+
   return (
     <div className="pb-hover" data-no-advance>
       <div className="pb">
@@ -20,6 +36,7 @@ export function ProgressBar({ chapters, cursor, onJumpChapter }: Props) {
           return (
             <button
               key={c.id}
+              ref={isActive ? activeRef : undefined}
               className={`pb-chapter ${isActive ? "pb-active" : ""}`}
               onClick={(e) => {
                 e.stopPropagation();

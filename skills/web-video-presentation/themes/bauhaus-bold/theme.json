@@ -4,12 +4,20 @@
   "nameZh": "包豪斯",
   "description": "Pure off-white surface, primary-blue accent, and chunky Archivo Black display type. Bauhaus / brutalist modernist — best for opinionated manifestos and bold product pitches.",
   "descriptionZh": "净色底 + 主色蓝强调色 + Archivo Black 黑体. 包豪斯 / 布鲁塔利风格, 适合观点鲜明的演讲与产品发布.",
-  "mood": ["light", "modernist", "bauhaus", "geometric", "bold", "manifesto"],
-  "bestFor": ["产品发布", "观点宣言", "设计演讲", "品牌主张"],
-  "motionHints": "几何位移、大块色平移、巨字砸下；slide / scale / hard-cut。**禁**弹簧、淡入淡出、花体动画、柔光",
-  "motionDuration": "fast",
-  "typeScale": "loud",
-  "allowEmoji": false,
+  "mood": [
+    "light",
+    "modernist",
+    "bauhaus",
+    "geometric",
+    "bold",
+    "manifesto"
+  ],
+  "bestFor": [
+    "产品发布",
+    "观点宣言",
+    "设计演讲",
+    "品牌主张"
+  ],
   "preview": {
     "shell": "#f0eee8",
     "surface": "#fafaf7",
