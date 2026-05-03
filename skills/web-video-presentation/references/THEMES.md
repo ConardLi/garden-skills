@@ -4,27 +4,36 @@
 打断视频的视觉连贯性，录屏时看起来像很硬的剪辑。如果想要"暗一点的氛围"
 段落，请在**同一调色板内**降对比、收聚光，而不是翻转表面色。
 
-主题是一个 CSS 文件量的设计 token 集合。章节用**语义名**引用 token
-（`--surface`、`--text`、`--accent`、`--t-h1`、`--space-5`、`--r-card` …），
-绝不写硬编码值。换主题就是覆盖 `tokens.css`，章节代码一行不动。
+主题 = 一组 CSS 设计 token + 一个 `theme.json` 元数据。
 
-主题**不只是**颜色和字体。它管：
+**章节对 token 的消费分两层**：
 
-| 维度                       | 例子                                                              |
+1. **必须用 token 的**（换主题不破的底线）—— 颜色 + 字体家族
+2. **章节自由发挥的**（按内容设计）—— 字号 / 间距 / 动画时长 / 缓动 /
+   边框宽度 / 一般圆角 / 字距等都可硬编码
+
+主题**不只管**颜色和字体，但其他维度（hero 数字、分割线、卡片、舞台
+装饰）通过 **primitive class**（`.hero-num` / `.rule` / `.card` /
+`.stage-frame`）自动接入，章节用 class 即可，不需要手动 `var()`。
+
+主题管的维度：
+
+| 维度                       | 主题怎么管                                                        |
 | -------------------------- | ----------------------------------------------------------------- |
 | **调色板**                 | shell / surface 阶梯、text 阶梯、accent + 透明度衍生              |
-| **字型**                   | 中文 / 英文 / 等宽家族、OpenType 特性集                            |
-| **字号尺度覆盖**           | 每个主题可以重调 `--t-display-1` 等，匹配自己的气质                |
-| **字距预设**               | tight / snug / normal / loose / caps                              |
-| **舞台 padding 密度**      | 精炼主题用 140×100，密集主题用 80×60                              |
-| **圆角性格**               | sharp (0) / refined (4) / soft (16) / keynote (32)                |
-| **分割线性格**             | 细 / 粗 × 实 / 虚 —— 屏幕上每条 rule 都在说主题的语言             |
-| **hero 数字风格**          | 编辑级斜体 / 终端等宽 / 粗黑 / 手写                                |
-| **阴影配方**               | 纸质浮起 / 卡片 / 发光 / 硬偏移（Bauhaus）/ 内阴影（terminal）     |
-| **装饰层**                 | grid / 纸纹 / scanlines / vignette / 干净                         |
-| **动效气质**               | 电影感慢 / 弹簧 / 利落 / 安静                                      |
+| **字型**                   | 中文 / 英文 / body / 等宽家族 + OpenType 特性集                     |
+| **舞台 padding 密度**      | `--stage-pad-x/y` —— 精炼主题 140×100，密集主题 80×60              |
+| **圆角性格**               | `--r-card` —— sharp (0) / refined (4) / soft (16) / keynote (32)  |
+| **分割线性格**             | `--rule-w` + `--rule-style` —— 细/粗 × 实/虚                       |
+| **hero 数字风格**          | `--hero-num-*` —— 编辑级斜体 / 终端等宽 / 粗黑 / 手写              |
+| **舞台 / 卡片阴影**        | `--shadow-stage` / `--card-shadow` —— 纸浮 / 偏移实色 / 内阴影     |
+| **装饰层**                 | `--surface-pattern*` / `--surface-vignette` / `--text-shadow`     |
+| **动效基线**               | `theme.json` 的 `mood` —— 电影感慢 / 弹簧 / 利落 / 安静            |
 
-合起来每个主题约 50 个 token。完整契约见下方"完整 token 契约"。
+> **`mood` 不写时长数值**。具体 ms / 缓动由 chapter agent 看 `mood`
+> 自己拍板（慢主题别写 200ms 快动画，仅此而已）。
+
+每个主题约 25~35 个 token。完整契约见下方。
 
 ---
 
@@ -94,10 +103,13 @@ cp .cursor/skills/web-video-presentation/themes/newsroom/tokens.css \
 
 ## 完整 token 契约
 
-`base.css` 给**每个 token 都准备了合理的默认值**。主题的 `tokens.css`
-只需要覆盖与众不同的那部分。间距尺度、字号尺度这种东西很少在主题间变化；
-**性格 token**（`--r-card`、`--rule-style`、`--hero-num-*`）才是主题
-赚到性格的地方。
+`base.css` 给**性格 token 都准备了合理的默认值**。主题的 `tokens.css`
+只需要覆盖**调色板 + 字体 + 性格旋钮 + 装饰**这四类。
+
+> **base.css 里的字号 / 间距 / 时长尺度只供 primitive class 自己用**
+> （`.label-mono` / `.kicker` / `.scene-pad` 等）。**不是**章节必须消费
+> 的契约——章节这一层要不要 `var(--t-h1)` 还是直接写 `font-size: 96px`
+> 完全自由。
 
 ### 必填（主题必须定义）
 
@@ -177,13 +189,8 @@ cp .cursor/skills/web-video-presentation/themes/newsroom/tokens.css \
 | `--surface-pattern-size`     | 配套的 `background-size`。可平铺渐变必填。                                                                  |
 | `--surface-pattern-blend`    | pattern 层的 `mix-blend-mode`（`normal` / `multiply` / `overlay`）。                                       |
 | `--surface-pattern-opacity`  | pattern 层的整体透明度乘子。                                                                                |
-| `--surface-pattern-repeat`   | `background-repeat`（默认 `repeat`）。                                                                      |
 | `--surface-vignette`         | vignette 叠层的 `background`（黑板 / 电影感边角的径向渐变）。                                              |
-| `--shell-pattern`            | 舞台外 letterbox 区域的 `background-image`。                                                               |
-| `--shell-pattern-size`       | 配套 `--shell-pattern` 的 size。                                                                            |
-| `--shell-pattern-attachment` | `--shell-pattern` 的 `background-attachment`。                                                              |
-| `--text-shadow`              | 应用在 `.serif-cn` / `.serif-it` 上。如粉笔晕 / 磷光辉。                                                    |
-| `--stage-filter`             | 舞台 fitter 上的 `filter`。很少用；如轻微 `contrast()` 微调。                                              |
+| `--text-shadow`              | 应用在 `.serif-cn` / `.serif-it` / `.display-en` 上。如粉笔晕 / 磷光辉。                                    |
 
 如果你需要的装饰找不到对应槽位，那就跨过"主题契约"边界进入"章节自定义
 CSS"领域 —— 在那里解决，别扩主题契约。
@@ -216,8 +223,10 @@ cp -r monochrome-print my-theme
 
 ### 2. 改 `my-theme/tokens.css`
 
-按契约自上而下走一遍：调色板 → 字体 → 动效 → 性格 → 装饰。**不要**碰
-间距和字号尺度，除非你有特别理由 —— 默认值已经在所有主题上验证过了。
+按契约自上而下走一遍：调色板 → 字体 → 性格旋钮（`--r-card` /
+`--rule-*` / `--hero-num-*` / `--stage-pad-*`）→ 阴影 → 装饰。
+**不要**碰字号 / 间距 / 时长尺度 —— 那些是 base.css 给 primitive class
+用的内部默认值，不是主题契约的一部分。
 
 **几条不那么显而易见的规则：**
 
@@ -301,12 +310,14 @@ npm run dev
 
 ## 反模式
 
-- **章节 CSS 硬编码 hex / px / 字体名** —— 缺哪个 token 就在契约里
-  补一个，给所有主题加上
+- **章节 CSS 硬编码 hex 颜色 / 字体名** —— 缺哪个色彩 / 字体语义就在
+  契约里补一个，给所有主题加上（注意：**字号 / 间距 / 时长**硬编码不算
+  反模式，章节按内容自由设计）
 - **演示中途切换主题** —— 选一个，一以贯之
 - **第二个 accent 色** —— 只能有一个。用尺度 + 字重做层级
-- **在组件层 override token** —— 只在 `:root` 里覆盖。一次性的颜色
-  需求 = 提一个派生 token，让所有主题都提供自己的值
+- **在组件层 override 主题 token**（颜色 / 字体 / 性格签名）—— 只在
+  `:root` 里覆盖。一次性的颜色需求 = 提一个派生 token，让所有主题都
+  提供自己的值
 - **依赖主题的 TSX 条件分支** —— 章节必须主题无关。布局依赖明 vs 暗
   = 布局脆弱，修布局
 - **一个主题叠三个设计签名** —— 选 ONE 个（虚线 rule / 扫描线 /

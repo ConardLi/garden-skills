@@ -1,14 +1,21 @@
 /* ─────────────────────────────────────────────────────────────────────
  * base.css — design system for the web-video-presentation skill.
  *
- * This file owns the "shape" of the system: type scale, spacing scale,
- * radius / border / shadow ladders, layout primitives, and component
- * primitives. Themes (themes/<id>/tokens.css) own COLOR, FONTS, MOTION
- * timings, and decorative textures.
+ * Ownership split:
+ *   • Themes (themes/<id>/tokens.css) own COLOR, FONTS, and the
+ *     "personality knobs" that make themes recognizable
+ *     (--r-card / --rule-* / --hero-num-* / --card-shadow / decorative
+ *     pattern + vignette).
+ *   • Chapters use COLOR + FONT tokens (mandatory) and the personality
+ *     primitive classes (.hero-num / .rule / .card / .stage-frame).
+ *     Everything else — font sizes, spacing, motion timings, easings,
+ *     border widths, generic radii — chapters write freely (token OR
+ *     hard-coded value, whatever the content needs).
  *
- * Anything here marked `var(--something, default)` can be overridden by
- * a theme. Themes that don't override get sane defaults so chapters
- * never break on a sparsely-defined theme.
+ * The variables defined below are kept ONLY for the primitive classes
+ * in this file (.label-mono / .kicker / .corner-mark / .click-cue /
+ * .scene-pad / .badge-mono / .pull-quote / .card / .masthead). They are
+ * NOT a contract chapters must consume.
  * ───────────────────────────────────────────────────────────────────── */
 
 /* ─── 0. Reset ─── */
@@ -37,68 +44,57 @@ body {
  *    A theme can override any of these in its tokens.css.
  * ───────────────────────────────────────────────────────────────────── */
 :root {
-  /* ── Type scale (clamp-based; theme can override individual sizes) ── */
-  --t-mega:        clamp(220px, 18vw, 320px);
+  /* ── Type scale (used by primitive classes below; chapters can use
+        these OR write hard-coded sizes — whatever the content needs) ── */
   --t-display-1:   clamp(140px, 11vw, 200px);
   --t-display-2:   clamp(80px, 7vw, 128px);
   --t-h1:          clamp(56px, 5vw, 88px);
   --t-h2:          clamp(40px, 3.6vw, 60px);
-  --t-h3:          clamp(28px, 2.4vw, 40px);
-  --t-body-l:      28px;
   --t-body:        20px;
-  --t-cap:         14px;
   --t-micro:       12px;
 
-  /* ── Tracking presets (themes lean on these) ── */
+  /* ── Tracking presets (used by primitive classes) ── */
   --track-tight:   -0.025em;   /* large serif display */
   --track-snug:    -0.005em;   /* body */
-  --track-normal:   0;
-  --track-loose:    0.04em;    /* small caps copy */
   --track-caps:     0.22em;    /* mono uppercase labels */
 
-  /* ── Spacing scale (4-pt rhythm) ── */
-  --space-1:    4px;
+  /* ── Spacing scale (used by primitive classes) ── */
   --space-2:    8px;
   --space-3:    12px;
   --space-4:    16px;
   --space-5:    24px;
-  --space-6:    32px;
   --space-7:    48px;
-  --space-8:    64px;
   --space-9:    96px;
-  --space-10:   120px;
-  --space-11:   160px;
 
   /* ── Stage padding (theme can dial density) ── */
   --stage-pad-x: 96px;
   --stage-pad-y: 80px;
 
-  /* ── Radius scale ── */
+  /* ── Radius scale (themes reference these via --r-card; chapters write
+        their own radii freely) ── */
   --r-flat:    0;
   --r-xs:      4px;
   --r-sm:      8px;
   --r-md:      16px;
-  --r-lg:      24px;
   --r-xl:      32px;
   --r-pill:    999px;
-  /* "default card radius" — theme sets identity (sharp / soft / blob) */
+  /* "default card radius" — theme sets identity (sharp / soft / keynote) */
   --r-card:    var(--r-md);
 
-  /* ── Border weights ── */
+  /* ── Border weights (used by primitive classes) ── */
   --bw-1:      1px;
   --bw-2:      2px;
   --bw-4:      4px;
-  --bw-8:      8px;
   /* "default rule" — theme sets identity (hairline / thick / dashed) */
   --rule-w:        1px;
   --rule-style:    solid;
 
-  /* ── Motion (themes can retune personality) ── */
-  --ease-quart:    cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-expo:     cubic-bezier(0.86, 0, 0.07, 1);
-  --ease-soft:     cubic-bezier(0.4, 0, 0.1, 1);
+  /* ── Motion (used by primitive class transitions; chapters time their
+        own motion freely, ideally guided by theme.json `mood`) ── */
+  --ease-quart:     cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-expo:      cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-soft:      cubic-bezier(0.4, 0, 0.1, 1);
   --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --dur-instant:    120ms;
   --dur-quick:      280ms;
   --dur-base:       600ms;
   --dur-slow:       900ms;
@@ -110,14 +106,7 @@ body {
   --hero-num-weight:  400;
   --hero-num-track:   var(--track-tight);
 
-  /* ── Shadow recipes (themes can redefine for paper / glow / flat) ── */
-  --shadow-card:
-    0 30px 80px rgba(0, 0, 0, 0.45),
-    0 6px 20px rgba(0, 0, 0, 0.35);
-  --shadow-paper:
-    0 1px 0 var(--rule),
-    0 24px 60px rgba(0, 0, 0, 0.18);
-  --shadow-glow:    0 0 40px var(--accent-glow, transparent);
+  /* ── Stage shadow (themes override for paper / glow / flat) ── */
   --shadow-stage:
     0 60px 160px rgba(0, 0, 0, 0.55),
     0 0 0 1px rgba(255, 255, 255, 0.025);
@@ -134,15 +123,11 @@ body {
   align-items: center;
   justify-content: center;
   background: var(--shell);
-  background-image: var(--shell-pattern, none);
-  background-size: var(--shell-pattern-size, auto);
-  background-attachment: var(--shell-pattern-attachment, scroll);
 }
 .stage-fitter {
   position: relative;
   /* width / height are set inline by Stage.tsx (1920*scale × 1080*scale) */
   isolation: isolate;
-  filter: var(--stage-filter, none);
 }
 .stage-frame {
   position: absolute;
@@ -169,7 +154,6 @@ body {
   pointer-events: none;
   background-image: var(--surface-pattern, none);
   background-size: var(--surface-pattern-size, auto);
-  background-repeat: var(--surface-pattern-repeat, repeat);
   mix-blend-mode: var(--surface-pattern-blend, normal);
   opacity: var(--surface-pattern-opacity, 1);
   z-index: 1;
@@ -419,8 +403,11 @@ body {
 
 /* ─────────────────────────────────────────────────────────────────────
  * 8. State helpers.
+ *
+ * `.no-advance` / `[data-no-advance]` — interactive elements inside a
+ * chapter mark themselves with this so a click on them does NOT advance
+ * the global step. The marker is consumed by Stage.tsx; no styles needed.
  * ───────────────────────────────────────────────────────────────────── */
-.no-advance, [data-no-advance] { /* nothing visual; used by Stage click handler */ }
 .fade-in { animation: fade-in var(--dur-base) var(--ease-quart) both; }
 @keyframes fade-in {
   from { opacity: 0; }
