@@ -53,7 +53,7 @@ Phase 4   录屏 + 后期
 ```
 my-video/
 ├── article.md          # 用户给原文时必有 —— 不删！开发阶段画面信息源
-├── script.md           # 必有：B 站风格口播稿（决定节拍）
+├── script.md           # 必有：保持原文语言的平台化口播稿（决定节拍）
 ├── outline.md          # 必有：开发计划（章节切分 + 每步内容 + 信息池）
 └── presentation/       # 脚手架产出的 Vite + React + TS 项目
     ├── src/chapters/<NN>-<id>/
@@ -135,7 +135,7 @@ Phase 2.4 的"实现单章"会重复 N 次 —— 每次都要回看核心约束
 **两份产出物在一次思考中完成**：
 
 1. **生成 `script.md`**：按 [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md)
-   的规则把 article 转 B 站风口播稿。**保留 `article.md` 不删**——它是
+   的规则把 article 转成保持原文语言的平台化口播稿。**保留 `article.md` 不删**——它是
    outline 写信息池和章节实现画面时的细节源（双源原则）。
 2. **生成 `outline.md`**：按 [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md)
    规则切章节 + 切 step + 每章首段抽**信息池**。
