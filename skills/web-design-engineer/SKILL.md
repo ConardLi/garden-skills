@@ -1,6 +1,6 @@
 ---
 name: web-design-engineer
-description: Build polished visual web artifacts with HTML/CSS/JavaScript/React: pages, dashboards, prototypes, slide decks, animations, UI mockups, and data visualizations. Use when the user wants a browser-rendered, interactive, or presentational front-end deliverable. Not for back-end, CLI, or non-visual coding tasks.
+description: Build polished visual web artifacts with HTML/CSS/JavaScript/React. pages, dashboards, prototypes, slide decks, animations, UI mockups, and data visualizations. Use when the user wants a browser-rendered, interactive, or presentational front-end deliverable. Not for back-end, CLI, or non-visual coding tasks.
 ---
 
 # Web Design Engineer
