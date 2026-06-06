@@ -33,7 +33,7 @@ The skill is primarily a **methodology and collaboration workflow**. The scaffol
 - **Hidden chrome** — progress controls are hover-only, keeping recordings clean.
 - **Motion first** — each scene needs a moving visual anchor; static paragraphs are treated as a smell.
 - **Theme tokens** — visual decisions flow through semantic tokens so themes can change the whole feel.
-- **Pluggable TTS** — provider-agnostic audio runner ships **two built-in providers** (MiniMax `mmx-cli` and OpenAI TTS via curl); swap to ElevenLabs / edge-tts / Azure / Google Cloud / macOS `say` / any self-hosted TTS by dropping a single shell file into `tts-providers/`.
+- **Pluggable TTS** — provider-agnostic audio runner ships **three built-in providers** (MiniMax `mmx-cli`, OpenAI TTS via curl, and MiMo-V2.5-TTS via curl); swap to ElevenLabs / edge-tts / Azure / Google Cloud / macOS `say` / any self-hosted TTS by dropping a single shell file into `tts-providers/`.
 - **Hard checkpoints** — the agent pauses after script/theme alignment, after outline approval, and before optional audio synthesis.
 
 ---
