@@ -10,12 +10,13 @@ Auto 模式会自动按 step 播放并自动推进——录屏可以一镜到底
 > 这个老问题。
 
 合成器是 **provider-agnostic** 的：runner 本身不绑定任何 TTS 后端，每个
-后端是 `scripts/tts-providers/<name>.sh` 一个文件。**内置 2 个 provider**：
+后端是 `scripts/tts-providers/<name>.sh` 一个文件。**内置 3 个 provider**：
 
 | Provider | 默认 | 何时用 |
 |---|---|---|
 | `minimax` | ✓ | 中文口播首选（用 `mmx-cli`，要 MiniMax API key） |
 | `openai`  | —— | 多数 agent 已有 `OPENAI_API_KEY`；curl-based、响应快 |
+| `mimo`    | —— | 中文口播强；curl-based；9 个预置音色（冰糖/茉莉/苏打/白桦等） |
 
 换 / 加 provider 见
 [`scripts/tts-providers/README.md`](../templates/scripts/tts-providers/README.md)

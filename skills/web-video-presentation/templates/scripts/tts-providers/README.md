@@ -38,6 +38,7 @@ npm run synthesize-audio -- --force
 |---|---|---|---|
 | `minimax.sh` | MiniMax `mmx` CLI | `mmx auth login --api-key` | **默认**；中文口播质量稳 |
 | `openai.sh` | OpenAI Audio Speech API | `OPENAI_API_KEY` env var | curl-based；多数 agent 已有 key |
+| `mimo.sh` | MiMo-V2.5-TTS API | `MIMO_API_KEY` env var | curl-based；9 preset voices；中文口播强 |
 
 只内置这两个 —— 我们不替你做更多技术选型。其它后端的代码片段在下面，
 复制到 `tts-providers/<name>.sh` 即可启用。
@@ -107,6 +108,26 @@ PRESENTATION_TTS=openai npm run synthesize-audio
 # 用 HD 模型 + 别的音色
 OPENAI_TTS_MODEL=tts-1-hd npm run synthesize-audio -- --provider=openai --voice=nova
 ```
+
+### MiMo-V2.5-TTS
+
+**已内置** —— 直接看 [`mimo.sh`](./mimo.sh)。
+基于 MiMo-V2.5-TTS 的 OpenAI 兼容协议，curl + jq 构造 payload，
+返回 base64 编码的 WAV 音频，ffmpeg 转 mp3。
+
+启用：
+
+```bash
+export MIMO_API_KEY=tp-...
+PRESENTATION_TTS=mimo npm run synthesize-audio
+# 指定中文音色
+PRESENTATION_TTS=mimo npm run synthesize-audio -- --voice=茉莉
+# 切换到新加坡集群
+MIMO_BASE_URL=https://token-plan-sgp.xiaomimimo.com/v1 \
+  PRESENTATION_TTS=mimo npm run synthesize-audio
+```
+
+9 个预置音色：冰糖 / 茉莉 / 苏打 / 白桦（中文）、Mia / Chloe / Milo / Dean（English）、mimo_default（集群默认）。
 
 ### ElevenLabs — `tts-providers/elevenlabs.sh`
 
