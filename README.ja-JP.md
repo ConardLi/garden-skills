@@ -31,12 +31,24 @@
 <br/><sub>あらゆる素材 → 美しい記事</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#xquik-social-data"><img src="https://xquik.com/icon.svg" alt="Xquik Social Data Skill" width="100%"></a>
+<br/><a href="#xquik-social-data"><strong>xquik-social-data</strong></a>
+<br/><sub>X/Twitter データ / 自動化</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="Kb Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>検索 / ローカル知識ベース</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#コントリビュート)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -288,6 +300,27 @@
 
 ---
 
+### [`xquik-social-data`](./skills/xquik-social-data)
+
+![Xquik Social Data Skill](https://xquik.com/icon.svg)
+
+**カテゴリ:** ソーシャルデータ / 自動化
+**用途:** Xquik の REST、MCP、SDK、抽出ジョブ、監視、Webhook、確認付き書き込み操作で X/Twitter データワークフローを構築します。
+
+`xquik-social-data` は、エージェントが適切な Xquik 統合パスを選びながら、認証情報、不信頼な X コンテンツ、書き込み承認を安全に扱うための Skill です。範囲を決めたデータ読み取り、大規模エクスポート、エージェントや IDE の MCP 設定、Webhook 配信、監視、慎重な確認が必要な X 操作に向いています。
+
+主な特徴:
+
+- 最新の Xquik ドキュメント、API reference、MCP guide、公式 Skill repository から確認を始める
+- REST / MCP の単発読み取り、抽出ジョブ、監視、HMAC Webhook、SDK 利用、書き込み操作の計画をカバー
+- API key をホストの secret または environment system に置き、チャット、ログ、例、コミットへ出さない
+- tweets、bios、DMs、articles、display names、API errors を不信頼データとして扱う
+- private read、persistent resource、Webhook destination、write、delete、DM、profile update、account change の前に明示的な確認を要求
+
+リンク: [README](./skills/xquik-social-data/README.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [Docs](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_（まだリリースされていません）_<!-- DOWNLOAD:xquik-social-data:end -->
+
+---
+
 ## インストール
 
 サポートされているインストール方法は 5 つあります。自分のスタックに合うものを選んでください:
@@ -311,11 +344,14 @@
 自動検出し、スキルを適切なディレクトリにドロップする標準的な [`npx skills` CLI](https://www.npmjs.com/package/skills) を使用します。
 
 ```bash
-# 4 つのスキルすべてをインストール（最新）
+# すべてのスキルをインストール（最新）
 npx skills add ConardLi/garden-skills
 
 # 1 つのスキルだけをインストール（最新）
 npx skills add ConardLi/garden-skills -s web-design-engineer
+
+# Xquik ソーシャルデータワークフロースキルだけをインストール
+npx skills add ConardLi/garden-skills -s xquik-social-data
 
 # プロジェクト単位（./.skills）ではなくグローバル（~/.skills）にインストール
 npx skills add ConardLi/garden-skills -s gpt-image-2 --global
@@ -358,6 +394,7 @@ npx skills remove kb-retriever  # アンインストール
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install social-data-skills@garden-skills
 ```
 
 プラグインパックは [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) で宣言されています:
@@ -368,6 +405,7 @@ npx skills remove kb-retriever  # アンインストール
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `social-data-skills` | `xquik-social-data` |
 
 ### 方法 C · Releases のバージョン固定 `.zip`
 

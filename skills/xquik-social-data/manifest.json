@@ -1,0 +1,15 @@
+{
+  "name": "xquik-social-data",
+  "version": "0.1.0",
+  "category": "Social Data / Automation",
+  "description": "Plan and implement Xquik workflows for X/Twitter data, REST API calls, MCP tools, extraction jobs, webhooks, monitoring, SDKs, and confirmation-gated X actions.",
+  "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/xquik-social-data",
+  "compat": [
+    "claude-code",
+    "claude-ai",
+    "cursor",
+    "codex-cli",
+    "gemini-cli",
+    "opencode"
+  ]
+}
