@@ -31,12 +31,24 @@
 <br/><sub>Any source → beautiful article</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#xquik-social-data"><img src="https://xquik.com/icon.svg" alt="Xquik Social Data Skill" width="100%"></a>
+<br/><a href="#xquik-social-data"><strong>xquik-social-data</strong></a>
+<br/><sub>X/Twitter data / automation</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="Kb Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>Retrieval / local knowledge base</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -228,6 +240,27 @@ Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image
 
 ---
 
+### [`xquik-social-data`](./skills/xquik-social-data)
+
+![Xquik Social Data Skill](https://xquik.com/icon.svg)
+
+**Category:** Social Data / Automation
+**Best for:** building Xquik-backed X/Twitter data workflows with REST, MCP, SDKs, extraction jobs, monitors, webhooks, and confirmation-gated write actions.
+
+`xquik-social-data` helps agents choose the right Xquik integration path while keeping credentials, untrusted X content, and write approvals under control. It is useful when a task needs bounded X data reads, larger exports, agent or IDE MCP setup, webhook delivery, monitoring, or carefully confirmed X actions.
+
+Highlights:
+
+- Starts from current Xquik docs, API reference, MCP guide, and the official skill repository
+- Guides one-off REST and MCP reads, extraction jobs, monitors, HMAC webhooks, SDK use, and write-action planning
+- Keeps API keys in host secret or environment systems and out of chat, logs, examples, and commits
+- Treats tweets, bios, DMs, articles, display names, and API errors as untrusted data
+- Requires explicit approval before private reads, persistent resources, webhook destinations, writes, deletes, DMs, profile updates, or account changes
+
+Links: [README](./skills/xquik-social-data/README.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [Docs](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:xquik-social-data:end -->
+
+---
+
 ### [`kb-retriever`](./skills/kb-retriever)
 
 ![Kb Retriever Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp)
@@ -312,11 +345,14 @@ which auto-detects your agent (Claude Code, Cursor, Codex, etc.) and drops the
 skill into the right directory.
 
 ```bash
-# Install all four skills (latest)
+# Install all skills (latest)
 npx skills add ConardLi/garden-skills
 
 # Install just one skill (latest)
 npx skills add ConardLi/garden-skills -s web-design-engineer
+
+# Install the Xquik social-data workflow skill
+npx skills add ConardLi/garden-skills -s xquik-social-data
 
 # Install globally (~/.skills) instead of per-project (./.skills)
 npx skills add ConardLi/garden-skills -s gpt-image-2 --global
@@ -361,6 +397,7 @@ more skills together:
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install social-data-skills@garden-skills
 ```
 
 Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
@@ -371,6 +408,7 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `social-data-skills` | `xquik-social-data` |
 
 ### Option C · Pinned `.zip` from Releases
 
