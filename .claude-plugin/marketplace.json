@@ -9,6 +9,15 @@
   },
   "plugins": [
     {
+      "name": "study-skills",
+      "description": "Skills for AI-powered learning and education — built on YJango Learning Theory.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/study"
+      ]
+    },
+    {
       "name": "presentation-skills",
       "description": "Skills for click-driven web video presentations and screen-recorded explainers.",
       "source": "./",

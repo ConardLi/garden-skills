@@ -31,6 +31,13 @@
 <br/><sub>Any source → beautiful article</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top" colspan="2">
+<a href="#study"><img src="./dist/imgs/study-skill.png" alt="Study Skill" width="100%"></a>
+<br/><a href="#study"><strong>study</strong></a>
+<br/><sub>AI-powered learning assistant</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
@@ -50,6 +57,28 @@
 | Install | Use | Contribute |
 |---|---|---|
 | [Install](#install)<br>[`skills` CLI (npx)](#option-a--skills-cli-npx)<br>[Claude Code plugin marketplace](#option-b--claude-code-plugin-marketplace)<br>[Pinned `.zip` from Releases](#option-c--pinned-zip-from-releases)<br>[Manual copy](#option-d--manual-copy-into-your-project)<br>[Git submodule](#option-e--git-submodule) | [Compatibility](#compatibility)<br>[What is a Skill?](#what-is-a-skill) | [Contributing](#contributing)<br>[Acknowledgments](#acknowledgments)<br>[License](#license) |
+
+---
+
+### [`study`](./skills/study)
+
+![Study Skill](./dist/imgs/study-skill.png)
+
+**Category:** Learning / Education  
+**Best for:** learning any concept or skill — from "I don't understand" to "I can use it fluently."
+
+`study` is an AI-powered learning assistant built on **YJango's Learning Theory v5.5**. Instead of just throwing information at the user, it follows the Eight-Step Progressive Construction framework: diagnose → decompose → teach atom-by-atom → validate. It handles programming, languages, theoretical knowledge, and practical skills.
+
+Highlights:
+
+- **Diagnosis-first** — never starts teaching until it knows what the learner actually needs
+- **Three learning atoms** — discrimination (🧩), linking (🔗), and implicit (⚡) — each with dedicated exercise workflows
+- **24 reference modules** covering concept worlds, information theory, DCA, implicit/explicit learning, and more
+- **Domain-adaptive** — auto-detects programming scenarios and loads domain-specific guidance
+- **Quality guardrails** — 11 quality checks to prevent superficial learning
+- **Progress tracking** — saves learning records for cross-session continuity
+
+Links: [README](./skills/study/README.md) · [SKILL.md](./skills/study/SKILL.md) · <!-- DOWNLOAD:study:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:study:end -->
 
 ---
 
@@ -86,6 +115,7 @@ Highlights:
 <sub>↑ All 23 themes at a glance — <a href="./skills/web-video-presentation/README.md#theme-gallery"><b>open the full gallery</b></a> for live 16:9 previews, design signatures, and best-for tags.</sub>
 
 Links: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[Download v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.2/web-video-presentation-1.2.2.zip)<!-- DOWNLOAD:web-video-presentation:end -->
+Links: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:web-video-presentation:end -->
 
 ---
 
@@ -131,6 +161,7 @@ Highlights:
 <sub>↑ 12 of 25 anchored recipes — <a href="./skills/web-design-engineer/README.md#style-recipe-gallery"><b>open the full gallery</b></a> for all 25 working artefacts (apothecary pages, trading workstations, magazine covers, Y2K portals, mid-century posters …) with signature moves and best-for tags.</sub>
 
 Links: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[Download v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.2.2/web-design-engineer-1.2.2.zip)<!-- DOWNLOAD:web-design-engineer:end -->
+Links: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:web-design-engineer:end -->
 
 ---
 
@@ -225,6 +256,7 @@ Highlights:
 <sub>↑ 12 selected cases from the 160+ public case library — <a href="./skills/gpt-image-2/README.md#case-gallery"><b>open the skill gallery</b></a> for more templates, or browse the <a href="https://gpt-image2.mmh1.top/#/case">live website</a>.</sub>
 
 Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website) · <!-- DOWNLOAD:gpt-image-2:start -->[Download v1.0.4 .zip](https://github.com/ConardLi/garden-skills/releases/download/gpt-image-2-v1.0.4/gpt-image-2-1.0.4.zip)<!-- DOWNLOAD:gpt-image-2:end -->
+Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website) · <!-- DOWNLOAD:gpt-image-2:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:gpt-image-2:end -->
 
 ---
 
@@ -285,6 +317,7 @@ Highlights:
 </table>
 
 Links: [README](./skills/beautiful-article/README.md) · [SKILL.md](./skills/beautiful-article/SKILL.md) · <!-- DOWNLOAD:beautiful-article:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/beautiful-article-v0.1.0/beautiful-article-0.1.0.zip)<!-- DOWNLOAD:beautiful-article:end -->
+Links: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:kb-retriever:end -->
 
 ---
 

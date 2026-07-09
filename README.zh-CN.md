@@ -31,6 +31,13 @@
 <br/><sub>任意素材 → 一篇精美的文章</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top" colspan="2">
+<a href="#study"><img src="./dist/imgs/study-skill.png" alt="Study Skill" width="100%"></a>
+<br/><a href="#study"><strong>study</strong></a>
+<br/><sub>AI 学习助手</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
@@ -50,6 +57,28 @@
 | 安装 | 使用 | 参与共建 |
 |---|---|---|
 | [安装](#安装)<br>[`skills` CLI（npx）](#方式-a--skills-clinpx)<br>[Claude Code 插件市场](#方式-b--claude-code-插件市场)<br>[Releases 钉版本 `.zip`](#方式-c--releases-钉版本-zip)<br>[手动拷贝](#方式-d--手动拷贝到项目)<br>[Git Submodule](#方式-e--git-submodule) | [兼容性](#兼容性)<br>[什么是 Skill？](#什么是-skill) | [贡献](#贡献)<br>[致谢](#致谢)<br>[许可证](#许可证) |
+
+---
+
+### [`study`](./skills/study)
+
+![Study Skill](./dist/imgs/study-skill.png)
+
+**类别：** 学习 / 教育  
+**适合：** 学习任何概念或技能 — 从"我不懂"到"我能熟练运用"。
+
+`study` 是基于 **YJango 学习理论 v5.5** 的 AI 学习助手。它不是直接抛信息，而是遵循渐构八步框架：诊断 → 分解 → 逐原子教学 → 验证。适配编程、语言学习、理论知识和实践技能等各类场景。
+
+亮点：
+
+- **先诊断后教学** — 不摸清学习者需求之前不开始讲解
+- **三个学习原子** — 判别（🧩）、联结（🔗）、内隐（⚡），各有专属练习工作流
+- **24 个参考模块** — 覆盖概念世界、信息论、DCA、内隐/外显学习等
+- **领域自适应** — 自动检测编程场景并加载领域专属指导
+- **质量护栏** — 11 条质量检查防止浅层学习
+- **进度追踪** — 跨会话保存学习记录
+
+链接：[README](./skills/study/README.zh-CN.md) · [SKILL.md](./skills/study/SKILL.md) · <!-- DOWNLOAD:study:start -->_（暂未发布）_<!-- DOWNLOAD:study:end -->
 
 ---
 
@@ -86,6 +115,7 @@
 <sub>↑ 23 套主题一览 —— <a href="./skills/web-video-presentation/README.zh-CN.md#主题画廊"><b>打开完整画廊</b></a>，含真实预览图、设计签名与适合场景标签。</sub>
 
 链接：[README](./skills/web-video-presentation/README.zh-CN.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[下载 v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.2/web-video-presentation-1.2.2.zip)<!-- DOWNLOAD:web-video-presentation:end -->
+链接：[README](./skills/web-video-presentation/README.zh-CN.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->_（暂未发布）_<!-- DOWNLOAD:web-video-presentation:end -->
 
 ---
 
@@ -131,6 +161,7 @@
 <sub>↑ 25 套有 anchor 的配方里挑出最具代表性的 12 套 —— <a href="./skills/web-design-engineer/README.zh-CN.md#风格配方画廊"><b>打开完整画廊</b></a>，含全部 25 个真实作品（药剂师页、交易工作站、杂志封面、Y2K 门户、Mid-Century 海报……），含签名手法与适合场景标签。</sub>
 
 链接：[README](./skills/web-design-engineer/README.zh-CN.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[下载 v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.2.2/web-design-engineer-1.2.2.zip)<!-- DOWNLOAD:web-design-engineer:end -->
+链接：[README](./skills/web-design-engineer/README.zh-CN.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->_（暂未发布）_<!-- DOWNLOAD:web-design-engineer:end -->
 
 ---
 
@@ -225,6 +256,7 @@
 <sub>↑ 从 160+ 公开案例库里挑出的 12 个精选入口 —— <a href="./skills/gpt-image-2/README.zh-CN.md#案例画廊"><b>打开 Skill 案例画廊</b></a> 查看更多模板，也可以直接浏览 <a href="https://gpt-image2.mmh1.top/#/case">线上案例站</a>。</sub>
 
 链接：[README](./skills/gpt-image-2/README.zh-CN.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website) · <!-- DOWNLOAD:gpt-image-2:start -->[下载 v1.0.4 .zip](https://github.com/ConardLi/garden-skills/releases/download/gpt-image-2-v1.0.4/gpt-image-2-1.0.4.zip)<!-- DOWNLOAD:gpt-image-2:end -->
+链接：[README](./skills/gpt-image-2/README.zh-CN.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website) · <!-- DOWNLOAD:gpt-image-2:start -->_（暂未发布）_<!-- DOWNLOAD:gpt-image-2:end -->
 
 ---
 
@@ -286,6 +318,7 @@
 - 内置 `grep`、`pdftotext`、`pdfplumber`、`pandas` 工作流，并强调答案来源
 
 链接：[README](./skills/kb-retriever/README.zh-CN.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->[下载 v1.0.1 .zip](https://github.com/ConardLi/garden-skills/releases/download/kb-retriever-v1.0.1/kb-retriever-1.0.1.zip)<!-- DOWNLOAD:kb-retriever:end -->
+链接：[README](./skills/kb-retriever/README.zh-CN.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->_（暂未发布）_<!-- DOWNLOAD:kb-retriever:end -->
 
 ---
 

@@ -1,0 +1,15 @@
+{
+  "name": "study",
+  "version": "1.0.0",
+  "category": "Learning / Education",
+  "description": "基于 YJango 学习理论的学习技能，当你需要学习任何概念或技能时使用。触发词：学习、学会、理解、掌握、练习、诊断、怎么学、教教我、入门、拆解、分析。支持渐构八步法（判断类型→明确IO→拆组任务→分析类型→分析材料→分析方式→执行方案→验证成果），适配编程、语言、理论等各类学习场景。",
+  "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/study",
+  "compat": [
+    "claude-code",
+    "claude-ai",
+    "cursor",
+    "codex-cli",
+    "gemini-cli",
+    "opencode"
+  ]
+}
