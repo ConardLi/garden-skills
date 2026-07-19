@@ -37,12 +37,12 @@ const FILES = [
 ];
 
 const COPY = {
-  en: { label: "Download v%V .zip", unreleased: "_(no release yet — coming soon)_" },
+  en: { label: "Download v%V .zip", unreleased: "_(no release yet - coming soon)_" },
   zh: { label: "下载 v%V .zip", unreleased: "_（暂未发布）_" },
   ja: { label: "Download v%V .zip", unreleased: "_（まだリリースされていません）_" },
 };
 
-// Per-skill block is intentionally a single inline link — appended to the
+// Per-skill block is intentionally a single inline link - appended to the
 // existing "Links:" / "链接：" row of each skill section. All other install
 // flavours (npx, marketplace, manual copy, submodule) live in the unified
 // Install section below.

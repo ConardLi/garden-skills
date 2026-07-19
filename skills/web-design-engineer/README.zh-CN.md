@@ -22,16 +22,16 @@
 
 这个 Skill 通过以下方式将**设计品位**注入 AI 的决策过程：
 
-- **反俗套规则** —— 一份明确的 AI 设计雷区清单
-- **设计系统宣告** —— 强制 AI 在写代码之前，先用自然语言说清配色、字体、间距和动效选择
-- **oklch 色彩理论** —— 基于感知均匀色彩空间的配色派生，取代随机 hex 值
-- **精选字体 × 配色组合** —— 高品质起点，替代默认的 Inter + #3b82f6
-- **占位符哲学** —— 用诚实的 `[icon]` 标记代替拙劣的 SVG 假图
-- **五旋钮 Design Read** —— 把受众、产物、品牌和约束转成可见的构图变化 / 动效 / 密度 / 素材 / 品牌保真决策
-- **保留契约的改版协议** —— 动手前区分 Extension、Preserve 与 Overhaul
-- **上下文化失败模式** —— 识别布局、内容、素材、动效与 Dashboard 的常见 AI 问题，同时保留合理例外
-- **结构化工作流** —— 需求 → 上下文 → 校准后的设计系统 → v0 草稿 → 完整构建 → 验证
-- **按需浏览器验收** —— 只有用户明确提出验收或浏览器测试时，才运行响应式 / 交互 / 运行时 QA harness
+- **反俗套规则** - 一份明确的 AI 设计雷区清单
+- **设计系统宣告** - 强制 AI 在写代码之前，先用自然语言说清配色、字体、间距和动效选择
+- **oklch 色彩理论** - 基于感知均匀色彩空间的配色派生，取代随机 hex 值
+- **精选字体 × 配色组合** - 高品质起点，替代默认的 Inter + #3b82f6
+- **占位符哲学** - 用诚实的 `[icon]` 标记代替拙劣的 SVG 假图
+- **五旋钮 Design Read** - 把受众、产物、品牌和约束转成可见的构图变化 / 动效 / 密度 / 素材 / 品牌保真决策
+- **保留契约的改版协议** - 动手前区分 Extension、Preserve 与 Overhaul
+- **上下文化失败模式** - 识别布局、内容、素材、动效与 Dashboard 的常见 AI 问题，同时保留合理例外
+- **结构化工作流** - 需求 → 上下文 → 校准后的设计系统 → v0 草稿 → 完整构建 → 验证
+- **按需浏览器验收** - 只有用户明确提出验收或浏览器测试时，才运行响应式 / 交互 / 运行时 QA harness
 
 ---
 
@@ -61,7 +61,7 @@ your-project/
 └── ...
 ```
 
-也可以从集合首页通过 Claude Code 插件市场一键安装 —— 参见[根目录 README](../../README.zh-CN.md#%E5%AE%89%E8%A3%85)。
+也可以从集合首页通过 Claude Code 插件市场一键安装 - 参见[根目录 README](../../README.zh-CN.md#%E5%AE%89%E8%A3%85)。
 
 当你的请求涉及可视化/交互式前端工作时，Agent 会自动启用此技能。
 
@@ -86,7 +86,7 @@ your-project/
 1. 理解需求          →  信息充足就干活，信息不足才提问
 2. 获取设计上下文    →  代码 > 截图；现有项目先判断改动模式
 3. 产出 Design Read  →  五个旋钮把 brief 映射为可见决策
-4. 宣告设计系统      →  配色、字体、间距、动效 —— 用 Markdown 说明，写代码之前
+4. 宣告设计系统      →  配色、字体、间距、动效 - 用 Markdown 说明，写代码之前
 5. 尽早展示 v0       →  占位符 + 布局 + token；让用户提前纠偏
 6. 完整构建          →  组件、状态、动效；在关键决策点暂停确认
 7. 验证              →  默认轻量自检；仅在用户明确要求时运行浏览器 harness
@@ -101,7 +101,7 @@ your-project/
 - 用 emoji 充当图标
 - 编造的数据、假 logo 墙、虚假好评
 
-**oklch 色彩系统。** 在感知均匀的 oklch 色彩空间中派生颜色。相同的亮度值在人眼中看起来确实一样亮——HSL 做不到这一点，HSL 中亮度 50% 的黄色看起来比亮度 50% 的蓝色亮得多。
+**oklch 色彩系统。** 在感知均匀的 oklch 色彩空间中派生颜色。相同的亮度值在人眼中看起来确实一样亮--HSL 做不到这一点，HSL 中亮度 50% 的黄色看起来比亮度 50% 的蓝色亮得多。
 
 **精选起点。** 六套经过验证的配色 × 字体组合，覆盖常见场景：
 
@@ -130,20 +130,20 @@ your-project/
 
 ## 风格配方画廊
 
-Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、工作室或设计师。目录中的每个配方都在 demo 画廊里有一个完整的整页作品 —— 不是共用模板、不是缩略图情绪板，而是每套配方本来就该长成的那种东西：Aesop 是药剂师产品页、Bloomberg Terminal 是交易工作站、Mid-Century 是 Saul Bass 海报、Y2K 是世纪之交的门户网站。按学派浏览下方卡片，挑一套气质契合你 brief 的配方，或者直接读 `references/style-recipes/<recipe>.md` 的 spec 文件。点击任意预览图打开完整分辨率的 2:1 大图。
+Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、工作室或设计师。目录中的每个配方都在 demo 画廊里有一个完整的整页作品 - 不是共用模板、不是缩略图情绪板，而是每套配方本来就该长成的那种东西：Aesop 是药剂师产品页、Bloomberg Terminal 是交易工作站、Mid-Century 是 Saul Bass 海报、Y2K 是世纪之交的门户网站。按学派浏览下方卡片，挑一套气质契合你 brief 的配方，或者直接读 `references/style-recipes/<recipe>.md` 的 spec 文件。点击任意预览图打开完整分辨率的 2:1 大图。
 
-> 所有截图都是来自 [`demo/web-design-engineer-demo`](../../demo/web-design-engineer-demo/) 这个 React + Vite 画廊的真实渲染 —— 字体、配色、签名手法都和 spec 文件里一致。每个 demo 位于 `src/recipes/<id>.tsx`。
+> 所有截图都是来自 [`demo/web-design-engineer-demo`](../../demo/web-design-engineer-demo/) 这个 React + Vite 画廊的真实渲染 - 字体、配色、签名手法都和 spec 文件里一致。每个 demo 位于 `src/recipes/<id>.tsx`。
 
 ### Editorial / 极简 · 5 套
 
-> 留白、考究的排版、安静的奢华 —— 药剂师、博物馆图录、硬件产品页。
+> 留白、考究的排版、安静的奢华 - 药剂师、博物馆图录、硬件产品页。
 
 <table>
 <tr>
 <td align="center" width="50%">
 <a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design/apple-hig.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design/apple-hig.webp" alt="apple-hig preview" /></a>
 <br /><strong><code>apple-hig</code></strong>
-<br /><sub>SF Pro Display、慷慨留白、柔和阴影 —— Apple Store 的语气</sub>
+<br /><sub>SF Pro Display、慷慨留白、柔和阴影 - Apple Store 的语气</sub>
 <br /><sub><b>适合</b> · 硬件产品页 · 设备发布 · 高端消费电子</sub>
 </td>
 <td align="center" width="50%">
@@ -163,7 +163,7 @@ Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、
 <td align="center" width="50%">
 <a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design/dieter-rams-braun.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design/dieter-rams-braun.webp" alt="dieter-rams-braun preview" /></a>
 <br /><strong><code>dieter-rams-braun</code></strong>
-<br /><sub>十大设计原则、灰阶网格、技术正投影 —— 功能即形式</sub>
+<br /><sub>十大设计原则、灰阶网格、技术正投影 - 功能即形式</sub>
 <br /><sub><b>适合</b> · 工业设计档案 · 硬件 spec · 品牌原则页</sub>
 </td>
 </tr>
@@ -187,7 +187,7 @@ Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、
 
 ### 信息架构 · 5 套
 
-> 理性、数据驱动、克制 —— 指示系统、交易终端、脚注长文、报纸头版的重量。
+> 理性、数据驱动、克制 - 指示系统、交易终端、脚注长文、报纸头版的重量。
 
 <table>
 <tr>
@@ -238,7 +238,7 @@ Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、
 
 ### 现代工具 / Builder SaaS · 4 套
 
-> 发丝级细节、暖色暗夜、单一点缀色 —— 2020 年代后期的开发者工具美学。
+> 发丝级细节、暖色暗夜、单一点缀色 - 2020 年代后期的开发者工具美学。
 
 <table>
 <tr>
@@ -273,7 +273,7 @@ Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、
 
 ### 动态 / 实验 · 3 套
 
-> 张扬、生成式、感官 —— brief 里写"电影感""WebGL""能拿 Awwwards"的时候。
+> 张扬、生成式、感官 - brief 里写"电影感""WebGL""能拿 Awwwards"的时候。
 
 <table>
 <tr>
@@ -310,7 +310,7 @@ Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、
 
 ### 粗野 / Brutalist · 3 套
 
-> 反设计、诚实、未抛光 —— 系统默认的网页、小报封面、反奢侈的奢侈。
+> 反设计、诚实、未抛光 - 系统默认的网页、小报封面、反奢侈的奢侈。
 
 <table>
 <tr>
@@ -347,14 +347,14 @@ Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、
 
 ### 温暖人文 · 3 套
 
-> 平易近人、有机、手工感 —— 小生意的拉拉队长、手工装帧的书、每日重置。
+> 平易近人、有机、手工感 - 小生意的拉拉队长、手工装帧的书、每日重置。
 
 <table>
 <tr>
 <td align="center" width="50%">
 <a href="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design/mailchimp-freddie.webp"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design/mailchimp-freddie.webp" alt="mailchimp-freddie preview" /></a>
 <br /><strong><code>mailchimp-freddie</code></strong>
-<br /><sub>Cavendish 黄、手绘涂鸦、对话式文案 —— 小生意的拉拉队长</sub>
+<br /><sub>Cavendish 黄、手绘涂鸦、对话式文案 - 小生意的拉拉队长</sub>
 <br /><sub><b>适合</b> · 引导流程 · 中小企业营销工具 · 友好的消费类应用</sub>
 </td>
 <td align="center" width="50%">
@@ -384,7 +384,7 @@ Skill 自带 **25 套有名字的配方**，每套都对应到真实的品牌、
 
 ### 类型 / 流派 · 2 套
 
-> 时代编码、十年编码、主题编码 —— 只能通过直接 anchor 名字唤起。
+> 时代编码、十年编码、主题编码 - 只能通过直接 anchor 名字唤起。
 
 <table>
 <tr>
@@ -420,7 +420,7 @@ Hash 路由 URL（`#/linear`、`#/aesop`、…）可深链到任意配方。按 
 
 ### Demo 1：太空探索博物馆
 
-**提示词：** *"帮我做一个'太空探索博物馆'的线上展览首页——全屏 Hero、4 个核心展览介绍、一个至少 6 个节点的时间线、参观预约 CTA、页脚。整体风格要沉浸感强、有宇宙的深邃感。"*
+**提示词：** *"帮我做一个'太空探索博物馆'的线上展览首页--全屏 Hero、4 个核心展览介绍、一个至少 6 个节点的时间线、参观预约 CTA、页脚。整体风格要沉浸感强、有宇宙的深邃感。"*
 
 | | 无 Skill | 有 Skill |
 |---|---|---|
@@ -439,13 +439,13 @@ Hash 路由 URL（`#/linear`、`#/aesop`、…）可深链到任意配方。按 
 |---|---|
 | **文件** | `demo/web-design-demo/demo2/demo2-with-skill.html` |
 | **角色塑造** | 虚构了北欧摄影师 "Mira Høst"，设计了一整套视觉身份 |
-| **配色** | 暖纸色浅底（#f2efe8）+ 墨色深文（#161513）—— 极度克制的双色调 |
+| **配色** | 暖纸色浅底（#f2efe8）+ 墨色深文（#161513）-- 极度克制的双色调 |
 | **字体** | Instrument Serif（展示标题）+ Space Grotesk（界面）, 大量使用斜体 |
 | **布局** | 杂志编排式结构，编号分节、不对称网格、侧边竖排文字 |
 | **动效** | Hero 图片的慢速 Ken Burns 动画（24秒周期），胶片噪点纹理叠加 |
-| **导航** | `mix-blend-mode: difference` 顶栏 —— 在深浅背景间无缝过渡 |
+| **导航** | `mix-blend-mode: difference` 顶栏 - 在深浅背景间无缝过渡 |
 
-> 启发本 Skill 的 Claude Design 原始系统提示词保留在 [`dist/prompt/claude-design-system-prompt.md`](../../dist/prompt/claude-design-system-prompt.md)。
+> 启发本 Skill 的 Claude Design 原始系统提示词保留在 [`dist/prompts/claude-design-system-prompt.md`](../../dist/prompts/claude-design-system-prompt.md)。
 
 ---
 
@@ -453,17 +453,17 @@ Hash 路由 URL（`#/linear`、`#/aesop`、…）可深链到任意配方。按 
 
 此 Skill 的灵感来自 [Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs) 的系统提示词。Claude Design 是 Anthropic 于 2026 年 4 月推出的视觉设计产品。其系统提示词（约 420 行）编码了一套精密的设计原则、反模式和工作流约束，使其输出保持稳定的高品质。
 
-本项目将这些核心理念提取并精炼为一个可移植的 Skill，适用于任何 AI 编程代理——让你获得 Claude Design 级别的设计品位，同时摆脱产品锁定和用量限制。
+本项目将这些核心理念提取并精炼为一个可移植的 Skill，适用于任何 AI 编程代理--让你获得 Claude Design 级别的设计品位，同时摆脱产品锁定和用量限制。
 
 相比 Claude Design 原始提示词的主要新增内容：
-- **设计系统宣告步骤** —— 强制 AI 在编码前用自然语言说明设计 token
-- **v0 草稿策略** —— 一套具体的方法论，确保尽早展示半成品
-- **扩展的反俗套清单** —— 从真实 AI 输出中识别出的额外模式
-- **占位符哲学** —— 一套完整的框架，专业地处理缺失素材
-- **配色 × 字体配对表** —— 六套经过验证的视觉系统起点
-- **设计方向顾问** —— 模糊需求场景的 6 学派差异化 3 选 1 推荐机制，且显式接入到 recipe 库做落地
-- **25 套有 anchor 的风格配方库** —— 每套绑定一个真实品牌 / studio / 设计师，含可粘贴的具体值；用来抵御 AI 默认味
-- **高级模式库** —— 常见 UI 模式的即用代码模板
+- **设计系统宣告步骤** - 强制 AI 在编码前用自然语言说明设计 token
+- **v0 草稿策略** - 一套具体的方法论，确保尽早展示半成品
+- **扩展的反俗套清单** - 从真实 AI 输出中识别出的额外模式
+- **占位符哲学** - 一套完整的框架，专业地处理缺失素材
+- **配色 × 字体配对表** - 六套经过验证的视觉系统起点
+- **设计方向顾问** - 模糊需求场景的 6 学派差异化 3 选 1 推荐机制，且显式接入到 recipe 库做落地
+- **25 套有 anchor 的风格配方库** - 每套绑定一个真实品牌 / studio / 设计师，含可粘贴的具体值；用来抵御 AI 默认味
+- **高级模式库** - 常见 UI 模式的即用代码模板
 
 ---
 

@@ -31,12 +31,24 @@
 <br/><sub>Any source → beautiful article</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#xquik-social-data"><img src="https://xquik.com/icon.svg" alt="Xquik Social Data Skill" width="100%"></a>
+<br/><a href="#xquik-social-data"><strong>xquik-social-data</strong></a>
+<br/><sub>X/Twitter data / automation</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="Kb Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>Retrieval / local knowledge base</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -68,8 +80,8 @@ Highlights:
 - Click / keyboard driven `(chapter, step)` cursor, with one narration beat per visual step
 - Hard collaboration checkpoints for script, theme, outline, implementation mode, and optional audio
 - Hidden hover-only progress controls so the stage stays clean while recording
-- Theme-token architecture with **23 built-in themes**, each with its own design signature — editorial, terminal, engineering, Swiss International, and more
-- **Pluggable TTS** — provider-agnostic audio runner; ships **two built-in providers** (MiniMax `mmx-cli` + OpenAI TTS via curl) plus a contract + ready-to-paste snippets for ElevenLabs / edge-tts / Azure / Google Cloud / macOS `say`
+- Theme-token architecture with **23 built-in themes**, each with its own design signature - editorial, terminal, engineering, Swiss International, and more
+- **Pluggable TTS** - provider-agnostic audio runner; ships **two built-in providers** (MiniMax `mmx-cli` + OpenAI TTS via curl) plus a contract + ready-to-paste snippets for ElevenLabs / edge-tts / Azure / Google Cloud / macOS `say`
 - Scaffolded Vite + React + TypeScript project with reusable stage primitives and recording guidance
 
 <table>
@@ -81,9 +93,9 @@ Highlights:
 </tr>
 </table>
 
-<a href="./skills/web-video-presentation/README.md#theme-gallery"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/gallery.webp" alt="Theme gallery — 23 built-in themes for web-video-presentation" /></a>
+<a href="./skills/web-video-presentation/README.md#theme-gallery"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/gallery.webp" alt="Theme gallery - 23 built-in themes for web-video-presentation" /></a>
 
-<sub>↑ All 23 themes at a glance — <a href="./skills/web-video-presentation/README.md#theme-gallery"><b>open the full gallery</b></a> for live 16:9 previews, design signatures, and best-for tags.</sub>
+<sub>↑ All 23 themes at a glance - <a href="./skills/web-video-presentation/README.md#theme-gallery"><b>open the full gallery</b></a> for live 16:9 previews, design signatures, and best-for tags.</sub>
 
 Links: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[Download v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.2/web-video-presentation-1.2.2.zip)<!-- DOWNLOAD:web-video-presentation:end -->
 
@@ -104,7 +116,7 @@ Highlights:
 - Distinguishes extension, preserve, and overhaul redesign modes before changing an existing product
 - Runs executable browser acceptance only when the user explicitly requests acceptance, QA, or browser testing
 - Pushes beyond generic AI UI patterns with an anti-cliché blocklist and stronger visual judgment
-- Ships a **Design Direction Advisor (six differentiated schools) + 25 anchored style recipes** (Linear / Aesop / Pentagram / Bloomberg / Stripe Press / Mid-Century, etc.) — each recipe carries concrete palette, typography, signature moves, and anti-patterns ready to paste into the design-system declaration
+- Ships a **Design Direction Advisor (six differentiated schools) + 25 anchored style recipes** (Linear / Aesop / Pentagram / Bloomberg / Stripe Press / Mid-Century, etc.) - each recipe carries concrete palette, typography, signature moves, and anti-patterns ready to paste into the design-system declaration
 - Covers HTML / CSS / JavaScript / React prototypes, with guidance for responsive layout, motion, and interaction polish
 - Includes practical implementation rules for inline React + Babel, CSS tokens, `oklch()` color work, container queries, and reduced-motion handling
 - Ships an advanced patterns reference for device frames, slide engines, animation timelines, dashboards, and other reusable web artifacts
@@ -130,7 +142,7 @@ Highlights:
 </tr>
 </table>
 
-<sub>↑ 12 of 25 anchored recipes — <a href="./skills/web-design-engineer/README.md#style-recipe-gallery"><b>open the full gallery</b></a> for all 25 working artefacts (apothecary pages, trading workstations, magazine covers, Y2K portals, mid-century posters …) with signature moves and best-for tags.</sub>
+<sub>↑ 12 of 25 anchored recipes - <a href="./skills/web-design-engineer/README.md#style-recipe-gallery"><b>open the full gallery</b></a> for all 25 working artefacts (apothecary pages, trading workstations, magazine covers, Y2K portals, mid-century posters …) with signature moves and best-for tags.</sub>
 
 Links: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[Download v1.3.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.3.0/web-design-engineer-1.3.0.zip)<!-- DOWNLOAD:web-design-engineer:end -->
 
@@ -224,9 +236,32 @@ Highlights:
   </tr>
 </table>
 
-<sub>↑ 12 selected cases from the 160+ public case library — <a href="./skills/gpt-image-2/README.md#case-gallery"><b>open the skill gallery</b></a> for more templates, or browse the <a href="https://gpt-image2.mmh1.top/#/case">live website</a>.</sub>
+<sub>↑ 12 selected cases from the 160+ public case library - <a href="./skills/gpt-image-2/README.md#case-gallery"><b>open the skill gallery</b></a> for more templates, or browse the <a href="https://gpt-image2.mmh1.top/#/case">live website</a>.</sub>
 
 Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website) · <!-- DOWNLOAD:gpt-image-2:start -->[Download v1.0.4 .zip](https://github.com/ConardLi/garden-skills/releases/download/gpt-image-2-v1.0.4/gpt-image-2-1.0.4.zip)<!-- DOWNLOAD:gpt-image-2:end -->
+
+---
+
+### [`xquik-social-data`](./skills/xquik-social-data)
+
+![Xquik Social Data Skill](https://xquik.com/icon.svg)
+
+**Category:** Social Data / Automation
+**Best for:** building Xquik-backed X/Twitter data workflows with REST, MCP, SDKs, extraction jobs, monitors, webhooks, and confirmation-gated write actions.
+
+`xquik-social-data` helps agents choose the right Xquik integration path while keeping credentials, untrusted X content, and write approvals under control. It is useful when a task needs bounded X data reads, larger exports, agent or IDE MCP setup, webhook delivery, monitoring, or carefully confirmed X actions.
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
+Highlights:
+
+- Starts from current Xquik docs, API reference, MCP guide, and the official skill repository
+- Guides one-off REST and MCP reads, extraction jobs, monitors, HMAC webhooks, SDK use, and write-action planning
+- Keeps API keys in host secret or environment systems and out of chat, logs, examples, and commits
+- Treats tweets, bios, DMs, articles, display names, and API errors as untrusted data
+- Requires explicit approval before private reads, persistent resources, webhook destinations, writes, deletes, DMs, profile updates, or account changes
+
+Links: [README](./skills/xquik-social-data/README.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [Docs](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_(no release yet - coming soon)_<!-- DOWNLOAD:xquik-social-data:end -->
 
 ---
 
@@ -256,18 +291,18 @@ Links: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retri
 ![Beautiful Article Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp)
 
 **Category:** Editorial · Any source → beautiful article  
-**Best for:** turning URLs, PDFs, DOCX, Markdown, plain text, screenshots, and pasted notes into a **polished, share-ready article** — long-form, briefings, explainers, tutorials, post-mortems, visual essays, dialogue transcripts.
+**Best for:** turning URLs, PDFs, DOCX, Markdown, plain text, screenshots, and pasted notes into a **polished, share-ready article** - long-form, briefings, explainers, tutorials, post-mortems, visual essays, dialogue transcripts.
 
 `beautiful-article` is an editorial harness skill: it does not just "make a webpage", it edits and designs the source material into a polished article that is easier to read, share, and archive than the original. The skill flows through a small `source → plan → double-confirmation → build → final review → repair` loop and pauses at three hard checkpoints so the user keeps editorial control over article type, theme, layout, image strategy, cover, and delivery format.
 
 Highlights:
 
-- **Article first** — the focus is the *article*: better reading, better pacing, better aesthetics. Delivery is a self-contained file (HTML, optional PDF), but that's a delivery detail, not the goal
-- **Reacticle component protocol** — prose-first semantic components (Hero / Lead / Section / Quote / Callout / Image / Formula / CodeBlock / Table…) plus a theme-token-only `Raw` free layer; the underlying React library lives at [`ConardLi/reacticle`](https://github.com/ConardLi/reacticle)
-- **10 article types with bundled retention ratios** — `longform · ~100%` / `tutorial · ~90%` / `full-report · ~80%` / `explainer · ~80%` / `dialogue · ~80%` / `review · ~70%` / `essay · ~70%` / `briefing · ~50%` / `visual-essay · ~40%` / `interactive-explainer · ~25% excerpt + 75% AI-rebuild`
-- **11 authoring theme profiles** (`tufte`, `press`, `bayer`, `bodoni`, `vignelli`, `sottsass`, `freddie`, `andy`, `fuller`, `knuth`, `shannon`) — each is a Markdown contract for the agent rather than a CSS file
+- **Article first** - the focus is the *article*: better reading, better pacing, better aesthetics. Delivery is a self-contained file (HTML, optional PDF), but that's a delivery detail, not the goal
+- **Reacticle component protocol** - prose-first semantic components (Hero / Lead / Section / Quote / Callout / Image / Formula / CodeBlock / Table…) plus a theme-token-only `Raw` free layer; the underlying React library lives at [`ConardLi/reacticle`](https://github.com/ConardLi/reacticle)
+- **10 article types with bundled retention ratios** - `longform · ~100%` / `tutorial · ~90%` / `full-report · ~80%` / `explainer · ~80%` / `dialogue · ~80%` / `review · ~70%` / `essay · ~70%` / `briefing · ~50%` / `visual-essay · ~40%` / `interactive-explainer · ~25% excerpt + 75% AI-rebuild`
+- **11 authoring theme profiles** (`tufte`, `press`, `bayer`, `bodoni`, `vignelli`, `sottsass`, `freddie`, `andy`, `fuller`, `knuth`, `shannon`) - each is a Markdown contract for the agent rather than a CSS file
 - **Hard collaboration checkpoints** with item-by-item decision capture (no silent defaults), plus a 3:4 book-style cover, default-on TOC, and language-aware translation step
-- **Per-node quality protocol** — main-agent inline checks for plan, sub-agent reviewers for first spread / sections / final review, repair as minimal slices
+- **Per-node quality protocol** - main-agent inline checks for plan, sub-agent reviewers for first spread / sections / final review, repair as minimal slices
 
 #### Theme gallery
 
@@ -314,11 +349,14 @@ which auto-detects your agent (Claude Code, Cursor, Codex, etc.) and drops the
 skill into the right directory.
 
 ```bash
-# Install all four skills (latest)
+# Install all skills (latest)
 npx skills add ConardLi/garden-skills
 
 # Install just one skill (latest)
 npx skills add ConardLi/garden-skills -s web-design-engineer
+
+# Install the Xquik social-data workflow skill
+npx skills add ConardLi/garden-skills -s xquik-social-data
 
 # Install globally (~/.skills) instead of per-project (./.skills)
 npx skills add ConardLi/garden-skills -s gpt-image-2 --global
@@ -328,10 +366,10 @@ npx skills add ConardLi/garden-skills -s kb-retriever -a claude-code
 ```
 
 > **Defaults to the latest commit on `main`.** That's what you want 95% of the
-> time — the CLI tracks each skill's most recent published `SKILL.md` straight
+> time - the CLI tracks each skill's most recent published `SKILL.md` straight
 > from the source tree.
 
-**Want a pinned version? (CI / production)** Use a tag-scoped `tree/` URL —
+**Want a pinned version? (CI / production)** Use a tag-scoped `tree/` URL -
 this points at the exact commit a release was cut from:
 
 ```bash
@@ -363,6 +401,7 @@ more skills together:
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install social-data-skills@garden-skills
 ```
 
 Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
@@ -373,6 +412,7 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `social-data-skills` | `xquik-social-data` |
 
 ### Option C · Pinned `.zip` from Releases
 
@@ -398,19 +438,19 @@ shasum -a 256 -c "${SKILL}.zip.sha256"
 unzip -q "${SKILL}.zip" -d .claude/skills/   # or .agents/skills/, .codex/skills/, ...
 ```
 
-A floating "always-latest" URL is also available — useful for one-off installs:
+A floating "always-latest" URL is also available - useful for one-off installs:
 
 ```bash
 https://github.com/ConardLi/garden-skills/releases/latest/download/<skill>-<version>.zip
 ```
 
-> **Pinned URLs for every skill are listed inline in this README** — see the
+> **Pinned URLs for every skill are listed inline in this README** - see the
 > "Download" line under each skill's "Links" entry above. They are kept in sync
 > automatically by the release pipeline.
 
 ### Option D · Manual copy into your project
 
-Clone the repo and copy the skill folder you want — handy if you want to fork
+Clone the repo and copy the skill folder you want - handy if you want to fork
 or hack on the skill itself.
 
 ```bash
@@ -451,7 +491,7 @@ git checkout web-design-engineer-v1.0.0
 | **Gemini CLI** | extension manifest | ✅ Tested |
 | **OpenCode** | `.opencode/skills/<name>/` | ✅ Tested |
 
-> The `SKILL.md` format is portable by design — if your agent supports skills, copy the folder into the directory it scans, and it should work. PRs welcome to extend this matrix.
+> The `SKILL.md` format is portable by design - if your agent supports skills, copy the folder into the directory it scans, and it should work. PRs welcome to extend this matrix.
 
 ---
 
@@ -471,7 +511,7 @@ by reference docs, scripts, and assets:
 ```
 
 The agent decides whether to activate the skill from the `description` line
-in the frontmatter — so the description is the contract between you and the
+in the frontmatter - so the description is the contract between you and the
 agent. For the full spec, see [agentskills.io](https://agentskills.io) and
 [Anthropic's reference repository](https://github.com/anthropics/skills).
 
@@ -481,8 +521,8 @@ agent. For the full spec, see [agentskills.io](https://agentskills.io) and
 
 Bug reports, new skills, and tooling improvements are all welcome.
 
-The maintainer-facing docs — repository layout, release process, version
-rules, CI workflow, troubleshooting — live in
+The maintainer-facing docs - repository layout, release process, version
+rules, CI workflow, troubleshooting - live in
 [**`CONTRIBUTING.md`**](./CONTRIBUTING.md) ([中文](./CONTRIBUTING.zh-CN.md)).
 Read that first if you want to add a skill or cut a release.
 
@@ -502,8 +542,8 @@ npm run validate  # the same check CI runs on every PR
 This collection stands on the shoulders of:
 
 - **[Anthropic](https://www.anthropic.com)** for the [Agent Skills spec](https://agentskills.io) and the [`anthropics/skills`](https://github.com/anthropics/skills) reference repository.
-- **[Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs)** — the system prompt that inspired `web-design-engineer`. The original is preserved in [`dist/prompt/claude-design-system-prompt.md`](./dist/prompt/claude-design-system-prompt.md) for reference.
-- The broader OSS skill community — see [`travisvn/awesome-claude-skills`](https://github.com/travisvn/awesome-claude-skills) and [`obra/superpowers`](https://github.com/obra/superpowers) for further discovery.
+- **[Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs)** - the system prompt that inspired `web-design-engineer`. The original is preserved in [`dist/prompts/claude-design-system-prompt.md`](./dist/prompts/claude-design-system-prompt.md) for reference.
+- The broader OSS skill community - see [`travisvn/awesome-claude-skills`](https://github.com/travisvn/awesome-claude-skills) and [`obra/superpowers`](https://github.com/obra/superpowers) for further discovery.
 
 ---
 
