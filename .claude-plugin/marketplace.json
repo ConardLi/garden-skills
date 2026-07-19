@@ -4,8 +4,8 @@
     "name": "ConardLi"
   },
   "metadata": {
-    "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, GPT Image 2 image generation, and beautifully designed single-file HTML articles.",
-    "version": "0.4.0"
+    "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, GPT Image 2 image generation, beautifully designed single-file HTML articles, and Xquik social-data workflows.",
+    "version": "0.5.0"
   },
   "plugins": [
     {
@@ -48,6 +48,15 @@
       "name": "beautiful-article-skills",
       "description": "Skills for turning URL / PDF / DOCX / Markdown / text / screenshots into beautifully designed, offline-friendly single-file HTML articles via the reacticle component protocol.",
       "source": "./skills/beautiful-article",
+      "strict": false,
+      "skills": [
+        "./"
+      ]
+    },
+    {
+      "name": "social-data-skills",
+      "description": "Skills for planning Xquik REST, MCP, SDK, extraction, monitoring, webhook, and confirmation-gated X action workflows. Not affiliated with X Corp.",
+      "source": "./skills/xquik-social-data",
       "strict": false,
       "skills": [
         "./"
