@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import process from "node:process";
-import { loadAmbientEnv, DEFAULT_MODEL } from "./shared.js";
+import { loadAmbientEnv, DEFAULT_MODEL, imageProvider } from "./shared.js";
+import { ATLAS_GENERATE_MODEL } from "./atlas.js";
 
 await loadAmbientEnv();
 
@@ -9,9 +10,14 @@ const TRUTHY = new Set(["1", "true", "yes", "on", "y"]);
 const rawFlag = String(process.env.ENABLE_GARDEN_IMAGEGEN || "").trim().toLowerCase();
 const gardenEnabled = TRUTHY.has(rawFlag);
 
-const apiKey = process.env.OPENAI_API_KEY || "";
-const baseUrl = process.env.OPENAI_BASE_URL || "https://api.openai.com/v1";
-const model = process.env.OPENAI_IMAGE_MODEL || DEFAULT_MODEL;
+const provider = imageProvider();
+const apiKey = provider === "atlas" ? process.env.ATLASCLOUD_API_KEY || "" : process.env.OPENAI_API_KEY || "";
+const baseUrl = provider === "atlas"
+  ? process.env.ATLASCLOUD_BASE_URL || "https://api.atlascloud.ai/api/v1"
+  : process.env.OPENAI_BASE_URL || "https://api.openai.com/v1";
+const model = provider === "atlas"
+  ? process.env.ATLASCLOUD_IMAGE_MODEL || ATLAS_GENERATE_MODEL
+  : process.env.OPENAI_IMAGE_MODEL || DEFAULT_MODEL;
 
 let recommendation;
 let mode;
@@ -26,7 +32,7 @@ if (gardenEnabled && apiKey) {
   mode = "A?";
   recommendation = "garden-missing-key";
   summary =
-    "ENABLE_GARDEN_IMAGEGEN 已开，但缺 OPENAI_API_KEY。先向用户索要 key，或临时降级到 MODE B / C。";
+    `ENABLE_GARDEN_IMAGEGEN 已开，但缺 ${provider === "atlas" ? "ATLASCLOUD_API_KEY" : "OPENAI_API_KEY"}。先向用户索要 key，或临时降级到 MODE B / C。`;
 } else {
   mode = "B-or-C";
   recommendation = "host-or-advisor";
@@ -37,6 +43,7 @@ if (gardenEnabled && apiKey) {
 const result = {
   mode,
   recommendation,
+  provider,
   garden_mode_enabled: gardenEnabled,
   has_api_key: Boolean(apiKey),
   base_url: baseUrl,
@@ -54,6 +61,7 @@ if (wantJson) {
   console.log("--- gpt-image-2 runtime mode ---");
   console.log(`${pad("mode")}: ${result.mode}`);
   console.log(`${pad("recommendation")}: ${result.recommendation}`);
+  console.log(`${pad("provider")}: ${result.provider}`);
   console.log(`${pad("garden_mode_enabled")}: ${result.garden_mode_enabled}`);
   console.log(`${pad("has_api_key")}: ${result.has_api_key}`);
   console.log(`${pad("base_url")}: ${result.base_url}`);

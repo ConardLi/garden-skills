@@ -138,6 +138,16 @@ export function buildBaseUrl() {
   return (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/$/, "");
 }
 
+export function imageProvider() {
+  const explicit = String(process.env.GARDEN_IMAGE_PROVIDER || "").trim().toLowerCase();
+  if (explicit && !["openai", "atlas"].includes(explicit)) {
+    throw new Error("GARDEN_IMAGE_PROVIDER must be openai or atlas.");
+  }
+  if (explicit) return explicit;
+  if (process.env.ATLASCLOUD_API_KEY && !process.env.OPENAI_API_KEY) return "atlas";
+  return "openai";
+}
+
 export function requireApiKey() {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("OPENAI_API_KEY is required.");

@@ -10,7 +10,7 @@
 
 ## What it does
 
-This skill is a structured prompt-engineering and image-generation pack built around the GPT Image 2 model (and OpenAI-compatible image endpoints). It only does two image tasks — `POST /images/generations` and `POST /images/edits` — but it does them in three different runtime environments without changing user-facing behavior.
+This skill is a structured prompt-engineering and image-generation pack built around GPT Image 2, OpenAI-compatible image endpoints, and an optional Atlas Cloud backend. It supports generation and editing in three different runtime environments without changing user-facing behavior.
 
 It bundles:
 
@@ -34,7 +34,7 @@ The output picks one of three modes:
 
 | Mode | Trigger | Behavior |
 |---|---|---|
-| **A — Garden local** | `ENABLE_GARDEN_IMAGEGEN` truthy **AND** `OPENAI_API_KEY` present | End-to-end: pick template → render prompt → call `generate.js` / `edit.js` → image lands on disk |
+| **A — Garden local** | `ENABLE_GARDEN_IMAGEGEN` truthy **AND** the selected provider key is present | End-to-end: pick template → render prompt → call `generate.js` / `edit.js` → image lands on disk |
 | **B — Host-native** | Garden disabled, but the host agent already has an image tool (`image_generation`, `dalle`, `nano_banana`, image MCP, etc.) | Render the prompt, then **delegate** image generation to the host's own tool |
 | **C — Advisor** | Garden disabled, host has no image tool | Skill degrades into a high-quality prompt writer — saves the rendered prompt to `garden-gpt-image-2/prompt/` and instructs the user to paste it into ChatGPT / Midjourney / DALL·E / Sora / Nano Banana / their own gateway |
 
@@ -184,7 +184,9 @@ skills/gpt-image-2/
 │   ├── check-mode.js              Mode A/B/C detector (run this first)
 │   ├── generate.js                Text-to-image (Mode A only)
 │   ├── edit.js                    Image edit / inpaint (Mode A only)
+│   ├── atlas.js                   Atlas async submit, polling, and safe download
 │   ├── shared.js                  Shared request, save, env-resolution logic
+│   ├── atlas.test.js              Offline Atlas contract tests
 │   └── package.json
 └── references/
     ├── prompt-writing.md          Methodology: how to design templates & ask for missing fields
@@ -216,11 +218,17 @@ Read in this order: CLI args → `process.env` → `<cwd>/.env` → `<cwd>/.gate
 | Variable | Required | Purpose |
 |---|---|---|
 | `ENABLE_GARDEN_IMAGEGEN` | Mode A | Master switch for Mode A (`1` / `true` / `yes` / `on`) |
+| `GARDEN_IMAGE_PROVIDER` | optional | `openai` (default) or `atlas`; if unset, Atlas is selected only when its key is the sole available key |
 | `OPENAI_API_KEY` | Mode A | Required for actual image API calls |
 | `OPENAI_BASE_URL` | optional | Default `https://api.openai.com/v1`; can point to any OpenAI-compatible gateway |
 | `OPENAI_IMAGE_MODEL` | optional | Default `gpt-image-2`; can be swapped for `gpt-image-1` / `dall-e-3` / etc. |
+| `ATLASCLOUD_API_KEY` | Atlas Mode A | Required when `GARDEN_IMAGE_PROVIDER=atlas` |
+| `ATLASCLOUD_IMAGE_MODEL` | optional | Atlas generation model; default `qwen-image-3.0/text-to-image` |
+| `ATLASCLOUD_EDIT_MODEL` | optional | Atlas edit model; default `qwen-image-3.0/edit` |
 
-The skill is wire-compatible with the OpenAI image API and is **not** hard-coded to any third-party gateway.
+Atlas uses its native asynchronous image API: the script submits once, polls the prediction with a bounded loop, and downloads the credential-free HTTPS output without forwarding the API key. Atlas edit mode sends the local source image as a data URL; masks and OpenAI-only quality or background options remain on the OpenAI path.
+
+The existing OpenAI-compatible path remains the default. Atlas is an explicit optional provider and does not change existing behavior.
 
 ---
 
@@ -248,7 +256,7 @@ Examples:
 2. **Templates over freeform prompts.** 18 categories of pre-validated structured templates with explicit `{argument ...}` slots and `default` markers — much higher quality than asking "describe what you want."
 3. **Ask precisely, not vaguely.** When a template field is missing, the skill asks per field (e.g. "Who is the host? real photo, named celebrity, free description, or random?") instead of "what style do you want?"
 4. **Always archive prompts.** Even in advisor mode, the rendered prompt is saved so the work is reusable.
-5. **OpenAI-compatible by default.** No vendor lock-in to any specific gateway.
+5. **OpenAI-compatible by default.** Atlas is opt-in, so existing gateway behavior remains unchanged.
 
 ---
 

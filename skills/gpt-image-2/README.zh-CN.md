@@ -10,7 +10,7 @@
 
 ## 这个 Skill 干什么
 
-围绕 GPT Image 2（以及任何 OpenAI 兼容的图像接口）做的结构化提示词工程 + 图像生成包。只做两件事——`POST /images/generations` 和 `POST /images/edits`，但能在三种完全不同的运行环境下做到对用户无感。
+围绕 GPT Image 2、OpenAI 兼容图像接口和可选 Atlas Cloud 后端做的结构化提示词工程 + 图像生成包。支持生成与编辑，并能在三种完全不同的运行环境下做到对用户无感。
 
 它内置了：
 
@@ -34,7 +34,7 @@ node skills/gpt-image-2/scripts/check-mode.js --json
 
 | 模式 | 触发条件 | 行为 |
 |---|---|---|
-| **A · Garden 本地生图** | `ENABLE_GARDEN_IMAGEGEN` 为真 **且** 有 `OPENAI_API_KEY` | 端到端：选模板 → 渲染 prompt → 调用 `generate.js` / `edit.js` → 图片落盘 |
+| **A · Garden 本地生图** | `ENABLE_GARDEN_IMAGEGEN` 为真 **且** 有所选 provider 的 API Key | 端到端：选模板 → 渲染 prompt → 调用 `generate.js` / `edit.js` → 图片落盘 |
 | **B · Host-Native 委托宿主出图** | 未启用 Garden，但宿主 Agent 自带图像工具（`image_generation` / `dalle` / `nano_banana` / 图像 MCP 等） | 渲染好 prompt 后**交给宿主自带的图像工具**出图 |
 | **C · Advisor 纯提示词顾问** | 未启用 Garden，宿主也没有图像工具 | 退化成"高质量 prompt 撰写顾问"——把 prompt 落盘到 `garden-gpt-image-2/prompt/`，告诉用户去 ChatGPT / Midjourney / DALL·E / Sora / Nano Banana / 自己的网关里执行 |
 
@@ -184,7 +184,9 @@ skills/gpt-image-2/
 │   ├── check-mode.js              模式 A/B/C 探测器（先跑这个）
 │   ├── generate.js                文本生图（仅 Mode A）
 │   ├── edit.js                    图像编辑 / 局部编辑（仅 Mode A）
+│   ├── atlas.js                   Atlas 异步提交、轮询和安全下载
 │   ├── shared.js                  共享请求 / 落盘 / 环境变量解析
+│   ├── atlas.test.js              Atlas 离线契约测试
 │   └── package.json
 └── references/
     ├── prompt-writing.md          方法论：模板怎么设计、缺字段怎么问
@@ -216,11 +218,17 @@ skills/gpt-image-2/
 | 变量 | 必需性 | 说明 |
 |---|---|---|
 | `ENABLE_GARDEN_IMAGEGEN` | Mode A 必需 | 模式开关：`1` / `true` / `yes` / `on` 启用 Mode A |
+| `GARDEN_IMAGE_PROVIDER` | 可选 | `openai`（默认）或 `atlas`；未设置时，仅在只有 Atlas Key 时自动选择 Atlas |
 | `OPENAI_API_KEY` | Mode A 必需 | 真正调图像 API 用 |
 | `OPENAI_BASE_URL` | 可选 | 默认 `https://api.openai.com/v1`，可指向任意 OpenAI 兼容网关 |
 | `OPENAI_IMAGE_MODEL` | 可选 | 默认 `gpt-image-2`，也可换成 `gpt-image-1` / `dall-e-3` 等 |
+| `ATLASCLOUD_API_KEY` | Atlas Mode A 必需 | `GARDEN_IMAGE_PROVIDER=atlas` 时使用 |
+| `ATLASCLOUD_IMAGE_MODEL` | 可选 | Atlas 生图模型，默认 `qwen-image-3.0/text-to-image` |
+| `ATLASCLOUD_EDIT_MODEL` | 可选 | Atlas 编辑模型，默认 `qwen-image-3.0/edit` |
 
-默认实现严格按 OpenAI 兼容接口工作，**不绑定**任何第三方网关。
+Atlas 使用原生异步图像 API：生成任务只提交一次，prediction 采用有界轮询，下载输出时不转发 API Key 且只接受无凭据 HTTPS URL。Atlas 编辑模式将本地原图编码为 data URL；遮罩和 OpenAI 专属的 quality / background 等选项仍走 OpenAI 路径。
+
+现有 OpenAI 兼容路径仍是默认行为；Atlas 是显式可选 provider，不改变已有配置。
 
 ---
 
@@ -248,7 +256,7 @@ skills/gpt-image-2/
 2. **模板优于自由提示。** 18 大类预校验过的结构化模板，带显式 `{argument ...}` 参数槽和 `default` 标记，质量远高于"你说说想要啥"。
 3. **精确提问，不要笼统提问。** 模板字段缺失时按字段精确问（"主播是谁？真人照片 / 名人名字 / 自由描述 / 随机生成？"），不要笼统问"想要什么风格"。
 4. **永远归档 prompt。** 即使在顾问模式，渲染好的 prompt 也会落盘，方便复用。
-5. **默认 OpenAI 兼容。** 不锁定任何特定网关。
+5. **默认 OpenAI 兼容。** Atlas 为可选项，不改变已有网关行为。
 
 ---
 
