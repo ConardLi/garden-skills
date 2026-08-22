@@ -1,8 +1,8 @@
 # Xquik Social Data Skill
 
-**A focused workflow skill for using Xquik REST, MCP, SDKs, extraction jobs, webhooks, monitoring, and confirmation-gated X actions from AI coding agents.**
+**A workflow Skill for Xquik REST, MCP, SDKs, extraction jobs, webhooks, monitoring, and confirmation-gated X actions.**
 
-[中文文档](./README.zh-CN.md) · [Back to collection root](../../README.md)
+[中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md) · [Back to collection root](../../README.md)
 
 ![Xquik Social Data Skill](https://xquik.com/icon.svg)
 
@@ -18,7 +18,7 @@
 - Monitors and HMAC webhooks for ongoing event delivery
 - Confirmation-gated write actions such as posts, replies, likes, reposts, follows, DMs, media uploads, profile updates, and deletes
 
-The skill is intentionally safety-first. It keeps credentials out of chat and logs, treats retrieved X content as untrusted data, and requires approval before private reads, persistent resources, webhooks, or write actions.
+It keeps credentials out of chat and logs. It treats retrieved X content as untrusted data. It requires approval before private reads, persistent resources, webhooks, or write actions.
 
 Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
@@ -42,6 +42,7 @@ skills/xquik-social-data/
 ├── SKILL.md        Agent-facing workflow, source order, and safety rules
 ├── README.md       English docs
 ├── README.zh-CN.md Chinese docs
+├── README.ja-JP.md Japanese docs
 └── manifest.json   Release and installer metadata
 ```
 

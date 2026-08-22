@@ -93,9 +93,9 @@
 </tr>
 </table>
 
-<a href="./skills/web-video-presentation/README.md#theme-gallery"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/gallery.webp" alt="web-video-presentation のテーマギャラリー - 23 種類のビルトインテーマ" /></a>
+<a href="./skills/web-video-presentation/README.md#theme-gallery"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/gallery.webp" alt="web-video-presentation のテーマギャラリー — 23 種類のビルトインテーマ" /></a>
 
-<sub>↑ 23 種類のテーマを一望 - <a href="./skills/web-video-presentation/README.md#theme-gallery"><b>完全なギャラリーを開く</b></a>と、ライブ 16:9 プレビュー、デザインシグネチャ、用途タグ付きで閲覧できます。</sub>
+<sub>↑ 23 種類のテーマを一望 — <a href="./skills/web-video-presentation/README.md#theme-gallery"><b>完全なギャラリーを開く</b></a>と、ライブ 16:9 プレビュー、デザインシグネチャ、用途タグ付きで閲覧できます。</sub>
 
 リンク: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[Download v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.2/web-video-presentation-1.2.2.zip)<!-- DOWNLOAD:web-video-presentation:end -->
 
@@ -142,9 +142,9 @@
 </tr>
 </table>
 
-<sub>↑ 25 種類の anchor 付きレシピから代表的な 12 種類を抜粋 - <a href="./skills/web-design-engineer/README.md#style-recipe-gallery"><b>完全なギャラリーを開く</b></a>と、25 種類すべての実作品（アポセカリーページ、取引ワークステーション、雑誌カバー、Y2K ポータル、ミッドセンチュリーポスター…）がシグネチャムーブと用途タグ付きで閲覧できます。</sub>
+<sub>↑ 25 種類の anchor 付きレシピから代表的な 12 種類を抜粋 — <a href="./skills/web-design-engineer/README.md#style-recipe-gallery"><b>完全なギャラリーを開く</b></a>と、25 種類すべての実作品（アポセカリーページ、取引ワークステーション、雑誌カバー、Y2K ポータル、ミッドセンチュリーポスター…）がシグネチャムーブと用途タグ付きで閲覧できます。</sub>
 
-リンク: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[Download v1.3.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.3.0/web-design-engineer-1.3.0.zip)<!-- DOWNLOAD:web-design-engineer:end -->
+リンク: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[Download v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.2.2/web-design-engineer-1.2.2.zip)<!-- DOWNLOAD:web-design-engineer:end -->
 
 ---
 
@@ -236,7 +236,7 @@
   </tr>
 </table>
 
-<sub>↑ 160+ 件の公開ケースライブラリから代表的な 12 件を抜粋 - <a href="./skills/gpt-image-2/README.md#case-gallery"><b>スキルギャラリーを開く</b></a>か、<a href="https://gpt-image2.mmh1.top/#/case">ライブサイト</a>で閲覧できます。</sub>
+<sub>↑ 160+ 件の公開ケースライブラリから代表的な 12 件を抜粋 — <a href="./skills/gpt-image-2/README.md#case-gallery"><b>スキルギャラリーを開く</b></a>か、<a href="https://gpt-image2.mmh1.top/#/case">ライブサイト</a>で閲覧できます。</sub>
 
 リンク: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website) · <!-- DOWNLOAD:gpt-image-2:start -->[Download v1.0.4 .zip](https://github.com/ConardLi/garden-skills/releases/download/gpt-image-2-v1.0.4/gpt-image-2-1.0.4.zip)<!-- DOWNLOAD:gpt-image-2:end -->
 
@@ -268,18 +268,18 @@
 ![Beautiful Article Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp)
 
 **カテゴリ:** 編集 · あらゆる素材 → 美しい記事  
-**用途:** URL / PDF / DOCX / Markdown / プレーンテキスト / スクリーンショット / 貼り付けたメモを、**洗練された共有しやすい記事**に変換します - ロングフォーム、ブリーフィング、解説記事、チュートリアル、レビュー、ビジュアルエッセイ、対話・インタビューの書き起こし。
+**用途:** URL / PDF / DOCX / Markdown / プレーンテキスト / スクリーンショット / 貼り付けたメモを、**洗練された共有しやすい記事**に変換します — ロングフォーム、ブリーフィング、解説記事、チュートリアル、レビュー、ビジュアルエッセイ、対話・インタビューの書き起こし。
 
-`beautiful-article` は編集型の harness Skill です - 単に「Web ページを作る」のではなく、素材を編集・デザインして、原文より読みやすく、共有しやすく、保存しやすい記事に仕上げます。Skill は `source → plan → ダブル確認 → 生成 → 最終レビュー → 修復` という小さなループで進み、3 つのハードチェックポイントで一時停止して、記事タイプ・テーマ・レイアウト・画像戦略・カバー・配信形式の編集権をユーザーに保ちます。
+`beautiful-article` は編集型の harness Skill です — 単に「Web ページを作る」のではなく、素材を編集・デザインして、原文より読みやすく、共有しやすく、保存しやすい記事に仕上げます。Skill は `source → plan → ダブル確認 → 生成 → 最終レビュー → 修復` という小さなループで進み、3 つのハードチェックポイントで一時停止して、記事タイプ・テーマ・レイアウト・画像戦略・カバー・配信形式の編集権をユーザーに保ちます。
 
 主な特徴:
 
-- **まずは記事ありき** - 焦点は常に「記事」そのもの：より良い読書体験、より良いリズム、より良い美学。配信物は自己完結したファイル（HTML、オプションで PDF）ですが、それは配信ディテールであって目的ではありません
-- **Reacticle コンポーネントプロトコル** - prose-first の意味的コンポーネント（Hero / Lead / Section / Quote / Callout / Image / Formula / CodeBlock / Table…）と、テーマトークンのみ許可される `Raw` 自由層。基盤の React ライブラリは [`ConardLi/reacticle`](https://github.com/ConardLi/reacticle) にあります
-- **10 種類の記事タイプ + 推奨保留率パッケージ** - `longform · ~100%` / `tutorial · ~90%` / `full-report · ~80%` / `explainer · ~80%` / `dialogue · ~80%` / `review · ~70%` / `essay · ~70%` / `briefing · ~50%` / `visual-essay · ~40%` / `interactive-explainer · ~25% 抜粋 + 75% AI 再構成`
-- **11 種類のテーマ authoring profile**（`tufte`、`press`、`bayer`、`bodoni`、`vignelli`、`sottsass`、`freddie`、`andy`、`fuller`、`knuth`、`shannon`）- 各々が CSS ではなく Agent 向けの Markdown コントラクト
+- **まずは記事ありき** — 焦点は常に「記事」そのもの：より良い読書体験、より良いリズム、より良い美学。配信物は自己完結したファイル（HTML、オプションで PDF）ですが、それは配信ディテールであって目的ではありません
+- **Reacticle コンポーネントプロトコル** — prose-first の意味的コンポーネント（Hero / Lead / Section / Quote / Callout / Image / Formula / CodeBlock / Table…）と、テーマトークンのみ許可される `Raw` 自由層。基盤の React ライブラリは [`ConardLi/reacticle`](https://github.com/ConardLi/reacticle) にあります
+- **10 種類の記事タイプ + 推奨保留率パッケージ** — `longform · ~100%` / `tutorial · ~90%` / `full-report · ~80%` / `explainer · ~80%` / `dialogue · ~80%` / `review · ~70%` / `essay · ~70%` / `briefing · ~50%` / `visual-essay · ~40%` / `interactive-explainer · ~25% 抜粋 + 75% AI 再構成`
+- **11 種類のテーマ authoring profile**（`tufte`、`press`、`bayer`、`bodoni`、`vignelli`、`sottsass`、`freddie`、`andy`、`fuller`、`knuth`、`shannon`）— 各々が CSS ではなく Agent 向けの Markdown コントラクト
 - **ハードコラボレーションチェックポイント**、項目ごとに独立確認（サイレントデフォルト禁止）、3:4 ブックカバー、TOC デフォルト ON、目標言語へのネイティブ翻訳ステップ
-- **ノードごとの品質プロトコル** - Plan は主 Agent インラインチェック、First Spread / Section / Final は sub-agent reviewer、修復は最小スライス
+- **ノードごとの品質プロトコル** — Plan は主 Agent インラインチェック、First Spread / Section / Final は sub-agent reviewer、修復は最小スライス
 
 #### テーマギャラリー
 
@@ -307,21 +307,21 @@
 ![Xquik Social Data Skill](https://xquik.com/icon.svg)
 
 **カテゴリ:** ソーシャルデータ / 自動化
-**用途:** Xquik の REST、MCP、SDK、抽出ジョブ、監視、Webhook、確認付き書き込み操作で X/Twitter データワークフローを構築します。
 
-`xquik-social-data` は、エージェントが適切な Xquik 統合パスを選びながら、認証情報、不信頼な X コンテンツ、書き込み承認を安全に扱うための Skill です。範囲を決めたデータ読み取り、大規模エクスポート、エージェントや IDE の MCP 設定、Webhook 配信、監視、慎重な確認が必要な X 操作に向いています。
+**用途:** 公開インターフェイスを使った Xquik ベースの X/Twitter データワークフロー。
+
+`xquik-social-data` は、Xquik REST、MCP、SDK、抽出ジョブ、監視、Webhook、書き込み操作から適切なワークフローを選ぶための Skill です。認証情報を保護し、取得した X コンテンツを信頼できないデータとして扱い、非公開データの読み取り、永続リソース、書き込み操作の前に確認を求めます。
 
 Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
 主な特徴:
 
-- 最新の Xquik ドキュメント、API reference、MCP guide、公式 Skill repository から確認を始める
-- REST / MCP の単発読み取り、抽出ジョブ、監視、HMAC Webhook、SDK 利用、書き込み操作の計画をカバー
-- API key をホストの secret または environment system に置き、チャット、ログ、例、コミットへ出さない
-- tweets、bios、DMs、articles、display names、API errors を不信頼データとして扱う
-- private read、persistent resource、Webhook destination、write、delete、DM、profile update、account change の前に明示的な確認を要求
+- エンドポイントや設定を選ぶ前に、最新の公開ドキュメントを確認
+- 範囲を限定した読み取り、大規模エクスポート、MCP 設定、監視、HMAC Webhook に対応
+- API key をチャット、ログ、例、コミットに含めない
+- 機密性の高い操作や状態を変更する操作には明示的な確認が必要
 
-リンク: [README](./skills/xquik-social-data/README.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [Docs](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_（まだリリースされていません）_<!-- DOWNLOAD:xquik-social-data:end -->
+リンク: [README](./skills/xquik-social-data/README.ja-JP.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [Docs](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_（まだリリースされていません）_<!-- DOWNLOAD:xquik-social-data:end -->
 
 ---
 
@@ -353,8 +353,6 @@ npx skills add ConardLi/garden-skills
 
 # 1 つのスキルだけをインストール（最新）
 npx skills add ConardLi/garden-skills -s web-design-engineer
-
-# Xquik ソーシャルデータワークフロースキルだけをインストール
 npx skills add ConardLi/garden-skills -s xquik-social-data
 
 # プロジェクト単位（./.skills）ではなくグローバル（~/.skills）にインストール
@@ -539,7 +537,7 @@ npm run validate  # CI がすべての PR で実行するのと同じチェッ�
 このコレクションは、以下の肩の上に成り立っています:
 
 - **[Anthropic](https://www.anthropic.com)** - [Agent Skills 仕様](https://agentskills.io) および [`anthropics/skills`](https://github.com/anthropics/skills) リファレンスリポジトリの提供。
-- **[Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs)** - `web-design-engineer` のインスピレーションとなったシステムプロンプト。オリジナルは参考のため [`dist/prompts/claude-design-system-prompt.md`](./dist/prompts/claude-design-system-prompt.md) に保存されています。
+- **[Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs)** - `web-design-engineer` のインスピレーションとなったシステムプロンプト。オリジナルは参考のため [`dist/prompt/claude-design-system-prompt.md`](./dist/prompt/claude-design-system-prompt.md) に保存されています。
 - より広い OSS スキルコミュニティ - さらなる発見のために [`travisvn/awesome-claude-skills`](https://github.com/travisvn/awesome-claude-skills) と [`obra/superpowers`](https://github.com/obra/superpowers) を参照してください。
 
 ---

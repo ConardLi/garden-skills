@@ -93,9 +93,9 @@
 </tr>
 </table>
 
-<a href="./skills/web-video-presentation/README.zh-CN.md#主题画廊"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/gallery.webp" alt="web-video-presentation 主题画廊 - 23 套内置主题一览" /></a>
+<a href="./skills/web-video-presentation/README.zh-CN.md#主题画廊"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video/gallery.webp" alt="web-video-presentation 主题画廊 —— 23 套内置主题一览" /></a>
 
-<sub>↑ 23 套主题一览 - <a href="./skills/web-video-presentation/README.zh-CN.md#主题画廊"><b>打开完整画廊</b></a>，含真实预览图、设计签名与适合场景标签。</sub>
+<sub>↑ 23 套主题一览 —— <a href="./skills/web-video-presentation/README.zh-CN.md#主题画廊"><b>打开完整画廊</b></a>，含真实预览图、设计签名与适合场景标签。</sub>
 
 链接：[README](./skills/web-video-presentation/README.zh-CN.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[下载 v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.2/web-video-presentation-1.2.2.zip)<!-- DOWNLOAD:web-video-presentation:end -->
 
@@ -142,9 +142,9 @@
 </tr>
 </table>
 
-<sub>↑ 25 套有 anchor 的配方里挑出最具代表性的 12 套 - <a href="./skills/web-design-engineer/README.zh-CN.md#风格配方画廊"><b>打开完整画廊</b></a>，含全部 25 个真实作品（药剂师页、交易工作站、杂志封面、Y2K 门户、Mid-Century 海报……），含签名手法与适合场景标签。</sub>
+<sub>↑ 25 套有 anchor 的配方里挑出最具代表性的 12 套 —— <a href="./skills/web-design-engineer/README.zh-CN.md#风格配方画廊"><b>打开完整画廊</b></a>，含全部 25 个真实作品（药剂师页、交易工作站、杂志封面、Y2K 门户、Mid-Century 海报……），含签名手法与适合场景标签。</sub>
 
-链接：[README](./skills/web-design-engineer/README.zh-CN.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[下载 v1.3.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.3.0/web-design-engineer-1.3.0.zip)<!-- DOWNLOAD:web-design-engineer:end -->
+链接：[README](./skills/web-design-engineer/README.zh-CN.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[下载 v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.2.2/web-design-engineer-1.2.2.zip)<!-- DOWNLOAD:web-design-engineer:end -->
 
 ---
 
@@ -236,7 +236,7 @@
   </tr>
 </table>
 
-<sub>↑ 从 160+ 公开案例库里挑出的 12 个精选入口 - <a href="./skills/gpt-image-2/README.zh-CN.md#案例画廊"><b>打开 Skill 案例画廊</b></a> 查看更多模板，也可以直接浏览 <a href="https://gpt-image2.mmh1.top/#/case">线上案例站</a>。</sub>
+<sub>↑ 从 160+ 公开案例库里挑出的 12 个精选入口 —— <a href="./skills/gpt-image-2/README.zh-CN.md#案例画廊"><b>打开 Skill 案例画廊</b></a> 查看更多模板，也可以直接浏览 <a href="https://gpt-image2.mmh1.top/#/case">线上案例站</a>。</sub>
 
 链接：[README](./skills/gpt-image-2/README.zh-CN.md) · [SKILL.md](./skills/gpt-image-2/SKILL.md) · [Website](./website/gpt-image2-website) · <!-- DOWNLOAD:gpt-image-2:start -->[下载 v1.0.4 .zip](https://github.com/ConardLi/garden-skills/releases/download/gpt-image-2-v1.0.4/gpt-image-2-1.0.4.zip)<!-- DOWNLOAD:gpt-image-2:end -->
 
@@ -247,18 +247,18 @@
 ![Beautiful Article Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp)
 
 **类别：** 编辑 · 任意素材 → 一篇精美的文章  
-**适合：** 把 URL / PDF / DOCX / Markdown / 纯文本 / 截图 / 粘贴材料编辑成一篇**比原文更易读、更便于分享和归档的精美文章** - 长文、briefing、解释文、教程、复盘、视觉随笔、对话访谈转写。
+**适合：** 把 URL / PDF / DOCX / Markdown / 纯文本 / 截图 / 粘贴材料编辑成一篇**比原文更易读、更便于分享和归档的精美文章** —— 长文、briefing、解释文、教程、复盘、视觉随笔、对话访谈转写。
 
 `beautiful-article` 是一个编辑型 harness Skill：它不只是"做个网页"，而是把素材编辑、设计成一篇比原文更易读、更便于分享和归档的精美文章。整个 Skill 走一个 `source → plan → 双确认 → 生成 → 终审 → 修复` 小型流程，并在 3 个硬 checkpoint 暂停，让用户掌握文章类型 / 主题 / 版式 / 配图策略 / 封面 / 交付格式的最终控制权。
 
 亮点：
 
-- **首先是一篇文章** - 注意力永远在"文章"本身：更好的阅读、更好的节奏、更好的美学。交付物是一份自包含的文件（HTML，可选 PDF），但那是交付细节、不是目标
-- **Reacticle 组件协议** - prose-first 的语义组件（Hero / Lead / Section / Quote / Callout / Image / Formula / CodeBlock / Table…）+ 仅允许主题 token 的 `Raw` 自由层；底层 React 组件库见 [`ConardLi/reacticle`](https://github.com/ConardLi/reacticle)
-- **10 种文章类型 + 推荐保留比例打包** - `longform · ~100%` / `tutorial · ~90%` / `full-report · ~80%` / `explainer · ~80%` / `dialogue · ~80%` / `review · ~70%` / `essay · ~70%` / `briefing · ~50%` / `visual-essay · ~40%` / `interactive-explainer · ~25% 摘录 + 75% AI 重构`
-- **11 套主题 authoring profile**（`tufte`、`press`、`bayer`、`bodoni`、`vignelli`、`sottsass`、`freddie`、`andy`、`fuller`、`knuth`、`shannon`）-- 每套是给 Agent 看的 Markdown 契约，不是 CSS 文件
+- **首先是一篇文章** —— 注意力永远在"文章"本身：更好的阅读、更好的节奏、更好的美学。交付物是一份自包含的文件（HTML，可选 PDF），但那是交付细节、不是目标
+- **Reacticle 组件协议** —— prose-first 的语义组件（Hero / Lead / Section / Quote / Callout / Image / Formula / CodeBlock / Table…）+ 仅允许主题 token 的 `Raw` 自由层；底层 React 组件库见 [`ConardLi/reacticle`](https://github.com/ConardLi/reacticle)
+- **10 种文章类型 + 推荐保留比例打包** —— `longform · ~100%` / `tutorial · ~90%` / `full-report · ~80%` / `explainer · ~80%` / `dialogue · ~80%` / `review · ~70%` / `essay · ~70%` / `briefing · ~50%` / `visual-essay · ~40%` / `interactive-explainer · ~25% 摘录 + 75% AI 重构`
+- **11 套主题 authoring profile**（`tufte`、`press`、`bayer`、`bodoni`、`vignelli`、`sottsass`、`freddie`、`andy`、`fuller`、`knuth`、`shannon`）—— 每套是给 Agent 看的 Markdown 契约，不是 CSS 文件
 - **硬协作 checkpoint**，每项决策独立确认（禁止静默替用户选择），自带 3:4 书封封面、TOC 默认开、目标语言地道翻译
-- **分节点质检协议** - Plan 主 Agent 内联自查、First Spread / Section / Final 用 sub-agent reviewer，修复走最小切片
+- **分节点质检协议** —— Plan 主 Agent 内联自查、First Spread / Section / Final 用 sub-agent reviewer，修复走最小切片
 
 #### 主题预览
 
@@ -281,29 +281,6 @@
 
 ---
 
-### [`xquik-social-data`](./skills/xquik-social-data)
-
-![Xquik Social Data Skill](https://xquik.com/icon.svg)
-
-**类别：** 社交数据 / 自动化
-**适合：** 用 Xquik 的 REST、MCP、SDK、抽取任务、监控、Webhook 和需要确认的写操作构建 X/Twitter 数据工作流。
-
-`xquik-social-data` 帮助 Agent 为任务选择合适的 Xquik 集成路径，同时把凭据、不可信 X 内容和写操作确认控制好。它适合有边界的数据读取、大规模导出、Agent 或 IDE MCP 配置、Webhook 投递、监控和需要谨慎确认的 X 操作。
-
-Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
-
-亮点：
-
-- 从当前 Xquik 文档、API Reference、MCP 指南和官方 Skill 仓库开始核对事实
-- 覆盖一次性 REST / MCP 读取、抽取任务、监控、HMAC Webhook、SDK 使用和写操作规划
-- 要求把 API key 放在主机密钥或环境变量系统中，避免进入聊天、日志、示例和提交
-- 把 tweets、bios、DMs、articles、display names 和 API errors 都当成不可信数据
-- 在私密读取、持久资源、Webhook destination、写操作、删除、DM、profile updates 或账号变更前要求明确确认
-
-链接：[README](./skills/xquik-social-data/README.zh-CN.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [Docs](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_（暂未发布）_<!-- DOWNLOAD:xquik-social-data:end -->
-
----
-
 
 ### [`kb-retriever`](./skills/kb-retriever)
 
@@ -323,6 +300,29 @@ Xquik is an independent third-party service. Not affiliated with X Corp. "Twitte
 - 内置 `grep`、`pdftotext`、`pdfplumber`、`pandas` 工作流，并强调答案来源
 
 链接：[README](./skills/kb-retriever/README.zh-CN.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->[下载 v1.0.1 .zip](https://github.com/ConardLi/garden-skills/releases/download/kb-retriever-v1.0.1/kb-retriever-1.0.1.zip)<!-- DOWNLOAD:kb-retriever:end -->
+
+---
+
+### [`xquik-social-data`](./skills/xquik-social-data)
+
+![Xquik Social Data Skill](https://xquik.com/icon.svg)
+
+**类别：** 社交数据 / 自动化
+
+**适合：** 通过公开接口构建基于 Xquik 的 X/Twitter 数据工作流。
+
+`xquik-social-data` 帮助 Agent 在 Xquik REST、MCP、SDK、抽取任务、监控、Webhook 和写操作之间选择合适的工作流。它保护凭据，把获取的 X 内容视为不可信数据，并在私密读取、持久资源或写操作前要求确认。
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
+亮点：
+
+- 选择 endpoint 或配置前，先核对当前公开文档
+- 覆盖有边界的读取、大规模导出、MCP 配置、监控和 HMAC Webhook
+- 不在聊天、日志、示例或提交中暴露 API key
+- 敏感操作或会改变状态的操作必须经过明确确认
+
+链接：[README](./skills/xquik-social-data/README.zh-CN.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [文档](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_（暂未发布）_<!-- DOWNLOAD:xquik-social-data:end -->
 
 ---
 
@@ -356,8 +356,6 @@ npx skills add ConardLi/garden-skills
 
 # 只装某一个 Skill，最新
 npx skills add ConardLi/garden-skills -s web-design-engineer
-
-# 只安装 Xquik 社交数据工作流 Skill
 npx skills add ConardLi/garden-skills -s xquik-social-data
 
 # 装到全局 (~/.skills) 而不是当前项目 (./.skills)
@@ -367,7 +365,7 @@ npx skills add ConardLi/garden-skills -s gpt-image-2 --global
 npx skills add ConardLi/garden-skills -s kb-retriever -a claude-code
 ```
 
-> **默认就是 `main` 上的最新版本**，95% 的场景这就是你想要的--CLI 直接从源码
+> **默认就是 `main` 上的最新版本**，95% 的场景这就是你想要的——CLI 直接从源码
 > 树拉每个 Skill 当前的 `SKILL.md`。
 
 **想钉版本？（CI / 生产环境）** 用带 tag 的 `tree/` URL，会指向某次 release
@@ -444,7 +442,7 @@ unzip -q "${SKILL}.zip" -d .claude/skills/   # 或 .agents/skills/、.codex/skil
 https://github.com/ConardLi/garden-skills/releases/latest/download/<skill>-<version>.zip
 ```
 
-> **每个 Skill 当前版本的钉版本 URL 都直接列在 README 里**--见上面每个 Skill
+> **每个 Skill 当前版本的钉版本 URL 都直接列在 README 里**——见上面每个 Skill
 > 区块"链接"那一行下面的"下载"块。这些链接由发布流水线自动同步。
 
 ### 方式 D · 手动拷贝到项目
@@ -489,7 +487,7 @@ git checkout web-design-engineer-v1.0.0
 | **Gemini CLI** | extension manifest | ✅ 已验证 |
 | **OpenCode** | `.opencode/skills/<name>/` | ✅ 已验证 |
 
-> `SKILL.md` 格式本身是可移植的--只要你的 Agent 支持 Skill 体系，把文件夹放进它扫描的目录就行。欢迎 PR 扩充这张表。
+> `SKILL.md` 格式本身是可移植的——只要你的 Agent 支持 Skill 体系，把文件夹放进它扫描的目录就行。欢迎 PR 扩充这张表。
 
 ---
 
@@ -507,7 +505,7 @@ git checkout web-design-engineer-v1.0.0
 └── assets/       ← 可选：模板、字体、图标等
 ```
 
-Agent 会根据 frontmatter 里的 `description` 决定要不要激活这个 Skill--
+Agent 会根据 frontmatter 里的 `description` 决定要不要激活这个 Skill——
 所以 description 就是你和 Agent 之间的契约。完整规范见
 [agentskills.io](https://agentskills.io) 与
 [Anthropic 官方示例仓库](https://github.com/anthropics/skills)。
@@ -518,7 +516,7 @@ Agent 会根据 frontmatter 里的 `description` 决定要不要激活这个 Ski
 
 欢迎提 issue、贡献新的 Skill、或者改进发版工具链。
 
-维护者向的文档--仓库结构、发版流程、版本号规则、CI 工作流、常见问题--
+维护者向的文档——仓库结构、发版流程、版本号规则、CI 工作流、常见问题——
 都在 [**`CONTRIBUTING.zh-CN.md`**](./CONTRIBUTING.zh-CN.md)
 （[English](./CONTRIBUTING.md)）。新增 Skill 或者发版前先读那份。
 
@@ -537,9 +535,9 @@ npm run validate  # 跑一遍和 PR CI 完全一样的检查
 
 本集合站在以下工作的肩膀上：
 
-- **[Anthropic](https://www.anthropic.com)** - [Agent Skills 规范](https://agentskills.io) 和 [`anthropics/skills`](https://github.com/anthropics/skills) 参考仓库。
-- **[Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs)** - `web-design-engineer` 的灵感来源，原系统提示词保留在 [`dist/prompts/claude-design-system-prompt.md`](./dist/prompts/claude-design-system-prompt.md) 供参考。
-- 更广义的 OSS Skill 社区--延伸阅读：[`travisvn/awesome-claude-skills`](https://github.com/travisvn/awesome-claude-skills) 和 [`obra/superpowers`](https://github.com/obra/superpowers)。
+- **[Anthropic](https://www.anthropic.com)** —— [Agent Skills 规范](https://agentskills.io) 和 [`anthropics/skills`](https://github.com/anthropics/skills) 参考仓库。
+- **[Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs)** —— `web-design-engineer` 的灵感来源，原系统提示词保留在 [`dist/prompt/claude-design-system-prompt.md`](./dist/prompt/claude-design-system-prompt.md) 供参考。
+- 更广义的 OSS Skill 社区——延伸阅读：[`travisvn/awesome-claude-skills`](https://github.com/travisvn/awesome-claude-skills) 和 [`obra/superpowers`](https://github.com/obra/superpowers)。
 
 ---
 

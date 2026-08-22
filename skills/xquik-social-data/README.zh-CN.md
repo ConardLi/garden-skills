@@ -2,7 +2,7 @@
 
 **一个面向 AI 编程代理的 Xquik 工作流 Skill，覆盖 REST、MCP、SDK、批量抽取、Webhook、监控和需要确认的 X 操作。**
 
-[English](./README.md) · [返回集合首页](../../README.zh-CN.md)
+[English](./README.md) · [日本語](./README.ja-JP.md) · [返回集合首页](../../README.zh-CN.md)
 
 ![Xquik Social Data Skill](https://xquik.com/icon.svg)
 
@@ -42,6 +42,7 @@ skills/xquik-social-data/
 ├── SKILL.md        面向 Agent 的工作流、信息源顺序和安全规则
 ├── README.md       英文文档
 ├── README.zh-CN.md 中文文档
+├── README.ja-JP.md 日文文档
 └── manifest.json   发布与安装元数据
 ```
 
