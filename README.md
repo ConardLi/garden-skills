@@ -31,12 +31,24 @@
 <br/><sub>Any source → beautiful article</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#xquik-social-data"><img src="https://xquik.com/icon.svg" alt="Xquik Social Data Skill" width="100%"></a>
+<br/><a href="#xquik-social-data"><strong>xquik-social-data</strong></a>
+<br/><sub>X/Twitter data / automation</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="Kb Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>Retrieval / local knowledge base</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -290,6 +302,29 @@ Links: [README](./skills/beautiful-article/README.md) · [SKILL.md](./skills/bea
 
 ---
 
+### [`xquik-social-data`](./skills/xquik-social-data)
+
+![Xquik Social Data Skill](https://xquik.com/icon.svg)
+
+**Category:** Social Data / Automation
+
+**Best for:** building Xquik-backed X/Twitter data workflows through public interfaces.
+
+`xquik-social-data` helps agents choose between Xquik REST, MCP, SDK, extraction, monitoring, webhook, and write workflows. It protects credentials, treats retrieved X content as untrusted, and requires confirmation before private reads, persistent resources, or write actions.
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
+Highlights:
+
+- Verifies current public documentation before choosing endpoints or setup
+- Covers bounded reads, large exports, MCP setup, monitors, and HMAC webhooks
+- Keeps API keys out of chat, logs, examples, and commits
+- Requires explicit approval for sensitive or state-changing operations
+
+Links: [README](./skills/xquik-social-data/README.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [Docs](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:xquik-social-data:end -->
+
+---
+
 ## Install
 
 There are five supported install paths. Pick the one that fits your stack:
@@ -314,11 +349,12 @@ which auto-detects your agent (Claude Code, Cursor, Codex, etc.) and drops the
 skill into the right directory.
 
 ```bash
-# Install all four skills (latest)
+# Install all skills (latest)
 npx skills add ConardLi/garden-skills
 
 # Install just one skill (latest)
 npx skills add ConardLi/garden-skills -s web-design-engineer
+npx skills add ConardLi/garden-skills -s xquik-social-data
 
 # Install globally (~/.skills) instead of per-project (./.skills)
 npx skills add ConardLi/garden-skills -s gpt-image-2 --global
@@ -363,6 +399,7 @@ more skills together:
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install social-data-skills@garden-skills
 ```
 
 Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
@@ -373,6 +410,7 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `social-data-skills` | `xquik-social-data` |
 
 ### Option C · Pinned `.zip` from Releases
 

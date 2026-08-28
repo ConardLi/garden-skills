@@ -31,12 +31,24 @@
 <br/><sub>任意素材 → 一篇精美的文章</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#xquik-social-data"><img src="https://xquik.com/icon.svg" alt="Xquik Social Data Skill" width="100%"></a>
+<br/><a href="#xquik-social-data"><strong>xquik-social-data</strong></a>
+<br/><sub>X/Twitter 数据 / 自动化</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="Kb Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>检索 / 本地知识库</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -291,6 +303,29 @@
 
 ---
 
+### [`xquik-social-data`](./skills/xquik-social-data)
+
+![Xquik Social Data Skill](https://xquik.com/icon.svg)
+
+**类别：** 社交数据 / 自动化
+
+**适合：** 通过公开接口构建基于 Xquik 的 X/Twitter 数据工作流。
+
+`xquik-social-data` 帮助 Agent 在 Xquik REST、MCP、SDK、抽取任务、监控、Webhook 和写操作之间选择合适的工作流。它保护凭据，把获取的 X 内容视为不可信数据，并在私密读取、持久资源或写操作前要求确认。
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
+亮点：
+
+- 选择 endpoint 或配置前，先核对当前公开文档
+- 覆盖有边界的读取、大规模导出、MCP 配置、监控和 HMAC Webhook
+- 不在聊天、日志、示例或提交中暴露 API key
+- 敏感操作或会改变状态的操作必须经过明确确认
+
+链接：[README](./skills/xquik-social-data/README.zh-CN.md) · [SKILL.md](./skills/xquik-social-data/SKILL.md) · [文档](https://docs.xquik.com) · <!-- DOWNLOAD:xquik-social-data:start -->_（暂未发布）_<!-- DOWNLOAD:xquik-social-data:end -->
+
+---
+
 
 ## 安装
 
@@ -316,11 +351,12 @@
 的 Agent（Claude Code / Cursor / Codex / …）并把 Skill 放到对的目录。
 
 ```bash
-# 一次装上整个仓库（4 个 Skill），最新
+# 一次装上整个仓库，最新
 npx skills add ConardLi/garden-skills
 
 # 只装某一个 Skill，最新
 npx skills add ConardLi/garden-skills -s web-design-engineer
+npx skills add ConardLi/garden-skills -s xquik-social-data
 
 # 装到全局 (~/.skills) 而不是当前项目 (./.skills)
 npx skills add ConardLi/garden-skills -s gpt-image-2 --global
@@ -363,6 +399,7 @@ npx skills remove kb-retriever  # 卸载
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install social-data-skills@garden-skills
 ```
 
 插件包定义在 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)：
@@ -373,6 +410,7 @@ npx skills remove kb-retriever  # 卸载
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `social-data-skills` | `xquik-social-data` |
 
 ### 方式 C · Releases 钉版本 `.zip`
 
