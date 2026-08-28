@@ -144,7 +144,7 @@
 
 <sub>↑ 25 種類の anchor 付きレシピから代表的な 12 種類を抜粋 — <a href="./skills/web-design-engineer/README.md#style-recipe-gallery"><b>完全なギャラリーを開く</b></a>と、25 種類すべての実作品（アポセカリーページ、取引ワークステーション、雑誌カバー、Y2K ポータル、ミッドセンチュリーポスター…）がシグネチャムーブと用途タグ付きで閲覧できます。</sub>
 
-リンク: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[Download v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.2.2/web-design-engineer-1.2.2.zip)<!-- DOWNLOAD:web-design-engineer:end -->
+リンク: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/web-design-engineer/SKILL.md) · [Website](./website/web-design-website) · [Demo](./demo/web-design-demo) · <!-- DOWNLOAD:web-design-engineer:start -->[Download v1.3.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-design-engineer-v1.3.0/web-design-engineer-1.3.0.zip)<!-- DOWNLOAD:web-design-engineer:end -->
 
 ---
 
