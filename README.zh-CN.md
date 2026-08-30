@@ -316,7 +316,7 @@
 的 Agent（Claude Code / Cursor / Codex / …）并把 Skill 放到对的目录。
 
 ```bash
-# 一次装上整个仓库（4 个 Skill），最新
+# 一次装上整个仓库（全部 Skill），最新
 npx skills add ConardLi/garden-skills
 
 # 只装某一个 Skill，最新

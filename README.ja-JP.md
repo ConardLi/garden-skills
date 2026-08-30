@@ -313,7 +313,7 @@
 自動検出し、スキルを適切なディレクトリにドロップする標準的な [`npx skills` CLI](https://www.npmjs.com/package/skills) を使用します。
 
 ```bash
-# 4 つのスキルすべてをインストール（最新）
+# すべてのスキルをインストール（最新）
 npx skills add ConardLi/garden-skills
 
 # 1 つのスキルだけをインストール（最新）
