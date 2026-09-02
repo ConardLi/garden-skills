@@ -314,7 +314,7 @@ which auto-detects your agent (Claude Code, Cursor, Codex, etc.) and drops the
 skill into the right directory.
 
 ```bash
-# Install all four skills (latest)
+# Install all five skills (latest)
 npx skills add ConardLi/garden-skills
 
 # Install just one skill (latest)

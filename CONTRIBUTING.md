@@ -231,7 +231,7 @@ gh run list --workflow=release-skill.yml
 git pull origin main
 ```
 
-After this, the four skills each have a `releases/tag/<skill>-v1.0.0` entry
+After this, the five skills each have a `releases/tag/<skill>-v1.0.0` entry
 on GitHub, with downloadable zip + sha256, and the README download links
 point at them.
 
