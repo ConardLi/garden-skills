@@ -2,7 +2,7 @@
 
 全部是**只依赖 t 的纯函数写法**，可以直接搬进 `render(t)`。示例默认已经从 `motion.js` 引入了需要的函数，`ctx` 是 `setupCanvas` 返回的 2D 上下文，`U = Math.min(W, H) / 1080`。这些是手法的骨架，配色、尺寸和节奏要按 brief 重新设计。
 
-目录：1 遮罩逐字 · 2 前后沿拉伸 · 3 形状变形链 · 4 光标驱动 · 5 穿越转场 · 6 遮罩擦除 · 7 粒子组字 · 8 无状态发射器 · 9 计数器 · 10 SVG 描边 · 11 无缝循环 · 12 WebGL 后期 · 13 拖影 · 14 节拍驱动
+目录：1 遮罩逐字 · 2 前后沿拉伸 · 3 形状变形链 · 4 光标驱动 · 5 穿越转场 · 6 遮罩擦除 · 7 粒子组字 · 8 无状态发射器 · 9 计数器 · 10 SVG 描边 · 11 无缝循环 · 12 WebGL 后期 · 13 拖影 · 14 节拍驱动 · 15 Canvas 伪 3D 体块
 
 ---
 
@@ -249,3 +249,33 @@ const beatIndex = Math.floor(t / BEAT);           // 当前第几拍，可以用
 const onBeat = (t % BEAT) / BEAT;                 // 拍内进度 0→1，可以驱动拍内的小动作
 ```
 用户给了曲子：把 `beats.json` 的 `beats` / `downbeats` / `drops` 复制进 `timeline.js`（作为数组导出），画面和 `score.mjs` 都从这里读。
+
+## 15. Canvas 伪 3D 体块（平面网格立成空间，不用 Three.js）
+
+规则网格上的方块、柱子、楼群、柱状图，用 `motion.js` 的 `camera3d` + `drawBoxes` 就够了：透视投影 + 画家算法，几百个体块一帧几毫秒，和 2D 画面共用同一张画布，所以「平面 → 立体」可以是连续的一个镜头。
+
+```js
+import { camera3d, drawBoxes, glide, seg, spring, lerp, mix, TAU } from './motion.js';
+import { BAR } from './timeline.js';
+const S = 96 * U, F = 1400 * U;                                     // 网格间距；焦距固定，推近靠缩短 dist
+const INK = { top: '#F8F7F3', px: '#8E8B85', nx: '#D2CFC8', pz: '#111', nz: '#3A3936' };   // 每个朝向一个颜色 = 光照
+const tilt = glide(seg(t, t0, t0 + 1.6));
+const cam = camera3d({ W, H, focal: F, dist: F * lerp(1, 0.92, tilt),
+  pitch: lerp(Math.PI / 2, 35 * Math.PI / 180, tilt),               // π/2 = 正俯视：和 2D 版式完全重合
+  yaw: lerp(0, 0.5, tilt), cx: W / 2 + W * 0.16 * tilt, cy: H / 2 + H * 0.2 * tilt });   // 主体让出位置给大字
+const boxes = [];
+for (let i = -7; i <= 7; i++) for (let j = -7; j <= 7; j++) {
+  const d = Math.hypot(i, j); if (d > 6.5) continue;                // 圆形岛：轮廓干净，留出天空放字
+  const h = S * spring(t - t0, { freq: 1, damp: 0.95 }) * (0.4 + 2.4 * (0.5 + 0.5 * Math.cos(0.6 * d - TAU * (t - t0) / BAR)));
+  const top = mix('#111', INK.top, Math.min(1, h / (S * 0.4)));    // 高度 0 时顶面是墨色方块，长高后变亮：没有颜色跳变
+  boxes.push({ x: i * S, z: j * S, w: S * 0.5, h, color: { ...INK, top } });
+}
+drawBoxes(ctx, cam, boxes);
+```
+
+要点：
+- **正俯视 = 平面**：`pitch = π/2`、高度为 0 时，体块就是 2D 网格上的方块（`focal = dist` 时比例 1:1）。从 2D 段切进来时，让 2D 的最后一帧和这一帧对齐，再开始俯仰，观众看到的是「平面立起来」，不是切镜头。
+- 相机基向量直接由 pitch / yaw 构造，正俯视不会像 `lookAt(cross(forward, worldUp))` 那样退化。
+- 画家算法按到相机的水平距离从远到近排序，适合互相分开的体块；体块互相穿插或者要真实光影、阴影时，换 Three.js。
+- 世界坐标里 y 朝上、地面 y = 0；yaw = 0 时相机在 +z 一侧，`pz` 是正面。
+- 大字和体块同屏时先定「文字禁入区」（stack.md 第 4 节），用 `cx / cy` 和岛的半径把体块挡在外面，渲几张静帧确认。

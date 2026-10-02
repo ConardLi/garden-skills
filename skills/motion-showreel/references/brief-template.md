@@ -55,7 +55,7 @@ Reel Read:
 4. 渲染：render.mjs 逐帧截图 → ffmpeg；参数：--fps … --size … [--subframes 4] [--dpr 2] [--grain …]。
 5. 声音：第 1 档 score.mjs / 第 2 档 score.tone.js → audio.mjs build（−14 LUFS，真峰值 < −1 dBTP）；音效密度按风格来，有音效的动作要落在动作那一帧。无声作品写「无声」。
 6. 每个镜头做完渲 3 张静帧检查；全部完成后跑 --determinism，出低清小样确认节奏，再出正片。
-7. 验收：inspect.mjs qa --expect-size … --expect-fps … --expect-duration … --audio required|none [--loop]，技术检查全部 PASS。
+7. 验收：sh build.sh（FPS / SIZE / AUDIO / LOOP 写在 build.sh 顶部，时长取 timeline.js 的 DUR），等价于 inspect.mjs qa --expect-size … --expect-fps … --expect-duration … --audio required|none [--loop]；技术检查全部 PASS，且没有 NOT CHECKED。timeline.js 里声明 HOLDS（刻意的停留）和 DROPS（要留呼吸的重拍）。
 </build>
 
 <gotchas>
@@ -63,6 +63,9 @@ Reel Read:
 </gotchas>
 
 <start>
-已定风格：先出 hook、记忆点、结尾三张风格帧给我确认；未定风格：先给 3 个拉开差距的方向，各一张关键帧让我选。确认后按镜头顺序制作，每个镜头完成后自检；正片渲完跑 inspect qa，技术检查全部 PASS 后，附上审片记录（已知问题如实列出）交付，由我终审。
+（按情况只保留下面一段）
+【要确认 · 默认】已定风格：先出 hook、记忆点、结尾三张风格帧给我确认；未定风格：先给 3 个拉开差距的方向，各一张关键帧（render.mjs --directions）让我选。等我回复后再制作。
+【不用确认 · 用户说过「你决定 / 不用问我」】仍然先出风格帧（未定风格时仍是 3 个方向），自己看图选一个，把选择和理由写进 brief，然后直接继续，不停下来等。
+之后：按镜头顺序制作，每个镜头完成后自检；正片用 build.sh 渲（它带着规格跑 inspect qa），技术检查全部 PASS、没有 NOT CHECKED 后，附上审片记录（已知问题如实列出）交付，由我终审。
 </start>
 ```

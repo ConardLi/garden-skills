@@ -24,3 +24,9 @@ export const CUES = [
   { t: b(11), sfx: 'impact' },
   { t: b(14), sfx: 'shimmer' },
 ];
+
+// What the QA tools should know you meant (inspect.mjs / audio.mjs read these from this file):
+// deliberate still moments, e.g. the end card [[b(28), DUR]]: reported as intended holds, not dead air
+export const HOLDS = [];
+// the big hits that should follow a breath, e.g. [b(24)]: audio check measures the dip before each and the lift on it
+export const DROPS = [];

@@ -10,8 +10,10 @@
 //   beats  node audio.mjs beats <track.mp3> [--out audio/beats.json] [--bpm 120] [--shift 0.5] [--engine auto|librosa|js]
 //          uses librosa for the beat grid when python3 + librosa are available (more robust), the built-in tracker otherwise.
 //          Measures a supplied track: bpm, beats, downbeats, onset hits, bar energy and likely drops.
-//   check  node audio.mjs check <file.wav|mp4> [--out qa/audio]
+//   check  node audio.mjs check <file.wav|mp4> [--out qa/audio] [--drops 12,24.5] [--timeline <proj>/timeline.js | none]
 //          Loudness (LUFS / true peak), band balance, silences, clipping + waveform & spectrum PNGs.
+//          Drops (--drops, or DROPS = [t, …] in the project's timeline.js): the breath before each hit (last half-beat vs
+//          the bar before it) and how much the hit lifts the level.
 //   mux    node audio.mjs mux <video.mp4> <audio.wav> [--out final.mp4]
 import fs from 'node:fs';
 import path from 'node:path';
@@ -21,6 +23,7 @@ import { session, writeWav, loadAudio, lufs, master, SR } from './lib/synth.mjs'
 import { renderTone, fetchPack, PACKS, SAMPLES_DIR } from './lib/tone-render.mjs';
 import { stft } from './lib/fft.mjs';
 import { args, die } from './lib/browser.mjs';
+import { findTimeline, loadTimeline, sameClock } from './lib/project.mjs';
 
 const { pos, opt } = args(process.argv.slice(2));
 const cmd = pos[0];
@@ -168,6 +171,22 @@ async function check() {
     const db = 10 * Math.log10(m / win + 1e-12);
     if (db < -50) { if (runStart < 0) runStart = s; } else { if (runStart >= 0 && (s - runStart) / SR >= 0.6) quiet.push([+(runStart / SR).toFixed(2), +(s / SR).toFixed(2)]); runStart = -1; }
   }
+  // drops: is there a breath before each hit, and does the hit land louder than what came before?
+  const tl = await loadTimeline(findTimeline(file, opt.timeline));
+  const tlOk = sameClock(tl, dur);
+  const drops = typeof opt.drops === 'string' ? opt.drops.split(',').map(Number).filter(v => v > 0 && v < dur) : tlOk ? tl.DROPS.filter(v => v > 0 && v < dur) : [];
+  const beat = (tlOk && tl.BEAT > 0 ? tl.BEAT : 0.5);
+  const rmsDb = (a, b) => { const i0 = Math.max(0, Math.round(a * SR)), i1 = Math.min(n, Math.round(b * SR)); if (i1 - i0 < 64) return NaN; let s = 0; for (let i = i0; i < i1; i++) s += mono[i] * mono[i]; return 10 * Math.log10(s / (i1 - i0) + 1e-12); };
+  const dropLines = [], dropWarn = [];
+  for (const d of drops) {
+    const breath = rmsDb(d - beat / 2, d - 0.01), bar = rmsDb(d - beat / 2 - 4 * beat, d - beat / 2), hit = rmsDb(d, d + 2 * beat);
+    if (![breath, bar, hit].every(Number.isFinite)) continue;
+    const dip = bar - breath, lift = hit - bar, f = v => (v >= 0 ? '+' : '') + v.toFixed(1);
+    dropLines.push(`drop @${d.toFixed(2)}s: last ½ beat ${f(-dip)} dB vs the bar before · hit ${f(lift)} dB vs that bar`);
+    if (dip < 4) dropWarn.push(`no audible breath before the drop at ${d.toFixed(2)}s (last half-beat only ${dip.toFixed(1)} dB below the bar before): stop drums / pads there, keep at most a riser tail (sound.md §6)`);
+    if (lift < 1) dropWarn.push(`the drop at ${d.toFixed(2)}s does not land louder than the bar before it (${f(lift)} dB): thin the build-up or add weight on the hit`);
+  }
+
   const warn = [];
   if (!(I > -15.5 && I < -12.5)) warn.push(`integrated loudness ${I} LUFS is off target (−14 ± 1)`);
   if (TP > -1) warn.push(`true peak ${TP} dBFS is above −1 dBTP (lower the master or limit harder)`);
@@ -177,8 +196,11 @@ async function check() {
   if (highDb < -24) warn.push(`dull: the 4–8 kHz octaves sit ${highDb.toFixed(1)} dB below 1 kHz (typical: −6…−18). Add hats/shakers, transients, brighter synth cutoffs`);
   if (highDb > -2) warn.push(`harsh/hissy: 4–8 kHz is ${highDb.toFixed(1)} dB re 1 kHz; tame noise layers, hats, risers`);
   if (quiet.length) warn.push(`silences: ${quiet.map(q => q.join('–') + 's').join(', ')} (fine only if intentional, e.g. the breath before a drop)`);
+  warn.push(...dropWarn);
   console.log(`${file}\n  duration ${dur.toFixed(2)}s · ${I} LUFS · LRA ${LRA} LU · true peak ${TP} dBFS · internal LUFS ${lufs(L, R).toFixed(1)}`);
   console.log('  octave power, dB re 1 kHz (pink noise = all 0): ' + OCT.map((c, i) => `${label(c)} ${db[i] > 0 ? '+' : ''}${db[i]}`).join(' · '));
+  if (dropLines.length) console.log('  ' + dropLines.join('\n  '));
+  else if (tlOk && !tl.hasDrops) console.log('  drops: none declared (export DROPS = [t, …] in timeline.js to measure the breath before each hit)');
   console.log(`  images: ${prefix}-wave.png, ${prefix}-spectrum.png`);
   console.log(warn.length ? '  WARN\n   - ' + warn.join('\n   - ') : '  OK: loudness, peaks and band balance look sane');
 }

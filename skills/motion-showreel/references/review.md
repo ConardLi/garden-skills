@@ -31,11 +31,13 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 响度 / 真峰值（有音轨时） | 超出 −14 ± 1.5 LUFS，或真峰值 > −1 dBTP |
 | 循环接缝（`--loop`） | 首尾帧 SSIM ≤ 0.97 |
 
+没传的规格项（尺寸、帧率、时长、音轨）会列成 `NOT CHECKED`，结尾也不会说「全部通过」。这时不算验收，要按 brief 的规格重跑。`sh build.sh` 会用顶部的 `FPS / SIZE / AUDIO / LOOP` 和 `timeline.js` 的 `DUR` 自动带齐。
+
 另外：`render.mjs` 发现帧数不对、页面报错、编码器退出时，会直接失败，不留下任何输出；`--determinism` 必须通过。
 
 ## 2. 审片
 
-`qa` 同时会给出审片材料：`-sheet.png`（24 格抽帧）、`-phone.png`（信息流尺寸）、冻结段（它是刻意的停留还是空拍？）、切点、音频的波形图和频谱图。快速动作、转场、记忆点处，再用 `inspect.mjs strip --at <秒>` 看连续帧。
+`qa` 同时会给出审片材料：`-sheet.png`（24 格抽帧）、`-phone.png`（信息流尺寸）、冻结段、切点、音频的波形图和频谱图。冻结段落在 `timeline.js` 的 `HOLDS` 里会标成「intended hold」；其余的都要判断是不是空拍，刻意的就补进 `HOLDS`，不是的就修。写了 `DROPS` 时，音频部分还会给出每个重拍前的呼吸凹陷。快速动作、转场、记忆点处，再用 `inspect.mjs strip --at <秒>` 看连续帧。
 
 逐项写观察，**不适用的写「不适用」**：
 
@@ -73,6 +75,7 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 画面卡、像幻灯片 | 快速运动没有模糊；步进时镜头也一起步进了 | `--subframes` 或画拖影；镜头保持平滑 |
 | 字发糊 | `will-change`；画布没按 DPR 设置；素材分辨率低 | 去掉 will-change；`setupCanvas`；2× 素材；`--dpr 2` |
 | 新旧文字叠在一起 | 容器里的内容没有单独的进场和出场 | 旧内容先模糊淡出，新内容延后进场 |
+| 大字看起来像乱码、重影 | 字压在同色的繁忙内容（体块侧面、粒子、阵列）上，不是字体或代码问题 | 先单独关掉内容层渲一帧确认字本身没问题；再给字划禁入区，用取景中心或主体轮廓让开（stack.md 第 4 节） |
 | 前几帧字体不对 | READY 设得太早 | `await loadFonts()` 之后再设置 READY |
 | 文字突然消失 | 动画参数算出了 NaN（比如空的或无限长的时间窗） | 用 `seg()`（不会产生 NaN）；给离场时间用 `null` 而不是 `Infinity` |
 | WebGL 层全黑 | 着色器编译失败；没开 `preserveDrawingBuffer` | 编译失败就抛错；先渲一帧确认 |
@@ -84,7 +87,7 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 
 ## 4. 交付清单
 
-- [ ] `inspect.mjs qa` 技术检查全部 PASS（参数和 brief 的规格一致）
+- [ ] `inspect.mjs qa` 技术检查全部 PASS，没有 NOT CHECKED（参数和 brief 的规格一致；用 `sh build.sh` 最省事）
 - [ ] `--determinism` 通过
 - [ ] 事实、数字、名称和用户提供的一致；不确定的已单独列出
 - [ ] 文字在手机尺寸下可读，没有溢出或重叠

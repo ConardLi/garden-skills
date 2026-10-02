@@ -138,6 +138,55 @@ export function setupCanvas(canvas, W, H, opts = {}) {
 export function camera(ctx, W, H, { x = W / 2, y = H / 2, zoom = 1, rot = 0 } = {}) {
   ctx.translate(W / 2, H / 2); ctx.rotate(rot); ctx.scale(zoom, zoom); ctx.translate(-x, -y);
 }
+
+// ── 2.5-D: a perspective camera + extruded boxes on Canvas 2D (no Three.js needed for a grid of blocks) ──
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+/**
+ * Orbit camera around `target`. World: y is up, the ground is y = 0.
+ * pitch = elevation above the ground in radians (π/2 = straight down, the top view equals a flat 2-D layout);
+ * yaw = rotation around +y (0 = camera on the +z side, looking towards −z).
+ * focal = projection scale in px (default = dist, so a ground point at the target is drawn at 1:1 in the top view;
+ * keep focal fixed and shrink dist for a push-in). (cx, cy) = where the target lands on screen.
+ * The basis is built from the angles directly, so the straight-down view never degenerates (no lookAt cross product).
+ * project([x, y, z]) → [sx, sy, depth]; depth ≤ 0 means behind the camera.
+ */
+export function camera3d({ W, H, pitch = Math.PI / 4, yaw = 0, dist = 1400, focal = dist, target = [0, 0, 0], cx = W / 2, cy = H / 2 }) {
+  const cp = Math.cos(pitch), sp = Math.sin(pitch), ct = Math.cos(yaw), st = Math.sin(yaw);
+  const pos = [target[0] + dist * cp * st, target[1] + dist * sp, target[2] + dist * cp * ct];
+  const fwd = [-cp * st, -sp, -cp * ct], right = [ct, 0, -st];
+  const up = [right[1] * fwd[2] - right[2] * fwd[1], right[2] * fwd[0] - right[0] * fwd[2], right[0] * fwd[1] - right[1] * fwd[0]];
+  const project = P => {
+    const p = [P[0] - pos[0], P[1] - pos[1], P[2] - pos[2]], d = dot3(p, fwd);
+    return [cx + focal * dot3(p, right) / d, cy - focal * dot3(p, up) / d, d];
+  };
+  return { pos, fwd, right, up, project };
+}
+/**
+ * Draw axis-aligned boxes standing on the ground, far → near (painter's algorithm; right for separated blocks on a grid).
+ * box = { x, z, w, d = w, h, y = 0, color: { top, px, nx, pz, nz } }: centre on the ground, footprint w × d, height h;
+ * px / nx / pz / nz = the faces looking towards +x / −x / +z / −z. Only faces that look at the camera are drawn.
+ * A box with h ≈ 0 is just its top face (a flat square), so a top-down grid can stand up continuously.
+ */
+export function drawBoxes(ctx, cam, boxes) {
+  const C = cam.pos;
+  const items = boxes.filter(b => b.w > 0).map(b => ({ b, k: (b.x - C[0]) ** 2 + (b.z - C[2]) ** 2 })).sort((a, b) => b.k - a.k);
+  const quad = (pts, col) => {
+    const q = pts.map(cam.project); if (q.some(p => p[2] <= 1)) return;
+    ctx.fillStyle = col; ctx.strokeStyle = col; ctx.lineWidth = 1;   // same-colour stroke hides antialiasing seams
+    ctx.beginPath(); q.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.fill(); ctx.stroke();
+  };
+  for (const { b } of items) {
+    const { x, z, w, d = w, h = 0, y = 0, color: c } = b, x0 = x - w / 2, x1 = x + w / 2, z0 = z - d / 2, z1 = z + d / 2, y1 = y + h;
+    if (h > 0.5) {
+      if (C[2] > z1) quad([[x0, y, z1], [x1, y, z1], [x1, y1, z1], [x0, y1, z1]], c.pz);
+      if (C[2] < z0) quad([[x0, y, z0], [x1, y, z0], [x1, y1, z0], [x0, y1, z0]], c.nz);
+      if (C[0] > x1) quad([[x1, y, z0], [x1, y, z1], [x1, y1, z1], [x1, y1, z0]], c.px);
+      if (C[0] < x0) quad([[x0, y, z0], [x0, y, z1], [x0, y1, z1], [x0, y1, z0]], c.nx);
+    }
+    if (C[1] > y1) quad([[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]], c.top);
+  }
+}
+
 /** Wait for named fonts before READY, e.g. await loadFonts(['800 120px "Archivo"', '400 32px "JetBrains Mono"']) */
 export async function loadFonts(specs = []) { await Promise.all(specs.map(s => document.fonts.load(s))); await document.fonts.ready; }
 /** Load an image and decode it before READY */

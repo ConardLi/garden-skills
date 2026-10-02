@@ -4,17 +4,22 @@
 //   • review material (images + notes) for a human-style look: contact sheets, strips, dead air, cuts, loop seam
 //
 //   node inspect.mjs qa <video> [--out qa/final] [--expect-size 1920x1080] [--expect-fps 30] [--expect-duration 16]
-//                              [--audio required|none|any] [--loop]
+//                              [--audio required|none|any] [--loop] [--timeline <proj>/timeline.js | none]
 //   node inspect.mjs sheet <video> [--cells 24] [--width 320] [--out qa/sheet]
 //   node inspect.mjs phone <video> [--out qa/phone]
 //   node inspect.mjs strip <video> --at 4.1 [--frames 12] [--width 320]
 //   node inspect.mjs frames <video> 1.5 4 9.2 [--out qa/f]
 //   node inspect.mjs loop <video>
-//   node inspect.mjs motion <video> [--freeze 0.8]
+//   node inspect.mjs motion <video> [--freeze 0.8] [--timeline …]
+// qa without --expect-size / --expect-fps / --expect-duration / --audio says which checks did NOT run (never "all passed").
+// The project's timeline.js (found next to out/ automatically) may export HOLDS = [[t0, t1], …]: freezes inside a
+// declared hold are reported as intended holds instead of dead air.
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { args, die } from './lib/browser.mjs';
+import { findTimeline, loadTimeline, sameClock } from './lib/project.mjs';
 
 const { pos, opt } = args(process.argv.slice(2));
 const [cmd, video] = pos;
@@ -96,10 +101,26 @@ function detect() {
   const fmt = a => a.map(([x, y]) => `${x.toFixed(2)}–${y.toFixed(2)}s`).join(', ');
   return { freezes, blacks, cuts, fmt, freezeMin };
 }
+// Split freezes into declared holds (timeline.js HOLDS) and the rest. freezedetect needs a few frames to notice a freeze,
+// so a freeze counts as a hold when it sits inside a declared window give or take 0.35 s.
+async function classifyFreezes(freezes) {
+  const tl = await loadTimeline(findTimeline(video, opt.timeline));
+  let note = '';
+  if (!tl) note = 'no timeline.js found: declare deliberate holds as HOLDS = [[t0, t1]] in timeline.js (or pass --timeline)';
+  else if (tl.error) note = `could not read ${tl.file}: ${tl.error}`;
+  else if (!sameClock(tl, info.dur)) note = `timeline DUR ${tl.DUR ?? '?'}s ≠ video ${info.dur.toFixed(2)}s (a segment?): HOLDS not applied`;
+  else if (!tl.hasHolds) note = 'timeline.js has no HOLDS: declare deliberate holds (end card, a held breath) as HOLDS = [[t0, t1]]';
+  const holds = note ? [] : tl.HOLDS;
+  const isHold = ([a, b]) => holds.some(([h0, h1]) => a >= h0 - 0.35 && b <= h1 + 0.35);
+  return { intended: freezes.filter(isHold), dead: freezes.filter(f => !isHold(f)), note };
+}
 async function motion() {
   const { freezes, blacks, cuts, fmt, freezeMin } = detect();
+  const { intended, dead, note } = await classifyFreezes(freezes);
   const b = [0, ...cuts, info.dur]; let longest = 0; for (let i = 1; i < b.length; i++) longest = Math.max(longest, b[i] - b[i - 1]);
-  console.log(`dead air (frozen ≥ ${freezeMin}s): ${freezes.length ? fmt(freezes) : 'none'}`);
+  console.log(`dead air (frozen ≥ ${freezeMin}s): ${dead.length ? fmt(dead) : 'none'}`);
+  if (intended.length) console.log(`intended holds (HOLDS in timeline.js): ${fmt(intended)}`);
+  else if (note && dead.length) console.log(`  (${note})`);
   console.log(`black frames: ${blacks.length ? fmt(blacks) : 'none'}`);
   console.log(`hard cuts (${cuts.length}): ${cuts.map(c => c.toFixed(2)).join(', ') || 'none'}; longest uncut stretch ${longest.toFixed(2)}s`);
 }
@@ -131,20 +152,29 @@ async function qa() {
   let seam = null;
   if (opt.loop) { seam = await loop(); check(seam > 0.97, 'loop seam (first ≈ last frame)', `SSIM ${seam.toFixed(4)}`); }
 
+  // what the brief's spec would have checked but nobody asked for: say so, never call that "all passed"
+  const unchecked = [['expect-size', 'size'], ['expect-fps', 'fps'], ['expect-duration', 'duration'], ['audio', 'audio track']].filter(([k]) => !opt[k]).map(([, l]) => l);
+
   console.log(`${video}\n  ${info.w}×${info.h} · ${info.fps.toFixed(2)} fps · ${info.dur.toFixed(2)}s · audio: ${info.audio ? 'yes' : 'no'}\n\nTECHNICAL CHECKS`);
   for (const [ok, label, detail] of checks) console.log(`  ${ok ? 'PASS' : 'FAIL'}  ${label} — ${detail}`);
+  if (unchecked.length) console.log(`  NOT CHECKED  ${unchecked.join(', ')} — pass --expect-size WxH --expect-fps N --expect-duration S --audio required|none (build.sh does)`);
 
   console.log('\nREVIEW MATERIAL (not pass/fail: look at it and judge)');
   makeSheet(`${outPrefix}-sheet.png`, +(opt.cells || 24), 320); console.log(`  sheet: ${outPrefix}-sheet.png`);
   makeSheet(`${outPrefix}-phone.png`, 12, info.h > info.w ? 180 : 320); console.log(`  phone: ${outPrefix}-phone.png`);
-  console.log(`  frozen ≥ ${freezeMin}s: ${freezes.length ? fmt(freezes) + ' (intended hold or dead air?)' : 'none'}`);
+  const { intended, dead, note } = await classifyFreezes(freezes);
+  const frozen = [...(intended.length ? [fmt(intended) + ' (intended hold: HOLDS in timeline.js)'] : []), ...(dead.length ? [fmt(dead) + (note ? ' (intended hold or dead air?)' : ' (not a declared hold: dead air?)')] : [])];
+  console.log(`  frozen ≥ ${freezeMin}s: ${frozen.join('; ') || 'none'}`);
+  if (dead.length && note) console.log(`    ${note}`);
   console.log(`  hard cuts: ${cuts.map(c => c.toFixed(2)).join(', ') || 'none'}`);
   if (info.audio) {
-    const r = spawnSync(process.execPath, [new URL('./audio.mjs', import.meta.url).pathname, 'check', video, '--out', `${outPrefix}-audio`], { encoding: 'utf8' });
+    const r = spawnSync(process.execPath, [fileURLToPath(new URL('./audio.mjs', import.meta.url)), 'check', video, '--out', `${outPrefix}-audio`, ...(opt.timeline ? ['--timeline', String(opt.timeline)] : [])], { encoding: 'utf8' });
     process.stdout.write((r.stdout + r.stderr).split('\n').map(l => '  ' + l).join('\n') + '\n');
   }
   const failed = checks.filter(c => !c[0]).length;
-  console.log(failed ? `\n${failed} technical check(s) FAILED: fix before delivery.` : '\nAll technical checks passed. Now review the images against references/review.md.');
+  if (failed) console.log(`\n${failed} technical check(s) FAILED: fix before delivery.`);
+  else if (unchecked.length) console.log(`\nThe ${checks.length} checks that ran passed, but ${unchecked.join(', ')} were NOT checked: rerun with the brief's spec before calling this accepted.`);
+  else console.log('\nAll technical checks passed. Now review the images against references/review.md.');
   process.exit(failed ? 1 : 0);
 }
 

@@ -1,7 +1,7 @@
 // score.tone.js — tier-2 audio: Tone.js rendered offline in the headless browser.
 // Use it when the piece needs real instruments (sampled piano), convolution reverb or richer synths/effects.
 // Build: node <skill>/scripts/audio.mjs build score.tone.js      (first: node <skill>/scripts/audio.mjs samples salamander)
-// Delete whichever of score.mjs / score.tone.js you don't use (build.sh prefers score.tone.js when it exists).
+// You get this file from `scaffold.sh --audio tone` (or `--audio layer`); build.sh builds whichever score its AUDIO= names.
 import { DUR, BPM, CUES, b } from './timeline.js';
 export { DUR };
 

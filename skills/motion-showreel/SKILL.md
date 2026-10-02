@@ -46,7 +46,7 @@ description: 用代码制作以图形、文字或界面动画为主的短视频�
 7 交付
 ```
 
-工作目录：在用户当前目录下建 `<slug>/`，所有文件都放在里面：`brief.md`、`index.html`、`motion.js`、`timeline.js`、`score.mjs` 或 `score.tone.js`、`build.sh`、`fonts/`、`assets/`、`audio/`、`qa/`、`out/`。
+工作目录：在用户当前目录下建 `<slug>/`，所有文件都放在里面：`brief.md`、`index.html`、`motion.js`、`timeline.js`、`score.mjs` 或 `score.tone.js`（按 scaffold 的 `--audio` 选择）、`build.sh`、`fonts/`、`assets/`、`audio/`、`qa/`、`out/`。
 
 ### 第 0 步：环境
 
@@ -103,7 +103,7 @@ Reel Read:
 
 ### 第 3 步：风格帧（🛑 唯一停顿点）
 
-建项目：`sh <skill>/scripts/scaffold.sh <slug>`。starter 只用来验证管线能跑通，画面和文案都要换掉。先写 `timeline.js`。
+建项目：`sh <skill>/scripts/scaffold.sh <slug> [--audio synth|tone|layer|none]`（默认 synth = 第 1 档合成；只拷贝选中的那份 score，`build.sh` 的 `AUDIO=` 也随之设好）。starter 只用来验证管线能跑通，画面和文案都要换掉。先写 `timeline.js`。
 
 **A. 用户已经定了风格**（或者给了明确的参考）：
 1. 用真代码搭出 hook 帧、记忆点帧、结尾帧，配色、字体、文案都用最终的。
@@ -112,8 +112,8 @@ Reel Read:
 
 **B. 用户没定风格（包括放手模式）**：给 **3 个拉开差距的方向**，规则见 `styles/INDEX.md`：
 - A 贴合主题 / 品牌，B 换一种画面语言（来自另一个分组），C 大胆（自定义、混搭或结构上很大胆，至少一个方向不是库里现成的）。
-- 每个方向写一段迷你 Reel Read（风格、对标、记忆点、配乐方向，3–5 行），并用真代码渲**一张**最能代表它的关键帧。三个方向的页面可以放在同一个项目里，用 `?dir=a|b|c` 切换，渲染时传 `--q dir=a`。
-- 三张图拼在一起发给用户，问「选哪个，或者怎么混合？」。
+- 每个方向写一段迷你 Reel Read（风格、对标、记忆点、配乐方向，3–5 行），并用真代码渲**一张**最能代表它的关键帧。三个方向的页面放在同一个项目里，用 `?dir=a|b|c` 切换。B、C 只为这一张关键帧服务，不必做成能播的整片。
+- `render.mjs <slug> --directions a,b,c --at 14.5,2,0` 一次渲出三张并拼成带标签的 `qa/directions.png`，发给用户，问「选哪个，或者怎么混合？」。
 
 两种情况都**真的等用户回复**，再进入制作。用户事先说过不用确认的，就自己选一个、写明理由，自查后继续。
 
@@ -121,11 +121,11 @@ Reel Read:
 
 制作前先读 `references/stack.md`（页面契约、确定性、各技术的坑）。要现成写法时查 `references/recipes.md`。
 
-1. 时间点全部写进 `timeline.js`，页面和 `score.mjs` 都从这里 import。
+1. 时间点全部写进 `timeline.js`，页面和 `score.mjs` 都从这里 import。刻意的停留写进 `HOLDS`（比如落版 `[[b(36), DUR]]`），要留呼吸的重拍写进 `DROPS`，验收工具会读它们。
 2. 逐个镜头做。每个镜头渲开头、中段、结尾 3 张静帧；快速动作用 `inspect.mjs strip` 看连续帧。
 3. 跑确定性检查 `render.mjs <slug> --determinism`，不通过就先修。
 4. 片长 30 秒以上或渲染慢的，先出低清小样：`--size 960x540 --out out/proxy.mp4`。
-5. 出正片：`sh <slug>/build.sh`，或者直接调 `render.mjs`。`--subframes`、`--dpr`、`--grain` 按风格需要加。这些参数都会成倍增加耗时，开渲前先报预计时间。
+5. 出正片：先在 `build.sh` 顶部按 brief 设好 `FPS`、`SIZE`、`AUDIO`、`LOOP`，再 `sh <slug>/build.sh`。它会构建配乐、渲染，并带着同一份规格跑技术检查（时长取 `timeline.js` 的 `DUR`）。`--subframes`、`--dpr`、`--grain` 作为参数加在后面，按风格需要加。这些参数都会成倍增加耗时，开渲前先报预计时间。
 
 **硬规则**：
 - 画面只由 t 决定：不用 `Math.random`、`Date.now`、rAF、定时器、CSS 动画，帧和帧之间不保存状态。
@@ -146,7 +146,7 @@ Reel Read:
 - 用户曲子：先跑 `audio.mjs beats`（有 librosa 时自动使用），对齐 timeline，再在 score 里 `S.load()` 进来叠音效。
 - 无声：跳过这一步。
 
-你听不到声音，所以每次 build 之后都要跑 `audio.mjs check`，看数值和图。
+你听不到声音，所以每次 build 之后都要跑 `audio.mjs check`，看数值和图。`timeline.js` 里写了 `DROPS` 时，它还会量出每个重拍前那半拍的凹陷和重拍的抬升，没有呼吸就给 WARN。
 
 ### 第 6 步：验收
 
@@ -157,16 +157,16 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
   --expect-size 1920x1080 --expect-fps 30 --expect-duration 16 --audio required   # 无声片用 --audio none；循环片加 --loop
 ```
 
-它检查文件能否解码、尺寸、帧率、时长、帧数、音轨、黑帧、响度、真峰值，以及循环接缝（需要时）。只要有一项 FAIL，退出码就是 1，必须修好。渲染工具本身也会拒绝发布帧数不对的文件。
+它检查文件能否解码、尺寸、帧率、时长、帧数、音轨、黑帧、响度、真峰值，以及循环接缝（需要时）。只要有一项 FAIL，退出码就是 1，必须修好。没传的规格项会列成 `NOT CHECKED`，这时不算验收通过。`build.sh` 会自动带上规格。渲染工具本身也会拒绝发布帧数不对的文件。
 
-**审片**：给人判断用，不是程序判定。看抽帧图、手机尺寸抽帧图、冻结段、切点、音频图，按 `references/review.md` 的审片表逐项写下观察和最严重的 3 个问题。修完只重渲有问题的那一段，再出整片，过程记到 `qa/review_log.md`。
+**审片**：给人判断用，不是程序判定。看抽帧图、手机尺寸抽帧图、冻结段（`HOLDS` 里声明过的会标成刻意停留，其余要判断是不是空拍）、切点、音频图，按 `references/review.md` 的审片表逐项写下观察和最严重的 3 个问题。修完只重渲有问题的那一段，再出整片，过程记到 `qa/review_log.md`。
 
 审片结论是给用户的参考，**不能代替用户自己看片**。不适用的项标「不适用」，比如无声作品的音画同步，不要硬给分数。
 
 ### 第 7 步：交付
 
 告诉用户：
-- `out/final.mp4` 和 `out/poster.png` 的路径（poster 用 `render.mjs --still <t> --out out` 导出后重命名）。
+- `out/final.mp4` 和 `out/poster.png` 的路径（poster：`render.mjs <slug> --poster <t>`）。
 - `brief.md`：完整的结构化提示词，可以复用。
 - 技术检查结果（全部 PASS）、审片记录里还没解决的问题、渲染用时。
 - 怎么重建（`sh build.sh`）、怎么只改一段。
@@ -191,12 +191,13 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 目的 | 命令 |
 |---|---|
 | 装依赖 / 查环境 / 自测 | `sh $S/setup.sh` · `node $S/check-env.mjs` · `cd $S && npm test` |
-| 建项目 | `sh $S/scaffold.sh <slug>` |
+| 建项目 | `sh $S/scaffold.sh <slug> [--audio synth\|tone\|layer\|none]` |
 | 静帧 + 拼图 | `node $S/render.mjs <slug> --still 0.5,3,7.2 --sheet` · `--range 0:15:1 --sheet` |
+| 三个方向 / 封面 | `node $S/render.mjs <slug> --directions a,b,c --at 14.5,2,0` → `qa/directions.png` · `--poster 14.5` → `out/poster.png` |
 | 确定性 | `node $S/render.mjs <slug> --determinism` |
-| 小样 / 正片 / 分段 | `--size 960x540 --out out/proxy.mp4` · `--fps 60 --subframes 2 --grain 4 --audio audio/music.wav --out out/final.mp4` · `--start 6 --duration 3 --out out/seg.mp4` |
-| 声音 | `node $S/audio.mjs build <slug>/score.mjs`（或 `score.tone.js`）· `samples salamander` · `beats <track> --out audio/beats.json` · `check audio/music.wav` |
-| 验收与审片材料 | `node $S/inspect.mjs qa out/final.mp4 --expect-…` · `sheet` · `phone` · `strip --at 4.2` · `loop` · `motion` |
+| 小样 / 正片 / 分段 | `--size 960x540 --out out/proxy.mp4` · 正片 `sh <slug>/build.sh --subframes 2 --grain 4`（规格在 build.sh 顶部）· `--start 6 --duration 3 --out out/seg.mp4` |
+| 声音 | `node $S/audio.mjs build <slug>/score.mjs`（或 `score.tone.js`）· `samples salamander` · `beats <track> --out audio/beats.json` · `check audio/music.wav`（读 `DROPS`） |
+| 验收与审片材料 | `node $S/inspect.mjs qa out/final.mp4 --expect-…`（build.sh 自动带）· `sheet` · `phone` · `strip --at 4.2` · `loop` · `motion`（读 `HOLDS`） |
 
 ## 参考文件（按需读）
 

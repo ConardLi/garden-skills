@@ -11,6 +11,11 @@
 // Stills (review frames, PNG) and contact sheet
 //   node render.mjs <project> --still 0.5,2,7.25 [--out qa/stills] [--sheet]
 //   node render.mjs <project> --range 0:15:1 [--out qa/stills] [--sheet]
+// Poster frame (step 7)
+//   node render.mjs <project> --poster 14.5 [--out out/poster.png]
+// Style-frame directions (step 3): one key frame per ?dir=<name>, side by side with labels
+//   node render.mjs <project> --directions a,b,c --at 14.5,2,0 [--out qa/directions.png] [--dir-param dir]
+//   (--at: one time per direction, or one time for all; singles go next to the sheet in qa/directions/)
 // Determinism check (same t rendered in different orders must be pixel-identical)
 //   node render.mjs <project> --determinism
 //
@@ -43,7 +48,7 @@ const fmt = opt.png ? 'png' : 'jpeg';
 const chromium = await loadChromium(target.root);
 const { server, port } = await serve(target.root);
 const browser = await launch(chromium);
-const open = () => openPage(browser, { port, rel: target.rel, w: W, h: H, dpr: DPR, query: QUERY });
+const open = (query = QUERY) => openPage(browser, { port, rel: target.rel, w: W, h: H, dpr: DPR, query });
 const finish = async code => { await browser.close().catch(() => {}); server.close(); process.exit(code); };
 cleanups.push(() => server.close());
 
@@ -52,10 +57,52 @@ async function shoot(page, t, type = fmt) {
   return await page.screenshot({ type, ...(type === 'jpeg' ? { quality: 95 } : {}), clip: { x: 0, y: 0, width: W, height: H } });
 }
 
-if (opt.still || opt.range) await stills();
+if (opt.poster !== undefined) await poster();
+else if (opt.directions !== undefined) await directions();
+else if (opt.still || opt.range) await stills();
 else if (opt.determinism) await determinism();
 else await video();
 await finish(0);
+
+// ───────────────────────────── poster / directions ─────────────────────────────
+function writePng(file, buf) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, buf);
+  if (!fs.statSync(file).size) fail(`empty image written: ${file}`);
+  console.log(file);
+}
+async function poster() {
+  const t = +opt.poster;
+  if (opt.poster === true || !Number.isFinite(t) || t < 0) die('--poster needs a time in seconds, e.g. --poster 14.5');
+  const out = path.resolve(typeof opt.out === 'string' ? (opt.out.endsWith('.png') ? opt.out : path.join(opt.out, 'poster.png')) : path.join(target.root, 'out', 'poster.png'));
+  const page = await open();
+  await warnSoftwareGL(page);
+  writePng(out, await shoot(page, t, 'png'));
+}
+async function directions() {
+  const names = String(opt.directions === true ? '' : opt.directions).split(',').map(s => s.trim()).filter(Boolean);
+  if (!names.length) die('--directions needs names, e.g. --directions a,b,c --at 14.5,2,0');
+  if (opt.at === undefined || opt.at === true) die('--directions needs --at <seconds>: one per direction (--at 14.5,2,0) or one for all (--at 3)');
+  const ats = String(opt.at).split(',').map(Number);
+  if (ats.some(v => !Number.isFinite(v) || v < 0)) die(`bad --at ${opt.at}`);
+  if (ats.length !== 1 && ats.length !== names.length) die(`--at has ${ats.length} times for ${names.length} directions (give one per direction, or one for all)`);
+  const key = typeof opt['dir-param'] === 'string' ? opt['dir-param'] : 'dir';
+  const sheet = path.resolve(typeof opt.out === 'string' ? (opt.out.endsWith('.png') ? opt.out : opt.out + '.png') : path.join(target.root, 'qa', 'directions.png'));
+  const singles = sheet.replace(/\.png$/, '');
+  const shots = [];
+  for (const [i, name] of names.entries()) {
+    const q = new URLSearchParams(QUERY); q.set(key, name);
+    const page = await open(q.toString());                 // a fresh page per direction: no state shared between them
+    await warnSoftwareGL(page);
+    const t = ats.length === 1 ? ats[0] : ats[i], buf = await shoot(page, t, 'png');
+    await page.close();
+    writePng(path.join(singles, `${name}_t${t.toFixed(2)}.png`), buf);
+    shots.push({ t, buf, label: `${name.toUpperCase()} · ${t.toFixed(2)}s` });
+  }
+  fs.mkdirSync(path.dirname(sheet), { recursive: true });
+  await contactSheet(shots, sheet, { below: true });
+  console.log(`${sheet}  (${names.length} directions side by side: send this one image and ask which to take, or how to mix)`);
+}
 
 // ───────────────────────────────── stills ─────────────────────────────────
 async function stills() {
@@ -87,15 +134,17 @@ async function stills() {
   }
 }
 
-async function contactSheet(shots, file) {
+// below: captions in a strip under each cell instead of over its top-left corner (keeps the whole frame visible)
+async function contactSheet(shots, file, { below = false } = {}) {
   const cols = shots.length <= 4 ? shots.length : shots.length <= 9 ? 3 : 4;
   const cw = Math.round(1600 / cols), ch = Math.round(cw * H / W);
-  const cells = shots.map(s => `<figure><img src="data:image/png;base64,${s.buf.toString('base64')}"><figcaption>${s.t.toFixed(2)}s</figcaption></figure>`).join('');
+  const cells = shots.map(s => `<figure><img src="data:image/png;base64,${s.buf.toString('base64')}"><figcaption>${s.label ?? s.t.toFixed(2) + 's'}</figcaption></figure>`).join('');
   const page = await browser.newPage({ viewport: { width: cols * (cw + 8) + 8, height: 200 } });
+  const cap = below ? 'padding:8px 2px 2px;font-size:16px' : 'position:absolute;left:6px;top:6px;background:#000c;padding:4px 6px;border-radius:3px';
   await page.setContent(`<style>body{margin:0;background:#111;font:600 14px/1 ui-monospace,Menlo,monospace;color:#ddd}
     main{display:grid;grid-template-columns:repeat(${cols},${cw}px);gap:8px;padding:8px}figure{margin:0;position:relative}
     img{width:${cw}px;height:${ch}px;display:block;object-fit:cover;background:#000}
-    figcaption{position:absolute;left:6px;top:6px;background:#000c;padding:4px 6px;border-radius:3px}</style><main>${cells}</main>`);
+    figcaption{${cap}}</style><main>${cells}</main>`);
   await page.evaluate(() => Promise.all([...document.images].map(i => i.decode())));
   await page.screenshot({ path: file, fullPage: true });
   await page.close();

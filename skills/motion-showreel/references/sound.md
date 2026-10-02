@@ -15,7 +15,9 @@
 | 外部曲子 | 用户的音频文件 | `S.load()` | 真实制作的音乐（用户自己的、授权的、AI 音乐服务生成的） | 授权要用户负责；只能卡它的拍 |
 | 无声 | — | — | 循环动图、要放进别的片子里的素材 | — |
 
-两档可以叠：先 `audio.mjs build score.tone.js --raw --out audio/tone.wav` 得到一层没做母带的音乐，再在 `score.mjs` 里 `S.load('audio/tone.wav')` 放进一条 bus，叠上第 1 档的音效，最后统一做母带。
+两档可以叠：先 `audio.mjs build score.tone.js --raw --out audio/tone.wav` 得到一层没做母带的音乐，再在 `score.mjs` 里 `S.load('audio/tone.wav')` 放进一条 bus，叠上第 1 档的音效，最后统一做母带。`build.sh` 里设 `AUDIO=layer`（或 `scaffold.sh --audio layer`）就会按这个顺序自动构建。
+
+`build.sh` 只构建 `AUDIO=` 指定的那份 score（synth / tone / layer / none），另一份文件存在时会提示它被忽略，不会悄悄换成别的配乐。
 
 **怎么选**：看所选风格文件里的「声音调色板」。电子、界面、复古、抽象类风格用第 1 档就够了；电影感、手作、东方、高端产品这类需要真实乐器和空间感的，用第 2 档。
 
@@ -80,7 +82,7 @@ export default async function score(Tone, kit) {
 }
 ```
 
-- **构建**：`node <skill>/scripts/audio.mjs build <slug>/score.tone.js`，输出 −14 LUFS 的 WAV（`--raw` 跳过母带）。starter 里有一份完整示例 `score.tone.js`。
+- **构建**：`node <skill>/scripts/audio.mjs build <slug>/score.tone.js`，输出 −14 LUFS 的 WAV（`--raw` 跳过母带）。`scaffold.sh <slug> --audio tone` 会拷贝一份完整示例 `score.tone.js`，并把 `build.sh` 设成 `AUDIO=tone`；两档叠用时选 `--audio layer`。
 - **kit**：`DUR`、`transport`、`loaded()`、`baseUrl(pack)`、`sample(pack, file)`、`salamander()`（Salamander 钢琴的 `Sampler` urls 表）。
 - **采样**：`node <skill>/scripts/audio.mjs samples` 列出可下载的包；`samples salamander` 下载 Salamander Grand Piano（CC BY 3.0，交付时要署名）。其他 CC0 / 有授权的采样可以放进 `<slug>/samples/<名字>/`，在页面里用 `/samples/<名字>/文件` 引用。不要使用来源和授权不明的采样。
 - **常用部件**：`Sampler`（采样乐器）、`PolySynth(FMSynth | AMSynth | Synth)`、`MonoSynth`（贝斯）、`MembraneSynth`（底鼓）、`MetalSynth`（镲）、`NoiseSynth`；效果 `Reverb`（卷积）、`FeedbackDelay`、`PingPongDelay`、`Chorus`、`Phaser`、`Distortion`、`BitCrusher`、`Filter`、`AutoFilter`、`Compressor`、`Limiter`。
@@ -143,7 +145,9 @@ export default async function score(Tone, kit) {
 node <skill>/scripts/audio.mjs check <slug>/audio/music.wav --out <slug>/qa/music
 ```
 
-它会打印：整体响度（目标 −14 ± 1 LUFS）、真峰值（< −1 dBTP）、按倍频程的能量（相对 1 kHz，粉红噪声全部为 0；一般的混音在 63–125 Hz 是 +4…+12，4–8 kHz 是 −6…−18）、意外的静音段，并给出 WARN。然后**看** `-wave.png`（有没有削顶、音量起伏是否和画面结构一致：drop 处应该最满，吸气处应该有凹陷）和 `-spectrum.png`（低频是否一直轰着、高频是否完全没有）。
+它会打印：整体响度（目标 −14 ± 1 LUFS）、真峰值（< −1 dBTP）、按倍频程的能量（相对 1 kHz，粉红噪声全部为 0；一般的混音在 63–125 Hz 是 +4…+12，4–8 kHz 是 −6…−18）、意外的静音段，并给出 WARN。
+
+**drop 前的呼吸**：在 `timeline.js` 里导出 `DROPS = [T.drop, …]`（或者临时传 `--drops 12,24.5`），check 会量出每个重拍前最后半拍比前一小节低多少 dB、重拍比前一小节高多少 dB。凹陷不到 4 dB 就 WARN「没有呼吸」，说明鼓或铺底没停，或者 riser 太响；重拍不比前一小节响也会 WARN。这是你「听」drop 的唯一办法。然后**看** `-wave.png`（有没有削顶、音量起伏是否和画面结构一致：drop 处应该最满，吸气处应该有凹陷）和 `-spectrum.png`（低频是否一直轰着、高频是否完全没有）。
 
 成片之后，`inspect.mjs qa` 会对混好的 MP4 再检查一次。
 
