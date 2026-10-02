@@ -1,0 +1,12 @@
+{
+  "name": "motion-showreel-tools",
+  "private": true,
+  "type": "module",
+  "description": "Render / audio / QA tools for the motion-showreel skill. Only Playwright is needed; ffmpeg must be on PATH.",
+  "dependencies": {
+    "playwright": "^1.55.0"
+  },
+  "scripts": {
+    "test": "node --test --test-concurrency=1 test/tools.test.mjs"
+  }
+}

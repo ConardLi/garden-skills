@@ -1,0 +1,15 @@
+{
+  "name": "motion-showreel",
+  "version": "0.1.0",
+  "category": "Motion Graphics / Short Video",
+  "description": "Make stunning 5-60s short videos entirely in code: showreels, product teasers, UI morphs, kinetic typography, logo stings, generative loops. Deterministic render(t) pages rendered frame by frame with Playwright + ffmpeg, optional code-synthesized music and SFX sharing one timeline with the picture, a one-checkpoint workflow and programmatic technical acceptance kept separate from human review.",
+  "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/motion-showreel",
+  "compat": [
+    "claude-code",
+    "claude-ai",
+    "cursor",
+    "codex-cli",
+    "gemini-cli",
+    "opencode"
+  ]
+}

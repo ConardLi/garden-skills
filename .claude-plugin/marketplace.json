@@ -45,6 +45,15 @@
       ]
     },
     {
+      "name": "motion-showreel-skills",
+      "description": "Skills for stunning code-rendered short videos: showreels, teasers, UI morphs, kinetic type and logo stings with optional synthesized, beat-synced music.",
+      "source": "./skills/motion-showreel",
+      "strict": false,
+      "skills": [
+        "./"
+      ]
+    },
+    {
       "name": "beautiful-article-skills",
       "description": "Skills for turning URL / PDF / DOCX / Markdown / text / screenshots into beautifully designed, offline-friendly single-file HTML articles via the reacticle component protocol.",
       "source": "./skills/beautiful-article",
