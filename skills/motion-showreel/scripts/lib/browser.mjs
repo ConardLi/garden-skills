@@ -54,14 +54,17 @@ const MIME = {
   '.wasm': 'application/wasm', '.txt': 'text/plain; charset=utf-8',
 };
 
-export function serve(root) {
+// mounts: { '/__msr/': '/abs/dir' } serve extra folders (tool assets, shared samples) next to the project root
+export function serve(root, mounts = {}) {
   root = path.resolve(root);
   return new Promise(resolve => {
     const server = http.createServer((req, res) => {
       let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
       if (p.endsWith('/')) p += 'index.html';
-      const file = path.resolve(root, '.' + p);
-      if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end('not found'); return; }
+      let base = root, rel = p;
+      for (const [prefix, dir] of Object.entries(mounts)) if (p.startsWith(prefix)) { base = path.resolve(dir); rel = '/' + p.slice(prefix.length); break; }
+      const file = path.resolve(base, '.' + rel);
+      if (!file.startsWith(base) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end('not found'); return; }
       res.writeHead(200, { 'Content-Type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*' });
       fs.createReadStream(file).pipe(res);
     });

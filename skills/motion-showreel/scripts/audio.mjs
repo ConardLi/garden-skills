@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 // Audio toolkit for motion-showreel. You cannot hear: every command prints numbers and draws pictures.
 //
-//   build  node audio.mjs build <score.mjs> [--out audio/music.wav] [--dur D] [--lufs -14] [--stems]
-//          Imports the score module (export default (S) => {...}; optional export const DUR),
-//          renders all buses, sidechain, reverb/delay, masters to the loudness target (24-bit WAV).
-//   beats  node audio.mjs beats <track.mp3> [--out audio/beats.json] [--bpm 120] [--shift 0.5]
+//   build  node audio.mjs build <score.mjs | score.tone.js> [--out audio/music.wav] [--dur D] [--lufs -14] [--stems] [--raw]
+//          score.mjs      → tier 1: the built-in synth session (export default (S) => {...}), runs in Node.
+//          score.tone.js  → tier 2: a Tone.js score rendered offline in the headless browser (samplers, convolution
+//                           reverb, effects). Both are mastered to the loudness target (24-bit WAV); --raw skips mastering
+//                           (use it when the result is a layer that another score loads with S.load()).
+//   samples node audio.mjs samples [salamander]   fetch a licensed sample pack for Tone scores (lists packs without a name)
+//   beats  node audio.mjs beats <track.mp3> [--out audio/beats.json] [--bpm 120] [--shift 0.5] [--engine auto|librosa|js]
+//          uses librosa for the beat grid when python3 + librosa are available (more robust), the built-in tracker otherwise.
 //          Measures a supplied track: bpm, beats, downbeats, onset hits, bar energy and likely drops.
 //   check  node audio.mjs check <file.wav|mp4> [--out qa/audio]
 //          Loudness (LUFS / true peak), band balance, silences, clipping + waveform & spectrum PNGs.
@@ -13,19 +17,21 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { session, writeWav, loadAudio, lufs, SR } from './lib/synth.mjs';
+import { session, writeWav, loadAudio, lufs, master, SR } from './lib/synth.mjs';
+import { renderTone, fetchPack, PACKS, SAMPLES_DIR } from './lib/tone-render.mjs';
 import { stft } from './lib/fft.mjs';
 import { args, die } from './lib/browser.mjs';
 
 const { pos, opt } = args(process.argv.slice(2));
 const cmd = pos[0];
-const cmds = { build, beats, check, mux };
-if (!cmds[cmd]) die('usage: audio.mjs build|beats|check|mux …  (see the header of this file)');
+const cmds = { build, beats, check, mux, samples };
+if (!cmds[cmd]) die('usage: audio.mjs build|samples|beats|check|mux …  (see the header of this file)');
 await cmds[cmd]();
 
 async function build() {
   const file = pos[1] && path.resolve(pos[1]);
-  if (!file || !fs.existsSync(file)) die('usage: audio.mjs build <score.mjs> [--out audio/music.wav]');
+  if (!file || !fs.existsSync(file)) die('usage: audio.mjs build <score.mjs | score.tone.js> [--out audio/music.wav]');
+  if (/\.tone\.m?js$/.test(file)) return buildTone(file);
   const mod = await import(pathToFileURL(file).href);
   const dur = +(opt.dur || mod.DUR);
   if (!(dur > 0)) die('score needs a duration: export const DUR = <seconds> (or re-export it from timeline.js), or pass --dur');
@@ -41,6 +47,32 @@ async function build() {
   let peak = 0; for (let i = 0; i < L.length; i++) peak = Math.max(peak, Math.abs(L[i]), Math.abs(R[i]));
   console.log(`${out}\n  ${dur.toFixed(2)}s, ${isFinite(lu) ? lu.toFixed(1) + ' LUFS' : 'silent'}, sample peak ${(20 * Math.log10(peak || 1e-9)).toFixed(1)} dBFS, built in ${((Date.now() - t0) / 1000).toFixed(1)}s${stems ? `\n  stems → ${stems}` : ''}`);
   console.log('  next: node audio.mjs check ' + path.relative(process.cwd(), out));
+}
+
+async function buildTone(file) {
+  const t0 = Date.now();
+  const { L, R } = await renderTone(file, { dur: opt.dur ? +opt.dur : undefined });
+  const out = path.resolve(typeof opt.out === 'string' ? opt.out : path.join(path.dirname(file), 'audio', 'music.wav'));
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  const m = opt.raw ? { L, R, lufs: lufs(L, R) } : master(L, R, { target: +(opt.lufs || -14) });
+  writeWav(out, m.L, m.R);
+  let peak = 0; for (let i = 0; i < m.L.length; i++) peak = Math.max(peak, Math.abs(m.L[i]), Math.abs(m.R[i]));
+  console.log(`${out}\n  tone score · ${(m.L.length / SR).toFixed(2)}s, ${isFinite(m.lufs) ? m.lufs.toFixed(1) + ' LUFS' : 'silent'}, sample peak ${(20 * Math.log10(peak || 1e-9)).toFixed(1)} dBFS${opt.raw ? ' (raw, not mastered)' : ''}, built in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+  if (!isFinite(m.lufs)) die('the Tone score rendered silence: check that instruments are connected .toDestination() and notes are scheduled inside DUR');
+}
+
+async function samples() {
+  const name = pos[1];
+  if (!name) { console.log(`sample packs (stored in ${SAMPLES_DIR}):`); for (const [k, p] of Object.entries(PACKS)) console.log(`  ${k.padEnd(12)} ${p.licence}`); return; }
+  const r = await fetchPack(name);
+  console.log(`${r.dir}: ${r.count} files\n  licence: ${r.licence}  → list it in the delivery notes`);
+}
+
+function librosaBeats(file) {
+  const py = `import json,sys,librosa\ny,sr=librosa.load(sys.argv[1],sr=22050,mono=True)\nt,b=librosa.beat.beat_track(y=y,sr=sr,units='time')\nimport numpy as np\nprint(json.dumps({'bpm':float(np.atleast_1d(t)[0]),'beats':[float(x) for x in b]}))`;
+  const r = spawnSync('python3', ['-c', py, file], { encoding: 'utf8' });
+  if (r.status !== 0) return null;
+  try { return JSON.parse(r.stdout.trim().split('\n').pop()); } catch { return null; }
 }
 
 async function beats() {
@@ -77,11 +109,17 @@ async function beats() {
     const refine = [bi - 1, bi, bi + 1].map(ac), den = refine[0] - 2 * refine[1] + refine[2];
     if (den) period += Math.max(-0.5, Math.min(0.5, 0.5 * (refine[0] - refine[2]) / den));
   }
+  const engine = opt.engine || 'auto';
+  const lb = engine === 'js' ? null : librosaBeats(file);
+  if (engine === 'librosa' && !lb) die('librosa engine requested but python3 + librosa are not available (pip install librosa)');
   const grid = o => { const g = []; for (let t = o; t < n; t += period) g.push(Math.round(t)); return g; };
   let phase = 0, ps = -Infinity;
   for (let o = 0; o < period; o++) { const s = grid(o).reduce((a, i) => a + (acc[i] || 0), 0); if (s > ps) { ps = s; phase = o; } }
   const bt = [], w = Math.max(2, Math.round(period * 0.1));
-  for (let t = phase; t < n;) { const c = Math.round(t); let j = c, m = -Infinity; for (let k = Math.max(0, c - w); k <= Math.min(n - 1, c + w); k++) if (acc[k] > m) { m = acc[k]; j = k; } const p = m > 0.5 ? j : c; bt.push(p); t = p + period; }
+  if (lb && lb.beats.length > 4 && !opt.bpm) {
+    period = 60 * fps / lb.bpm;
+    for (const s of lb.beats) bt.push(Math.max(0, Math.round((s - nfft / 2 / sr) * fps)));
+  } else for (let t = phase; t < n;) { const c = Math.round(t); let j = c, m = -Infinity; for (let k = Math.max(0, c - w); k <= Math.min(n - 1, c + w); k++) if (acc[k] > m) { m = acc[k]; j = k; } const p = m > 0.5 ? j : c; bt.push(p); t = p + period; }
   const lag = nfft / 2 / sr + (+(opt.shift || 0)) * period / fps, sec = i => +(i / fps + lag).toFixed(3);   // --shift 0.5 moves the grid half a beat
   let d0 = 0, ds = -Infinity; for (let k = 0; k < Math.min(4, bt.length); k++) { const s = bt.filter((_, i) => i % 4 === k).reduce((a, i) => a + lowOn[i], 0); if (s > ds) { ds = s; d0 = k; } }
   const hits = []; let last = -1e9;
@@ -94,7 +132,7 @@ async function beats() {
   }
   const drops = bars.filter((b, i) => i >= 2 && b.db - (bars[i - 1].db + bars[i - 2].db) / 2 > 4).map(b => b.t);
   const breaks = bars.filter((b, i) => i >= 1 && bars[i - 1].db - b.db > 5).map(b => b.t);
-  const res = { file: path.basename(file), duration: +dur.toFixed(3), bpm: +(60 * fps / period).toFixed(2), beats: bt.map(sec), downbeats: downs, hits, bars, drops, breaks };
+  const res = { engine: lb && !opt.bpm ? 'librosa' : 'js', file: path.basename(file), duration: +dur.toFixed(3), bpm: +(60 * fps / period).toFixed(2), beats: bt.map(sec), downbeats: downs, hits, bars, drops, breaks };
   const out = typeof opt.out === 'string' ? opt.out : null;
   if (out) { fs.mkdirSync(path.dirname(path.resolve(out)), { recursive: true }); fs.writeFileSync(out, JSON.stringify(res, null, 1)); }
   else console.log(JSON.stringify(res, null, 1));

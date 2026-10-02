@@ -21,7 +21,9 @@
 <direction>
 Reel Read:
   format: …（用途，formats.md）
-  style: …（风格，styles.md；或自定义风格规则）
+  benchmark: …（对标作品 · 学什么 · 不学什么）
+  structure: …（三个候选结构 → 选中的那个和理由）
+  style: …（styles/<slug>.md，写明改造点；或混搭方案；或按 _template.md 写的自定义规则）
   hook: …
   signature: …（记忆点：第几秒，什么手法）
   visual-language: …
@@ -51,7 +53,7 @@ Reel Read:
 2. 页面暴露 window.DUR / window.render(t) / window.READY；画面只由 t 决定，随机数带固定种子，不用计时器，不用 CSS 动画，帧和帧之间不保存状态。
 3. 所有时间点写在 timeline.js，页面和 score.mjs 都从它 import。
 4. 渲染：render.mjs 逐帧截图 → ffmpeg；参数：--fps … --size … [--subframes 4] [--dpr 2] [--grain …]。
-5. 声音：score.mjs → audio.mjs build（−14 LUFS，真峰值 < −1 dBTP）；音效密度按风格来，有音效的动作要落在动作那一帧。无声作品写「无声」。
+5. 声音：第 1 档 score.mjs / 第 2 档 score.tone.js → audio.mjs build（−14 LUFS，真峰值 < −1 dBTP）；音效密度按风格来，有音效的动作要落在动作那一帧。无声作品写「无声」。
 6. 每个镜头做完渲 3 张静帧检查；全部完成后跑 --determinism，出低清小样确认节奏，再出正片。
 7. 验收：inspect.mjs qa --expect-size … --expect-fps … --expect-duration … --audio required|none [--loop]，技术检查全部 PASS。
 </build>
@@ -61,6 +63,6 @@ Reel Read:
 </gotchas>
 
 <start>
-先出 hook、记忆点、结尾三张风格帧给我确认；确认后按镜头顺序制作，每个镜头完成后自检；正片渲完跑 inspect qa，技术检查全部 PASS 后，附上审片记录（已知问题如实列出）交付，由我终审。
+已定风格：先出 hook、记忆点、结尾三张风格帧给我确认；未定风格：先给 3 个拉开差距的方向，各一张关键帧让我选。确认后按镜头顺序制作，每个镜头完成后自检；正片渲完跑 inspect qa，技术检查全部 PASS 后，附上审片记录（已知问题如实列出）交付，由我终审。
 </start>
 ```

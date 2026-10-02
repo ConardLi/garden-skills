@@ -26,5 +26,11 @@ if (chromium) {
   console.log(`[ok] headless browser ${browser.version()} · WebGL renderer: ${gl}`);
   await browser.close();
 }
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+const here = fileURLToPath(new URL('.', import.meta.url));
+const toneOk = [here, process.argv[2] || '', process.cwd()].some(b => b && fs.existsSync(`${b}/node_modules/tone/build/Tone.js`));
+console.log(`[${toneOk ? 'ok' : 'optional'}] tone.js (tier-2 audio)${toneOk ? '' : '  →  sh setup.sh'}`);
+console.log(`[${has('python3', ['-c', 'import librosa']) !== null ? 'ok' : 'optional'}] librosa (more robust beat tracking for user tracks)`);
 console.log(ok ? '\nready' : '\nsome tools are missing (see above)');
 process.exit(ok ? 0 : 1);

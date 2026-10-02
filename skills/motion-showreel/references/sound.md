@@ -1,20 +1,25 @@
 # 声音：配乐、音效、混音
 
-声音是视频的另一半。同样的画面，有没有卡点的音效，观感能差一个档次。这里的配乐和音效全部在 `score.mjs` 里用代码合成，时间点从 `timeline.js` 读取，所以和画面是同一张时间表。
+声音是视频的另一半。同样的画面，有没有卡点的音效，观感能差一个档次。配乐和音效都用代码写，时间点从 `timeline.js` 读取，所以和画面是同一张时间表。
 
-目录：1 三种模式 · 2 session API · 3 按类型的编曲配方 · 4 音效对照表 · 5 时间规则 · 6 混音 · 7 检查（你听不到） · 8 用户给的曲子
+目录：1 选哪一档 · 2 第 1 档：内置合成（session API） · 3 第 2 档：Tone.js · 4 编曲配方 · 5 音效对照表 · 6 时间规则 · 7 混音 · 8 检查（你听不到） · 9 用户给的曲子
 
 ---
 
-## 1. 三种模式
+## 1. 选哪一档
 
-| 模式 | 什么时候 | 流程 |
-|---|---|---|
-| 代码合成（默认） | 用户没给曲子 | 写 `score.mjs` → `audio.mjs build` → `audio.mjs check` |
-| 用户的曲子 | 用户提供了能商用的音乐 | `audio.mjs beats` → 把节拍对齐到 timeline → 画面排在节拍上 → `score.mjs` 里 `S.load()` 曲子并叠加音效 |
-| 无声 | 循环动图、要放进别的片子里的素材 | 跳过 |
+| 档 | 文件 | 引擎 | 强项 | 弱项 |
+|---|---|---|---|---|
+| 第 1 档 · 内置合成（默认） | `score.mjs` | Node 里的合成器，零依赖、完全确定 | 电子鼓、合成贝斯、铺底、拨弦、FM 钟声、芯片音乐、UI 音效、侧链 | 真实乐器（钢琴、弦乐、真鼓）不像 |
+| 第 2 档 · Tone.js | `score.tone.js` | 在无头浏览器里用 Tone.js 离线渲染（OfflineAudioContext） | 采样乐器、卷积混响、合唱 / 相位 / 失真等效果、更丰富的合成器 | 需要先下载采样；噪声类音色每次渲染略有不同 |
+| 外部曲子 | 用户的音频文件 | `S.load()` | 真实制作的音乐（用户自己的、授权的、AI 音乐服务生成的） | 授权要用户负责；只能卡它的拍 |
+| 无声 | — | — | 循环动图、要放进别的片子里的素材 | — |
 
-## 2. session API
+两档可以叠：先 `audio.mjs build score.tone.js --raw --out audio/tone.wav` 得到一层没做母带的音乐，再在 `score.mjs` 里 `S.load('audio/tone.wav')` 放进一条 bus，叠上第 1 档的音效，最后统一做母带。
+
+**怎么选**：看所选风格文件里的「声音调色板」。电子、界面、复古、抽象类风格用第 1 档就够了；电影感、手作、东方、高端产品这类需要真实乐器和空间感的，用第 2 档。
+
+## 2. 第 1 档：内置合成（session API）
 
 `score.mjs` 导出 `DUR`，以及一个接收 session `S` 的默认函数：
 
@@ -59,9 +64,31 @@ export default function score(S) {
 
 构建：`node <skill>/scripts/audio.mjs build <slug>/score.mjs [--out audio/music.wav] [--stems]`。母带会自动处理到 −14 LUFS，并用峰值限制器压到 −1.5 dBFS。`--stems` 会把每条 bus 单独导出到 `audio/stems/`，方便排查是哪一轨出了问题。
 
-## 3. 编曲配方（按用途给结构，按风格选配器）
+## 3. 第 2 档：Tone.js
 
-**结构跟用途走，配器跟风格走**（风格的声音调色板见 styles.md）。避免通用的「钢琴 + 弦乐」。
+`score.tone.js` 是一个**浏览器 ES 模块**，和 `timeline.js` 放在一起：
+
+```js
+import { DUR, BPM, CUES, b } from './timeline.js';
+export { DUR };
+export default async function score(Tone, kit) {
+  kit.transport.bpm.value = BPM;
+  const verb = new Tone.Reverb({ decay: 2.8, wet: 0.25 }).toDestination();
+  const piano = new Tone.Sampler({ urls: kit.salamander(), baseUrl: kit.baseUrl('salamander'), release: 1.2 }).connect(verb);
+  await kit.loaded();                                        // 采样解码完再排音符
+  piano.triggerAttackRelease(['A3', 'C4', 'E4'], b(4), 0);   // 时间用秒（从 timeline 来）
+}
+```
+
+- **构建**：`node <skill>/scripts/audio.mjs build <slug>/score.tone.js`，输出 −14 LUFS 的 WAV（`--raw` 跳过母带）。starter 里有一份完整示例 `score.tone.js`。
+- **kit**：`DUR`、`transport`、`loaded()`、`baseUrl(pack)`、`sample(pack, file)`、`salamander()`（Salamander 钢琴的 `Sampler` urls 表）。
+- **采样**：`node <skill>/scripts/audio.mjs samples` 列出可下载的包；`samples salamander` 下载 Salamander Grand Piano（CC BY 3.0，交付时要署名）。其他 CC0 / 有授权的采样可以放进 `<slug>/samples/<名字>/`，在页面里用 `/samples/<名字>/文件` 引用。不要使用来源和授权不明的采样。
+- **常用部件**：`Sampler`（采样乐器）、`PolySynth(FMSynth | AMSynth | Synth)`、`MonoSynth`（贝斯）、`MembraneSynth`（底鼓）、`MetalSynth`（镲）、`NoiseSynth`；效果 `Reverb`（卷积）、`FeedbackDelay`、`PingPongDelay`、`Chorus`、`Phaser`、`Distortion`、`BitCrusher`、`Filter`、`AutoFilter`、`Compressor`、`Limiter`。
+- **注意**：所有声音都要接到 `.toDestination()`（直接或经过效果链），否则渲出来是静音；时间用绝对秒数（从 `timeline.js` 来），不要依赖 `Tone.now()`；采样一定要 `await kit.loaded()` 之后再排音符。
+
+## 4. 编曲配方（按用途给结构，按风格选配器）
+
+**结构跟用途走，配器跟风格走**：配器看所选风格文件里的「声音调色板」（`styles/<slug>.md`）。避免通用的「钢琴 + 弦乐」。
 
 | 用途 | 常用 BPM | 结构要点 |
 |---|---|---|
@@ -72,17 +99,9 @@ export default function score(S) {
 | E Logo / 片头 | — | riser → impact → 一个持续和弦或钟声，4–8 秒内完成一次起伏 |
 | F 循环动图 | 60–90 或无声 | 声音也要能循环：首尾的音量和和声要一致 |
 | G 数据爆点 | 120 | 滚动期间 tick 越来越密 → 落定前半拍静音 → impact |
+| I 年代回顾 | 全片固定或缓慢上升 | 一首曲子贯穿全片，配器逐段升级（芯片 → 合成器 → 采样 + 大混响），高潮时全部合在一起 |
 
-| 风格 | 配器 |
-|---|---|
-| 瑞士编辑 | 干净的电子鼓、tick 网格、短促的 pluck；混响少 |
-| 极简界面 | 拨弦琶音（penta）、轻底鼓、软拍手、界面音效 |
-| 像素 CRT | `lead` / `bass` 用 square、`blip`、`glitch`、噪声鼓 |
-| 3D 材质 | sub drone、boom、FM 钟声 / 玻璃、颗粒 shimmer、慢 riser |
-| 生成抽象 | 铺底 drone、shimmer、慢 pluck |
-| 手绘笔触 | pluck、keys、bell，节奏松一些 |
-
-## 4. 音效对照表
+## 5. 音效对照表
 
 音效的密度由风格决定：极简界面几乎每个动作都有声音，生成抽象可能一个都没有。需要音效时，材质要对得上：
 
@@ -99,7 +118,7 @@ export default function score(S) {
 | 数字跳动 | `tick`（每变一次一个，太密就隔几次一个） |
 | 故障、像素化、切片 | `glitch` |
 
-## 5. 时间规则
+## 6. 时间规则
 
 - 音效的触发时间**直接用 timeline.js 里的同一个数字**，不要另外手写。
 - whoosh 的峰值对准切点（`t − peak × dur`）；impact 正好落在动作那一帧。
@@ -107,7 +126,7 @@ export default function score(S) {
 - 声音可以当转场：下一镜的声音提前 2–4 帧进来（J-cut），或者上一镜的尾音延续过切点（L-cut）。
 - 循环片：最后一小节的混响尾巴会在片头突然断掉，最后一拍要收干净，或者把尾巴叠回片头。
 
-## 6. 混音
+## 7. 混音
 
 - **分 bus**：drums、bass、music、sfx 至少四条，方便调整平衡。
 - **侧链**：bass 和 music 的 `duck` 设 0.5–0.7，每个底鼓和撞击都 `S.duck(t)`，律动感立刻就出来了。
@@ -116,7 +135,7 @@ export default function score(S) {
 - **空间**：混响只发送给 music 和 sfx（0.15–0.35），鼓和贝斯保持干声。
 - **响度**：母带自动处理到 −14 LUFS（各大平台的标准）、真峰值 ≤ −1 dBTP。
 
-## 7. 检查（你听不到）
+## 8. 检查（你听不到）
 
 每次 build 之后都要跑：
 
@@ -128,10 +147,10 @@ node <skill>/scripts/audio.mjs check <slug>/audio/music.wav --out <slug>/qa/musi
 
 成片之后，`inspect.mjs qa` 会对混好的 MP4 再检查一次。
 
-## 8. 用户给的曲子
+## 9. 用户给的曲子
 
 1. 确认授权（能不能商用，是不是用户自己的），写进交付说明。
-2. `node <skill>/scripts/audio.mjs beats track.mp3 --out <slug>/audio/beats.json`：得到 BPM、beats、downbeats、onset hits、每小节能量、drops（能量突增的小节）、breaks（能量突降的小节）。
+2. `node <skill>/scripts/audio.mjs beats track.mp3 --out <slug>/audio/beats.json`（装了 librosa 时自动用 librosa 定节拍网格，更稳；`--engine js` 强制用内置算法）：得到 BPM、beats、downbeats、onset hits、每小节能量、drops（能量突增的小节）、breaks（能量突降的小节）。
 3. **核对网格**：节拍检测可能锁到半速或倍速，或者落在反拍上。已知 BPM 不一致就加 `--bpm`；拍点在反拍上就加 `--shift 0.5`。打开 `-wave` 图看 drop 的位置是否和 `drops` 一致。
 4. 选一段：短片一般截取一个完整的乐句（4 或 8 小节），最好包含一个 drop。在 `score.mjs` 里：
    ```js

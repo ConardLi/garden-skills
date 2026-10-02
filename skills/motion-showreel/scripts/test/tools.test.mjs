@@ -137,3 +137,16 @@ test('audio build: masters to −14 LUFS under the ceiling', () => {
 test('audio check: a missing file fails', () => {
   assert.equal(node('audio.mjs', ['check', path.join(tmp, 'nope.wav')]).status, 1);
 });
+
+test('audio build: a Tone.js score renders offline and is mastered', { skip: !fs.existsSync(path.join(S, 'node_modules', 'tone', 'build', 'Tone.js')) && 'tone not installed' }, () => {
+  const dir = fs.mkdtempSync(path.join(tmp, 'tone-'));
+  fs.writeFileSync(path.join(dir, 'score.tone.js'), `export const DUR = 3;\nexport default async (Tone, kit) => { const s = new Tone.PolySynth(Tone.Synth).toDestination(); const k = new Tone.MembraneSynth().toDestination(); for (let i = 0; i < 6; i++) k.triggerAttackRelease('C1', '8n', i * 0.5); s.triggerAttackRelease(['A3','C4','E4'], 2.5, 0); };\n`);
+  const r = node('audio.mjs', ['build', path.join(dir, 'score.tone.js'), '--out', path.join(dir, 'm.wav')]);
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /tone score · 3\.00s, -1[34]\.\d LUFS/);
+});
+test('audio build: a silent Tone.js score fails loudly', { skip: !fs.existsSync(path.join(S, 'node_modules', 'tone', 'build', 'Tone.js')) && 'tone not installed' }, () => {
+  const dir = fs.mkdtempSync(path.join(tmp, 'tone-'));
+  fs.writeFileSync(path.join(dir, 'score.tone.js'), `export const DUR = 1;\nexport default async (Tone) => { new Tone.Synth(); };\n`);
+  assert.equal(node('audio.mjs', ['build', path.join(dir, 'score.tone.js'), '--out', path.join(dir, 'm.wav')]).status, 1);
+});
