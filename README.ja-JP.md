@@ -31,12 +31,24 @@
 <br/><sub>あらゆる素材 → 美しい記事</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#motion-showreel"><img src="./dist/imgs/motion-showreel/banner.webp" alt="Motion Showreel Skill" width="100%"></a>
+<br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
+<br/><sub>コードで描くショート動画</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="KB Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>ローカルナレッジ検索</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#コントリビュート)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -290,6 +302,39 @@
 
 ---
 
+### [`motion-showreel`](./skills/motion-showreel)
+
+![Motion Showreel Skill](./dist/imgs/motion-showreel/banner.webp)
+
+**カテゴリ:** モーショングラフィックス / ショート動画  
+**用途:** モーションショーリール、製品ティザー、UI モーションデモ、キネティックタイポグラフィ、ロゴアニメーションとタイトルシーケンス、ジェネラティブループ、データの「数字ドロップ」、時代をまたぐ回顧映像など、グラフィック・文字・インターフェースのアニメーションが主体のショート動画（通常 5〜60 秒、音楽主体なら最長約 2 分）。
+
+`motion-showreel` は一文の依頼を、完成した MP4 と編集可能なソースに変えます。すべてコードで作ります。エージェントは「画面が時間だけで決まる」ページ（`render(t)`）を書き、Playwright で 1 フレームずつキャプチャし、ffmpeg で MP4 にエンコードします。音楽と効果音は同じ `timeline.js` 上に書くので、ヒットはフレーム単位で合います。制作前にベンチマークを選び、構成案を 3 つ考えます。スタイルフレームで一度だけ確認したあとは自律的に制作し、プログラムによる技術チェックをすべて通過してから納品します。
+
+ハイライト:
+
+- **決定論的な `render(t)` パイプライン**: 静止画、コンタクトシート、3 方向の比較、プロキシ、本番レンダーがすべて同じページから出力されます。モーションブラー、スーパーサンプリング、フィルムグレインはレンダーフラグで指定します
+- **映像と音が 1 つのタイムラインを共有**: カット、ヒット、効果音は同じ数値を使います。音楽は依存ゼロの内蔵シンセ、ピアノのサンプルを使える Tone.js、またはユーザーの楽曲（ビートとドロップを自動検出）から選べます
+- **22 スタイルのライブラリは出発点であって選択肢リストではない**: swiss-editorial、ink-wash、risograph、synthwave、soft 3D、cinematic title、pixel game など。各スタイルにルック、モーション、カメラ文法、サウンドパレットが定義されていて、改造・ミックス・自作ができます
+- **デフォルトの曲ではなく音の方向性を決める**: ブリーフで音のベンチマーク、グルーヴ、和声、楽器編成、ドラマの曲線を決め、避けるべき音の「デフォルト」リストも用意しています
+- **確認は 1 回だけ**: スタイルフレームを確認したら（スタイル未指定なら 3 つの異なる方向性をキーフレーム 1 枚ずつ提示）、あとは全力で自律制作します。「おまかせモード」ではテイストを完全にモデルに任せます
+- **技術的な受け入れと美的判断を分離**: サイズ、fps、尺、フレーム数、黒フレーム、ラウドネス、トゥルーピーク、ループのつなぎ目、決定論性はすべて PASS が必須です。レビューノートはユーザーに渡し、最終判断はユーザーが行います
+
+<table>
+<tr>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/afterglow.webp" alt="synthwave-neon" /></a><br /><sub><code>synthwave-neon</code><br />アルバムのタイトル</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/boink.webp" alt="soft-3d-toy" /></a><br /><sub><code>soft-3d-toy</code><br />連鎖反応</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/last-stroke.webp" alt="stick ink" /></a><br /><sub><code>stick ink</code><br />ゲームトレーラー</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/umbra.webp" alt="cinematic-title" /></a><br /><sub><code>cinematic-title</code><br />映画のオープニング</sub></td>
+</tr>
+</table>
+
+<sub>↑ このスキルで作った作品の 4 秒の抜粋。スキル自身の 80 秒トレーラーやスタイルギャラリーを含む全作品は <a href="./skills/motion-showreel/README.md#showcase"><b>ショーケース</b></a> で。</sub>
+
+リンク: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->_（まだリリースされていません）_<!-- DOWNLOAD:motion-showreel:end -->
+
+---
+
 ## インストール
 
 サポートされているインストール方法は 5 つあります。自分のスタックに合うものを選んでください:
@@ -313,7 +358,7 @@
 自動検出し、スキルを適切なディレクトリにドロップする標準的な [`npx skills` CLI](https://www.npmjs.com/package/skills) を使用します。
 
 ```bash
-# 4 つのスキルすべてをインストール（最新）
+# コレクションのすべてのスキルをインストール（最新）
 npx skills add ConardLi/garden-skills
 
 # 1 つのスキルだけをインストール（最新）
@@ -360,6 +405,8 @@ npx skills remove kb-retriever  # アンインストール
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install motion-showreel-skills@garden-skills
+/plugin install beautiful-article-skills@garden-skills
 ```
 
 プラグインパックは [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) で宣言されています:
@@ -370,6 +417,8 @@ npx skills remove kb-retriever  # アンインストール
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `motion-showreel-skills` | `motion-showreel` |
+| `beautiful-article-skills` | `beautiful-article` |
 
 ### 方法 C · Releases のバージョン固定 `.zip`
 

@@ -4,8 +4,8 @@
     "name": "ConardLi"
   },
   "metadata": {
-    "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, GPT Image 2 image generation, and beautifully designed single-file HTML articles.",
-    "version": "0.4.0"
+    "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, GPT Image 2 image generation, beautifully designed single-file HTML articles, and code-rendered motion-graphics short videos.",
+    "version": "0.5.0"
   },
   "plugins": [
     {

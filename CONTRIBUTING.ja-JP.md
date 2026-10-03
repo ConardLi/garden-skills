@@ -55,7 +55,9 @@ npm run validate  # CI がすべての PR で実行するのと同じチェッ�
 │   │
 │   ├── web-design-engineer/
 │   ├── gpt-image-2/
-│   └── kb-retriever/
+│   ├── kb-retriever/
+│   ├── beautiful-article/
+│   └── motion-showreel/
 │
 ├── scripts/release/                     ← リリースツール（ゼロ依存 Node ESM）
 │   ├── cut-release.mjs                  ← インタラクティブなリリースヘルパー（メインエントリ）
@@ -158,6 +160,17 @@ description: このスキルが何をして、いつ使うかを明確に説明�
 
 オプション: `/plugin install` 経由で発見できるようにしたい場合は、
 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) にプラグインパックエントリを追加します。
+
+ルートの多言語 README のチェックリスト（見落としやすい項目です。`validate` が確認するのは DOWNLOAD マーカーだけ）:
+
+- 先頭のスキルギャラリーにセルを追加し、`skills-N` バッジを 1 つ増やす
+- 「インストール」の前にスキルのセクションを追加し、方法 B の `/plugin install` リストとパック表にプラグインパックを追加する
+- `marketplace.json` にプラグインを追加したら、`metadata.version` をマイナーバージョンで上げ、`metadata.description` にスキルを追記する
+- CDN にない README 画像は `dist/imgs/<skill>/` に置く。リリース zip には含まれない
+
+リリース zip に入るもの: `pack-skill.mjs` は `skills/<name>/` のうち、git が出荷する内容だけを固めます
+（追跡済みファイルと、追跡されていないが無視もされていないファイル。OS / エディタのゴミは除外）。gitignore 対象の
+ランタイムダウンロードやネストした `node_modules/` は含まれないため、ローカルの `npm run pack` は CI と同じ zip になります。
 
 ---
 

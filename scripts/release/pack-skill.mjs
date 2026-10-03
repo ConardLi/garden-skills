@@ -12,8 +12,8 @@
 // The zip's top-level entry is always "<skill>/" so users can extract straight
 // into .claude/skills/, .agents/skills/, etc.
 
-import { mkdir, rm, writeFile, readFile } from "node:fs/promises";
-import { existsSync, createReadStream } from "node:fs";
+import { mkdir, rm, writeFile, readFile, stat as statFile } from "node:fs/promises";
+import { existsSync, createReadStream, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import path from "node:path";
@@ -40,6 +40,31 @@ const EXCLUDE = [
   ".idea",
   ".vscode",
 ];
+
+// Files that belong in the zip: what git would ship (tracked + untracked-but-not-ignored),
+// so local packs match CI packs even when a skill has gitignored runtime downloads or a
+// nested node_modules/. Returns null outside a git checkout (caller falls back to zip -r).
+function shippedFiles(name) {
+  const r = spawnSync(
+    "git",
+    ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "."],
+    { cwd: path.join(SKILLS_DIR, name), encoding: "utf8" },
+  );
+  if (r.status !== 0) return null;
+  const segs = EXCLUDE.filter((p) => !p.includes("*"));
+  const globs = EXCLUDE.filter((p) => p.includes("*")).map(
+    (p) => new RegExp(`^${p.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*")}$`),
+  );
+  return [...new Set(r.stdout.split("\0").filter(Boolean))]
+    .filter((rel) => {
+      const parts = rel.split("/");
+      if (parts.some((s) => segs.includes(s))) return false;
+      if (globs.some((g) => g.test(parts[parts.length - 1]))) return false;
+      return existsSync(path.join(SKILLS_DIR, name, rel));   // tracked but deleted locally
+    })
+    .map((rel) => `${name}/${rel}`)
+    .sort();
+}
 
 function parseArgs(argv) {
   const args = { all: false };
@@ -88,8 +113,11 @@ async function packOne({ name, dir, manifest, outDir, expectVersion }) {
     );
   }
 
-  const sizeBefore = await dirSize(dir, { exclude: EXCLUDE });
-  console.log(`[pack] ${name}@${version}  source=${formatBytes(sizeBefore)}`);
+  const files = shippedFiles(name);
+  const sizeBefore = files
+    ? files.reduce((s, f) => s + statSync(path.join(SKILLS_DIR, f)).size, 0)
+    : await dirSize(dir, { exclude: EXCLUDE });
+  console.log(`[pack] ${name}@${version}  source=${formatBytes(sizeBefore)}${files ? `  files=${files.length}` : ""}`);
 
   await mkdir(outDir, { recursive: true });
   const zipFile = path.join(outDir, zipName(name, version));
@@ -97,17 +125,28 @@ async function packOne({ name, dir, manifest, outDir, expectVersion }) {
 
   // Use system `zip` for portability + deterministic-ish output.
   // Run inside SKILLS_DIR so the archive's top-level dir is "<name>/".
-  const excludeArgs = EXCLUDE.flatMap((p) => [
-    "-x",
-    `${name}/${p}`,
-    "-x",
-    `${name}/**/${p}`,
-  ]);
-  const result = spawnSync(
-    "zip",
-    ["-r", "-q", "-X", zipFile, name, ...excludeArgs],
-    { cwd: SKILLS_DIR, stdio: ["ignore", "inherit", "inherit"] },
-  );
+  let result;
+  if (files) {
+    result = spawnSync("zip", ["-q", "-X", zipFile, "-@"], {
+      cwd: SKILLS_DIR,
+      input: files.join("\n") + "\n",
+      stdio: ["pipe", "inherit", "inherit"],
+    });
+  } else {
+    const excludeArgs = EXCLUDE.flatMap((p) => [
+      "-x",
+      `${name}/${p}`,
+      "-x",
+      `${name}/**/${p}`,
+      "-x",
+      `${name}/**/${p}/*`,
+    ]);
+    result = spawnSync(
+      "zip",
+      ["-r", "-q", "-X", zipFile, name, ...excludeArgs],
+      { cwd: SKILLS_DIR, stdio: ["ignore", "inherit", "inherit"] },
+    );
+  }
   if (result.status !== 0) {
     throw new Error(`zip exited with status ${result.status}`);
   }
@@ -115,7 +154,7 @@ async function packOne({ name, dir, manifest, outDir, expectVersion }) {
   const digest = await sha256File(zipFile);
   const shaFile = `${zipFile}.sha256`;
   await writeFile(shaFile, `${digest}  ${path.basename(zipFile)}\n`, "utf8");
-  const stat = await import("node:fs/promises").then((m) => m.stat(zipFile));
+  const stat = await statFile(zipFile);
   console.log(
     `[pack] -> ${path.relative(REPO_ROOT, zipFile)}  (${formatBytes(stat.size)})`,
   );

@@ -31,12 +31,24 @@
 <br/><sub>Any source → beautiful article</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#motion-showreel"><img src="./dist/imgs/motion-showreel/banner.webp" alt="Motion Showreel Skill" width="100%"></a>
+<br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
+<br/><sub>Code-rendered short video</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="KB Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>Local knowledge retrieval</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -290,6 +302,39 @@ Links: [README](./skills/beautiful-article/README.md) · [SKILL.md](./skills/bea
 
 ---
 
+### [`motion-showreel`](./skills/motion-showreel)
+
+![Motion Showreel Skill](./dist/imgs/motion-showreel/banner.webp)
+
+**Category:** Motion Graphics / Short Video  
+**Best for:** motion showreels, product teasers, UI motion demos, kinetic typography, logo stings and title sequences, generative loops, data "number drops", and era-spanning retrospectives: short videos (5–60 s, up to ~2 min for music-driven pieces) built from graphics, type and interface animation.
+
+`motion-showreel` turns one sentence into a finished MP4 plus editable source, made entirely in code. The agent writes a page whose picture is a pure function of time (`render(t)`). Playwright captures it frame by frame, ffmpeg encodes it, and the score is written against the same `timeline.js`, so every hit lands on its frame. Before building, the agent picks a benchmark and sketches three candidate structures. It stops once for style frames, then produces autonomously and only hands over after the programmatic checks pass.
+
+Highlights:
+
+- **Deterministic `render(t)` pipeline**: stills, contact sheets, three-direction boards, proxies and masters all come from the same page. Motion blur, supersampling and film grain are render flags.
+- **One timeline for picture and sound**: cuts, hits and SFX share the same numbers. Music can be synthesized (a zero-dependency built-in synth, or Tone.js with a sampled piano), or cut to the user's own track with beat and drop detection.
+- **A 22-style library as a starting point**: swiss-editorial, ink-wash, risograph, synthwave, soft 3D, cinematic title, pixel game and more. Each style defines its look, motion, camera grammar and sound palette, and can be adapted, mixed or replaced with your own.
+- **A sound direction, not a default song**: the brief sets a sound benchmark, groove, harmony, palette and dramatic arc, plus a list of audio defaults to avoid.
+- **One checkpoint**: style frames (or three distinct directions with one key frame each), then all-out autonomous production. "Free mode" leaves taste to the model.
+- **Technical acceptance kept separate from taste**: size, fps, duration, frame count, black frames, loudness, true peak, loop seam and determinism must all PASS. Review notes go to the user, who makes the final call.
+
+<table>
+<tr>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/afterglow.webp" alt="synthwave-neon" /></a><br /><sub><code>synthwave-neon</code><br />album title</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/boink.webp" alt="soft-3d-toy" /></a><br /><sub><code>soft-3d-toy</code><br />chain reaction</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/last-stroke.webp" alt="stick ink" /></a><br /><sub><code>stick ink</code><br />game trailer</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/umbra.webp" alt="cinematic-title" /></a><br /><sub><code>cinematic-title</code><br />film opening</sub></td>
+</tr>
+</table>
+
+<sub>↑ 4-second excerpts of pieces made with the skill. <a href="./skills/motion-showreel/README.md#showcase"><b>Open the showcase</b></a> for the full set, including the skill's own 80-second trailer and the style gallery.</sub>
+
+Links: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:motion-showreel:end -->
+
+---
+
 ## Install
 
 There are five supported install paths. Pick the one that fits your stack:
@@ -314,7 +359,7 @@ which auto-detects your agent (Claude Code, Cursor, Codex, etc.) and drops the
 skill into the right directory.
 
 ```bash
-# Install all four skills (latest)
+# Install every skill in the collection (latest)
 npx skills add ConardLi/garden-skills
 
 # Install just one skill (latest)
@@ -363,6 +408,8 @@ more skills together:
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install motion-showreel-skills@garden-skills
+/plugin install beautiful-article-skills@garden-skills
 ```
 
 Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
@@ -373,6 +420,8 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `motion-showreel-skills` | `motion-showreel` |
+| `beautiful-article-skills` | `beautiful-article` |
 
 ### Option C · Pinned `.zip` from Releases
 

@@ -31,12 +31,24 @@
 <br/><sub>任意素材 → 一篇精美的文章</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top">
+<a href="#motion-showreel"><img src="./dist/imgs/motion-showreel/banner.webp" alt="Motion Showreel Skill" width="100%"></a>
+<br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
+<br/><sub>代码渲染的短视频</sub>
+</td>
+<td width="50%" valign="top">
+<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="KB Retriever Skill" width="100%"></a>
+<br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
+<br/><sub>本地知识库检索</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
-[![Skills count](https://img.shields.io/badge/skills-5-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -292,6 +304,39 @@
 ---
 
 
+### [`motion-showreel`](./skills/motion-showreel)
+
+![Motion Showreel Skill](./dist/imgs/motion-showreel/banner.webp)
+
+**类别：** 动态图形 / 短视频  
+**适合：** 动效作品集、产品宣传短片、UI 动效演示、动态排版与金句卡点、Logo 演绎与片头、生成艺术循环、数据爆点、年代回顾——以图形、文字、界面动画为主的短视频（常见 5–60 秒，纯音乐片最长约 2 分钟）。
+
+`motion-showreel` 把一句话变成一支做完的短视频：MP4 + 可编辑源码，全部用代码完成。Agent 写一个「画面只由时间决定」的页面（`render(t)`），Playwright 逐帧截图，ffmpeg 合成 MP4；配乐和音效写在同一张 `timeline.js` 上，卡点精确到帧。动笔前先找对标、想三个候选结构，只在风格帧停一次，之后自主完成制作，程序化技术检查全部通过后才交付。
+
+亮点：
+
+- **确定性的 `render(t)` 管线**：静帧、抽帧拼图、三方向对比、小样、正片都出自同一个页面；运动模糊、超采样、胶片颗粒都是渲染参数
+- **画面和声音共用一张时间表**：切点、撞击、音效用同一组数字；配乐可以用零依赖的内置合成器、带钢琴采样的 Tone.js，也可以按用户自己的曲子卡点（自动测拍点和 drop）
+- **22 种风格的风格库，是起点不是选择题**：瑞士编辑、水墨、孔版印刷、合成波、软萌 3D、电影片头、像素游戏……每种都写明质感、运动、镜头语法和声音调色板，可以改造、混搭或自定义
+- **先定声音方向，而不是套一首默认的曲子**：brief 里写清声音对标、律动、和声、配器和戏剧曲线，并有一份声音「默认味」清单
+- **只有一个确认点**：确认风格帧（未定风格时给 3 个拉开差距的方向，各一张关键帧），之后全力自主制作；「放手模式」把审美完全交给模型
+- **技术验收和审美判断分开**：尺寸、帧率、时长、帧数、黑帧、响度、真峰值、循环接缝、确定性必须全部 PASS；审片记录交给用户终审
+
+<table>
+<tr>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.zh-CN.md#作品展示"><img src="./dist/imgs/motion-showreel/afterglow.webp" alt="synthwave-neon" /></a><br /><sub><code>synthwave-neon</code><br />专辑片头</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.zh-CN.md#作品展示"><img src="./dist/imgs/motion-showreel/boink.webp" alt="soft-3d-toy" /></a><br /><sub><code>soft-3d-toy</code><br />连锁反应</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.zh-CN.md#作品展示"><img src="./dist/imgs/motion-showreel/last-stroke.webp" alt="stick ink" /></a><br /><sub><code>stick ink</code><br />游戏预告</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.zh-CN.md#作品展示"><img src="./dist/imgs/motion-showreel/umbra.webp" alt="cinematic-title" /></a><br /><sub><code>cinematic-title</code><br />电影片头</sub></td>
+</tr>
+</table>
+
+<sub>↑ 用这个 Skill 做的作品，各截 4 秒——<a href="./skills/motion-showreel/README.zh-CN.md#作品展示"><b>打开作品展示</b></a>，看全部作品（包括 Skill 自己的 80 秒宣传片）和风格画廊。</sub>
+
+链接：[README](./skills/motion-showreel/README.zh-CN.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->_（暂未发布）_<!-- DOWNLOAD:motion-showreel:end -->
+
+---
+
 ## 安装
 
 总共支持 5 种安装方式，按你的工作流选一个即可：
@@ -316,7 +361,7 @@
 的 Agent（Claude Code / Cursor / Codex / …）并把 Skill 放到对的目录。
 
 ```bash
-# 一次装上整个仓库（4 个 Skill），最新
+# 一次装上整个仓库（全部 Skill），最新
 npx skills add ConardLi/garden-skills
 
 # 只装某一个 Skill，最新
@@ -363,6 +408,8 @@ npx skills remove kb-retriever  # 卸载
 /plugin install web-design-skills@garden-skills
 /plugin install knowledge-base-skills@garden-skills
 /plugin install image-generation-skills@garden-skills
+/plugin install motion-showreel-skills@garden-skills
+/plugin install beautiful-article-skills@garden-skills
 ```
 
 插件包定义在 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)：
@@ -373,6 +420,8 @@ npx skills remove kb-retriever  # 卸载
 | `web-design-skills` | `web-design-engineer` |
 | `knowledge-base-skills` | `kb-retriever` |
 | `image-generation-skills` | `gpt-image-2` |
+| `motion-showreel-skills` | `motion-showreel` |
+| `beautiful-article-skills` | `beautiful-article` |
 
 ### 方式 C · Releases 钉版本 `.zip`
 

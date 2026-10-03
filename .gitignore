@@ -29,6 +29,6 @@ garden-gpt-image-2/
 
 .agents/
 
-temp/
+# temp/
 # motion-showreel downloaded sample packs
 skills/motion-showreel/scripts/samples/
