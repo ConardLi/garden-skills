@@ -41,7 +41,9 @@ Canvas 画出每个色版（灰度遮罩）→ WebGL 后期合成：每个色版
 | 色版分离再合上 | 组成 | Logo、标题 |
 
 ## 声音调色板
-lo-fi 鼓（kick decay 短一点、hat 加 `lowpass`）、温暖的 keys、pluck；可以叠一层很轻的黑胶底噪（低通噪声）。第 1 档合成即可。
+lo-fi 鼓（kick decay 短一点、hat 加 `lowpass`）、温暖的 keys、pluck；可以叠一层很轻的黑胶底噪（`ambience({ kind: 'vinyl' })`）。第 1 档合成即可。
+
+律动与和声（举例，不止这些）：lo-fi hip-hop 的 swing（`S.swing(n, 0.3, 0.25)`）、boom-bap；Dorian、m9 / maj7 这类柔和的七和弦；鼓 bus `crush: 10–12` + `lowpass`，music `wow: 0.3`。
 
 ## 原生手法
 - 色版分离：一个画面拆成两三个专色层错开，再合上变成下一个画面。适合「组成」「拼合」。

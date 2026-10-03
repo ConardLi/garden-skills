@@ -134,6 +134,35 @@ test('audio build: masters to −14 LUFS under the ceiling', () => {
   assert.ok(Math.abs(+m[1] + 14) < 0.5, r.stdout);
   assert.ok(+m[2] <= -1.4, r.stdout);
 });
+test('synth: rhythm helpers, harmony tables and the newer voices', async () => {
+  const Y = await import('../lib/synth.mjs');
+  const S = Y.session({ dur: 2 }); S.tempo(120);
+  assert.deepEqual(S.steps('x..x ..x. | x'), [0, 0.75, 1.5, 2]);
+  assert.deepEqual([0, 0.5, 1, 1.5].map(n => +S.swing(n, 0).toFixed(6)), [0, 0.25, 0.5, 0.75]);   // amount 0 = straight
+  assert.ok(Math.abs(S.swing(0.5) - S.beat(2 / 3)) < 1e-9);                                         // ⅓ = triplet feel
+  assert.equal(S.humanize(1, 8, 3), S.humanize(1, 8, 3));
+  assert.ok(Math.abs(S.humanize(1, 8) - 1) <= 0.008);
+  assert.deepEqual(S.chord('C4', 'quartal'), [60, 65, 70]);
+  assert.deepEqual([0, 1, 2, 3, 4].map(S.scale('D4', 'shang')), [62, 64, 67, 69, 72]);
+  const sounds = [S.shaker(), S.rim(), S.cowbell(), S.organ(['C4', 'E4'], 0.5), S.vox('A3', 0.5, { vowel: 'o' }), S.ambience(0.6, { kind: 'vinyl' }),
+    ...['marimba', 'xylo', 'vibes', 'glock', 'kalimba', 'steel', 'wood'].map(m => S.mallet('C8', 0.4, { material: m }))];
+  for (const s of sounds) for (const ch of s.L ? [s.L, s.R] : [s]) { assert.ok(ch.every(Number.isFinite)); assert.ok(ch.some(v => Math.abs(v) > 1e-3)); }
+  assert.throws(() => S.mallet('C4', 1, { material: 'nope' }), /unknown mallet material/);
+});
+test('audio build: lo-fi bus effects and a custom room stay deterministic and on target', () => {
+  const score = path.join(tmp, 'lofi.mjs');
+  fs.writeFileSync(score, `export const DUR = 3;\nexport default S => { S.tempo(84).space({ room: 0.6, damp: 0.6 });
+    const d = S.bus('d', { crush: 8, crushRate: 16000 }), m = S.bus('m', { gain: 0.5, wow: 0.6, reverb: 0.3 }), a = S.bus('a', { gain: 0.2 });
+    for (const n of S.steps('x..x..x.x.......', 0.25)) d.add(S.kick({ decay: 0.25 }), S.swing(n));
+    for (let k = 0; k < 8; k++) d.add(S.shaker(), S.humanize(S.swing(k / 2 + 0.25, 0.25, 0.25)));
+    m.add(S.organ(S.chord('D3', 'm9'), 2.5, { drawbars: '808000004' }), 0); m.add(S.mallet('A5', 1, { material: 'kalimba' }), 1);
+    a.add(S.ambience(3, { kind: 'tape' }), 0); };\n`);
+  const build = out => node('audio.mjs', ['build', score, '--out', path.join(tmp, out)]);
+  const r = build('lofi1.wav'); assert.equal(r.status, 0, r.stderr);
+  assert.ok(Math.abs(+/(-?[\d.]+) LUFS/.exec(r.stdout)[1] + 14) < 0.5, r.stdout);
+  assert.equal(build('lofi2.wav').status, 0);
+  assert.ok(fs.readFileSync(path.join(tmp, 'lofi1.wav')).equals(fs.readFileSync(path.join(tmp, 'lofi2.wav'))), 'same score → same bytes');
+});
 test('audio check: a missing file fails', () => {
   assert.equal(node('audio.mjs', ['check', path.join(tmp, 'nope.wav')]).status, 1);
 });

@@ -9,7 +9,7 @@ const TONE = fileURLToPath(new URL('./audio/tone.wav', import.meta.url));   // r
 
 export default function score(S) {
   S.tempo(BPM);
-  // the Tone layer: already a finished mix, so unity gain and no extra processing (sound.md §9)
+  // the Tone layer: already a finished mix, so unity gain and no extra processing (sound.md §11)
   S.bus('tone', { gain: 1 }).add(S.load(TONE), 0);
   const sfx = S.bus('sfx', { gain: 0.8, reverb: 0.18 });
   const hit = CUES.find(c => c.sfx === 'impact')?.t;

@@ -85,7 +85,7 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 看起来很「AI」 | 深色 + 居中大字 + 渐变 + 发光 + 同时淡入 | 回到风格文件（`styles/<slug>.md`）的规则和 brief 的禁止清单 |
 | 太闹、太累 | 没有层次，没有呼吸 | 减少微变化；在 drop 前留白 |
 | 结尾突然断掉 | 没有落版；音乐在小节中间被截断 | 落版停 ≥ 1.5 秒，或者做无缝循环；时长取整小节 |
-| 声音轰、发闷 | 低频太多 | 见 sound.md 第 7 节 |
+| 声音轰、发闷 | 低频太多 | 见 sound.md 第 9 节 |
 
 ## 4. 交付清单
 

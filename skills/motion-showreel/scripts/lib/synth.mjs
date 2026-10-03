@@ -9,6 +9,8 @@
 //   drums.add(S.kick(), S.beat(0)); S.duck(S.beat(0))
 //   music.add(S.pad(S.chord('A3', 'min7'), S.bar(2)), S.bar(0))
 //   sfx.add(S.whoosh(0.6), cutTime - 0.6 * 0.7)   // whoosh peaks at 70 % of its length
+//   S.steps('x..x..x.') / S.swing(n, 1/3) / S.humanize(t)   rhythm helpers; S.space({ room, damp }) sets the reverb
+//   mallet / organ / vox / shaker / rim / cowbell / ambience   more instrument families; bus { crush, wow } for lo-fi
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 
@@ -31,6 +33,9 @@ const CHORDS = {
   maj: [0, 4, 7], min: [0, 3, 7], sus2: [0, 2, 7], sus4: [0, 5, 7], dim: [0, 3, 6], aug: [0, 4, 8], '5': [0, 7, 12],
   maj7: [0, 4, 7, 11], min7: [0, 3, 7, 10], '7': [0, 4, 7, 10], m9: [0, 3, 7, 10, 14], maj9: [0, 4, 7, 11, 14],
   add9: [0, 4, 7, 14], madd9: [0, 3, 7, 14], min11: [0, 3, 7, 10, 14, 17],
+  '6': [0, 4, 7, 9], m6: [0, 3, 7, 9], '9': [0, 4, 7, 10, 14], '7b9': [0, 4, 7, 10, 13], '7sus4': [0, 5, 7, 10],
+  m7b5: [0, 3, 6, 10], dim7: [0, 3, 6, 9], 'maj7#11': [0, 4, 7, 11, 18],
+  quartal: [0, 5, 10], quartal4: [0, 5, 10, 15], cluster: [0, 1, 2],
 };
 export function chord(root, quality = 'maj', inversion = 0) {
   const ivs = CHORDS[quality]; if (!ivs) throw new Error(`unknown chord quality ${quality}; use ${Object.keys(CHORDS).join(', ')}`);
@@ -38,10 +43,16 @@ export function chord(root, quality = 'maj', inversion = 0) {
   for (let k = 0; k < inversion; k++) notes.push(notes.shift() + 12);
   return notes;
 }
-const SCALES = { major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10], dorian: [0, 2, 3, 5, 7, 9, 10], phrygian: [0, 1, 3, 5, 7, 8, 10], lydian: [0, 2, 4, 6, 7, 9, 11], mixolydian: [0, 2, 4, 5, 7, 9, 10], penta: [0, 2, 4, 7, 9], minpenta: [0, 3, 5, 7, 10] };
+const SCALES = {
+  major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10], dorian: [0, 2, 3, 5, 7, 9, 10], phrygian: [0, 1, 3, 5, 7, 8, 10], lydian: [0, 2, 4, 6, 7, 9, 11], mixolydian: [0, 2, 4, 5, 7, 9, 10], locrian: [0, 1, 3, 5, 6, 8, 10],
+  harmonic: [0, 2, 3, 5, 7, 8, 11], melodic: [0, 2, 3, 5, 7, 9, 11], hijaz: [0, 1, 4, 5, 7, 8, 10], wholetone: [0, 2, 4, 6, 8, 10], blues: [0, 3, 5, 6, 7, 10],
+  penta: [0, 2, 4, 7, 9], minpenta: [0, 3, 5, 7, 10], hirajoshi: [0, 2, 3, 7, 8], insen: [0, 1, 5, 7, 10],
+  // Chinese pentatonic modes (宫 商 角 徵 羽): gong = penta, yu = minpenta
+  gong: [0, 2, 4, 7, 9], shang: [0, 2, 5, 7, 10], jue: [0, 3, 5, 8, 10], zhi: [0, 2, 5, 7, 9], yu: [0, 3, 5, 7, 10],
+};
 // degree → MIDI note in a scale (degree may be negative or exceed 7)
 export function scale(root, name = 'minor') {
-  const s = SCALES[name]; if (!s) throw new Error(`unknown scale ${name}`);
+  const s = SCALES[name]; if (!s) throw new Error(`unknown scale ${name}; use ${Object.keys(SCALES).join(', ')}`);
   return deg => { const o = Math.floor(deg / s.length); return midi(root) + 12 * o + s[((deg % s.length) + s.length) % s.length]; };
 }
 
@@ -151,6 +162,23 @@ export function tom(note = 'A2', { decay = 0.35 } = {}) {
   const f = hz(note), len = N(decay * 3), b = osc(len, i => f * (1 + 0.6 * Math.exp(-i / SR / 0.03)));
   return fade(mul(b, expEnv(len, decay)), 0.0005, 0.02);
 }
+// shaker: soft-attack high noise (shakers swell for a few ms instead of clicking)
+export function shaker({ decay = 0.06, attack = 0.008, tone = 1, seed = 15 } = {}) {
+  const len = N(attack + decay * 3), b = bandpass(highpass(noise(len / SR, seed), 4000 * tone), 7500 * tone, 0.7);
+  return fade(mul(b, expEnv(len, decay, attack)), 0.0005, 0.01);
+}
+// side-stick / rim: a woody knock, much shorter and drier than a snare
+export function rim({ tone = 1, decay = 0.018, seed = 17 } = {}) {
+  const len = N(decay * 4 + 0.005), b = mul(osc(len, 1750 * tone, 'tri'), expEnv(len, decay, 0.0002));
+  addInto(b, mul(bandpass(noise(len / SR, seed), 3200 * tone, 1.4), expEnv(len, decay * 0.5, 0.0002)), 0, 1.2);
+  return fade(b, 0.0002, 0.005);
+}
+// 808-style cowbell: two detuned squares through a band-pass
+export function cowbell({ tone = 1, decay = 0.22 } = {}) {
+  const len = N(decay * 3), b = osc(len, 540 * tone, 'square'); addInto(b, osc(len, 800 * tone, 'square'), 0, 1);
+  const e = new Float32Array(len); for (let i = 0; i < len; i++) { const t = i / SR; e[i] = Math.min(1, t / 0.0005) * (0.65 * Math.exp(-t / 0.015) + 0.35 * Math.exp(-t / decay)); }
+  return fade(mul(bandpass(b, 2600 * tone, 1.1), e).map(v => v * 0.8), 0.0003, 0.01);
+}
 
 // ───────────────────────────── tonal voices ─────────────────────────────
 export function bass(note, dur, { wave = 'saw', cutoff = 600, q = 1.2, envAmt = 3, envDecay = 0.16, drive: dr = 0.45, sub = 0.6, glideFrom, glide = 0.06, release = 0.04 } = {}) {
@@ -210,6 +238,58 @@ export function lead(note, dur, { wave = 'saw', cutoff = 3200, q = 0.9, vibrato 
   const fr = c => i => { const t = i / SR, base = f + (f0 - f) * Math.exp(-t / glide), vib = vibrato * Math.min(1, Math.max(0, (t - 0.2) / 0.3)) * Math.sin(TAU * rate * t); return base * Math.pow(2, (vib + c / 100) / 12); };
   const b = osc(len, fr(detune / 2), wave); addInto(b, osc(len, fr(-detune / 2), wave, 0.37), 0, 1);
   return mul(biquad(mul(b, 0.5), 'lowpass', cutoff, q), adsr(len, 0.01, 0.15, 0.8, release, dur));
+}
+// struck bars and tines by modal synthesis: each material is a set of [frequency ratio, level, decay scale] partials
+const MALLETS = {
+  marimba: { decay: 0.5, strike: 0.25, partials: [[1, 1, 1], [3.99, 0.35, 0.25], [10.65, 0.12, 0.08]] },
+  xylo: { decay: 0.28, strike: 0.4, partials: [[1, 1, 1], [3, 0.5, 0.45], [6, 0.2, 0.2]] },
+  vibes: { decay: 1.6, strike: 0.15, trem: 5.5, partials: [[1, 1, 1], [4, 0.3, 0.35], [10.2, 0.08, 0.12]] },
+  glock: { decay: 1.3, strike: 0.2, partials: [[1, 1, 1], [2.76, 0.45, 0.5], [5.4, 0.25, 0.3], [8.93, 0.12, 0.18]] },
+  kalimba: { decay: 0.9, strike: 0.3, partials: [[1, 1, 1], [6.27, 0.22, 0.12], [17.55, 0.06, 0.04]] },
+  steel: { decay: 0.9, strike: 0.2, partials: [[1, 1, 1], [2, 0.55, 0.7], [3, 0.3, 0.5], [4.02, 0.16, 0.35]] },
+  wood: { decay: 0.06, strike: 0.6, partials: [[1, 1, 1], [2.63, 0.45, 0.6], [4.4, 0.2, 0.4]] },
+};
+export function mallet(note, dur = 1.2, { material = 'marimba', decay, bright = 0.5, seed = 101 } = {}) {
+  const m = MALLETS[material]; if (!m) throw new Error(`unknown mallet material ${material}; use ${Object.keys(MALLETS).join(', ')}`);
+  const f = hz(note), D = decay ?? m.decay, len = N(dur), out = new Float32Array(len), r = rng(seed);
+  for (const [ratio, level, ds] of m.partials) {
+    const fr = f * ratio; if (fr > SR * 0.45) continue;
+    addInto(out, mul(osc(len, fr, 'sine', r()), expEnv(len, D * ds, 0.0008)), 0, ratio === 1 ? level : level * (0.4 + 1.2 * bright));
+  }
+  if (m.strike) { const s = N(0.02); addInto(out, mul(bandpass(noise(0.02, seed), Math.min(f * 4, 9000), 1.5), expEnv(s, 0.004, 0.0003)), 0, m.strike * bright * 2); }
+  if (m.trem) for (let i = 0; i < len; i++) out[i] *= 1 - 0.35 * (0.5 + 0.5 * Math.sin(TAU * m.trem * i / SR));
+  return fade(peakNorm(out, 0.8), 0.0003, Math.min(0.05, dur / 4));
+}
+// tonewheel organ: drawbars as a 9-digit string (16' 5⅓' 8' 4' 2⅔' 2' 1⅗' 1⅓' 1'), key click, leslie as a rotating pan; returns {L, R}
+export function organ(notes, dur, { drawbars = '888000000', click = 0.3, leslie = 0.4, rate = 6.2, release = 0.06, seed = 111 } = {}) {
+  notes = (Array.isArray(notes) ? notes : [notes]).map(midi);
+  const RATIO = [0.5, 1.5, 1, 2, 3, 4, 5, 6, 8], lv = String(drawbars).padEnd(9, '0').slice(0, 9).split('').map(d => (+d || 0) / 8);
+  const len = N(dur + release), b = new Float32Array(len), r = rng(seed), norm = 0.6 / Math.max(0.5, lv.reduce((s, v) => s + v, 0)) / Math.sqrt(notes.length);
+  for (const n of notes) RATIO.forEach((ratio, k) => { const fr = hz(n) * ratio; if (lv[k] && fr < SR * 0.45) addInto(b, osc(len, fr, 'sine', r()), 0, lv[k] * norm); });
+  mul(b, adsr(len, 0.004, 0.01, 1, release, dur));
+  if (click) addInto(b, mul(highpass(noise(0.01, seed), 1800), expEnv(N(0.01), 0.002, 0.0002)), 0, click * 0.5);
+  const L = new Float32Array(len), R = new Float32Array(len);
+  for (let i = 0; i < len; i++) { const s = Math.sin(TAU * rate * i / SR); L[i] = b[i] * (1 - leslie * 0.5 * (1 + s)); R[i] = b[i] * (1 - leslie * 0.5 * (1 - s)); }
+  return { L, R };
+}
+// formant "choir": detuned saws through three vowel formants, with vibrato and breath; returns {L, R}
+const VOWELS = { a: [[800, 1], [1150, 0.5], [2900, 0.25]], e: [[400, 1], [1700, 0.35], [2600, 0.25]], i: [[300, 1], [2300, 0.3], [3000, 0.2]], o: [[450, 1], [800, 0.45], [2830, 0.15]], u: [[325, 1], [700, 0.3], [2530, 0.1]] };
+export function vox(notes, dur, { vowel = 'a', voices = 3, cents = 12, attack = 0.35, release = 0.8, vibrato = 0.1, breath = 0.12, seed = 121 } = {}) {
+  const F = VOWELS[vowel]; if (!F) throw new Error(`unknown vowel ${vowel}; use ${Object.keys(VOWELS).join(', ')}`);
+  notes = (Array.isArray(notes) ? notes : [notes]).map(midi);
+  const len = N(dur + release), sL = new Float32Array(len), sR = new Float32Array(len), r = rng(seed);
+  for (const n of notes) for (let v = 0; v < voices; v++) {
+    const det = voices > 1 ? (v / (voices - 1) - 0.5) * 2 * cents : 0, f = hz(n) * Math.pow(2, det / 1200), ph = r() * TAU, rt = 4.6 + r() * 1.2;
+    const o = osc(len, i => f * Math.pow(2, vibrato * Math.min(1, i / SR / 0.6) * Math.sin(rt * TAU * i / SR + ph) / 12), 'saw', r());
+    const p = voices > 1 ? v / (voices - 1) : 0.5; addInto(sL, o, 0, Math.cos(p * Math.PI / 2)); addInto(sR, o, 0, Math.sin(p * Math.PI / 2));
+  }
+  if (breath) { addInto(sL, noise(len / SR, seed), 0, breath); addInto(sR, noise(len / SR, seed + 1), 0, breath); }
+  const env = adsr(len, attack, 0.2, 0.9, release, dur);
+  const shape = x => { const y = new Float32Array(len); for (const [fc, a] of F) addInto(y, bandpass(x, fc, fc / 90), 0, a); return mul(y, env); };
+  const L = shape(sL), R = shape(sR), G = Math.min(len, N(dur));
+  let e = 0; for (let i = 0; i < G; i++) e += L[i] * L[i] + R[i] * R[i];
+  const g = e > 0 ? 0.25 / Math.sqrt(e / (2 * G)) : 1;                  // same loudness whatever the vowel / voicing
+  return { L: mul(L, g), R: mul(R, g) };
 }
 
 // ───────────────────────────── sound design ─────────────────────────────
@@ -278,6 +358,29 @@ export function shimmer(dur = 1.5, { root = 'E6', seed = 91, count = 9 } = {}) {
   }
   return b;
 }
+// a bed of place / medium: tape hiss, vinyl crackle, wind, rain, room tone; returns {L, R}
+export function ambience(dur, { kind = 'tape', amount = 1, seed = 131 } = {}) {
+  const len = N(dur), side = s => {
+    const r = rng(s), nz = noise(dur, s);
+    switch (kind) {
+      case 'tape': { const h = lowpass(highpass(nz, 2500), 12000); for (let i = 0; i < len; i++) h[i] *= 0.3 * (1 + 0.15 * Math.sin(TAU * 0.7 * i / SR)); return h; }
+      case 'vinyl': {
+        const b = mul(lowpass(highpass(nz, 3000), 9000), 0.06), c = new Float32Array(len);
+        for (let i = 0; i < len; i++) if (r() < 18 / SR) { const a = (0.3 + r() * 0.7) * (r() < 0.5 ? -1 : 1); for (let k = 0; k < 24 && i + k < len; k++) c[i + k] += a * Math.exp(-k / 4); }
+        addInto(b, highpass(c, 900), 0, 0.9); addInto(b, lowpass(noise(dur, s + 7), 45), 0, 0.5); return b;
+      }
+      case 'wind': { const p = [r(), r(), r()].map(v => v * TAU); return biquad(nz, 'bandpass', i => { const t = i / SR; return 500 * Math.pow(2, 0.9 * Math.sin(0.13 * TAU * t + p[0]) + 0.5 * Math.sin(0.31 * TAU * t + p[1])); }, 1.1).map((v, i) => v * 0.85 * (0.6 + 0.4 * Math.sin(0.09 * TAU * i / SR + p[2]))); }
+      case 'rain': {
+        const b = mul(lowpass(highpass(nz, 600), 7000), 0.25), d = new Float32Array(len);
+        for (let i = 0; i < len; i++) if (r() < 400 / SR) { const a = (0.2 + r() * 0.8) * (r() < 0.5 ? -1 : 1); for (let k = 0; k < 60 && i + k < len; k++) d[i + k] += a * Math.exp(-k / 9); }
+        addInto(b, bandpass(d, 3500, 0.8), 0, 0.8); return b;
+      }
+      case 'room': { const b = lowpass(nz, 350); addInto(b, highpass(noise(dur, s + 3), 6000), 0, 0.03); return mul(b, 1.3); }
+      default: throw new Error(`unknown ambience ${kind}; use tape, vinyl, wind, rain, room`);
+    }
+  };
+  return { L: fade(mul(side(seed), amount), 0.3, 0.3), R: fade(mul(side(seed + 1000), amount), 0.3, 0.3) };
+}
 
 // ─────────────────────────────── effects ───────────────────────────────
 // Freeverb-style stereo reverb. in: {L,R}; returns wet {L,R}
@@ -304,6 +407,23 @@ export function pingpong({ L, R }, { time = 0.25, feedback = 0.38, tone = 4500 }
   for (let i = 0; i < L.length; i++) {
     const yL = bL[idx], yR = bR[idx]; lpL = (1 - a) * yL + a * lpL; lpR = (1 - a) * yR + a * lpR;
     oL[i] = yL; oR[i] = yR; bL[idx] = (L[i] + R[i]) * 0.5 + lpR * feedback; bR[idx] = lpL * feedback; idx = (idx + 1) % d;
+  }
+  return { L: oL, R: oR };
+}
+// bit-crush (in place): quantise to `bits`, optionally sample-and-hold down to `rate` Hz
+export function crush(b, bits = 8, rate = SR) {
+  const q = Math.pow(2, Math.max(1, bits) - 1), hold = Math.max(1, SR / Math.min(SR, rate));
+  let v = 0, next = 0;
+  for (let i = 0; i < b.length; i++) { if (i >= next) { v = Math.round(b[i] * q) / q; next += hold; } b[i] = v; }
+  return b;
+}
+// tape wow (slow) + flutter (fast) as a modulated read position centred on "now" (offline, so no added latency);
+// amt 0–1, applied identically to both channels
+export function wow({ L, R }, amt = 0.5, { seed = 141 } = {}) {
+  const r = rng(seed), p1 = r() * TAU, p2 = r() * TAU, n = L.length, oL = new Float32Array(n), oR = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const t = i / SR, d = amt * SR * (0.0028 * Math.sin(TAU * 0.55 * t + p1) + 0.00025 * Math.sin(TAU * 6.8 * t + p2)), x = i - d, k = Math.floor(x), f = x - k;
+    if (k >= 0 && k + 1 < n) { oL[i] = L[k] * (1 - f) + L[k + 1] * f; oR[i] = R[k] * (1 - f) + R[k + 1] * f; }
   }
   return { L: oL, R: oR };
 }
@@ -377,20 +497,37 @@ export function loadAudio(file, channels = 2) {
 }
 
 // ─────────────────────────────── session ───────────────────────────────
-const VOICES = { kick, snare, clap, hat, crash, tom, bass, sub, pad, pluck, keys, bell, lead, riser, downlifter, whoosh, impact, boom, reverseCymbal, click, tick, pop, blip, swipe, glitch, shimmer };
-const FX = { noise, osc, adsr, expEnv, mul, drive, reverse, fade, peakNorm, biquad, lowpass, highpass, bandpass, midi, hz, chord, scale, rng };
+const VOICES = { kick, snare, clap, hat, crash, tom, shaker, rim, cowbell, bass, sub, pad, pluck, keys, bell, lead, mallet, organ, vox, riser, downlifter, whoosh, impact, boom, reverseCymbal, click, tick, pop, blip, swipe, glitch, shimmer, ambience };
+const FX = { noise, osc, adsr, expEnv, mul, drive, reverse, fade, peakNorm, biquad, lowpass, highpass, bandpass, crush, midi, hz, chord, scale, rng };
+
+// step pattern → beat positions: 'x..x..x.' with `step` beats per character ('x' / 'X' = hit, anything else = rest, spaces ignored)
+export function steps(pattern, step = 0.25, from = 0) {
+  const out = []; let k = 0;
+  for (const c of String(pattern)) { if (c === ' ' || c === '|') continue; if (c === 'x' || c === 'X') out.push(from + k * step); k++; }
+  return out;
+}
 
 export function session({ dur }) {
   if (!(dur > 0)) throw new Error('session needs a positive duration (export const DUR from the score or pass --dur)');
-  const len = N(dur), buses = new Map(), ducks = [];
-  const S = { SR, dur, bpm: 120, offset: 0, bpb: 4, ...VOICES, ...FX };
+  const len = N(dur), buses = new Map(), ducks = [], space = { room: 0.84, damp: 0.3, width: 1 };
+  const S = { SR, dur, bpm: 120, offset: 0, bpb: 4, ...VOICES, ...FX, steps };
   S.tempo = (bpm, { offset = 0, beatsPerBar = 4 } = {}) => { Object.assign(S, { bpm, offset, bpb: beatsPerBar }); return S; };
   S.beat = n => S.offset + n * 60 / S.bpm;
   S.bar = n => S.beat(n * S.bpb);
+  // swing: beat position → seconds, with every second `grid` (in beats) pushed late by amount × grid (⅓ ≈ triplet feel)
+  S.swing = (n, amount = 1 / 3, grid = 0.5) => {
+    const pair = 2 * grid, k = Math.floor(n / pair), x = n - k * pair, m = grid * (1 + amount);
+    return S.beat(k * pair + (x < grid ? x * m / grid : m + (x - grid) * (pair - m) / grid));
+  };
+  // deterministic timing jitter (± ms), seeded by the time itself, for parts that should not sound quantised
+  S.humanize = (t, ms = 8, seed = 0) => t + (rng(Math.round(t * 1e4) * 31 + seed)() * 2 - 1) * ms / 1000;
+  // the character of the shared reverb: room 0.3 (small room) … 0.95 (huge hall), damp 0 (bright) … 0.9 (dark), width 0–1
+  S.space = (o = {}) => { Object.assign(space, o); space.room = Math.min(0.95, Math.max(0.1, space.room)); return S; };
   S.load = file => loadAudio(file);
   S.duck = (t, depth = 1) => { ducks.push([t, depth]); };
   // bus options: gain, pan, reverb (send 0–1), delay (send 0–1), delayTime (s), duck (0–1 sidechain depth),
-  //              duckRelease (s), lowpass, highpass (Hz), drive (0–1), width (0–1, 0 = mono)
+  //              duckRelease (s), lowpass, highpass (Hz), drive (0–1), crush (bits, 0 = off), crushRate (Hz),
+  //              wow (0–1 tape wow & flutter), width (0–1, 0 = mono)
   S.bus = (name, o = {}) => {
     if (buses.has(name)) return buses.get(name);
     const bus = { name, o: { gain: 1, pan: 0, reverb: 0, delay: 0, delayTime: 60 / S.bpm * 0.75, duck: 0, duckRelease: 0.2, width: 1, ...o }, L: new Float32Array(len), R: new Float32Array(len) };
@@ -411,6 +548,8 @@ export function session({ dur }) {
       if (o.highpass) { bl = highpass(bl, o.highpass); br = highpass(br, o.highpass); }
       if (o.lowpass) { bl = lowpass(bl, o.lowpass); br = lowpass(br, o.lowpass); }
       if (o.drive) { drive(bl, o.drive); drive(br, o.drive); }
+      if (o.crush) { crush(bl, o.crush, o.crushRate || SR); crush(br, o.crush, o.crushRate || SR); }
+      if (o.wow) ({ L: bl, R: br } = wow({ L: bl, R: br }, o.wow));
       if (o.width < 1) for (let i = 0; i < len; i++) { const m = (bl[i] + br[i]) / 2, s = (bl[i] - br[i]) / 2 * o.width; bl[i] = m + s; br[i] = m - s; }
       if (o.duck > 0 && ducks.length) {
         const env = new Float32Array(len), A = N(0.004);
@@ -423,7 +562,7 @@ export function session({ dur }) {
       }
       if (stems) writeWav(`${stems}/${bus.name}.wav`, bl.map(v => v * o.gain), br.map(v => v * o.gain));
     }
-    if (rvL.some(v => v !== 0)) { const w = reverb({ L: rvL, R: rvR }); addInto(L, w.L); addInto(R, w.R); }
+    if (rvL.some(v => v !== 0)) { const w = reverb({ L: rvL, R: rvR }, space); addInto(L, w.L); addInto(R, w.R); }
     if (dlL.some(v => v !== 0)) { const t = [...buses.values()].find(b => b.o.delay > 0)?.o.delayTime || 0.375; const w = pingpong({ L: dlL, R: dlR }, { time: t }); addInto(L, w.L); addInto(R, w.R); }
     return master(L, R, { target });
   };

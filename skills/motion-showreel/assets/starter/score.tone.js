@@ -2,6 +2,8 @@
 // Use it when the piece needs real instruments (sampled piano), convolution reverb or richer synths/effects.
 // Build: node <skill>/scripts/audio.mjs build score.tone.js      (first: node <skill>/scripts/audio.mjs samples salamander)
 // You get this file from `scaffold.sh --audio tone` (or `--audio layer`); build.sh builds whichever score its AUDIO= names.
+// The progression, groove and instruments below are placeholders that prove the pipeline: write the music from the
+// brief's sound direction (sound.md §2), not by editing these numbers.
 import { DUR, BPM, CUES, b } from './timeline.js';
 export { DUR };
 

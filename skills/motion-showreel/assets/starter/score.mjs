@@ -1,6 +1,8 @@
 // score.mjs — music + sound design from the same timeline as the picture.
 // Build: node <skill>/scripts/audio.mjs build score.mjs   →  audio/music.wav (−14 LUFS)
 // The session S has every instrument / effect of scripts/lib/synth.mjs (see references/sound.md).
+// This file only proves the pipeline. Its key, progression, four-on-the-floor groove, instruments and riser → impact arc
+// are placeholders: write the music from the brief's sound direction (sound.md §2), not by editing these numbers.
 import { DUR, BPM, CUES } from './timeline.js';
 export { DUR };
 

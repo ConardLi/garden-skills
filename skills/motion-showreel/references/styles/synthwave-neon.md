@@ -44,6 +44,8 @@ Canvas 2D（透视网格用投影公式画线）+ WebGL 后期做 bloom 和轻�
 ## 声音调色板
 合成波：门控的大混响军鼓（`snare` + reverb 0.5）、八分音符的锯齿贝斯（`bass` 带 glide）、宽锯齿铺底（`pad` voices 7、cents 20）、主旋律 `lead`（saw，带颤音）。BPM 90–118。第 1 档合成很合适。
 
+律动与和声（举例，不止这些）：四踩加门控军鼓是这个风格的签名，可以直接用；也可以换成 half-time 的慢速版或 shuffle 的 italo 味。小调、Dorian、♭VI – ♭VII – i；music bus 加一点 `wow`，像录像带里的音乐。
+
 ## 原生手法
 - 字从地平线升起并亮起霓虹：适合片头和 logo。
 - 太阳条纹随节拍开合：适合卡点。

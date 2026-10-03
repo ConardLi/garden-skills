@@ -190,7 +190,7 @@ async function check() {
     if (![breath, bar, hit].every(Number.isFinite)) continue;
     const dip = bar - breath, lift = hit - bar, f = v => (v >= 0 ? '+' : '') + v.toFixed(1);
     dropLines.push(`drop @${d.toFixed(2)}s: last ½ beat ${f(-dip)} dB vs the bar before · hit ${f(lift)} dB vs that bar`);
-    if (dip < 4) dropWarn.push(`no audible breath before the drop at ${d.toFixed(2)}s (last half-beat only ${dip.toFixed(1)} dB below the bar before): stop drums / pads there, keep at most a riser tail (sound.md §6)`);
+    if (dip < 4) dropWarn.push(`no audible breath before the drop at ${d.toFixed(2)}s (last half-beat only ${dip.toFixed(1)} dB below the bar before): stop drums / pads there, keep at most a riser tail (sound.md §8); if this piece does not use a drop arc, leave the hit out of DROPS`);
     if (lift < 1) dropWarn.push(`the drop at ${d.toFixed(2)}s does not land louder than the bar before it (${f(lift)} dB): thin the build-up or add weight on the hit`);
   }
 

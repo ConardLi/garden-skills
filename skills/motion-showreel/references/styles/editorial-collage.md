@@ -44,6 +44,8 @@ Canvas 2D。素材来自用户提供的照片或产品图（裁成不规则形�
 ## 声音调色板
 纸张拟音（`swipe` 加 `highpass`、`click` 做胶带撕扯声）、马克笔划线声（带通噪声）；音乐用轻快的鼓、拨弦、keys。第 1 档合成即可。
 
+律动与和声（举例，不止这些）：breakbeat、shuffle 或 tresillo，带一点手工的松（`S.swing`、`S.humanize`）；大调、Mixolydian、Dorian；`rim`、`shaker`、`cowbell` 做手工打击乐。小房间，不侧链。
+
 ## 原生手法
 - 撕开一张纸，后面就是下一镜：适合转场和揭示。
 - 纸片一层层盖上去，最后拼成一张完整的海报或 logo：适合结尾。
