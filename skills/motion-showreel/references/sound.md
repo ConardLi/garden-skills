@@ -15,7 +15,7 @@
 | 外部曲子 | 用户的音频文件 | `S.load()` | 真实制作的音乐（用户自己的、授权的、AI 音乐服务生成的） | 授权要用户负责；只能卡它的拍 |
 | 无声 | — | — | 循环动图、要放进别的片子里的素材 | — |
 
-两档可以叠：先 `audio.mjs build score.tone.js --raw --out audio/tone.wav` 得到一层没做母带的音乐，再在 `score.mjs` 里 `S.load('audio/tone.wav')` 放进一条 bus，叠上第 1 档的音效，最后统一做母带。`build.sh` 里设 `AUDIO=layer`（或 `scaffold.sh --audio layer`）就会按这个顺序自动构建。
+两档可以叠：先 `audio.mjs build score.tone.js --raw --out audio/tone.wav` 得到一层没做母带的音乐，再在 `score.mjs` 里 `S.load('audio/tone.wav')` 放进一条 bus，叠上第 1 档的音效，最后统一做母带。`scaffold.sh --audio layer` 会给出这样一份 `score.mjs`（第一行就加载 `audio/tone.wav`，后面只写音效），`build.sh` 的 `AUDIO=layer` 按这个顺序自动构建；`score.mjs` 里没有引用 `tone.wav` 时 build 会报错，免得 Tone 层渲出来却没混进去。
 
 `build.sh` 只构建 `AUDIO=` 指定的那份 score（synth / tone / layer / none），另一份文件存在时会提示它被忽略，不会悄悄换成别的配乐。
 

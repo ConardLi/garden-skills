@@ -6,6 +6,7 @@
 #   AUDIO       → synth: score.mjs · tone: score.tone.js · layer: score.tone.js (raw) loaded by score.mjs · none: silent
 #                 (anything but none also makes qa require an audio track)
 #   LOOP=1      → qa also checks the loop seam
+#   DETERMINISM → 1 (default): render.mjs --determinism must pass before the film is rendered; 0 skips it (quick iterations only)
 # Extra arguments go to render.mjs and are for quality only:  sh build.sh --subframes 2 --grain 4
 # Set FPS / SIZE as variables (FPS=60 sh build.sh), not as flags. To re-render one segment, call render.mjs --start/--duration.
 set -e
@@ -15,6 +16,7 @@ FPS=${FPS:-30}
 SIZE=${SIZE:-1920x1080}
 AUDIO=${AUDIO:-__AUDIO__}
 LOOP=${LOOP:-0}
+DETERMINISM=${DETERMINISM:-1}
 cd "$HERE"
 
 for a in "$@"; do case "$a" in
@@ -30,13 +32,17 @@ case "$AUDIO" in
   synth) need score.mjs; ignored score.tone.js; audio build score.mjs --out audio/music.wav ;;
   tone)  need score.tone.js; ignored score.mjs; audio build score.tone.js --out audio/music.wav ;;
   layer) need score.tone.js; need score.mjs
-         audio build score.tone.js --raw --out audio/tone.wav     # score.mjs loads it: S.load('audio/tone.wav')
+         grep -q "tone\.wav" score.mjs || { echo "✗ AUDIO=layer but score.mjs never loads audio/tone.wav: the Tone layer would be built and then dropped (see assets/starter/score.layer.mjs)"; exit 1; }
+         audio build score.tone.js --raw --out audio/tone.wav     # score.mjs loads it: S.load(<project>/audio/tone.wav)
          audio build score.mjs --out audio/music.wav ;;
   none)  ignored score.mjs; ignored score.tone.js ;;
   *) echo "✗ AUDIO must be synth | tone | layer | none (got '$AUDIO')"; exit 1 ;;
 esac
 
 if [ "$AUDIO" = none ]; then MUX=""; EXPECT_AUDIO=none; else MUX="--audio audio/music.wav"; EXPECT_AUDIO=required; fi
+# a film that cannot be re-rendered identically cannot be fixed segment by segment: refuse to publish it
+if [ "$DETERMINISM" = 1 ]; then node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --determinism
+else echo "! DETERMINISM=0: determinism not checked (fine for drafts, not for delivery)"; fi
 node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --out out/final.mp4 $MUX "$@"
 
 DUR=$(node --input-type=module -e 'import { pathToFileURL } from "node:url"; const m = await import(pathToFileURL(process.argv[1]).href); console.log(m.DUR ?? "")' "$HERE/timeline.js" 2>/dev/null || true)

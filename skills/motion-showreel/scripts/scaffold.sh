@@ -3,7 +3,7 @@
 #   sh scaffold.sh <project-dir> [--audio synth|tone|layer|none]
 #     synth (default)  score.mjs       tier 1: built-in synth (electronic, UI, retro, abstract)
 #     tone             score.tone.js   tier 2: Tone.js offline (sampled piano, convolution reverb, cinematic)
-#     layer            both            tier 2 music rendered raw, loaded by score.mjs for SFX on top (references/sound.md §1)
+#     layer            both            tier 2 music rendered raw to audio/tone.wav; score.mjs loads it and adds SFX on top (sound.md §1)
 #     none             no score        silent piece (loops, footage for another edit)
 # Gives you: index.html (render(t) page) · motion.js (helpers) · timeline.js (shared clock) · the score file(s) above ·
 #            build.sh (one-command rebuild + technical checks, AUDIO preset to your choice) · package.json (ESM)
@@ -26,7 +26,7 @@ cp "$ST/index.html" "$ST/motion.js" "$ST/timeline.js" "$ST/package.json" "$DEST/
 case "$AUDIO" in
   synth) cp "$ST/score.mjs" "$DEST/" ;;
   tone)  cp "$ST/score.tone.js" "$DEST/" ;;
-  layer) cp "$ST/score.mjs" "$ST/score.tone.js" "$DEST/" ;;
+  layer) cp "$ST/score.tone.js" "$DEST/"; cp "$ST/score.layer.mjs" "$DEST/score.mjs" ;;   # score.mjs loads audio/tone.wav + adds SFX
 esac
 sed -e "s#__SKILL_DIR__#$SKILL#" -e "s#__AUDIO__#$AUDIO#" "$ST/build.sh" > "$DEST/build.sh"
 chmod +x "$DEST/build.sh"

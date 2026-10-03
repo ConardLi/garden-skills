@@ -176,7 +176,7 @@ const th = TAU * (t % DUR) / DUR;                          // 所有运动都写
 const x = Math.cos(th * 2 + i * 0.3) * R;                  // 整数倍频率 → 首尾天然衔接
 const n = noise2(Math.cos(th) * 1.5 + 10, Math.sin(th) * 1.5 + 10, i);   // 在圆上采样噪声 = 周期噪声
 ```
-用 `inspect.mjs loop out/final.mp4` 看首尾帧的相似度（SSIM > 0.97），再连播两遍看接缝。
+用 `inspect.mjs loop out/final.mp4` 看接缝：它比较「最后一帧 → 第一帧」这一步和两侧普通帧间步的相似度（不是要求首尾帧完全一样：`render(DUR) = render(0)`，最后一帧比第一帧早一帧）。再连播两遍看接缝。
 
 ## 12. WebGL 后期（CRT / 色差 / 暗角 / 半调都在这一层）
 

@@ -125,7 +125,7 @@ Reel Read:
 2. 逐个镜头做。每个镜头渲开头、中段、结尾 3 张静帧；快速动作用 `inspect.mjs strip` 看连续帧。
 3. 跑确定性检查 `render.mjs <slug> --determinism`，不通过就先修。
 4. 片长 30 秒以上或渲染慢的，先出低清小样：`--size 960x540 --out out/proxy.mp4`。
-5. 出正片：先在 `build.sh` 顶部按 brief 设好 `FPS`、`SIZE`、`AUDIO`、`LOOP`，再 `sh <slug>/build.sh`。它会构建配乐、渲染，并带着同一份规格跑技术检查（时长取 `timeline.js` 的 `DUR`）。`--subframes`、`--dpr`、`--grain` 作为参数加在后面，按风格需要加。这些参数都会成倍增加耗时，开渲前先报预计时间。
+5. 出正片：先在 `build.sh` 顶部按 brief 设好 `FPS`、`SIZE`、`AUDIO`、`LOOP`，再 `sh <slug>/build.sh`。它会构建配乐，先跑确定性检查（不过不出片），再渲染，并带着同一份规格跑技术检查（时长取 `timeline.js` 的 `DUR`）。`--subframes`、`--dpr`、`--grain` 作为参数加在后面，按风格需要加。这些参数都会成倍增加耗时，开渲前先报预计时间。
 
 **硬规则**：
 - 画面只由 t 决定：不用 `Math.random`、`Date.now`、rAF、定时器、CSS 动画，帧和帧之间不保存状态。

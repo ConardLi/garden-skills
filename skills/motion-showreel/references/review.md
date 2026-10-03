@@ -18,7 +18,7 @@
 node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
   --expect-size 1920x1080 --expect-fps 30 --expect-duration 16 \
   --audio required          # 有声片；无声片用 --audio none
-  # 循环片再加 --loop（首尾帧 SSIM 必须 > 0.97）
+  # 循环片再加 --loop（接缝那一步要和普通帧间的一步一样平滑）
 ```
 
 | 检查 | FAIL 条件 |
@@ -29,11 +29,13 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 音轨 | `required` 时没有音轨，或者 `none` 时却有音轨 |
 | 黑帧 | 出现任何黑帧段 |
 | 响度 / 真峰值（有音轨时） | 超出 −14 ± 1.5 LUFS，或真峰值 > −1 dBTP |
-| 循环接缝（`--loop`） | 首尾帧 SSIM ≤ 0.97 |
+| 循环接缝（`--loop`） | 最后一帧 → 第一帧的 SSIM 比它两侧的普通帧间步（倒数第二 → 最后、第一 → 第二）低 0.03 以上，且低于 0.97。最后一帧本来就比第一帧早一帧，所以快速运动的循环首尾帧不会完全一样，比较的是「这一步跳没跳」 |
 
 没传的规格项（尺寸、帧率、时长、音轨）会列成 `NOT CHECKED`，结尾也不会说「全部通过」。这时不算验收，要按 brief 的规格重跑。`sh build.sh` 会用顶部的 `FPS / SIZE / AUDIO / LOOP` 和 `timeline.js` 的 `DUR` 自动带齐。
 
-另外：`render.mjs` 发现帧数不对、页面报错、编码器退出时，会直接失败，不留下任何输出；`--determinism` 必须通过。
+参数写错（比如 `--audio requried`、`--expect-size 1920*1080`）会直接报错退出，不会悄悄跳过那一项检查。
+
+另外：`render.mjs` 发现帧数不对、页面报错、编码器退出时，会直接失败，不留下任何输出；`--determinism` 必须通过。`build.sh` 在出片之前自动跑一次（`DETERMINISM=0` 只在草稿时跳过）。
 
 ## 2. 审片
 

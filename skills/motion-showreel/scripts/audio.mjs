@@ -145,13 +145,20 @@ async function beats() {
 
 async function check() {
   const file = pos[1]; if (!file || !fs.existsSync(file)) die('usage: audio.mjs check <file>');
+  if (opt.drops !== undefined && (opt.drops === true || String(opt.drops).split(',').some(v => v.trim() === '' || !Number.isFinite(+v)))) die(`bad --drops ${opt.drops === true ? '(no value)' : opt.drops}: comma-separated seconds, e.g. --drops 12,24.5`);
   const prefix = path.resolve(typeof opt.out === 'string' ? opt.out : path.join(path.dirname(path.resolve(file)), '..', 'qa', 'audio'));
-  fs.mkdirSync(path.dirname(prefix), { recursive: true });
+  try { fs.mkdirSync(path.dirname(prefix), { recursive: true }); } catch (e) { die(`cannot create ${path.dirname(prefix)}: ${e.code || e.message}`); }
   const st = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', file, '-af', 'ebur128=peak=true', '-f', 'null', '-'], { encoding: 'utf8' }).stderr;
   const sum = st.slice(st.lastIndexOf('Summary:'));
   const I = +(/I:\s+(-?[\d.]+) LUFS/.exec(sum)?.[1]), LRA = +(/LRA:\s+(-?[\d.]+) LU/.exec(sum)?.[1]), TP = +(/Peak:\s+(-?[\d.inf]+) dBFS/.exec(sum)?.[1]);
-  spawnSync('ffmpeg', ['-v', 'error', '-y', '-i', file, '-filter_complex', 'showwavespic=s=1600x320:split_channels=1:colors=0x4fd1c5|0xf6ad55', '-frames:v', '1', `${prefix}-wave.png`]);
-  spawnSync('ffmpeg', ['-v', 'error', '-y', '-i', file, '-lavfi', 'showspectrumpic=s=1600x520:legend=1:scale=log', `${prefix}-spectrum.png`]);
+  // the pictures are the only way to "listen": an image that was not written is an error, not a path to print
+  const picture = (argv, png) => {
+    fs.rmSync(png, { force: true });                       // a stale image from an earlier run must not pass for this one
+    const r = spawnSync('ffmpeg', ['-v', 'error', '-y', '-i', file, ...argv, png], { encoding: 'utf8' });
+    if (r.status !== 0 || !fs.existsSync(png) || fs.statSync(png).size === 0) die(`could not write ${png}${r.stderr ? ': ' + r.stderr.trim().split('\n').pop() : ''}`);
+  };
+  picture(['-filter_complex', 'showwavespic=s=1600x320:split_channels=1:colors=0x4fd1c5|0xf6ad55', '-frames:v', '1'], `${prefix}-wave.png`);
+  picture(['-lavfi', 'showspectrumpic=s=1600x520:legend=1:scale=log'], `${prefix}-spectrum.png`);
   const { L, R } = loadAudio(file), n = L.length, dur = n / SR;
   const mono = new Float32Array(n); let clip = 0;
   for (let i = 0; i < n; i++) { mono[i] = (L[i] + R[i]) / 2; if (Math.abs(L[i]) >= 0.999 || Math.abs(R[i]) >= 0.999) clip++; }

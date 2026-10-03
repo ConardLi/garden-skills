@@ -74,14 +74,22 @@ async function frames() {
   const ts = pos.slice(2).map(Number); if (!ts.length) die('frames needs seconds, e.g. frames out/video.mp4 1.5 4');
   for (const t of ts) console.log(ffOut(['-ss', String(inRange(t, 'time')), '-i', video, '-frames:v', '1'], `${outPrefix}-t${t.toFixed(2)}.png`));
 }
+// A loop's last frame is one frame step BEFORE the first (render(DUR) = render(0)), so first vs last differ by one step
+// of motion: comparing that to a fixed threshold fails every loop with fast full-frame motion. Instead, the seam step
+// (last → first) must look like the ordinary steps on either side of it (last-1 → last, first → second).
+const ssimOf = (a, b) => { const r = spawnSync('ffmpeg', ['-hide_banner', '-i', a, '-i', b, '-lavfi', 'ssim', '-f', 'null', '-'], { encoding: 'utf8' }).stderr; return +(/All:(-?[\d.]+)/.exec(r)?.[1] ?? NaN); };   // SSIM goes negative for inverted images: keep the sign
 async function loop() {
-  const a = ffOut(['-i', video, '-frames:v', '1'], `${outPrefix}-first.png`);
-  const b = ffOut(['-sseof', String(-Math.max(1.5 / info.fps, 0.05)), '-i', video, '-update', '1', '-frames:v', '1'], `${outPrefix}-last.png`);
-  const r = spawnSync('ffmpeg', ['-hide_banner', '-i', a, '-i', b, '-lavfi', 'ssim', '-f', 'null', '-'], { encoding: 'utf8' }).stderr;
-  const ssim = +(/All:([\d.]+)/.exec(r)?.[1] ?? NaN);
+  const n = info.frames; if (n < 4) die(`loop check needs at least 4 frames (got ${n})`);
+  const frame = (k, name) => ffOut(['-i', video, '-vf', `select=eq(n\\,${k})`, '-frames:v', '1'], `${outPrefix}-${name}.png`);
+  const first = frame(0, 'first'), second = frame(1, 'second'), prev = frame(n - 2, 'before-last'), last = frame(n - 1, 'last');
+  const seam = ssimOf(last, first), steps = [ssimOf(prev, last), ssimOf(first, second)];
+  if (![seam, ...steps].every(Number.isFinite)) die('could not measure SSIM between the loop frames');
+  const ref = Math.min(...steps);
+  // seamless = as similar as a normal step (small tolerance for encoder noise), or near-identical outright
+  const ok = seam > 0.97 || seam >= ref - 0.03;
   const twice = ffOut(['-stream_loop', '1', '-i', video, '-c', 'copy'], `${outPrefix}-loop2x.mp4`);
-  console.log(`loop seam: first vs last frame SSIM ${ssim.toFixed(4)} ${ssim > 0.97 ? '(seamless)' : '(visible jump)'} · watch ${twice}`);
-  return ssim;
+  console.log(`loop seam: last→first SSIM ${seam.toFixed(4)} vs ordinary frame steps ${steps.map(s => s.toFixed(4)).join(' / ')} ${ok ? '(seamless)' : '(visible jump)'} · watch ${twice}`);
+  return { ok, seam, ref };
 }
 function detect() {
   const freezeMin = +(opt.freeze || 0.8);
@@ -132,6 +140,10 @@ function loudness(file) {
 }
 
 async function qa() {
+  // a typo in the spec must not silently switch a check off
+  if (opt.audio !== undefined && !['required', 'none', 'any'].includes(opt.audio)) die(`bad --audio ${opt.audio === true ? '(no value)' : opt.audio}: use required | none | any`);
+  if (opt['expect-size'] !== undefined && !/^\d+x\d+$/.test(String(opt['expect-size']))) die(`bad --expect-size ${opt['expect-size']}: use WxH, e.g. 1920x1080`);
+  for (const k of ['expect-fps', 'expect-duration']) if (opt[k] !== undefined && !(+opt[k] > 0)) die(`bad --${k} ${opt[k]}: needs a positive number`);
   const checks = [];   // [ok, label, detail]
   const check = (ok, label, detail) => checks.push([ok, label, detail]);
   check(info.dur > 0 && info.frames > 0, 'file decodes', `${info.frames} frames, ${info.dur.toFixed(2)}s`);
@@ -149,8 +161,7 @@ async function qa() {
     check(I > -15.5 && I < -12.5, 'loudness −14 ± 1.5 LUFS', `${I} LUFS`);
     check(TP <= -1, 'true peak ≤ −1 dBTP', `${TP} dBTP`);
   }
-  let seam = null;
-  if (opt.loop) { seam = await loop(); check(seam > 0.97, 'loop seam (first ≈ last frame)', `SSIM ${seam.toFixed(4)}`); }
+  if (opt.loop) { const s = await loop(); check(s.ok, 'loop seam (last→first is an ordinary frame step)', `SSIM ${s.seam.toFixed(4)} vs ordinary steps ≥ ${s.ref.toFixed(4)}`); }
 
   // what the brief's spec would have checked but nobody asked for: say so, never call that "all passed"
   const unchecked = [['expect-size', 'size'], ['expect-fps', 'fps'], ['expect-duration', 'duration'], ['audio', 'audio track']].filter(([k]) => !opt[k]).map(([, l]) => l);
@@ -170,6 +181,7 @@ async function qa() {
   if (info.audio) {
     const r = spawnSync(process.execPath, [fileURLToPath(new URL('./audio.mjs', import.meta.url)), 'check', video, '--out', `${outPrefix}-audio`, ...(opt.timeline ? ['--timeline', String(opt.timeline)] : [])], { encoding: 'utf8' });
     process.stdout.write((r.stdout + r.stderr).split('\n').map(l => '  ' + l).join('\n') + '\n');
+    if (r.status !== 0) console.log('  ! the audio review material is incomplete (audio check failed above); loudness / peak checks were measured separately');
   }
   const failed = checks.filter(c => !c[0]).length;
   if (failed) console.log(`\n${failed} technical check(s) FAILED: fix before delivery.`);

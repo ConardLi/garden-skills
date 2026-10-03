@@ -254,6 +254,79 @@ test('build.sh: renders, builds the chosen score, and runs qa with the full spec
   assert.match(flag.stdout, /FPS \/ SIZE are variables here/);
 });
 
+// ── strict inputs, honest outputs ──
+test('inspect qa: a typo in the spec is an error, not a silently skipped check', () => {
+  for (const bad of [['--audio', 'requried'], ['--audio'], ['--expect-size', '1920*1080'], ['--expect-fps', 'thirty']]) {
+    const r = node('inspect.mjs', ['qa', tailFreeze, '--out', path.join(tmp, 'qa-bad'), ...bad]);
+    assert.equal(r.status, 1, `${bad.join(' ')} should fail`);
+    assert.match(r.stderr, /^bad --/m);
+  }
+});
+test('audio check: images that cannot be written fail; bad --drops fail', () => {
+  const score = path.join(tmp, 'img.mjs');
+  fs.writeFileSync(score, `export const DUR = 2;\nexport default S => { S.bus('m').add(S.pad(S.chord('A3', 'min7'), 1.8), 0); };\n`);
+  const wav = path.join(tmp, 'img.wav');
+  assert.equal(node('audio.mjs', ['build', score, '--out', wav]).status, 0);
+  const ro = path.join(tmp, 'readonly'); fs.mkdirSync(ro); fs.chmodSync(ro, 0o555);
+  const r = node('audio.mjs', ['check', wav, '--out', path.join(ro, 'x')]);
+  fs.chmodSync(ro, 0o755);
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(r.stderr, /could not write/);
+  assert.doesNotMatch(r.stdout, /images:/);
+  assert.equal(node('audio.mjs', ['check', wav, '--out', path.join(tmp, 'img'), '--drops', '1,abc']).status, 1);
+  assert.equal(node('audio.mjs', ['check', wav, '--out', path.join(tmp, 'img')]).status, 0);
+});
+
+// ── loop seam: judged against the video's own frame steps ──
+test('inspect loop: fast periodic motion is seamless; a broken phase is a jump', () => {
+  const mk = (name, speed) => { const f = path.join(tmp, `${name}.mp4`); execFileSync('ffmpeg', ['-v', 'error', '-y', '-f', 'lavfi', '-i', `nullsrc=s=320x180:r=30:d=2,geq=lum='128+127*sin(2*PI*(X/20-T*${speed}))':cb=128:cr=128`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '10', f]); return f; };
+  const good = mk('loop-good', 2), bad = mk('loop-bad', 2.25);   // 4 whole cycles in 2 s vs 4.5 (inverted at the seam)
+  const g = node('inspect.mjs', ['qa', good, '--out', path.join(tmp, 'lg'), '--loop', '--audio', 'none', '--timeline', 'none']);
+  assert.equal(g.status, 0, g.stdout + g.stderr);
+  assert.match(g.stdout, /PASS\s+loop seam/);
+  const b = node('inspect.mjs', ['qa', bad, '--out', path.join(tmp, 'lb'), '--loop', '--audio', 'none', '--timeline', 'none']);
+  assert.equal(b.status, 1, b.stdout);
+  assert.match(b.stdout, /FAIL\s+loop seam/);
+  const still = path.join(tmp, 'loop-still.mp4');                // no motion at all, then a cut back to the start
+  execFileSync('ffmpeg', ['-v', 'error', '-y', '-f', 'lavfi', '-i', 'color=c=gray:s=320x180:r=30:d=1', '-f', 'lavfi', '-i', 'color=c=white:s=320x180:r=30:d=1', '-filter_complex', '[0][1]concat=n=2:v=1', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', still]);
+  assert.match(node('inspect.mjs', ['loop', still, '--out', path.join(tmp, 'ls')]).stdout, /visible jump/);
+});
+
+// ── build.sh: determinism gate and a real Tone layer ──
+test('build.sh: a non-deterministic page is refused before anything is rendered', () => {
+  const d = path.join(tmp, 'nondet');
+  assert.equal(spawnSync('sh', [SCAFFOLD, d, '--audio', 'none']).status, 0);
+  fs.writeFileSync(path.join(d, 'index.html'), `<canvas id="c"></canvas><script type="module">
+    const q = new URLSearchParams(location.search), c = document.getElementById('c'); c.width = +q.get('w'); c.height = +q.get('h');
+    const g = c.getContext('2d'); let x = 0; window.DUR = 1;
+    window.render = t => { x += 7; g.fillStyle = '#eee'; g.fillRect(0, 0, c.width, c.height); g.fillStyle = '#111'; g.fillRect(x % c.width, 0, 40, c.height); };
+    window.READY = true;</script>`);
+  const r = spawnSync('sh', [path.join(d, 'build.sh')], { encoding: 'utf8', env: { ...process.env, SIZE: '160x90', FPS: '12' } });
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(r.stderr, /NOT deterministic/);
+  assert.ok(!fs.existsSync(path.join(d, 'out', 'final.mp4')));
+});
+test('build.sh AUDIO=layer: the Tone layer really ends up in the mix', { skip: !fs.existsSync(path.join(S, 'node_modules', 'tone', 'build', 'Tone.js')) && 'tone not installed' }, async () => {
+  const d = path.join(tmp, 'layer');
+  assert.equal(spawnSync('sh', [SCAFFOLD, d, '--audio', 'layer']).status, 0);
+  assert.match(fs.readFileSync(path.join(d, 'score.mjs'), 'utf8'), /tone\.wav/);
+  // a sample-free Tone score: one chord for the whole piece (the starter's needs the Salamander download)
+  fs.writeFileSync(path.join(d, 'score.tone.js'), `import { DUR } from './timeline.js';\nexport { DUR };\nexport default async (Tone) => { new Tone.PolySynth(Tone.Synth).toDestination().triggerAttackRelease(['A3', 'C4', 'E4'], DUR - 0.5, 0); };\n`);
+  const env = { ...process.env, SIZE: '160x90', FPS: '12' };
+  const r = spawnSync('sh', [path.join(d, 'build.sh')], { encoding: 'utf8', env });
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /PASS\s+audio track present/);
+  // 0.6–1.5 s has no SFX cue in the starter timeline: whatever sounds there is the Tone layer
+  const { loadAudio, SR } = await import('../lib/synth.mjs');
+  const { L } = loadAudio(path.join(d, 'audio', 'music.wav'));
+  let e = 0; for (let i = Math.round(0.6 * SR); i < Math.round(1.5 * SR); i++) e += L[i] * L[i];
+  assert.ok(10 * Math.log10(e / (0.9 * SR)) > -40, 'the Tone chord should be audible where there are no SFX');
+  fs.writeFileSync(path.join(d, 'score.mjs'), `import { DUR } from './timeline.js';\nexport { DUR };\nexport default S => { S.bus('x').add(S.tick(), 1); };\n`);
+  const lost = spawnSync('sh', [path.join(d, 'build.sh')], { encoding: 'utf8', env });
+  assert.equal(lost.status, 1);
+  assert.match(lost.stdout, /never loads audio\/tone\.wav/);
+});
+
 test('audio build: a silent Tone.js score fails loudly', { skip: !fs.existsSync(path.join(S, 'node_modules', 'tone', 'build', 'Tone.js')) && 'tone not installed' }, () => {
   const dir = fs.mkdtempSync(path.join(tmp, 'tone-'));
   fs.writeFileSync(path.join(dir, 'score.tone.js'), `export const DUR = 1;\nexport default async (Tone) => { new Tone.Synth(); };\n`);

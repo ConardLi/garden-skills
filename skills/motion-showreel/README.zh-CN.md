@@ -46,5 +46,5 @@ references/
   craft.md          手法库        stack.md     技术栈与坑      recipes.md   现成写法
   sound.md          声音          review.md    验收与审片      brief-template.md
 scripts/            render.mjs · audio.mjs · inspect.mjs · scaffold.sh · setup.sh · check-env.mjs · test/
-assets/starter/     index.html · motion.js · timeline.js · score.mjs · score.tone.js · build.sh
+assets/starter/     index.html · motion.js · timeline.js · score.mjs · score.tone.js · score.layer.mjs · build.sh
 ```
