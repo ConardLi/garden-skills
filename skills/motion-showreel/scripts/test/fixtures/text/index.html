@@ -1,0 +1,29 @@
+<!doctype html>
+<html><body style="margin:0;overflow:hidden"><canvas id="c" style="display:block"></canvas>
+<div id="cap" style="position:fixed;left:0;width:100%;text-align:center;font:600 40px sans-serif;color:#111"></div>
+<script type="module">
+// Test fixture for render.mjs --text-check. ?bad=1 draws every framing problem for the whole second:
+//   a small word cut by the right edge, two different words on top of each other (one via an offscreen buffer),
+//   a DOM caption in the bottom safe zone (vertical frames), a tiny label. Without ?bad the frame is clean:
+//   one centred word, plus a word revealed through a clip (a mask reveal must not count as an overlap).
+const q = new URLSearchParams(location.search), W = +q.get('w'), H = +q.get('h'), bad = q.get('bad') === '1';
+const c = document.getElementById('c'); c.width = W; c.height = H;
+const g = c.getContext('2d'), buf = document.createElement('canvas'); buf.width = 400; buf.height = 120;
+const b = buf.getContext('2d'), cap = document.getElementById('cap');
+window.DUR = 1;
+window.render = t => {
+  g.fillStyle = '#eee'; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#111'; g.textBaseline = 'middle'; g.textAlign = 'center';
+  g.font = `800 ${0.08 * H}px sans-serif`; g.fillText('CENTRE', W / 2, H * 0.3);
+  g.save(); g.beginPath(); g.rect(0, H * 0.5, W, H * 0.06); g.clip(); g.fillText('REVEAL', W / 2, H * 0.53 + (1 - t) * H * 0.05); g.restore();
+  cap.textContent = ''; cap.style.top = '0px';
+  if (!bad) return;
+  g.textAlign = 'left'; g.font = `600 ${0.05 * H}px sans-serif`; g.fillText('EDGECUT', W - 0.08 * H, H * 0.15);
+  g.font = `800 ${0.06 * H}px sans-serif`; g.fillText('ALPHA', W * 0.1, H * 0.7);
+  b.fillStyle = '#fff'; b.fillRect(0, 0, 400, 120); b.fillStyle = '#c00'; b.font = '800 60px sans-serif'; b.textBaseline = 'middle'; b.fillText('OMEGA', 10, 60);
+  g.drawImage(buf, 0, 0, 400, 120, W * 0.1 + 6, H * 0.7 - 0.05 * H, 400 * (0.1 * H / 120), 0.1 * H);
+  g.font = `400 ${Math.max(6, 0.01 * H)}px sans-serif`; g.fillText('tiny label', W * 0.6, H * 0.45);
+  cap.textContent = 'caption in the safe zone'; cap.style.top = `${H * 0.93}px`;
+};
+window.READY = true;
+</script></body></html>

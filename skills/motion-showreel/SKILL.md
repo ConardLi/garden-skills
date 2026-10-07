@@ -64,7 +64,7 @@ description: 用代码制作以图形、文字或界面动画为主的短视频�
 | 风格：有指定的风格、参考视频或截图吗？ | 没有就在第 3 步给 3 个方向，看图选 |
 | 声音：无声 / 代码合成 / 你提供曲子（需能商用） | 代码合成 |
 
-- 用户给了参考视频：先跑 `inspect.mjs sheet <ref> --cells 30` 和 `inspect.mjs motion <ref>`，只学结构和手法，不搬素材。
+- 用户给了参考视频：先跑 `inspect.mjs sheet <ref> --cells 30` 看全貌，`inspect.mjs grid <ref> --strips` 量出剪点和它们落的节拍网格（BPM 候选、每段占几步、每个转场的连续帧），`inspect.mjs heat <ref>` 看每段里哪里在动、动多大面积。把量到的数写进 brief 的对标一栏。只学结构和手法，不搬素材。
 - 用户给了曲子：先跑 `audio.mjs beats <track> --out <slug>/audio/beats.json`。
 - 画面里要出现的产品、品牌或技术名词，不确定的先查证。
 
@@ -115,17 +115,17 @@ Reel Read:
 - 每个方向写一段迷你 Reel Read（风格、对标、记忆点、配乐方向，3–5 行），并用真代码渲**一张**最能代表它的关键帧。三个方向的页面放在同一个项目里，用 `?dir=a|b|c` 切换。B、C 只为这一张关键帧服务，不必做成能播的整片。
 - `render.mjs <slug> --directions a,b,c --at 14.5,2,0` 一次渲出三张并拼成带标签的 `qa/directions.png`，发给用户，问「选哪个，或者怎么混合？」。
 
-两种情况都**真的等用户回复**，再进入制作。用户事先说过不用确认的，就自己选一个、写明理由，自查后继续。
+两种情况都**真的等用户回复**，再进入制作。用户事先说过不用确认的，就自己选一个、写明理由，自查后继续；交付时把没选的方向一起给用户（B 情况附上 `qa/directions.png`，A 情况各写一句另外两个可能的方向），让用户回来还能换。
 
 ### 第 4 步：制作
 
 制作前先读 `references/stack.md`（页面契约、确定性、各技术的坑）。要现成写法时查 `references/recipes.md`。
 
-1. 时间点全部写进 `timeline.js`，页面和 `score.mjs` 都从这里 import。刻意的停留写进 `HOLDS`（比如落版 `[[b(36), DUR]]`），要留呼吸的重拍写进 `DROPS`，验收工具会读它们。
+1. 时间点全部写进 `timeline.js`，页面和 `score.mjs` 都从这里 import。镜头表写进 `SHOTS`（验收时按镜头报运动），刻意的停留写进 `HOLDS`（比如落版 `[[b(36), DUR]]`），要留呼吸的重拍写进 `DROPS`，验收工具会读它们。转场要对拍时，用 `revealOn(拍点, 转场时长, 揭开点)` 倒推起点，让新画面露出来的那一帧落在拍上。
 2. 逐个镜头做。每个镜头渲开头、中段、结尾 3 张静帧；快速动作用 `inspect.mjs strip` 看连续帧。
 3. 跑确定性检查 `render.mjs <slug> --determinism`，不通过就先修。
 4. 片长 30 秒以上或渲染慢的，先出低清小样：`--size 960x540 --out out/proxy.mp4`。
-5. 出正片：先在 `build.sh` 顶部按 brief 设好 `FPS`、`SIZE`、`AUDIO`、`LOOP`，再 `sh <slug>/build.sh`。它会构建配乐，先跑确定性检查（不过不出片），再渲染，并带着同一份规格跑技术检查（时长取 `timeline.js` 的 `DUR`）。`--subframes`、`--dpr`、`--grain` 作为参数加在后面，按风格需要加。这些参数都会成倍增加耗时，开渲前先报预计时间。
+5. 出正片：先在 `build.sh` 顶部按 brief 设好 `FPS`、`SIZE`、`AUDIO`、`LOOP`，再 `sh <slug>/build.sh`。它会构建配乐，先跑确定性检查（不过不出片），再渲染，接着跑文字框景检查（只出审片材料，不挡构建），最后带着同一份规格跑技术检查（时长取 `timeline.js` 的 `DUR`）。`--subframes`、`--dpr`、`--grain` 作为参数加在后面，按风格需要加。这些参数都会成倍增加耗时，开渲前先报预计时间。
 
 **硬规则**：
 - 画面只由 t 决定：不用 `Math.random`、`Date.now`、rAF、定时器、CSS 动画，帧和帧之间不保存状态。
@@ -159,7 +159,7 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 
 它检查文件能否解码、尺寸、帧率、时长、帧数、音轨、黑帧、响度、真峰值，以及循环接缝（需要时）。只要有一项 FAIL，退出码就是 1，必须修好。没传的规格项会列成 `NOT CHECKED`，这时不算验收通过。`build.sh` 会自动带上规格。渲染工具本身也会拒绝发布帧数不对的文件。
 
-**审片**：给人判断用，不是程序判定。看抽帧图、手机尺寸抽帧图、冻结段（`HOLDS` 里声明过的会标成刻意停留，其余要判断是不是空拍）、切点、音频图，按 `references/review.md` 的审片表逐项写下观察和最严重的 3 个问题。修完只重渲有问题的那一段，再出整片，过程记到 `qa/review_log.md`。
+**审片**：给人判断用，不是程序判定。看抽帧图、手机尺寸抽帧图、冻结段（`HOLDS` 里声明过的会标成刻意停留，其余要判断是不是空拍）、切点、按镜头的运动和闪帧、文字框景的标记图（`qa/text-*.png`）、音频图，按 `references/review.md` 的审片表逐项写下观察和最严重的 3 个问题，有数字和图表的片子要核对内容与数字口径。修完只重渲有问题的那一段，再出整片，过程记到 `qa/review_log.md`。宿主支持子 agent 时，再派一个没参与制作的 agent 只看这些材料挑问题（review.md「独立审片」）。
 
 审片结论是给用户的参考，**不能代替用户自己看片**。不适用的项标「不适用」，比如无声作品的音画同步，不要硬给分数。
 
@@ -171,6 +171,8 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 - 技术检查结果（全部 PASS）、审片记录里还没解决的问题、渲染用时。
 - 怎么重建（`sh build.sh`）、怎么只改一段。
 - 第三方素材（字体、用户素材、曲子）的来源和授权；事实类内容提醒用户再核对一遍。
+
+交付之后花几分钟回看：哪一招明显让片子变好了，有证据（数字、前后对比）就记进 `references/field-notes.md`；用到的风格在 `styles/INDEX.md` 的「实做记录」里加一笔，新发现的短板写进那个风格文件的「坑」。只记可复用的方法，用户的素材和私人信息留在项目里。
 
 ---
 
@@ -195,9 +197,11 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 静帧 + 拼图 | `node $S/render.mjs <slug> --still 0.5,3,7.2 --sheet` · `--range 0:15:1 --sheet` |
 | 三个方向 / 封面 | `node $S/render.mjs <slug> --directions a,b,c --at 14.5,2,0` → `qa/directions.png` · `--poster 14.5` → `out/poster.png` |
 | 确定性 | `node $S/render.mjs <slug> --determinism` |
+| 文字框景（审片材料） | `node $S/render.mjs <slug> --text-check [--safe auto\|none\|T,R,B,L]` → `qa/text.json` + 标记图（build.sh 自动跑） |
+| 拆参考片 | `node $S/inspect.mjs grid <ref> --strips`（剪点 + 节拍网格 + 转场连续帧）· `heat <ref>`（每段的运动热图） |
 | 小样 / 正片 / 分段 | `--size 960x540 --out out/proxy.mp4` · 正片 `sh <slug>/build.sh --subframes 2 --grain 4`（规格在 build.sh 顶部）· `--start 6 --duration 3 --out out/seg.mp4` |
 | 声音 | `node $S/audio.mjs build <slug>/score.mjs`（或 `score.tone.js`）· `samples salamander` · `beats <track> --out audio/beats.json` · `check audio/music.wav`（读 `DROPS`） |
-| 验收与审片材料 | `node $S/inspect.mjs qa out/final.mp4 --expect-…`（build.sh 自动带）· `sheet` · `phone` · `strip --at 4.2` · `loop` · `motion`（读 `HOLDS`） |
+| 验收与审片材料 | `node $S/inspect.mjs qa out/final.mp4 --expect-…`（build.sh 自动带）· `sheet` · `phone` · `strip --at 4.2` · `loop` · `motion`（读 `SHOTS` / `HOLDS`：按镜头的运动、跳变、闪帧） |
 
 ## 参考文件（按需读）
 
@@ -210,4 +214,5 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | `references/stack.md` | 第 4 步：页面契约、确定性、各技术的坑、字体、素材、多画幅、性能 |
 | `references/recipes.md` | 要现成写法时 |
 | `references/sound.md` | 第 2 步（第 2 节：声音方向）和第 5 步 |
-| `references/review.md` | 第 6 步：技术检查说明、审片表、常见问题、交付清单 |
+| `references/review.md` | 第 6 步：技术检查说明、审片表、独立审片、常见问题、交付清单 |
+| `references/field-notes.md` | 第 2 步想参考前人做法时；第 7 步交付后回写 |

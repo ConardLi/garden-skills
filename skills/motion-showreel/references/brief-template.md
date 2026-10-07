@@ -21,7 +21,7 @@
 <direction>
 Reel Read:
   format: …（用途，formats.md）
-  benchmark: …（对标作品 · 学什么 · 不学什么）
+  benchmark: …（对标作品 · 学什么 · 不学什么；有参考视频时写上 inspect grid / heat 量到的数：BPM、段长序列、每段运动面积）
   structure: …（三个候选结构 → 选中的那个和理由）
   style: …（styles/<slug>.md，写明改造点；或混搭方案；或按 _template.md 写的自定义规则）
   hook: …
@@ -52,11 +52,11 @@ Reel Read:
 <build>
 1. 单个 HTML 文件（或说明为什么需要 Three.js / p5），内容层：…，质感层：…。
 2. 页面暴露 window.DUR / window.render(t) / window.READY；画面只由 t 决定，随机数带固定种子，不用计时器，不用 CSS 动画，帧和帧之间不保存状态。
-3. 所有时间点写在 timeline.js，页面和 score.mjs 都从它 import。
+3. 所有时间点写在 timeline.js，页面和 score.mjs 都从它 import；镜头表写进 SHOTS；要对拍的转场用 revealOn(拍点, 时长, 揭开点) 倒推起点。
 4. 渲染：render.mjs 逐帧截图 → ffmpeg；参数：--fps … --size … [--subframes 4] [--dpr 2] [--grain …]。
 5. 声音：第 1 档 score.mjs / 第 2 档 score.tone.js → audio.mjs build（−14 LUFS，真峰值 < −1 dBTP）；音效密度按风格来，有音效的动作要落在动作那一帧。无声作品写「无声」。
 6. 每个镜头做完渲 3 张静帧检查；全部完成后跑 --determinism，出低清小样确认节奏，再出正片。
-7. 验收：sh build.sh（FPS / SIZE / AUDIO / LOOP 写在 build.sh 顶部，时长取 timeline.js 的 DUR），等价于 inspect.mjs qa --expect-size … --expect-fps … --expect-duration … --audio required|none [--loop]；技术检查全部 PASS，且没有 NOT CHECKED。timeline.js 里声明 HOLDS（刻意的停留）和 DROPS（要留呼吸的重拍）。
+7. 验收：sh build.sh（FPS / SIZE / AUDIO / LOOP 写在 build.sh 顶部，时长取 timeline.js 的 DUR），等价于 inspect.mjs qa --expect-size … --expect-fps … --expect-duration … --audio required|none [--loop]；技术检查全部 PASS，且没有 NOT CHECKED。timeline.js 里声明 HOLDS（刻意的停留）和 DROPS（要留呼吸的重拍）。build.sh 还会出文字框景（qa/text.json）和按镜头的运动报告，这两份是审片材料，每一条都要看过。
 </build>
 
 <gotchas>

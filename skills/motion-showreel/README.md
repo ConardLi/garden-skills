@@ -48,7 +48,7 @@ Every clip below was made by an agent with this skill from a short request. For 
 <code>brief.md</code>: a reusable structured prompt<br/>
 <code>index.html</code> / <code>timeline.js</code> / <code>score.mjs</code>: editable source<br/>
 <code>sh build.sh</code>: rebuild everything, or one segment<br/>
-<code>qa/</code>: contact sheets, phone-size check, waveform and spectrum<br/>
+<code>qa/</code>: contact sheets, phone-size check, per-shot motion, text-framing marks, waveform and spectrum<br/>
 Technical checks (all PASS) and an honest review log
 </sub></td>
 </tr>
@@ -60,11 +60,11 @@ Technical checks (all PASS) and an honest review log
 
 - **Picture = a function of time.** The page exposes a deterministic `window.render(t)` (no `Math.random`, timers, rAF or CSS animation). Playwright captures every frame and ffmpeg encodes the MP4. Motion blur (`--subframes`), supersampling (`--dpr`) and film grain (`--grain`) are render flags, not page code.
 - **One timeline for picture and sound.** `timeline.js` holds every cut, hit and cue; the page and the score both import it, so hits land on the exact frame.
-- **Benchmark first, then three structures.** Before anything is drawn, the agent picks 1–2 reference works (what to learn, what not to copy) and writes down three candidate structures. The first idea that comes to mind is usually the style's cliché.
+- **Benchmark first, then three structures.** Before anything is drawn, the agent picks 1–2 reference works (what to learn, what not to copy) and writes down three candidate structures. A reference video can be measured: `inspect.mjs grid` finds its cuts and the beat grid they sit on, `heat` shows where each segment moves. The first idea that comes to mind is usually the style's cliché.
 - **A style library that is a starting point, not a menu.** 22 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Use one, adapt it, mix two, or write your own from the template.
 - **Sound gets its own direction.** The brief covers sound too: a reference, groove, harmony, palette and dramatic arc. A list of audio defaults keeps pieces from all ending up with the same song.
 - **One checkpoint, then all-out.** The only stop is the style-frame review. If no style was given, the agent offers three deliberately different directions, one key frame each. After that it builds autonomously.
-- **Technical acceptance is separate from taste.** Programmatic checks (size, fps, duration, frame count, black frames, loudness, true peak, loop seams, determinism) must all pass. The agent's review notes help the user watch faster; they never replace the user's own viewing.
+- **Technical acceptance is separate from taste.** Programmatic checks (size, fps, duration, frame count, black frames, loudness, true peak, loop seams, determinism) must all pass. Measured review material sits next to them without blocking anything: per-shot motion with sudden jumps and one-frame flashes, and a text-framing pass (text cut by the frame, overlapping, in the safe zone, too small). The agent's review notes help the user watch faster; they never replace the user's own viewing.
 - **Free mode.** Say "go all out" or "surprise me" and the agent keeps only the baseline rules and the technical pipeline. Style, structure and technique are left to the model.
 
 ---
@@ -140,13 +140,14 @@ skills/motion-showreel/
 │   ├── stack.md             page contract, determinism, per-tech pitfalls, fonts, multi-format, performance
 │   ├── recipes.md           ready-made snippets (masked type, morph chains, particle type, seamless loops, WebGL post, canvas pseudo-3-D …)
 │   ├── brief-template.md    the structured prompt every piece starts from
-│   └── review.md            technical checks, review sheet, common problems, delivery checklist
+│   ├── review.md            technical checks, review sheet, independent review, common problems, delivery checklist
+│   └── field-notes.md       what proved to work in real pieces, with evidence (written back after each delivery)
 ├── scripts/
 │   ├── setup.sh · check-env.mjs · scaffold.sh
-│   ├── render.mjs           stills, sheets, three directions, poster, determinism, proxy, master
+│   ├── render.mjs           stills, sheets, three directions, poster, determinism, text framing, proxy, master
 │   ├── audio.mjs            build · check · beats · samples · mux
-│   ├── inspect.mjs          qa · sheet · phone · strip · frames · motion · loop
-│   ├── lib/                 synth, Tone.js renderer, FFT, browser, project helpers
+│   ├── inspect.mjs          qa · sheet · phone · strip · frames · motion · loop · grid · heat
+│   ├── lib/                 synth, Tone.js renderer, FFT, browser, project, frame analysis, text hook
 │   └── test/                regression tests (npm test)
 └── assets/starter/          index.html · motion.js · timeline.js · score.mjs · score.tone.js · score.layer.mjs · build.sh
 ```

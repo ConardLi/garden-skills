@@ -7,6 +7,8 @@
 #                 (anything but none also makes qa require an audio track)
 #   LOOP=1      → qa also checks the loop seam
 #   DETERMINISM → 1 (default): render.mjs --determinism must pass before the film is rendered; 0 skips it (quick iterations only)
+#   TEXTCHECK   → 1 (default): render.mjs --text-check writes review material to qa/text* (text cut by the frame, overlapping,
+#                 in the safe zone, too small); it never blocks the build. 0 skips it.
 # Extra arguments go to render.mjs and are for quality only:  sh build.sh --subframes 2 --grain 4
 # Set FPS / SIZE as variables (FPS=60 sh build.sh), not as flags. To re-render one segment, call render.mjs --start/--duration.
 set -e
@@ -17,6 +19,7 @@ SIZE=${SIZE:-1920x1080}
 AUDIO=${AUDIO:-__AUDIO__}
 LOOP=${LOOP:-0}
 DETERMINISM=${DETERMINISM:-1}
+TEXTCHECK=${TEXTCHECK:-1}
 cd "$HERE"
 
 for a in "$@"; do case "$a" in
@@ -44,6 +47,7 @@ if [ "$AUDIO" = none ]; then MUX=""; EXPECT_AUDIO=none; else MUX="--audio audio/
 if [ "$DETERMINISM" = 1 ]; then node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --determinism
 else echo "! DETERMINISM=0: determinism not checked (fine for drafts, not for delivery)"; fi
 node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --out out/final.mp4 $MUX "$@"
+if [ "$TEXTCHECK" = 1 ]; then node "$SKILL/scripts/render.mjs" . --size "$SIZE" --text-check --out qa/text || echo "! text check could not run (review material only; the build goes on)"; fi
 
 DUR=$(node --input-type=module -e 'import { pathToFileURL } from "node:url"; const m = await import(pathToFileURL(process.argv[1]).href); console.log(m.DUR ?? "")' "$HERE/timeline.js" 2>/dev/null || true)
 EXPECT="--expect-size $SIZE --expect-fps $FPS --audio $EXPECT_AUDIO"

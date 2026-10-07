@@ -1,6 +1,6 @@
 # 风格库
 
-每个风格一个文件，只写**这种风格不变的规则**：本质、材质、配色、字体、运动、镜头语法、声音调色板、原生手法、坑。**不写任何具体的故事、分镜和时间线**，这些从用户的主题和 `formats.md` 的用途里来。
+每个风格一个文件，只写**这种风格不变的规则**：本质、材质、配色、字体、运动、画面怎么活、镜头语法、声音调色板、原生手法、坑。**不写任何具体的故事、分镜和时间线**，这些从用户的主题和 `formats.md` 的用途里来。
 
 ## 怎么用（先读这一段）
 
@@ -28,31 +28,33 @@
 
 ## 目录
 
-| 分组 | 文件 | 一句话 | 主要技术 | 常配用途 | 情绪 |
-|---|---|---|---|---|---|
-| 图形与排版 | `swiss-editorial.md` | 网格、一种字体、一个信号色，像印刷机一样精确 | Canvas / DOM | 作品集、Logo、数据 | 理性、克制 |
-| | `kinetic-brutalist.md` | 巨字、硬切、高对比，字就是画面 | Canvas / DOM | 金句卡点、作品集 | 冲击、躁动 |
-| | `risograph-print.md` | 孔版印刷：套色错位、半调网点、纸纹 | Canvas + WebGL | 宣传片、Logo、排版 | 温暖、手作 |
-| | `editorial-collage.md` | 杂志拼贴：剪纸边、胶带、照片碎片、手写标注 | Canvas / DOM | 宣传片、金句 | 活泼、潮流 |
-| 界面与产品 | `minimal-ui.md` | 浅色、干净、弹簧手感的界面动效 | DOM / SVG / Canvas | UI 演示、宣传片 | 精致、友好 |
-| | `dark-keynote.md` | 发布会：深色舞台、聚光、大数字、产品英雄镜头 | DOM / Canvas / Three.js | 宣传片、数据 | 隆重、高级 |
-| | `isometric-infographic.md` | 等距视角的小世界，信息层层搭起来 | Canvas / SVG | 讲解、宣传片 | 清晰、俏皮 |
-| | `data-motion.md` | 数字和图表本身就是主角 | Canvas / SVG | 数据爆点、宣传片 | 可信、利落 |
-| 复古与屏幕 | `pixel-game.md` | 16-bit 像素：小画布放大、步进、调色板 | Canvas + WebGL | 作品集、循环、Logo | 怀旧、可爱 |
-| | `crt-vhs.md` | 显像管和录像带：扫描线、色差、跟踪噪声 | Canvas + WebGL | 片头、怀旧主题 | 怀旧、诡异 |
-| | `terminal-ascii.md` | 终端：等宽字符、光标、ASCII 图形 | Canvas | 开发者产品、片头 | 极客、冷静 |
-| | `synthwave-neon.md` | 合成波：霓虹网格、日落、镀铬字 | Canvas + WebGL / Three.js | 片头、音乐向 | 热烈、复古未来 |
-| 3D 与材质 | `glass-material.md` | 玻璃、金属和光，镜头在空间里慢慢运动 | Three.js | 产品宣传、Logo | 高级、精密 |
-| | `soft-3d-toy.md` | 软萌 3D：圆润、哑光、黏土和玩具感 | Three.js | 宣传片、吉祥物、讲解 | 亲和、愉快 |
-| | `liquid-shader.md` | 液态与流体：融球、金属液、噪声流动 | WebGL 着色器 | 片头、转场、Logo | 迷幻、流动 |
-| 生成与抽象 | `generative-geometry.md` | 规则生成的阵列、波、对称图形 | Canvas / WebGL | 循环、作品集、片头 | 催眠、秩序 |
-| | `particle-field.md` | 成千上万的点：流动、聚合、组字、炸开 | Canvas / WebGL / Three.js | 签名时刻、Logo | 宏大、科技 |
-| 手作 | `crayon-storybook.md` | 蜡笔、彩铅、水彩的绘本 | p5.js + p5.brush | 故事向宣传、讲解 | 童趣、温暖 |
-| | `ink-wash.md` | 水墨：晕染、飞白、留白 | Canvas / WebGL | 东方题材、片头 | 意境、沉静 |
-| | `paper-cut.md` | 纸艺分层：剪纸、投影、纸纹、立体书 | Canvas / Three.js | 宣传片、节日、讲解 | 温暖、精巧 |
-| 电影感 | `cinematic-title.md` | 电影片头：宽银幕、胶片颗粒、慢推、衬线大字 | Canvas / DOM + WebGL | 片头、预告、Logo | 史诗、沉稳 |
-| | `mixed-media-era.md` | 每个年代一种媒介，一根线串起整部片 | 混合 | 历史回顾、作品集 | 史诗、动人 |
+「实做记录」是用这个风格做完并通过验收的片子数，「样帧」表示目前只渲过风格帧，规则还没在整片里经受过检验。规则越没被检验过，越要在第 3 步多看几张帧。每做完一支就更新这一格；做的过程里发现的短板写进那个风格文件的「坑」，验证有效的做法记进 `../field-notes.md`（见 SKILL.md 第 7 步）。
+
+| 分组 | 文件 | 一句话 | 主要技术 | 常配用途 | 情绪 | 实做记录 |
+|---|---|---|---|---|---|---|
+| 图形与排版 | `swiss-editorial.md` | 网格、一种字体、一个信号色，像印刷机一样精确 | Canvas / DOM | 作品集、Logo、数据 | 理性、克制 | 样帧 |
+| | `kinetic-brutalist.md` | 巨字、硬切、高对比，字就是画面 | Canvas / DOM | 金句卡点、作品集 | 冲击、躁动 | 样帧 |
+| | `risograph-print.md` | 孔版印刷：套色错位、半调网点、纸纹 | Canvas + WebGL | 宣传片、Logo、排版 | 温暖、手作 | 样帧 |
+| | `editorial-collage.md` | 杂志拼贴：剪纸边、胶带、照片碎片、手写标注 | Canvas / DOM | 宣传片、金句 | 活泼、潮流 | 样帧 |
+| 界面与产品 | `minimal-ui.md` | 浅色、干净、弹簧手感的界面动效 | DOM / SVG / Canvas | UI 演示、宣传片 | 精致、友好 | 样帧 |
+| | `dark-keynote.md` | 发布会：深色舞台、聚光、大数字、产品英雄镜头 | DOM / Canvas / Three.js | 宣传片、数据 | 隆重、高级 | 样帧 |
+| | `isometric-infographic.md` | 等距视角的小世界，信息层层搭起来 | Canvas / SVG | 讲解、宣传片 | 清晰、俏皮 | 样帧 |
+| | `data-motion.md` | 数字和图表本身就是主角 | Canvas / SVG | 数据爆点、宣传片 | 可信、利落 | 样帧 |
+| 复古与屏幕 | `pixel-game.md` | 16-bit 像素：小画布放大、步进、调色板 | Canvas + WebGL | 作品集、循环、Logo | 怀旧、可爱 | 样帧 |
+| | `crt-vhs.md` | 显像管和录像带：扫描线、色差、跟踪噪声 | Canvas + WebGL | 片头、怀旧主题 | 怀旧、诡异 | 样帧 |
+| | `terminal-ascii.md` | 终端：等宽字符、光标、ASCII 图形 | Canvas | 开发者产品、片头 | 极客、冷静 | 样帧 |
+| | `synthwave-neon.md` | 合成波：霓虹网格、日落、镀铬字 | Canvas + WebGL / Three.js | 片头、音乐向 | 热烈、复古未来 | 成片 1（AFTERGLOW） |
+| 3D 与材质 | `glass-material.md` | 玻璃、金属和光，镜头在空间里慢慢运动 | Three.js | 产品宣传、Logo | 高级、精密 | 样帧 |
+| | `soft-3d-toy.md` | 软萌 3D：圆润、哑光、黏土和玩具感 | Three.js | 宣传片、吉祥物、讲解 | 亲和、愉快 | 成片 1（boink） |
+| | `liquid-shader.md` | 液态与流体：融球、金属液、噪声流动 | WebGL 着色器 | 片头、转场、Logo | 迷幻、流动 | 样帧 |
+| 生成与抽象 | `generative-geometry.md` | 规则生成的阵列、波、对称图形 | Canvas / WebGL | 循环、作品集、片头 | 催眠、秩序 | 样帧 |
+| | `particle-field.md` | 成千上万的点：流动、聚合、组字、炸开 | Canvas / WebGL / Three.js | 签名时刻、Logo | 宏大、科技 | 样帧 |
+| 手作 | `crayon-storybook.md` | 蜡笔、彩铅、水彩的绘本 | p5.js + p5.brush | 故事向宣传、讲解 | 童趣、温暖 | 样帧 |
+| | `ink-wash.md` | 水墨：晕染、飞白、留白 | Canvas / WebGL | 东方题材、片头 | 意境、沉静 | 样帧 |
+| | `paper-cut.md` | 纸艺分层：剪纸、投影、纸纹、立体书 | Canvas / Three.js | 宣传片、节日、讲解 | 温暖、精巧 | 样帧 |
+| 电影感 | `cinematic-title.md` | 电影片头：宽银幕、胶片颗粒、慢推、衬线大字 | Canvas / DOM + WebGL | 片头、预告、Logo | 史诗、沉稳 | 成片 1（UMBRA） |
+| | `mixed-media-era.md` | 每个年代一种媒介，一根线串起整部片 | 混合 | 历史回顾、作品集 | 史诗、动人 | 成片 1（宣传片） |
 
 ## 新增风格
 
-复制 `_template.md`，以 `<slug>.md` 命名，写完后在上面的目录表里加一行。写规则的时候问自己：换三个完全不同的主题，这些规则还都成立吗？只适用于某一个主题的内容，不应该写进风格文件。
+复制 `_template.md`，以 `<slug>.md` 命名，写完后在上面的目录表里加一行（实做记录先写「样帧」）。写规则的时候问自己：换三个完全不同的主题，这些规则还都成立吗？只适用于某一个主题的内容，不应该写进风格文件。

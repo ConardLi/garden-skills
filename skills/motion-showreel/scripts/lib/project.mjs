@@ -3,6 +3,7 @@
 //   BEAT   seconds per beat
 //   HOLDS  [[t0, t1], …]  deliberate still moments (end card, a held breath): not reported as dead air
 //   DROPS  [t, …]         hits that should follow a breath of silence (audio check measures the dip before each)
+//   SHOTS  [{ id, t0, t1 }, …]  the shot list: motion is reported per shot
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -33,7 +34,10 @@ export async function loadTimeline(file) {
     .map(h => (Array.isArray(h) ? [num(h[0]), num(h[1])] : [num(h?.t0), num(h?.t1)]))
     .filter(([a, b]) => a != null && b != null && b > a);
   const drops = (Array.isArray(m.DROPS) ? m.DROPS : []).map(num).filter(v => v != null);
-  return { file, DUR: num(m.DUR), BEAT: num(m.BEAT), HOLDS: holds, DROPS: drops, hasHolds: Array.isArray(m.HOLDS), hasDrops: Array.isArray(m.DROPS) };
+  const shots = (Array.isArray(m.SHOTS) ? m.SHOTS : [])
+    .map((s, i) => ({ id: String(s?.id ?? `shot${i + 1}`), t0: num(s?.t0), t1: num(s?.t1) }))
+    .filter(s => s.t0 != null && s.t1 != null && s.t1 > s.t0);
+  return { file, DUR: num(m.DUR), BEAT: num(m.BEAT), HOLDS: holds, DROPS: drops, SHOTS: shots, hasHolds: Array.isArray(m.HOLDS), hasDrops: Array.isArray(m.DROPS) };
 }
 
 /** A timeline only describes a video of the same length (a --start/--duration segment is on a different clock). */

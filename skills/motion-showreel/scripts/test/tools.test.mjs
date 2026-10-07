@@ -276,7 +276,8 @@ test('build.sh: renders, builds the chosen score, and runs qa with the full spec
   const r = spawnSync('sh', [path.join(d, 'build.sh')], { encoding: 'utf8', env });
   assert.equal(r.status, 0, r.stdout + r.stderr);
   assert.match(r.stdout, /score\.tone\.js is ignored \(AUDIO=synth\)/);
-  for (const re of [/PASS\s+size — 320x180/, /PASS\s+fps — 12\.00/, /PASS\s+duration — 8\.000s/, /PASS\s+audio track present/, /All technical checks passed/]) assert.match(r.stdout, re);
+  for (const re of [/PASS\s+size — 320x180/, /PASS\s+fps — 12\.00/, /PASS\s+duration — 8\.000s/, /PASS\s+audio track present/, /All technical checks passed/, /text framing · /, /motion per shot \(SHOTS/]) assert.match(r.stdout, re);
+  assert.ok(fs.existsSync(path.join(d, 'qa', 'text.json')));
   assert.doesNotMatch(r.stdout, /NOT CHECKED/);
   const flag = spawnSync('sh', [path.join(d, 'build.sh'), '--fps', '60'], { encoding: 'utf8', env });
   assert.equal(flag.status, 1);
@@ -354,6 +355,80 @@ test('build.sh AUDIO=layer: the Tone layer really ends up in the mix', { skip: !
   const lost = spawnSync('sh', [path.join(d, 'build.sh')], { encoding: 'utf8', env });
   assert.equal(lost.status, 1);
   assert.match(lost.stdout, /never loads audio\/tone\.wav/);
+});
+
+// ── motion review material: per shot, flashes, churn ──
+const lavfi = (name, expr, d = 2) => { const f = path.join(tmp, `${name}.mp4`); execFileSync('ffmpeg', ['-v', 'error', '-y', '-f', 'lavfi', '-i', `nullsrc=s=320x180:r=30:d=${d},geq=lum='${expr}':cb=128:cr=128`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '12', f]); return f; };
+test('inspect motion: a one-frame flash is found; smooth motion has none', () => {
+  const smooth = lavfi('smooth', '128+100*sin(X/8-T*6)');
+  const flash = lavfi('flash', 'if(eq(N\\,30)\\,250\\,128+100*sin(X/8-T*6))');
+  const s = node('inspect.mjs', ['motion', smooth, '--out', path.join(tmp, 'ms')]).stdout;
+  assert.match(s, /flash frames[^\n]*: none/);
+  assert.doesNotMatch(s, /rapid whole-frame changes|↳/, 'steady fast motion is neither churn nor a problem');
+  const r = node('inspect.mjs', ['motion', flash, '--out', path.join(tmp, 'mf')]);
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /flash frames[^\n]*: 1\.00s/);
+});
+test('inspect motion: per shot from SHOTS — a still shot outside HOLDS, regenerated noise as rapid changes', () => {
+  const proj = fs.mkdtempSync(path.join(tmp, 'shots-')); fs.mkdirSync(path.join(proj, 'out'));
+  const v = path.join(proj, 'out', 'final.mp4');
+  // 0–1 s: still; 1–3 s: a texture regenerated every 4 frames (whole-frame jumps); 3–4 s: smooth motion
+  fs.copyFileSync(lavfi('shots', 'if(lt(T\\,1)\\,90\\,if(lt(T\\,3)\\,mod(floor(N/4)*97+X*31+Y*17\\,256)\\,128+100*sin(X/8-T*6)))', 4), v);
+  fs.writeFileSync(path.join(proj, 'timeline.js'), "export const DUR = 4;\nexport const SHOTS = [{ id: 'still', t0: 0, t1: 1 }, { id: 'churn', t0: 1, t1: 3 }, { id: 'pan', t0: 3, t1: 4 }];\nexport const HOLDS = [];\n");
+  const r = node('inspect.mjs', ['motion', v]);
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /motion per shot \(SHOTS/);
+  assert.match(r.stdout, /still\s+0\.00–1\.00s[^\n]*\n\s+↳ nothing moves/);
+  assert.match(r.stdout, /rapid whole-frame changes 1\.\d\d–2\.\d\ds/);
+  assert.match(r.stdout, /churn\s+1\.00–3\.00s[^\n]*jumps [1-9]\d*\n\s+↳ sudden jumps/, 'regeneration is measured, not hidden as cuts');
+  assert.doesNotMatch(r.stdout, /pan\s+3\.00–4\.00s[^\n]*\n\s+↳ nothing moves/);
+  fs.writeFileSync(path.join(proj, 'timeline.js'), "export const DUR = 4;\nexport const SHOTS = [{ id: 'still', t0: 0, t1: 1 }, { id: 'pan', t0: 1, t1: 4 }];\nexport const HOLDS = [[0, 1]];\n");
+  assert.doesNotMatch(node('inspect.mjs', ['motion', v]).stdout, /↳ nothing moves/, 'a declared hold is not dead air');
+});
+
+// ── reading a reference: the beat grid under its cuts, where it moves ──
+test('inspect grid: cuts on an accelerating 128 BPM eighth-note grid are fitted; heat measures the moving area', () => {
+  const u = 60 / 128 / 2, units = [6, 4, 4, 4, 3, 3, 2, 2, 1, 1, 1, 9];
+  let t = 0; const cuts = units.slice(0, -1).map(n => +(t += n * u).toFixed(4));
+  const ref = lavfi('ref', `60+120*mod(${cuts.map(c => `gte(T\\,${c})`).join('+')}\\,2)+40*sin(X/6+T*12)*lt(Y\\,60)`, units.reduce((a, n) => a + n, 0) * u);
+  const g = node('inspect.mjs', ['grid', ref, '--out', path.join(tmp, 'ref')]);
+  assert.equal(g.status, 0, g.stderr);
+  const j = JSON.parse(fs.readFileSync(path.join(tmp, 'ref-grid.json'), 'utf8'));
+  assert.equal(j.starts.length, cuts.length);
+  assert.ok(j.grid.inliers >= cuts.length - 1, g.stdout);
+  assert.ok(j.grid.bpmCandidates.some(c => c.step === 'an 8th' && Math.abs(c.bpm - 128) < 2), g.stdout);
+  assert.deepEqual(j.grid.unitsPerSegment.map(Math.round), units.slice(1, -1));
+  const h = node('inspect.mjs', ['heat', ref, '--out', path.join(tmp, 'ref')]);
+  assert.equal(h.status, 0, h.stderr);
+  assert.ok(fs.statSync(path.join(tmp, 'ref-heat.png')).size > 0);
+  for (const m of h.stdout.matchAll(/([\d.]+)–([\d.]+)s\s+(\d+\.\d)% of the frame moves/g)) {   // only the top third moves
+    if (m[2] - m[1] >= 0.4) assert.ok(Math.abs(+m[3] - 33.3) < 3, h.stdout);
+    else assert.ok(+m[3] <= 34, h.stdout);
+  }
+  assert.equal(node('inspect.mjs', ['heat', ref, '--at', '1,x']).status, 1);
+});
+
+// ── text framing ──
+const TEXT = path.join(HERE, 'fixtures', 'text');
+test('render --text-check: cut, overlapping, safe-zone and tiny text are reported; a clean frame (with a mask reveal) is not', () => {
+  const bad = node('render.mjs', [TEXT, '--size', '540x960', '--q', 'bad=1', '--text-check', '--out', path.join(tmp, 'tb')]);
+  assert.equal(bad.status, 0, bad.stderr);
+  for (const re of [/CUT\s+"EDGECUT"/, /OVERLAP\s+"ALPHA" and "OMEGA"/, /SAFE\s+"caption in the safe zone" sits in the bottom/, /TINY\s+"tiny label"/]) assert.match(bad.stdout, re);
+  assert.doesNotMatch(bad.stdout, /CENTRE|REVEAL|right safe zone/);
+  assert.ok(fs.readdirSync(tmp).some(f => /^tb-t0\.00\.png$/.test(f)), 'a marked frame is written');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(tmp, 'tb.json'), 'utf8')).issues.length, 4);
+  const ok = node('render.mjs', [TEXT, '--size', '540x960', '--text-check', '--out', path.join(tmp, 'tok')]);
+  assert.equal(ok.status, 0, ok.stderr);
+  assert.match(ok.stdout, /no lasting text-framing problems/);
+  const land = node('render.mjs', [TEXT, '--size', '960x540', '--q', 'bad=1', '--text-check', '--out', path.join(tmp, 'tl')]);
+  assert.doesNotMatch(land.stdout, /SAFE/, 'landscape: no safe zone unless asked');
+  assert.match(node('render.mjs', [TEXT, '--size', '960x540', '--q', 'bad=1', '--text-check', '--safe', '0,0,0.12,0', '--out', path.join(tmp, 'tl2')]).stdout, /SAFE\s+"caption/);
+  assert.equal(node('render.mjs', [TEXT, '--size', '960x540', '--text-check', '--safe', '1,2']).status, 1);
+});
+test('timeline: revealOn puts the reveal, not the start, on the hit', async () => {
+  const { revealOn, b } = await import('../../assets/starter/timeline.js');
+  assert.equal(revealOn(b(16), 0.5, 0.3), b(16) - 0.15);
+  assert.equal(revealOn(4, 0.5), 4);
 });
 
 test('audio build: a silent Tone.js score fails loudly', { skip: !fs.existsSync(path.join(S, 'node_modules', 'tone', 'build', 'Tone.js')) && 'tone not installed' }, () => {

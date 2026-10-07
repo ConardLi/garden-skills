@@ -18,6 +18,10 @@
 //   (--at: one time per direction, or one time for all; singles go next to the sheet in qa/directions/)
 // Determinism check (same t rendered in different orders must be pixel-identical)
 //   node render.mjs <project> --determinism
+// Text framing (review material, never pass/fail): text cut by the frame edge, two different strings on top of each
+// other, text in the platform safe zone, text too small for a phone. Canvas 2D and DOM/SVG text; issues that last ≥ 0.3 s.
+//   node render.mjs <project> --text-check [--every 0.2] [--safe auto|none|T,R,B,L] [--out qa/text]
+//   (--safe: fractions of the frame (0.12) or pixels; auto = 12 % top and bottom on vertical frames, none on landscape)
 //
 // --subframes N blends N samples per frame (motion blur; render time × N). --shutter 0.5 = 180°.
 // --dpr 2 supersamples (renders 2× and downsizes with lanczos): crisper hairlines / 3D edges, ~3× slower.
@@ -26,6 +30,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, execFileSync } from 'node:child_process';
 import { loadChromium, launch, serve, resolveTarget, openPage, warnSoftwareGL, parseSize, args, die } from './lib/browser.mjs';
+import { textHook } from './lib/text-hook.mjs';
 
 // Anything that must be undone on failure or interruption (ffmpeg children, temp dirs, output lock).
 const cleanups = [];
@@ -48,7 +53,7 @@ const fmt = opt.png ? 'png' : 'jpeg';
 const chromium = await loadChromium(target.root);
 const { server, port } = await serve(target.root);
 const browser = await launch(chromium);
-const open = (query = QUERY) => openPage(browser, { port, rel: target.rel, w: W, h: H, dpr: DPR, query });
+const open = (query = QUERY, init = null) => openPage(browser, { port, rel: target.rel, w: W, h: H, dpr: DPR, query, init });
 const finish = async code => { await browser.close().catch(() => {}); server.close(); process.exit(code); };
 cleanups.push(() => server.close());
 
@@ -61,8 +66,98 @@ if (opt.poster !== undefined) await poster();
 else if (opt.directions !== undefined) await directions();
 else if (opt.still || opt.range) await stills();
 else if (opt.determinism) await determinism();
+else if (opt['text-check']) await textCheck();
 else await video();
 await finish(0);
+
+// ───────────────────────────── text framing ─────────────────────────────
+function safeZone() {
+  const v = opt.safe === undefined || opt.safe === true ? 'auto' : String(opt.safe);
+  if (v === 'none') return null;
+  if (v === 'auto') return H > W ? { t: 0.12 * H, r: 0, b: 0.12 * H, l: 0 } : null;
+  const n = v.split(',').map(Number);
+  if (n.length !== 4 || n.some(x => !(x >= 0))) die(`bad --safe ${v}: auto | none | top,right,bottom,left (fractions like 0.12, or pixels)`);
+  const px = (x, d) => (x < 1 ? x * d : x);
+  return { t: px(n[0], H), r: px(n[1], W), b: px(n[2], H), l: px(n[3], W) };
+}
+async function textCheck() {
+  const every = +(opt.every || 0.2);
+  if (!(every > 0)) die(`bad --every ${opt.every}`);
+  const out = path.resolve(typeof opt.out === 'string' ? opt.out.replace(/\.json$/, '') : path.join(target.root, 'qa', 'text'));
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  const page = await open(QUERY, textHook);
+  if (!(await page.evaluate(() => !!window.__msrText))) die('the text hook did not load in the page');
+  const dur = +(opt.duration || await page.evaluate(() => window.DUR));
+  if (!(dur > 0)) die('window.DUR is missing; pass --duration');
+  const safe = safeZone(), BLEED = 0.12 * H, TINY = 0.016 * H;
+  const area = b => Math.max(0, b.x1 - b.x0) * Math.max(0, b.y1 - b.y0);
+  const inter = (a, b) => ({ x0: Math.max(a.x0, b.x0), y0: Math.max(a.y0, b.y0), x1: Math.min(a.x1, b.x1), y1: Math.min(a.y1, b.y1) });
+  const frame = { x0: 0, y0: 0, x1: W, y1: H };
+  const same = (a, b) => a.text.replace(/\s+/g, '') === b.text.replace(/\s+/g, '');
+  const issues = new Map();                       // key → { kind, what, times: [], boxes: { t: [box] } }
+  const note = (key, kind, what, t, bxs) => { let e = issues.get(key); if (!e) issues.set(key, (e = { kind, what, times: [], boxes: {} })); e.times.push(t); e.boxes[t] = bxs; };
+  const times = []; for (let t = 0; t < dur - 1e-6; t += every) times.push(+t.toFixed(4));
+  for (const t of times) {
+    const boxes = await page.evaluate(t => { window.__msrText.reset(); return Promise.resolve(window.render(t)).then(() => window.__msrText.collect()); }, t);
+    const seen = boxes.filter(b => area(b) > 1 && area(inter(b, frame)) > 0 && b.alpha >= 0.15);
+    for (const b of seen) {
+      const vis = area(inter(b, frame)) / area(b), q = JSON.stringify(b.text);
+      if (vis < 0.98 && Math.max(-b.x0, -b.y0, b.x1 - W, b.y1 - H) > 2) {
+        if (b.size >= BLEED) note(`bleed ${b.text}`, 'bleed', `${q} runs off the frame edge (display size: fine if it is a deliberate bleed)`, t, [b]);
+        else note(`cut ${b.text}`, 'cut', `${q} is cut by the frame edge`, t, [b]);
+      }
+      if (safe && b.size < BLEED) {
+        const zone = safe.t && b.y0 < safe.t ? 'top' : safe.b && b.y1 > H - safe.b ? 'bottom' : safe.l && b.x0 < safe.l ? 'left' : safe.r && b.x1 > W - safe.r ? 'right' : null;
+        if (zone) note(`safe ${b.text}`, 'safe', `${q} sits in the ${zone} safe zone (platform UI covers it)`, t, [b]);
+      }
+      if (b.size < TINY) note(`tiny ${b.text}`, 'tiny', `${q} is ${b.size.toFixed(0)}px (${(100 * b.size / H).toFixed(1)}% of the frame height): unreadable on a phone unless it is a deliberate micro-annotation`, t, [b]);
+    }
+    const solid = seen.filter(b => !b.clip && b.alpha >= 0.3);
+    for (let i = 0; i < solid.length; i++) for (let j = i + 1; j < solid.length; j++) {
+      const a = solid[i], c = solid[j];
+      if (same(a, c)) continue;
+      if (area(inter(a, c)) >= 0.3 * Math.min(area(a), area(c))) {
+        const [p, s] = [a.text, c.text].sort();
+        note(`overlap ${p}|${s}`, 'overlap', `${JSON.stringify(p)} and ${JSON.stringify(s)} are drawn on top of each other`, t, [a, c]);
+      }
+    }
+  }
+  // keep what lasts: consecutive samples, ≥ 0.3 s (a single sample counts when samples are that far apart)
+  const minRun = every >= 0.3 ? 1 : Math.ceil(0.3 / every) + 1;
+  const found = [];
+  for (const e of issues.values()) {
+    let run = [e.times[0]];
+    const flush = () => { if (run.length >= minRun) found.push({ kind: e.kind, what: e.what, t0: run[0], t1: +(run.at(-1) + every).toFixed(3), boxes: e.boxes[run[0]] }); };
+    for (const t of e.times.slice(1)) { if (t - run.at(-1) <= every * 1.5) run.push(t); else { flush(); run = [t]; } }
+    flush();
+  }
+  found.sort((a, b) => a.t0 - b.t0);
+  // one picture per moment, with the boxes drawn in
+  const shots = [...new Set(found.map(f => f.t0))].slice(0, 12);
+  const files = [];
+  for (const t of shots) {
+    const marks = found.filter(f => f.t0 === t).flatMap(f => f.boxes.map(b => ({ ...b, kind: f.kind })));
+    await page.evaluate(async ([t, marks, safe, W, H]) => {
+      window.__msrText.reset(); await window.render(t);
+      const d = document.createElement('div'); d.id = '__msr_marks';
+      d.style.cssText = `position:fixed;left:0;top:0;width:${W}px;height:${H}px;pointer-events:none;z-index:2147483647`;
+      const col = { cut: '#ff2d2d', overlap: '#ff2df0', safe: '#ffb000', tiny: '#2dd4ff', bleed: '#9aa0a6' };
+      if (safe) for (const [y, h] of [[0, safe.t], [H - safe.b, safe.b]]) if (h) d.insertAdjacentHTML('beforeend', `<div style="position:absolute;left:0;top:${y}px;width:${W}px;height:${h}px;background:rgba(255,176,0,.18)"></div>`);
+      for (const m of marks) d.insertAdjacentHTML('beforeend', `<div style="position:absolute;left:${m.x0}px;top:${m.y0}px;width:${m.x1 - m.x0}px;height:${m.y1 - m.y0}px;outline:3px solid ${col[m.kind]};outline-offset:2px"></div>`);
+      document.body.appendChild(d);
+    }, [t, marks, safe, W, H]);
+    const file = `${out}-t${t.toFixed(2)}.png`;
+    await page.screenshot({ path: file, clip: { x: 0, y: 0, width: W, height: H } });
+    await page.evaluate(() => document.getElementById('__msr_marks')?.remove());
+    files.push(file);
+  }
+  fs.writeFileSync(`${out}.json`, JSON.stringify({ size: `${W}x${H}`, every, safe, issues: found.map(({ boxes, ...f }) => f) }, null, 1));
+  console.log(`text framing · ${times.length} frames every ${every}s · safe zone: ${safe ? `top ${safe.t.toFixed(0)} / bottom ${safe.b.toFixed(0)} / left ${safe.l.toFixed(0)} / right ${safe.r.toFixed(0)} px` : 'not checked'}`);
+  if (!found.length) console.log('  no lasting text-framing problems found (WebGL / image text is not seen: look at those frames yourself)');
+  for (const f of found) console.log(`  [${f.t0.toFixed(2)}–${f.t1.toFixed(2)}s] ${f.kind.toUpperCase().padEnd(7)} ${f.what}`);
+  if (files.length) console.log(`  marked frames: ${files.join(', ')}${shots.length < new Set(found.map(f => f.t0)).size ? ' (first 12)' : ''}`);
+  console.log(`  ${out}.json  (review material: look at each marked frame and decide; deliberate bleeds and micro-annotations are fine)`);
+}
 
 // ───────────────────────────── poster / directions ─────────────────────────────
 function writePng(file, buf) {

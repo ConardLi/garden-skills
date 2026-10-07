@@ -83,8 +83,10 @@ export function resolveTarget(target) {
   return { root: isDir ? abs : path.dirname(abs), page, rel: path.basename(page) };
 }
 
-export async function openPage(browser, { port, rel, w, h, dpr = 1, query = '' }) {
+// init: a self-contained function run in the page before any of its scripts (e.g. the text-framing hook)
+export async function openPage(browser, { port, rel, w, h, dpr = 1, query = '', init = null }) {
   const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: dpr });
+  if (init) await page.addInitScript(init);
   const recent = [];
   page.on('console', m => { if (m.type() === 'error') { const s = '[page] ' + m.text().slice(0, 300); recent.push(s); if (recent.length > 6) recent.shift(); console.error(s); } });
   page.on('pageerror', e => die(`[pageerror] ${e.message}\n(render(t) threw or a module failed; fix the page and retry)`));

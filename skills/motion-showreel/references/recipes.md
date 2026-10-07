@@ -250,6 +250,20 @@ const onBeat = (t % BEAT) / BEAT;                 // 拍内进度 0→1，可以
 ```
 用户给了曲子：把 `beats.json` 的 `beats` / `downbeats` / `drops` 复制进 `timeline.js`（作为数组导出），画面和 `score.mjs` 都从这里读。
 
+**转场的揭开点对拍**：先量出新画面在转场进行到多少时第一次露出来（`reveal`，0–1），再倒推起点，拍点那一帧就是新画面露脸的那一帧。拍点上的冲击加在整个舞台上，新旧两层一起放大再弹回：
+
+```js
+import { b, revealOn } from './timeline.js';
+const HIT = b(16), TD = 0.5;                       // 第 16 拍要换镜；这个光圈转场 0.5 秒，进行到 30% 时新画面开始露出
+const T0 = revealOn(HIT, TD, 0.3);                 // = HIT − 0.15 s
+const p = seg(t, T0, T0 + TD);                     // 转场进度 0→1
+const punch = 1 + 0.03 * pulse(t, [HIT], 0.2);     // 拍点那一帧放大 3%，约 0.3 秒回到 1
+ctx.save(); camera(ctx, W, H, { zoom: punch });    // 冲击作用在两层上，不只是新层
+drawOld(t); drawIris(p, () => drawNew(t));
+ctx.restore();
+```
+渲完用 `inspect.mjs strip --at <HIT>` 看连续帧：拍点那一帧应该已经看得到新画面，而且整屏有明显变化。
+
 ## 15. Canvas 伪 3D 体块（平面网格立成空间，不用 Three.js）
 
 规则网格上的方块、柱子、楼群、柱状图，用 `motion.js` 的 `camera3d` + `drawBoxes` 就够了：透视投影 + 画家算法，几百个体块一帧几毫秒，和 2D 画面共用同一张画布，所以「平面 → 立体」可以是连续的一个镜头。

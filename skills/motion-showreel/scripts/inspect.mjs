@@ -7,24 +7,28 @@
 //                              [--audio required|none|any] [--loop] [--timeline <proj>/timeline.js | none]
 //   node inspect.mjs sheet <video> [--cells 24] [--width 320] [--out qa/sheet]
 //   node inspect.mjs phone <video> [--out qa/phone]
-//   node inspect.mjs strip <video> --at 4.1 [--frames 12] [--width 320]
+//   node inspect.mjs strip <video> --at 4.1 [--frames 12] [--step 1] [--width 320]
 //   node inspect.mjs frames <video> 1.5 4 9.2 [--out qa/f]
 //   node inspect.mjs loop <video>
 //   node inspect.mjs motion <video> [--freeze 0.8] [--timeline …]
+// Reading a reference video (step 1: learn its structure, not its assets):
+//   node inspect.mjs grid <ref> [--thresh 5] [--debounce 0.2] [--tol 1.5] [--strips]   cut/transition starts + the beat grid they sit on
+//   node inspect.mjs heat <ref> [--at 1.2,3.4,…] [--skip 0.35]                         where inside each segment things move
 // qa without --expect-size / --expect-fps / --expect-duration / --audio says which checks did NOT run (never "all passed").
 // The project's timeline.js (found next to out/ automatically) may export HOLDS = [[t0, t1], …]: freezes inside a
-// declared hold are reported as intended holds instead of dead air.
+// declared hold are reported as intended holds instead of dead air. SHOTS = [{ id, t0, t1 }] makes motion report per shot.
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { args, die } from './lib/browser.mjs';
 import { findTimeline, loadTimeline, sameClock } from './lib/project.mjs';
+import { diffProfile, shotMotion, bursts, findStarts, fitGrid, heatmap } from './lib/frames.mjs';
 
 const { pos, opt } = args(process.argv.slice(2));
 const [cmd, video] = pos;
-const CMDS = { qa, sheet, phone, strip, frames, loop, motion };
-if (!CMDS[cmd]) die('usage: inspect.mjs qa|sheet|phone|strip|frames|loop|motion <video> …');
+const CMDS = { qa, sheet, phone, strip, frames, loop, motion, grid, heat };
+if (!CMDS[cmd]) die('usage: inspect.mjs qa|sheet|phone|strip|frames|loop|motion|grid|heat <video> …');
 if (!video || !fs.existsSync(video)) die(`video not found: ${video}`);
 const info = probe(video);
 const outPrefix = path.resolve(typeof opt.out === 'string' ? opt.out.replace(/\.png$/, '') : path.join(path.dirname(path.resolve(video)), '..', 'qa', path.basename(video, path.extname(video))));
@@ -63,12 +67,17 @@ async function phone() {
   makeSheet(file, +(opt.cells || 12), info.h > info.w ? 180 : 320);
   console.log(`${file}  (feed-size cells: if a word is hard to read here, it is too small or too short on screen)`);
 }
+// n frames, every `step`-th one, starting at `from` seconds
+function stripTile(from, n, step, file, width = 320) {
+  const cols = Math.min(n, n > 12 ? 5 : 6), rows = Math.ceil(n / cols), pick = step > 1 ? `select='not(mod(n\\,${step}))',` : '';
+  ffOut(['-ss', String(from), '-i', video, '-vf', `${pick}scale=${width}:-2${stamp},tile=${cols}x${rows}:padding=4:color=0x111111`, '-frames:v', '1'], file);
+  return file;
+}
 async function strip() {
   if (opt.at === undefined) die('strip needs --at <seconds>');
-  const at = inRange(+opt.at, '--at'), n = +(opt.frames || 12), from = Math.max(0, at - n / 2 / info.fps), file = `${outPrefix}-strip-${at.toFixed(2)}.png`;
-  const cols = Math.min(n, 6), rows = Math.ceil(n / cols);
-  ffOut(['-ss', String(from), '-i', video, '-vf', `scale=${+(opt.width || 320)}:-2${stamp},tile=${cols}x${rows}:padding=4:color=0x111111`, '-frames:v', '1'], file);
-  console.log(`${file}  (${n} consecutive frames from ${from.toFixed(2)}s at ${info.fps.toFixed(0)}fps)`);
+  const at = inRange(+opt.at, '--at'), n = +(opt.frames || 12), step = Math.max(1, +(opt.step || 1) | 0), from = Math.max(0, at - n * step / 2 / info.fps);
+  const file = stripTile(from, n, step, `${outPrefix}-strip-${at.toFixed(2)}.png`, +(opt.width || 320));
+  console.log(`${file}  (${n} frames${step > 1 ? `, every ${step}th` : ' in a row'} from ${from.toFixed(2)}s at ${info.fps.toFixed(0)}fps)`);
 }
 async function frames() {
   const ts = pos.slice(2).map(Number); if (!ts.length) die('frames needs seconds, e.g. frames out/video.mp4 1.5 4');
@@ -131,6 +140,83 @@ async function motion() {
   else if (note && dead.length) console.log(`  (${note})`);
   console.log(`black frames: ${blacks.length ? fmt(blacks) : 'none'}`);
   console.log(`hard cuts (${cuts.length}): ${cuts.map(c => c.toFixed(2)).join(', ') || 'none'}; longest uncut stretch ${longest.toFixed(2)}s`);
+  for (const l of await motionReport(cuts)) console.log(l);
+}
+
+// Per shot (SHOTS in timeline.js, else the stretches between hard cuts): how much of the frame changes per step,
+// how many steps change nothing, sudden spikes, stutter; plus one-frame flashes. Review material, never pass/fail:
+// a quiet style is allowed to be still, a stepped style is allowed to stutter.
+async function motionReport(cuts) {
+  const prof = await diffProfile(video, info), fps = info.fps;
+  const tl = await loadTimeline(findTimeline(video, opt.timeline));
+  const clockOk = sameClock(tl, info.dur), holds = clockOk ? tl.HOLDS : [];
+  const b = [0, ...cuts, info.dur];
+  const segs = clockOk && tl.SHOTS.length ? tl.SHOTS : b.slice(1).map((t1, i) => ({ id: `#${i + 1}`, t0: b[i], t1 })).filter(s => s.t1 - s.t0 >= 0.2);
+  const pct = v => `${(v * 100).toFixed(v < 0.1 ? 1 : 0)}%`, ts = a => a.slice(0, 6).map(t => t.toFixed(2)).join(', ') + (a.length > 6 ? ', …' : '') + 's';
+  const held = s => holds.some(([h0, h1]) => Math.min(h1, s.t1) - Math.max(h0, s.t0) >= 0.8 * (s.t1 - s.t0));
+  const lines = [`motion per ${clockOk && tl.SHOTS.length ? 'shot (SHOTS in timeline.js)' : 'stretch between hard cuts'}: share of the frame changing per frame step · steps where nothing changes · sudden jumps`];
+  // a run of 3+ "cuts" each < 0.35 s apart is the picture being regenerated, not editing: measure those steps.
+  // One or two close cuts stay cuts (a hit that inverts the frame for a beat and back is two cuts).
+  const runs = []; for (const c of cuts) { if (runs.length && c - runs.at(-1).at(-1) < 0.35) runs.at(-1).push(c); else runs.push([c]); }
+  const realCuts = runs.filter(r => r.length <= 2).flat();
+  for (const r of shotMotion(prof, fps, segs, realCuts)) {
+    const head = `  ${r.id.padEnd(10)} ${r.t0.toFixed(2)}–${r.t1.toFixed(2)}s`;
+    if (r.moving === undefined) { lines.push(`${head}  (too short to measure)`); continue; }
+    const notes = [];
+    if (r.still >= 0.95 && !held(r)) notes.push('nothing moves: a deliberate hold (add it to HOLDS) or dead air?');
+    if (r.spikes.length) notes.push(`sudden jumps at ${ts(r.spikes)}: a deliberate hit (inversion, smash), whole-frame churn (noise reseeded every few frames reads as flicker) or a glitch? look with strip --at`);
+    if (r.alternation > 0.5 && r.still > 0.2 && r.still < 0.8) notes.push('every other step is still: stepped animation (fine if the style steps, but the camera should stay smooth) or duplicated frames');
+    lines.push(`${head}  moving ${pct(r.moving)} · still ${pct(r.still)} · jumps ${r.spikes.length}${notes.map(n => `\n      ↳ ${n}`).join('')}`);
+  }
+  for (const r of bursts(prof, fps)) lines.push(`rapid whole-frame changes ${r.t0.toFixed(2)}–${r.t1.toFixed(2)}s: ${r.n} in a row, one every ~${r.every.toFixed(2)}s — a deliberate fast montage, or strokes / noise / textures regenerated every few frames (reads as flicker: keep positions fixed, vary a parameter continuously)`);
+  const fl = prof.flashes.map(k => k / fps);
+  lines.push(`flash frames (one frame unlike both neighbours, which match each other): ${fl.length ? ts(fl) + ' — a glitch, a blank frame or a stray layer, unless it is a deliberate one-frame strobe' : 'none'}`);
+  return lines;
+}
+
+// ── reading a reference video ──
+async function grid() {
+  const prof = await diffProfile(video, info), fps = info.fps;
+  const starts = findStarts(prof, fps, { thresh: +(opt.thresh || 5), debounce: +(opt.debounce || 0.2) });
+  const fit = fitGrid(starts, fps, { tol: +(opt.tol || 1.5) });
+  const sec = starts.map(f => +(f / fps).toFixed(3));
+  const json = `${outPrefix}-grid.json`;
+  fs.writeFileSync(json, JSON.stringify({ video: path.basename(video), fps: +info.fps.toFixed(3), duration: +info.dur.toFixed(3), starts: sec, grid: fit }, null, 1));
+  console.log(`${starts.length} cut / transition starts: ${sec.map(t => t.toFixed(2)).join(', ') || 'none'}`);
+  if (fit) {
+    console.log(`grid: one step = ${fit.stepFrames} frames (${fit.stepSec}s), first on ${fit.offsetSec}s; ${fit.inliers}/${fit.total} starts sit on it (worst ${fit.maxResidualFrames} frames off)`);
+    console.log(`  BPM if one step is…  ${fit.bpmCandidates.map(c => `${c.step}: ${c.bpm}`).join(' · ') || '(outside 60–200 BPM for every reading)'}`);
+    console.log(`  segment lengths in steps: ${fit.unitsPerSegment.join(' ')}   (shrinking numbers = the cut accelerates while the tempo stays)`);
+    if (fit.outliers.length) console.log(`  off the grid: ${fit.outliers.join(', ')}s (false detections, or deliberate off-beat cuts)`);
+    console.log('  confirm with the music when there is a track: audio.mjs beats <ref> (the picture grid and the beat grid should agree)');
+  } else console.log('no regular grid: fewer than 4 starts, or no step holds 80 % of them (cut to phrases, or to the voice, not to a fixed beat)');
+  if (opt.strips) {
+    const step = Math.max(1, Math.round(fps / 30));
+    for (const f of starts) console.log('  ' + stripTile(Math.max(0, (f - 2) / fps), 15, step, `${outPrefix}-start-${(f / fps).toFixed(2)}.png`, 240));
+    console.log(`  (15 frames from 2 frames before each start, ${step > 1 ? `every ${step}th frame` : 'every frame'}: read the transition mechanism here, not from a sheet)`);
+  }
+  console.log(`${json}\nnext: inspect.mjs heat ${path.relative(process.cwd(), video)}  (what moves inside each segment)`);
+}
+
+async function heat() {
+  const fps = info.fps;
+  let cutsAt;
+  if (opt.at !== undefined) {
+    cutsAt = String(opt.at).split(',').map(Number);
+    if (opt.at === true || cutsAt.some(v => !Number.isFinite(v))) die(`bad --at ${opt.at}: segment boundaries in seconds, e.g. --at 1.2,3.4`);
+  } else {
+    const tl = await loadTimeline(findTimeline(video, opt.timeline));
+    if (sameClock(tl, info.dur) && tl.SHOTS.length) cutsAt = tl.SHOTS.slice(1).map(s => s.t0);
+    else cutsAt = findStarts(await diffProfile(video, info), fps, { thresh: +(opt.thresh || 5), debounce: +(opt.debounce || 0.2) }).map(f => f / fps);
+  }
+  const b = [0, ...cutsAt.filter(t => t > 0 && t < info.dur).sort((x, y) => x - y), info.dur];
+  const segs = b.slice(1).map((t1, i) => ({ t0: b[i], t1 })).filter(s => s.t1 - s.t0 >= 0.15);
+  if (!segs.length) die('no segment is long enough (≥ 0.15 s) to measure');
+  const file = `${outPrefix}-heat.png`;
+  const areas = await heatmap(video, info, segs, file, { skip: +(opt.skip ?? 0.35) });
+  console.log(`${file}  (${segs.length} cells, left to right: each segment's last frame in gray, everything that moved inside it in red)`);
+  segs.forEach((s, i) => console.log(`  #${String(i + 1).padEnd(3)} ${s.t0.toFixed(2)}–${s.t1.toFixed(2)}s  ${areas[i] == null ? 'too short' : `${(areas[i] * 100).toFixed(1)}% of the frame moves`}`));
+  console.log('Write down what moves and where (a main action plus small loops?), and how much: that is the motion budget to learn, not the imagery.');
 }
 
 function loudness(file) {
@@ -178,6 +264,7 @@ async function qa() {
   console.log(`  frozen ≥ ${freezeMin}s: ${frozen.join('; ') || 'none'}`);
   if (dead.length && note) console.log(`    ${note}`);
   console.log(`  hard cuts: ${cuts.map(c => c.toFixed(2)).join(', ') || 'none'}`);
+  for (const l of await motionReport(cuts)) console.log('  ' + l);
   if (info.audio) {
     const r = spawnSync(process.execPath, [fileURLToPath(new URL('./audio.mjs', import.meta.url)), 'check', video, '--out', `${outPrefix}-audio`, ...(opt.timeline ? ['--timeline', String(opt.timeline)] : [])], { encoding: 'utf8' });
     process.stdout.write((r.stdout + r.stderr).split('\n').map(l => '  ' + l).join('\n') + '\n');

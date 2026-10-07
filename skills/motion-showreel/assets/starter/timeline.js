@@ -6,6 +6,10 @@ export const BEAT = 60 / BPM;
 export const BAR = BEAT * 4;
 /** beat number → seconds (fractions allowed: b(4.5) is the "and" of beat 5) */
 export const b = n => n * BEAT;
+/** When to START a transition so the new picture first shows ON the hit (a beat / bar time).
+ *  reveal = how far into the transition the new picture first becomes visible (0 = at once; 0.3 = an iris that opens
+ *  after a third). Started on the beat, a transition reveals late and reads as "the sound came first". */
+export const revealOn = (hit, dur, reveal = 0) => hit - reveal * dur;
 
 export const DUR = b(16); // 8 s — set the real length here (whole bars keep loops and music tidy)
 
