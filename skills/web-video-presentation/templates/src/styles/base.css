@@ -113,8 +113,10 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 3. Stage chrome — letterbox + 16:9 fitter + raw 1920×1080 frame.
- *    The fitter is sized to ACTUAL visible px so flex-centering is exact.
+ * 3. Stage chrome — letterbox + fitter + raw STAGE_W×STAGE_H frame.
+ *    Stage size comes from stage.config.ts (default 1920×1080 = 16:9).
+ *    The fitter/frame dimensions are set inline by Stage.tsx; the px
+ *    values below are just a pre-JS fallback.
  * ───────────────────────────────────────────────────────────────────── */
 .app-shell {
   position: fixed;
@@ -126,7 +128,7 @@ body {
 }
 .stage-fitter {
   position: relative;
-  /* width / height are set inline by Stage.tsx (1920*scale × 1080*scale) */
+  /* width / height set inline by Stage.tsx from stage.config.ts */
   isolation: isolate;
 }
 .stage-frame {
