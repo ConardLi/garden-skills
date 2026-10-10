@@ -61,7 +61,7 @@
 - **画面 = 时间的函数**：页面暴露确定性的 `window.render(t)`（不用 `Math.random`、定时器、rAF、CSS 动画），Playwright 逐帧截图，ffmpeg 合成 MP4。运动模糊（`--subframes`）、超采样（`--dpr`）、胶片颗粒（`--grain`）都是渲染参数，不写在页面里。
 - **画面和声音共用一张时间表**：`timeline.js` 里写着每个切点、撞击和音效，页面和配乐都从它读取，卡点精确到帧。
 - **先找对标，再想三个结构**：动笔前先挑 1–2 个对标作品，写清学什么、不学什么，再写三个候选结构。第一个冒出来的想法往往是这个风格的陈词滥调。参考视频可以量：`inspect.mjs grid` 找出剪点和它们落的节拍网格，`heat` 看每段里哪里在动。
-- **风格库是起点，不是选择题**：22 种风格，每种写明不变的规则（质感、配色、字体、运动、镜头语法、声音调色板、原生手法、坑）。可以直接用、改造、混搭，也可以按模板自定义。
+- **风格库是起点，不是选择题**：28 种风格，每种写明不变的规则（质感、配色、字体、运动、镜头语法、声音调色板、原生手法、坑）。每种还列了 8–12 个辨识信号（按主题挑 2–3 个），并把这个风格最俗的版本直接写出来，选了合成波也不会每次都是网格加日落。可以直接用、改造、混搭，也可以按模板自定义。
 - **声音也要先定方向**：brief 里声音和画面同等对待，写清对标、律动、和声、配器、戏剧曲线；再配一份声音的「默认味」清单，免得几支片子听起来像同一首歌。
 - **一次确认，然后全力以赴**：唯一的停顿点是风格帧。用户没定风格时，给 3 个拉开差距的方向，每个一张关键帧；确认之后全部自主完成。
 - **技术验收和审美判断分开**：尺寸、帧率、时长、帧数、黑帧、响度、真峰值、循环接缝、确定性这些由程序判定，必须全部 PASS。旁边还有量出来的审片材料，不挡构建：按镜头的运动（含突然的跳变和单帧闪），以及文字框景（字被画面切掉、叠字、落进安全区、字太小）。审片记录只是帮用户更快地看片，不能代替用户自己看。
@@ -86,7 +86,7 @@
 
 ## 风格库
 
-22 种风格，分 7 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、手作、电影感。下面几种是 Skill 自己渲出来的：
+28 种风格，分 8 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、插画与漫画、手作、电影感。下面几种是 Skill 自己渲出来的：
 
 <table>
 <tr>
@@ -106,6 +106,18 @@
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-synthwave-neon.webp" alt="synthwave-neon" /><br /><sub><code>synthwave-neon</code> 合成波霓虹</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-paper-cut.webp" alt="paper-cut" /><br /><sub><code>paper-cut</code> 剪纸</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-minimal-ui.webp" alt="minimal-ui" /><br /><sub><code>minimal-ui</code> 极简界面</sub></td>
+</tr>
+<tr>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-comic-pop.webp" alt="comic-pop" /><br /><sub><code>comic-pop</code> 漫画分格</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-flat-vector.webp" alt="flat-vector" /><br /><sub><code>flat-vector</code> 扁平插画</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-guochao.webp" alt="guochao" /><br /><sub><code>guochao</code> 国潮纹样</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-painterly.webp" alt="painterly" /><br /><sub><code>painterly</code> 油画笔触</sub></td>
+</tr>
+<tr>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glitch-digital.webp" alt="glitch-digital" /><br /><sub><code>glitch-digital</code> 数字故障</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-soft-organic.webp" alt="soft-organic" /><br /><sub><code>soft-organic</code> 柔光有机</sub></td>
+<td width="25%"></td>
+<td width="25%"></td>
 </tr>
 </table>
 
@@ -134,7 +146,7 @@ skills/motion-showreel/
 ├── manifest.json
 ├── references/
 │   ├── formats.md           9 种用途（作品集、宣传片、UI 动效、排版卡点、Logo、循环、数据、年代回顾、绿幕合成）
-│   ├── styles/              INDEX.md + _template.md + 22 个风格文件
+│   ├── styles/              INDEX.md + _template.md + 28 个风格文件
 │   ├── craft.md             节奏、运动、转场、镜头、排版、配色、质感、签名时刻、默认味清单
 │   ├── sound.md             声音方向、合成 API、Tone.js、戏剧曲线、律动 / 和声词汇、混音、声音默认味
 │   ├── stack.md             页面契约、确定性、各技术的坑、字体、多画幅、性能

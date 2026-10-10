@@ -78,7 +78,7 @@ description: 用代码制作以图形、文字或界面动画为主的短视频�
 
 **用途**和**风格**分开选：
 - 用途（拍什么、按什么结构讲）看 `references/formats.md`，只读对应的那一节。
-- 风格（长什么样、怎么动、什么声音）先看 `references/styles/INDEX.md`，再**只读选中的 1–2 个风格文件**。风格可以直接用、改造（替换其中一两条规则）、混搭（一主一辅，或者按段落切换媒介），也可以按 `styles/_template.md` 自定义。风格规则保持不变，故事、镜头和结构从用户的主题来，不要沿用别的片子。
+- 风格（长什么样、怎么动、什么声音）先看 `references/styles/INDEX.md`，再**只读选中的 1–2 个风格文件**。风格可以直接用、改造（替换其中一两条规则）、混搭（一主一辅，或者按段落切换媒介），也可以按 `styles/_template.md` 自定义。风格规则保持不变，故事、镜头和结构从用户的主题来，不要沿用别的片子。每个风格文件都有「辨识信号」和「最俗的版本」两节：按主题挑 2–3 个信号（至少一个不在俗套里），在 brief 里写明翻掉了俗套的哪几条，或者为什么保留。用户选了风格，要的是一眼认出这个风格，两三个信号就够了。
 - 再按需翻 `references/craft.md`（手法库）。
 
 按 `references/brief-template.md` 写 brief，核心是：
@@ -89,6 +89,7 @@ Reel Read:
   benchmark: [对标作品 · 学什么 · 不学什么]
   structure: [三个候选结构 → 选中哪个、为什么]
   style: [styles/ 里的风格（含改造点），或者混搭方案，或者自定义规则]
+  signals: [挑了哪 2–3 个辨识信号、为什么；翻掉了俗套的哪几条]
   takeaway: [观众记住的一句话或一个画面]
   hook: [前 1 秒发生什么]
   signature: [记忆点：第几秒、什么手法]
@@ -208,7 +209,7 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 文件 | 什么时候读 |
 |---|---|
 | `references/formats.md` | 第 2 步：用途，比如宣传短片、作品集、UI 动效、排版卡点、Logo、数据爆点、绿幕合成 |
-| `references/styles/INDEX.md` | 第 2 步：22 种风格的目录、三方向规则、混搭规则；然后只读选中的 `styles/<slug>.md`。自定义用 `styles/_template.md` |
+| `references/styles/INDEX.md` | 第 2 步：28 种风格的目录、三方向规则、混搭规则；然后只读选中的 `styles/<slug>.md`。自定义用 `styles/_template.md` |
 | `references/craft.md` | 第 2 和第 4 步：节奏、运动、转场、镜头、排版、配色、质感、记忆点、默认味清单 |
 | `references/brief-template.md` | 写 brief 时 |
 | `references/stack.md` | 第 4 步：页面契约、确定性、各技术的坑、字体、素材、多画幅、性能 |

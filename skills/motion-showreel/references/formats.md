@@ -6,15 +6,15 @@
 
 | 用途 | 一句话 | 典型时长 / 画幅 | 常配风格（只是常见搭配，不是限制） |
 |---|---|---|---|
-| A 动效作品集 | 展示动效功力，手法密集切换 | 12–20 秒 · 16:9 / 1:1 | swiss-editorial、kinetic-brutalist、particle-field、mixed-media-era |
-| B 产品宣传短片 | 用真实的界面和卖点讲清一个产品 | 15–30 秒 · 16:9 / 9:16 | minimal-ui、dark-keynote、glass-material、isometric-infographic |
+| A 动效作品集 | 展示动效功力，手法密集切换 | 12–20 秒 · 16:9 / 1:1 | swiss-editorial、kinetic-brutalist、particle-field、glitch-digital、comic-pop、mixed-media-era |
+| B 产品宣传短片 | 用真实的界面和卖点讲清一个产品 | 15–30 秒 · 16:9 / 9:16 | minimal-ui、dark-keynote、glass-material、isometric-infographic、flat-vector、soft-organic |
 | C UI 动效演示 | 一个元素连续变成一串界面状态 | 10–16 秒 · 1:1 | minimal-ui |
-| D 动态排版 / 金句卡点 | 字就是画面，跟着节拍走 | 8–30 秒 · 9:16 / 16:9 | kinetic-brutalist、swiss-editorial、editorial-collage、risograph-print |
-| E Logo 演绎 / 片头 | 一个想法，最后落成 logo | 4–8 秒 · 16:9 | 任意，常见 liquid-shader、particle-field、glass-material、cinematic-title |
+| D 动态排版 / 金句卡点 | 字就是画面，跟着节拍走 | 8–30 秒 · 9:16 / 16:9 | kinetic-brutalist、swiss-editorial、editorial-collage、risograph-print、comic-pop、glitch-digital |
+| E Logo 演绎 / 片头 | 一个想法，最后落成 logo | 4–8 秒 · 16:9 | 任意，常见 liquid-shader、particle-field、glass-material、cinematic-title、guochao |
 | F 循环动图 | 没有开头和结尾，可以无限播放 | 4–12 秒 · 1:1 / 9:16 | generative-geometry、liquid-shader、pixel-game |
 | G 数据爆点 | 一个数字或一组对比的冲击力 | 6–15 秒 · 9:16 / 16:9 | data-motion、swiss-editorial、dark-keynote |
-| H 绿幕人物 + 代码场景 | 用户提供人物素材，场景和特效用代码做 | 10–20 秒 · 9:16 | 任意，常见 editorial-collage、kinetic-brutalist |
-| I 年代回顾 | 按时间讲一段演进史，每个阶段换一种媒介 | 45 秒–2 分钟 · 16:9 | mixed-media-era、cinematic-title |
+| H 绿幕人物 + 代码场景 | 用户提供人物素材，场景和特效用代码做 | 10–20 秒 · 9:16 | 任意，常见 editorial-collage、kinetic-brutalist、comic-pop |
+| I 年代回顾 | 按时间讲一段演进史，每个阶段换一种媒介 | 45 秒–2 分钟 · 16:9 | mixed-media-era、cinematic-title、painterly |
 
 ---
 

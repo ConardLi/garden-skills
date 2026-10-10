@@ -61,7 +61,7 @@ Technical checks (all PASS) and an honest review log
 - **Picture = a function of time.** The page exposes a deterministic `window.render(t)` (no `Math.random`, timers, rAF or CSS animation). Playwright captures every frame and ffmpeg encodes the MP4. Motion blur (`--subframes`), supersampling (`--dpr`) and film grain (`--grain`) are render flags, not page code.
 - **One timeline for picture and sound.** `timeline.js` holds every cut, hit and cue; the page and the score both import it, so hits land on the exact frame.
 - **Benchmark first, then three structures.** Before anything is drawn, the agent picks 1–2 reference works (what to learn, what not to copy) and writes down three candidate structures. A reference video can be measured: `inspect.mjs grid` finds its cuts and the beat grid they sit on, `heat` shows where each segment moves. The first idea that comes to mind is usually the style's cliché.
-- **A style library that is a starting point, not a menu.** 22 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Use one, adapt it, mix two, or write your own from the template.
+- **A style library that is a starting point, not a menu.** 28 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Every style also lists 8–12 recognition signals to pick 2–3 from and spells out its own cliché, so choosing "synthwave" does not mean the same grid-and-sunset every time. Use one, adapt it, mix two, or write your own from the template.
 - **Sound gets its own direction.** The brief covers sound too: a reference, groove, harmony, palette and dramatic arc. A list of audio defaults keeps pieces from all ending up with the same song.
 - **One checkpoint, then all-out.** The only stop is the style-frame review. If no style was given, the agent offers three deliberately different directions, one key frame each. After that it builds autonomously.
 - **Technical acceptance is separate from taste.** Programmatic checks (size, fps, duration, frame count, black frames, loudness, true peak, loop seams, determinism) must all pass. Measured review material sits next to them without blocking anything: per-shot motion with sudden jumps and one-frame flashes, and a text-framing pass (text cut by the frame, overlapping, in the safe zone, too small). The agent's review notes help the user watch faster; they never replace the user's own viewing.
@@ -86,7 +86,7 @@ Technical checks (all PASS) and an honest review log
 
 ## Style Library
 
-22 styles in 7 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, handmade, cinematic. A few of them, rendered by the skill:
+28 styles in 8 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, illustration & comics, handmade, cinematic. A few of them, rendered by the skill:
 
 <table>
 <tr>
@@ -106,6 +106,18 @@ Technical checks (all PASS) and an honest review log
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-synthwave-neon.webp" alt="synthwave-neon" /><br /><sub><code>synthwave-neon</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-paper-cut.webp" alt="paper-cut" /><br /><sub><code>paper-cut</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-minimal-ui.webp" alt="minimal-ui" /><br /><sub><code>minimal-ui</code></sub></td>
+</tr>
+<tr>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-comic-pop.webp" alt="comic-pop" /><br /><sub><code>comic-pop</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-flat-vector.webp" alt="flat-vector" /><br /><sub><code>flat-vector</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-guochao.webp" alt="guochao" /><br /><sub><code>guochao</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-painterly.webp" alt="painterly" /><br /><sub><code>painterly</code></sub></td>
+</tr>
+<tr>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glitch-digital.webp" alt="glitch-digital" /><br /><sub><code>glitch-digital</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-soft-organic.webp" alt="soft-organic" /><br /><sub><code>soft-organic</code></sub></td>
+<td width="25%"></td>
+<td width="25%"></td>
 </tr>
 </table>
 
@@ -134,7 +146,7 @@ skills/motion-showreel/
 ├── manifest.json
 ├── references/
 │   ├── formats.md           9 formats (showreel, product film, UI motion, kinetic type, logo, loop, data, era, green-screen)
-│   ├── styles/              INDEX.md + _template.md + 22 style files
+│   ├── styles/              INDEX.md + _template.md + 28 style files
 │   ├── craft.md             rhythm, motion, transitions, camera, type, colour, texture, signature moments, default-look blocklist
 │   ├── sound.md             sound direction, synth API, Tone.js, arcs, groove / harmony vocabulary, mixing, audio defaults
 │   ├── stack.md             page contract, determinism, per-tech pitfalls, fonts, multi-format, performance

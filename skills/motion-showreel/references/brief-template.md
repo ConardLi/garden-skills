@@ -24,6 +24,7 @@ Reel Read:
   benchmark: …（对标作品 · 学什么 · 不学什么；有参考视频时写上 inspect grid / heat 量到的数：BPM、段长序列、每段运动面积）
   structure: …（三个候选结构 → 选中的那个和理由）
   style: …（styles/<slug>.md，写明改造点；或混搭方案；或按 _template.md 写的自定义规则）
+  signals: …（从风格文件「辨识信号」里挑的 2–3 个，为什么跟这个主题有关；对照「最俗的版本」翻掉了哪几条，或者为什么保留）
   hook: …
   signature: …（记忆点：第几秒，什么手法）
   visual-language: …

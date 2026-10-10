@@ -315,7 +315,7 @@ Highlights:
 
 - **Deterministic `render(t)` pipeline**: stills, contact sheets, three-direction boards, proxies and masters all come from the same page. Motion blur, supersampling and film grain are render flags.
 - **One timeline for picture and sound**: cuts, hits and SFX share the same numbers. Music can be synthesized (a zero-dependency built-in synth, or Tone.js with a sampled piano), or cut to the user's own track with beat and drop detection.
-- **A 22-style library as a starting point**: swiss-editorial, ink-wash, risograph, synthwave, soft 3D, cinematic title, pixel game and more. Each style defines its look, motion, camera grammar and sound palette, and can be adapted, mixed or replaced with your own.
+- **A 28-style library as a starting point**: swiss-editorial, ink-wash, risograph, synthwave, soft 3D, cinematic title, pixel game, comic panels, guochao patterns, painterly strokes and more. Each style defines its look, motion, camera grammar and sound palette, and can be adapted, mixed or replaced with your own.
 - **A sound direction, not a default song**: the brief sets a sound benchmark, groove, harmony, palette and dramatic arc, plus a list of audio defaults to avoid.
 - **One checkpoint**: style frames (or three distinct directions with one key frame each), then all-out autonomous production. "Free mode" leaves taste to the model.
 - **Technical acceptance kept separate from taste**: size, fps, duration, frame count, black frames, loudness, true peak, loop seam and determinism must all PASS. Review notes go to the user, who makes the final call.
