@@ -9,36 +9,36 @@
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="#web-video-presentation"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video-presentation-skill.webp" alt="Web Video Presentation Skill" width="100%"></a>
+<a href="#web-video-presentation"><img src="./dist/imgs/covers/web-video-presentation.webp" alt="Web Video Presentation Skill" width="100%"></a>
 <br/><a href="#web-video-presentation"><strong>web-video-presentation</strong></a>
 <br/><sub>网页视频 / 演示</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#web-design-engineer"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design-skill.webp" alt="Web Design Skill" width="100%"></a>
+<a href="#web-design-engineer"><img src="./dist/imgs/covers/web-design-engineer.webp" alt="Web Design Skill" width="100%"></a>
 <br/><a href="#web-design-engineer"><strong>web-design-engineer</strong></a>
 <br/><sub>设计 / 前端</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="#gpt-image-2"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/gpt-image-2-skill.webp" alt="GPT Image 2 Skill" width="100%"></a>
+<a href="#gpt-image-2"><img src="./dist/imgs/covers/gpt-image-2.webp" alt="GPT Image 2 Skill" width="100%"></a>
 <br/><a href="#gpt-image-2"><strong>gpt-image-2</strong></a>
 <br/><sub>图像生成 / Prompt</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#beautiful-article"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp" alt="Beautiful Article Skill" width="100%"></a>
+<a href="#beautiful-article"><img src="./dist/imgs/covers/beautiful-article.webp" alt="Beautiful Article Skill" width="100%"></a>
 <br/><a href="#beautiful-article"><strong>beautiful-article</strong></a>
 <br/><sub>任意素材 → 一篇精美的文章</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="#motion-showreel"><img src="./dist/imgs/motion-showreel/banner.webp" alt="Motion Showreel Skill" width="100%"></a>
+<a href="#motion-showreel"><img src="./dist/imgs/covers/motion-showreel.webp" alt="Motion Showreel Skill" width="100%"></a>
 <br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
 <br/><sub>代码渲染的短视频</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="KB Retriever Skill" width="100%"></a>
+<a href="#kb-retriever"><img src="./dist/imgs/covers/kb-retriever.webp" alt="KB Retriever Skill" width="100%"></a>
 <br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
 <br/><sub>本地知识库检索</sub>
 </td>
@@ -67,7 +67,7 @@
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 
-![Web Video Presentation Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video-presentation-skill.webp)
+![Web Video Presentation Skill](./dist/imgs/covers/web-video-presentation.webp)
 
 **类别：** 网页视频 / 演示工程  
 **适合：** 把口播稿、文章、课程、产品演示和 talk 做成视频（网页模拟）。
@@ -103,7 +103,7 @@
 
 ### [`web-design-engineer`](./skills/web-design-engineer)
 
-![Web Design Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design-skill.webp)
+![Web Design Skill](./dist/imgs/covers/web-design-engineer.webp)
 
 **类别：** 设计 / 前端  
 **适合：** 网页、落地页、仪表盘、交互原型、HTML 幻灯片、动画、UI 样机、数据可视化和设计系统探索。
@@ -150,7 +150,7 @@
 
 ### [`gpt-image-2`](./skills/gpt-image-2)
 
-![GPT Image 2 Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/gpt-image-2-skill.webp)
+![GPT Image 2 Skill](./dist/imgs/covers/gpt-image-2.webp)
 
 **类别：** 图像生成 / Prompt 工程  
 **适合：** 海报、UI 样机、产品图、信息图、学术图、技术架构图、漫画、头像、分镜、品牌板和图像编辑工作流。
@@ -244,7 +244,7 @@
 
 ### [`beautiful-article`](./skills/beautiful-article)
 
-![Beautiful Article Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp)
+![Beautiful Article Skill](./dist/imgs/covers/beautiful-article.webp)
 
 **类别：** 编辑 · 任意素材 → 一篇精美的文章  
 **适合：** 把 URL / PDF / DOCX / Markdown / 纯文本 / 截图 / 粘贴材料编辑成一篇**比原文更易读、更便于分享和归档的精美文章** —— 长文、briefing、解释文、教程、复盘、视觉随笔、对话访谈转写。
@@ -284,7 +284,7 @@
 
 ### [`kb-retriever`](./skills/kb-retriever)
 
-![Kb Retriever Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp)
+![Kb Retriever Skill](./dist/imgs/covers/kb-retriever.webp)
 
 **类别：** 检索 / 本地知识库  
 **适合：** 从本地 `knowledge/` 目录回答问题，检索结构化文档，并在不撑爆上下文的前提下从 Markdown、文本、PDF、Excel 中提取证据。
@@ -306,7 +306,7 @@
 
 ### [`motion-showreel`](./skills/motion-showreel)
 
-![Motion Showreel Skill](./dist/imgs/motion-showreel/banner.webp)
+![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
 
 **类别：** 动态图形 / 短视频  
 **适合：** 动效作品集、产品宣传短片、UI 动效演示、动态排版与金句卡点、Logo 演绎与片头、生成艺术循环、数据爆点、年代回顾——以图形、文字、界面动画为主的短视频（常见 5–60 秒，纯音乐片最长约 2 分钟）。

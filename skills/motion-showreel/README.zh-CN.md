@@ -4,9 +4,7 @@
 
 [English](./README.md) · [返回集合首页](../../README.zh-CN.md)
 
-![Motion Showreel Skill：22 种风格同屏运行](../../dist/imgs/motion-showreel/banner.webp)
-
-<sub>↑ Skill 自己的宣传片里的一帧：22 种风格同时在一个页面里运行，全部由同一个 `render(t)` 驱动。</sub>
+![Motion Showreel Skill](../../dist/imgs/covers/motion-showreel.webp)
 
 ---
 

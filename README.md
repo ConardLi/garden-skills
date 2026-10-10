@@ -9,36 +9,36 @@
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="#web-video-presentation"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video-presentation-skill.webp" alt="Web Video Presentation Skill" width="100%"></a>
+<a href="#web-video-presentation"><img src="./dist/imgs/covers/web-video-presentation.webp" alt="Web Video Presentation Skill" width="100%"></a>
 <br/><a href="#web-video-presentation"><strong>web-video-presentation</strong></a>
 <br/><sub>Web video / presentation</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#web-design-engineer"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design-skill.webp" alt="Web Design Skill" width="100%"></a>
+<a href="#web-design-engineer"><img src="./dist/imgs/covers/web-design-engineer.webp" alt="Web Design Skill" width="100%"></a>
 <br/><a href="#web-design-engineer"><strong>web-design-engineer</strong></a>
 <br/><sub>Design / frontend</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="#gpt-image-2"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/gpt-image-2-skill.webp" alt="GPT Image 2 Skill" width="100%"></a>
+<a href="#gpt-image-2"><img src="./dist/imgs/covers/gpt-image-2.webp" alt="GPT Image 2 Skill" width="100%"></a>
 <br/><a href="#gpt-image-2"><strong>gpt-image-2</strong></a>
 <br/><sub>Image generation / prompting</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#beautiful-article"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp" alt="Beautiful Article Skill" width="100%"></a>
+<a href="#beautiful-article"><img src="./dist/imgs/covers/beautiful-article.webp" alt="Beautiful Article Skill" width="100%"></a>
 <br/><a href="#beautiful-article"><strong>beautiful-article</strong></a>
 <br/><sub>Any source → beautiful article</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="#motion-showreel"><img src="./dist/imgs/motion-showreel/banner.webp" alt="Motion Showreel Skill" width="100%"></a>
+<a href="#motion-showreel"><img src="./dist/imgs/covers/motion-showreel.webp" alt="Motion Showreel Skill" width="100%"></a>
 <br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
 <br/><sub>Code-rendered short video</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="KB Retriever Skill" width="100%"></a>
+<a href="#kb-retriever"><img src="./dist/imgs/covers/kb-retriever.webp" alt="KB Retriever Skill" width="100%"></a>
 <br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
 <br/><sub>Local knowledge retrieval</sub>
 </td>
@@ -67,7 +67,7 @@
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 
-![Web Video Presentation Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video-presentation-skill.webp)
+![Web Video Presentation Skill](./dist/imgs/covers/web-video-presentation.webp)
 
 **Category:** Web Video / Presentation Engineering  
 **Best for:** turning scripts, articles, lessons, product demos, and talks into click-driven 16:9 web presentations that can be screen-recorded as cinematic videos.
@@ -103,7 +103,7 @@ Links: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skill
 
 ### [`web-design-engineer`](./skills/web-design-engineer)
 
-![Web Design Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design-skill.webp)
+![Web Design Skill](./dist/imgs/covers/web-design-engineer.webp)
 
 **Category:** Design / Frontend  
 **Best for:** web pages, landing pages, dashboards, interactive prototypes, HTML slide decks, animations, UI mockups, data visualizations, and design-system explorations.
@@ -150,7 +150,7 @@ Links: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/w
 
 ### [`gpt-image-2`](./skills/gpt-image-2)
 
-![GPT Image 2 Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/gpt-image-2-skill.webp)
+![GPT Image 2 Skill](./dist/imgs/covers/gpt-image-2.webp)
 
 **Category:** Image Generation / Prompt Engineering  
 **Best for:** posters, UI mockups, product visuals, infographics, academic figures, technical diagrams, comics, avatars, storyboards, branding boards, and image-editing workflows.
@@ -244,7 +244,7 @@ Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image
 
 ### [`kb-retriever`](./skills/kb-retriever)
 
-![Kb Retriever Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp)
+![Kb Retriever Skill](./dist/imgs/covers/kb-retriever.webp)
 
 **Category:** Retrieval / Local Knowledge Base  
 **Best for:** answering questions from a local `knowledge/` directory, searching structured documentation, and extracting evidence from Markdown, text, PDF, and Excel files without flooding the agent context.
@@ -265,7 +265,7 @@ Links: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retri
 
 ### [`beautiful-article`](./skills/beautiful-article)
 
-![Beautiful Article Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp)
+![Beautiful Article Skill](./dist/imgs/covers/beautiful-article.webp)
 
 **Category:** Editorial · Any source → beautiful article  
 **Best for:** turning URLs, PDFs, DOCX, Markdown, plain text, screenshots, and pasted notes into a **polished, share-ready article** — long-form, briefings, explainers, tutorials, post-mortems, visual essays, dialogue transcripts.
@@ -304,7 +304,7 @@ Links: [README](./skills/beautiful-article/README.md) · [SKILL.md](./skills/bea
 
 ### [`motion-showreel`](./skills/motion-showreel)
 
-![Motion Showreel Skill](./dist/imgs/motion-showreel/banner.webp)
+![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
 
 **Category:** Motion Graphics / Short Video  
 **Best for:** motion showreels, product teasers, UI motion demos, kinetic typography, logo stings and title sequences, generative loops, data "number drops", and era-spanning retrospectives: short videos (5–60 s, up to ~2 min for music-driven pieces) built from graphics, type and interface animation.

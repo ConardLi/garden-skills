@@ -9,36 +9,36 @@
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="#web-video-presentation"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video-presentation-skill.webp" alt="Web Video Presentation Skill" width="100%"></a>
+<a href="#web-video-presentation"><img src="./dist/imgs/covers/web-video-presentation.webp" alt="Web Video Presentation Skill" width="100%"></a>
 <br/><a href="#web-video-presentation"><strong>web-video-presentation</strong></a>
 <br/><sub>Web 動画 / プレゼンテーション</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#web-design-engineer"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design-skill.webp" alt="Web Design Skill" width="100%"></a>
+<a href="#web-design-engineer"><img src="./dist/imgs/covers/web-design-engineer.webp" alt="Web Design Skill" width="100%"></a>
 <br/><a href="#web-design-engineer"><strong>web-design-engineer</strong></a>
 <br/><sub>デザイン / フロントエンド</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="#gpt-image-2"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/gpt-image-2-skill.webp" alt="GPT Image 2 Skill" width="100%"></a>
+<a href="#gpt-image-2"><img src="./dist/imgs/covers/gpt-image-2.webp" alt="GPT Image 2 Skill" width="100%"></a>
 <br/><a href="#gpt-image-2"><strong>gpt-image-2</strong></a>
 <br/><sub>画像生成 / プロンプト</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#beautiful-article"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp" alt="Beautiful Article Skill" width="100%"></a>
+<a href="#beautiful-article"><img src="./dist/imgs/covers/beautiful-article.webp" alt="Beautiful Article Skill" width="100%"></a>
 <br/><a href="#beautiful-article"><strong>beautiful-article</strong></a>
 <br/><sub>あらゆる素材 → 美しい記事</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="#motion-showreel"><img src="./dist/imgs/motion-showreel/banner.webp" alt="Motion Showreel Skill" width="100%"></a>
+<a href="#motion-showreel"><img src="./dist/imgs/covers/motion-showreel.webp" alt="Motion Showreel Skill" width="100%"></a>
 <br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
 <br/><sub>コードで描くショート動画</sub>
 </td>
 <td width="50%" valign="top">
-<a href="#kb-retriever"><img src="https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp" alt="KB Retriever Skill" width="100%"></a>
+<a href="#kb-retriever"><img src="./dist/imgs/covers/kb-retriever.webp" alt="KB Retriever Skill" width="100%"></a>
 <br/><a href="#kb-retriever"><strong>kb-retriever</strong></a>
 <br/><sub>ローカルナレッジ検索</sub>
 </td>
@@ -67,7 +67,7 @@
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 
-![Web Video Presentation Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-video-presentation-skill.webp)
+![Web Video Presentation Skill](./dist/imgs/covers/web-video-presentation.webp)
 
 **カテゴリ:** Web 動画 / プレゼンテーションエンジニアリング  
 **用途:** スクリプト、記事、レッスン、製品デモ、トークを、シネマティックな動画として画面録画できるクリック駆動の 16:9 Web プレゼンテーションに変換します。
@@ -103,7 +103,7 @@
 
 ### [`web-design-engineer`](./skills/web-design-engineer)
 
-![Web Design Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design-skill.webp)
+![Web Design Skill](./dist/imgs/covers/web-design-engineer.webp)
 
 **カテゴリ:** デザイン / フロントエンド  
 **用途:** Web ページ、ランディングページ、ダッシュボード、インタラクティブプロトタイプ、HTML スライドデッキ、アニメーション、UI モックアップ、データビジュアライゼーション、デザインシステムの探求。
@@ -150,7 +150,7 @@
 
 ### [`gpt-image-2`](./skills/gpt-image-2)
 
-![GPT Image 2 Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/gpt-image-2-skill.webp)
+![GPT Image 2 Skill](./dist/imgs/covers/gpt-image-2.webp)
 
 **カテゴリ:** 画像生成 / プロンプトエンジニアリング  
 **用途:** ポスター、UI モックアップ、製品ビジュアル、インフォグラフィック、学術図、技術図、コミック、アバター、ストーリーボード、ブランディングボード、画像編集ワークフロー。
@@ -244,7 +244,7 @@
 
 ### [`kb-retriever`](./skills/kb-retriever)
 
-![Kb Retriever Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/kb-retriever-skill.webp)
+![Kb Retriever Skill](./dist/imgs/covers/kb-retriever.webp)
 
 **カテゴリ:** 検索 / ローカル知識ベース  
 **用途:** ローカルの `knowledge/` ディレクトリから質問に答え、構造化されたドキュメントを検索し、エージェントのコンテキストを溢れさせることなく Markdown、テキスト、PDF、Excel ファイルから根拠を抽出します。
@@ -265,7 +265,7 @@
 
 ### [`beautiful-article`](./skills/beautiful-article)
 
-![Beautiful Article Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/article/banner.webp)
+![Beautiful Article Skill](./dist/imgs/covers/beautiful-article.webp)
 
 **カテゴリ:** 編集 · あらゆる素材 → 美しい記事  
 **用途:** URL / PDF / DOCX / Markdown / プレーンテキスト / スクリーンショット / 貼り付けたメモを、**洗練された共有しやすい記事**に変換します — ロングフォーム、ブリーフィング、解説記事、チュートリアル、レビュー、ビジュアルエッセイ、対話・インタビューの書き起こし。
@@ -304,7 +304,7 @@
 
 ### [`motion-showreel`](./skills/motion-showreel)
 
-![Motion Showreel Skill](./dist/imgs/motion-showreel/banner.webp)
+![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
 
 **カテゴリ:** モーショングラフィックス / ショート動画  
 **用途:** モーションショーリール、製品ティザー、UI モーションデモ、キネティックタイポグラフィ、ロゴアニメーションとタイトルシーケンス、ジェネラティブループ、データの「数字ドロップ」、時代をまたぐ回顧映像など、グラフィック・文字・インターフェースのアニメーションが主体のショート動画（通常 5〜60 秒、音楽主体なら最長約 2 分）。

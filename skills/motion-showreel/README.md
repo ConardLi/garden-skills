@@ -4,9 +4,7 @@
 
 [中文文档](./README.zh-CN.md) · [Back to collection root](../../README.md)
 
-![Motion Showreel Skill: 22 styles running at once](../../dist/imgs/motion-showreel/banner.webp)
-
-<sub>↑ One frame of the skill's own trailer: 22 styles running live in one page, all driven by the same `render(t)`.</sub>
+![Motion Showreel Skill](../../dist/imgs/covers/motion-showreel.webp)
 
 ---
 
