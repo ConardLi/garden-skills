@@ -160,6 +160,15 @@ cp "$TEMPLATES/scripts/tts-providers/README.md"   scripts/tts-providers/README.m
 cp "$TEMPLATES/scripts/tts-providers/minimax.sh"  scripts/tts-providers/minimax.sh
 cp "$TEMPLATES/scripts/tts-providers/openai.sh"   scripts/tts-providers/openai.sh
 
+# Optional Phase 4 auto-render pipeline (Playwright record + ffmpeg subtitles).
+# Not installed by default; opt in via `npm run render:setup` (see below).
+mkdir -p scripts/render/lib
+cp "$TEMPLATES/scripts/render/render.mjs"       scripts/render/render.mjs
+cp "$TEMPLATES/scripts/render/check-env.mjs"    scripts/render/check-env.mjs
+cp "$TEMPLATES/scripts/render/lib/ffmpeg.mjs"   scripts/render/lib/ffmpeg.mjs
+cp "$TEMPLATES/scripts/render/lib/timeline.mjs" scripts/render/lib/timeline.mjs
+cp "$TEMPLATES/scripts/render/lib/subtitles.mjs" scripts/render/lib/subtitles.mjs
+
 # Wire the audio scripts into npm so contributors don't have to remember
 # the exact command. Uses node to merge into the existing package.json.
 node -e '
@@ -168,6 +177,9 @@ const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
 p.scripts = Object.assign({}, p.scripts, {
   "extract-narrations": "tsx scripts/extract-narrations.ts",
   "synthesize-audio":   "bash scripts/synthesize-audio.sh",
+  "render:check":       "node scripts/render/check-env.mjs",
+  "render":             "node scripts/render/render.mjs",
+  "render:setup":       "npm install --save-dev playwright && npx playwright install chromium",
 });
 fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
 '
@@ -221,6 +233,13 @@ cat <<EOF
   npm run synthesize-audio      # 默认 minimax provider 合成 → public/audio/<id>/<step>.mp3
                                 # 换 provider：PRESENTATION_TTS=<name> npm run synthesize-audio
                                 # 自定义 / 没装 mmx 见 scripts/tts-providers/README.md
+
+自动出片（可选，替代 OBS/QuickTime 手动录屏）：
+
+  npm run render:setup          # 一次性：装 playwright + chromium（需要 ffmpeg 在 PATH）
+  npm run render:check          # 环境自检
+  npm run render                # Playwright 录 ?auto=1 + ffmpeg 烧字幕 → out/final/video.mp4
+                                # 详见 references/RECORDING.md "自动渲染" 一节。
 
 写章节时必读（单一入口，路径在 SKILL 仓库内）：
 
