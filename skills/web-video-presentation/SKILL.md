@@ -12,7 +12,7 @@ description: 把一篇文章或口播稿，做成"看起来像视频"的点击�
 
 - "我有口播稿 / 一篇文章，帮我做成视频" —— 口播驱动的内容
 - 想做 "动态 PPT"
-- 16:9 横屏录屏，大字、留白、每屏都要有动效
+- 横屏（16:9）或竖屏（3:4，小红书）录屏，大字、留白、每屏都要有动效
 - 教学 / 产品演示 / keynote 想要电影感
 - B 站 / YouTube /抖音视频内容
 
@@ -240,11 +240,20 @@ bash <path-to-web-video-presentation>/scripts/scaffold.sh \
   ./presentation \
   --theme=<用户选的主题 id>
 
+# 小红书竖版（3:4，1080×1440）：加 --ratio=3:4
+bash <path-to-web-video-presentation>/scripts/scaffold.sh \
+  ./xhs --ratio=3:4
+
 bash <path-to-web-video-presentation>/scripts/scaffold.sh --list-themes
 ```
 
 > 自定义主题 → 先按 [`references/THEMES.md`](references/THEMES.md)
 > "创作新主题"流程做一个 `themes/<my-theme>/`，再 `--theme=<my-theme>`。
+>
+> **舞台比例（`--ratio`）**：默认 `16:9`（1920×1080，B站/YouTube/抖音）。
+> 传 `--ratio=3:4` → 1080×1440（小红书竖版）；`--ratio=9:16` → 1080×1920；
+> 也支持任意 `--ratio=W:H`。舞台尺寸写在生成项目的 `src/stage.config.ts`，
+> 是单一真相源；换主题不影响它。
 
 脚手架带一个 `01-example` demo。在写第一章真实内容前**删掉**：
 
@@ -412,7 +421,7 @@ Part 0 —— **写章节时回那里查**，下面只是索引。
 
 | # | 原则 | 一句话 |
 |---|---|---|
-| 1 | 16:9 固定舞台 | 内容 1920×1080 + transform scale，没有响应式 |
+| 1 | 固定舞台（比例可配） | 内容 STAGE_W×STAGE_H（默认 1920×1080 = 16:9）+ transform scale，无响应式；竖版 `--ratio=3:4` → 1080×1440 |
 | 2 | 全局 step 计数器 | 章节是 step 的纯函数，无定时器 |
 | 3 | 每步独占整屏 | `if (step === N) return <FullScene />` |
 | 4 | 口播节拍 = step | 一节拍 = 一 step = 一聚焦想法 |
