@@ -331,7 +331,7 @@ Highlights:
 
 <sub>↑ 4-second excerpts of pieces made with the skill. <a href="./skills/motion-showreel/README.md#showcase"><b>Open the showcase</b></a> for the full set, including the skill's own 80-second trailer and the style gallery.</sub>
 
-Links: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:motion-showreel:end -->
+Links: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
 
 ---
 

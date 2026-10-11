@@ -331,7 +331,7 @@
 
 <sub>↑ このスキルで作った作品の 4 秒の抜粋。スキル自身の 80 秒トレーラーやスタイルギャラリーを含む全作品は <a href="./skills/motion-showreel/README.md#showcase"><b>ショーケース</b></a> で。</sub>
 
-リンク: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->_（まだリリースされていません）_<!-- DOWNLOAD:motion-showreel:end -->
+リンク: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
 
 ---
 

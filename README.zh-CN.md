@@ -333,7 +333,7 @@
 
 <sub>↑ 用这个 Skill 做的作品，各截 4 秒——<a href="./skills/motion-showreel/README.zh-CN.md#作品展示"><b>打开作品展示</b></a>，看全部作品（包括 Skill 自己的 80 秒宣传片）和风格画廊。</sub>
 
-链接：[README](./skills/motion-showreel/README.zh-CN.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->_（暂未发布）_<!-- DOWNLOAD:motion-showreel:end -->
+链接：[README](./skills/motion-showreel/README.zh-CN.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[下载 v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
 
 ---
 
