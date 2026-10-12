@@ -1,6 +1,6 @@
 ---
 name: gpt-image-2
-description: 面向 GPT Image 2 的图像生成 / 编辑技能。可在 3 种环境下使用：(A) Garden 本地模式，通过 OpenAI 兼容接口直接出图并落盘；(B) Host-Native 模式，把本 Skill 当作提示词工程指引，把渲染好的 prompt 交给宿主 Agent 自带的图像工具出图；(C) Advisor 模式，宿主无任何图像工具时退化为高质量 prompt 顾问。涵盖 18 大类、80+ 个结构化模板，覆盖海报 / UI / 产品 / 信息图 / 学术图 / 技术架构图 / 漫画 / 头像 / 流程板 / 电影分镜 / IP 周边 / 编辑工作流等场景。
+description: 面向 GPT Image 2 的图像生成 / 编辑技能。可在 3 种环境下使用：(A) Garden 本地模式，通过 OpenAI 兼容接口或可选 Atlas Cloud provider 直接出图并落盘；(B) Host-Native 模式，把本 Skill 当作提示词工程指引，把渲染好的 prompt 交给宿主 Agent 自带的图像工具出图；(C) Advisor 模式，宿主无任何图像工具时退化为高质量 prompt 顾问。涵盖 18 大类、80+ 个结构化模板，覆盖海报 / UI / 产品 / 信息图 / 学术图 / 技术架构图 / 漫画 / 头像 / 流程板 / 电影分镜 / IP 周边 / 编辑工作流等场景。
 ---
 
 # GPT Image 2
@@ -31,7 +31,7 @@ node skills/gpt-image-2/scripts/check-mode.js --json
 
 ### Mode A · Garden 本地生图
 
-**触发条件**：环境变量 `ENABLE_GARDEN_IMAGEGEN` 为真（`1` / `true` / `yes` / `on`）**且** 存在 `OPENAI_API_KEY`。
+**触发条件**：环境变量 `ENABLE_GARDEN_IMAGEGEN` 为真（`1` / `true` / `yes` / `on`）**且** 存在所选 provider 的 API Key。
 
 **行为**：完整端到端跑通"选模板 → 写 prompt → 调用脚本 → 出图落盘"。
 
@@ -94,7 +94,9 @@ node skills/gpt-image-2/scripts/check-mode.js --json
 - `scripts/check-mode.js`：**先跑这个**，检测运行模式（A / B / C）
 - `scripts/generate.js`：文本生图（仅 Mode A 使用）
 - `scripts/edit.js`：基于原图 / 遮罩改图（仅 Mode A 使用）
+- `scripts/atlas.js`：Atlas Cloud 单次提交、有界轮询和安全下载
 - `scripts/shared.js`：共享请求、保存、环境变量读取逻辑
+- `scripts/atlas.test.js`：Atlas Cloud 离线契约测试
 - `references/`：分层结构化提示词模板（A / B / C 三模式都用）
 
 ## 环境变量
@@ -110,11 +112,15 @@ node skills/gpt-image-2/scripts/check-mode.js --json
 核心变量：
 
 - `ENABLE_GARDEN_IMAGEGEN` — **模式开关**。`1` / `true` / `yes` / `on` 时启用 Mode A；未设置或其它值则进入 Mode B / C。
-- `OPENAI_API_KEY` — Mode A 必需；B / C 不需要。
+- `GARDEN_IMAGE_PROVIDER` — 可选：`openai`（默认）或 `atlas`。未设置时，只有 Atlas Key 且没有 OpenAI Key 才自动选择 Atlas。
+- `OPENAI_API_KEY` — OpenAI Mode A 必需；B / C 不需要。
 - `OPENAI_BASE_URL` — 默认 `https://api.openai.com/v1`，可指向第三方兼容网关。
 - `OPENAI_IMAGE_MODEL` — 默认 `gpt-image-2`，可换成网关支持的型号（如 `gpt-image-1` / `dall-e-3`）。
+- `ATLASCLOUD_API_KEY` — Atlas Mode A 必需。
+- `ATLASCLOUD_IMAGE_MODEL` — Atlas 生图模型，默认 `qwen-image-3.0/text-to-image`。
+- `ATLASCLOUD_EDIT_MODEL` — Atlas 编辑模型，默认 `qwen-image-3.0/edit`。
 
-默认实现按 OpenAI 兼容接口工作，不写死任何第三方网关。
+OpenAI 兼容路径保持默认。Atlas 为显式可选 provider，使用原生异步接口：POST 只提交一次，GET prediction 有界轮询，输出下载不转发 API Key 且只接受无凭据 HTTPS URL。Atlas 编辑把本地原图转成 data URL；遮罩和 OpenAI 专属参数仍仅用于 OpenAI 路径。
 
 ## 默认输出目录
 
