@@ -148,8 +148,8 @@ Links: [README](./skills/web-design-engineer/README.md) · [SKILL.md](./skills/w
 
 **Before/after example:** the same plain ops dashboard, before and after `web-design-engineer` (bloomberg-terminal recipe: Design Read, multi-pane hairline layout, IBM Plex Mono with tabular figures, amber for decisions, and a Tweaks panel for light mode and density).
 
-- Before: https://skill-fixture-before.theroost.dev?vr_gallery=1
-- After (web-design-engineer): https://web-design-engineer-after.theroost.dev?vr_gallery=1
+- Before: https://skill-fixture-before.theroost.dev
+- After (web-design-engineer): https://web-design-engineer-after.theroost.dev
 
 <sub>Illustrative, community-contributed example; not an official demo or benchmark.</sub>
 
