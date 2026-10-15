@@ -53,7 +53,9 @@ npm run validate  # 跑一遍和 PR CI 完全一样的检查
 │   │
 │   ├── web-design-engineer/
 │   ├── gpt-image-2/
-│   └── kb-retriever/
+│   ├── kb-retriever/
+│   ├── beautiful-article/
+│   └── motion-showreel/
 │
 ├── scripts/release/                     ← 发版工具（零依赖 Node ESM）
 │   ├── cut-release.mjs                  ← 交互式发版主入口
@@ -156,6 +158,17 @@ description: 用一句话清楚说明这个 Skill 是干什么的、什么时候
 可选：在 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)
 里加一条 plugin pack，让它能通过 `/plugin install` 被发现。
 
+根目录多语言 README 的检查清单（容易漏，`validate` 只检查 DOWNLOAD marker）：
+
+- 在顶部的 Skills 画廊里加一格，并把 `skills-N` 徽章加一
+- 在「安装」之前加这个 Skill 的章节；在方式 B 的 `/plugin install` 列表和插件包表格里加上它的插件包
+- `marketplace.json` 新增插件时，`metadata.version` 升一个 minor，并在 `metadata.description` 里提到这个 Skill
+- 不放在 CDN 上的 README 图片放进 `dist/imgs/<skill>/`，它们不会被打进发布 zip
+
+发布 zip 里有什么：`pack-skill.mjs` 只打包 git 会发布的内容，即 `skills/<name>/` 下已跟踪的文件，
+加上未跟踪但没被忽略的文件，再去掉系统和编辑器的杂文件。被 gitignore 的运行时下载和嵌套的
+`node_modules/` 都不会进 zip，所以本地 `npm run pack` 和 CI 打出来的 zip 一致。
+
 ---
 
 ## 发版
@@ -216,17 +229,17 @@ npm run release:dry
 # 3. 正式发版
 npm run release
 # 确认 y。脚本会：不改 manifest（initial）、commit README sync、
-# 一口气打 4 个 tag、原子 push
+# 给每个 Skill 打 tag、原子 push
 
-# 4. 看 4 个 release-skill 工作流并行跑完（每个约 1 分钟）
+# 4. 看各个 release-skill 工作流并行跑完（每个约 1 分钟）
 gh run list --workflow=release-skill.yml
 
 # 5. 拉一下 main（bot 会 commit README 同步）
 git pull origin main
 ```
 
-跑完之后 `https://github.com/ConardLi/garden-skills/releases` 下面就有 4 个
-release，每个带 zip + sha256 + 自动 changelog，README 的下载链接也会指向它们。
+跑完之后 `https://github.com/ConardLi/garden-skills/releases` 下面会为每个 Skill 创建一个 release，
+带 zip + sha256 + 自动 changelog，README 的下载链接也会指向它们。
 
 ---
 

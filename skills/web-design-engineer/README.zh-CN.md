@@ -4,7 +4,7 @@
 
 [English](./README.md) · [返回集合首页](../../README.zh-CN.md)
 
-![Web Design Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/web-design-skill.webp)
+![Web Design Skill](../../dist/imgs/covers/web-design-engineer.webp)
 
 ---
 

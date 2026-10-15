@@ -55,7 +55,9 @@ tooling is pure ESM Node, zero deps.
 │   │
 │   ├── web-design-engineer/
 │   ├── gpt-image-2/
-│   └── kb-retriever/
+│   ├── kb-retriever/
+│   ├── beautiful-article/
+│   └── motion-showreel/
 │
 ├── scripts/release/                     ← release tooling (zero-dep Node ESM)
 │   ├── cut-release.mjs                  ← interactive release helper (THE main entry)
@@ -159,6 +161,17 @@ For the full SKILL.md spec, see [agentskills.io](https://agentskills.io) and the
 Optional: add a plugin pack entry to [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)
 if you want it discoverable via `/plugin install`.
 
+Checklist for the localized root READMEs (easy to miss; `validate` only checks the DOWNLOAD markers):
+
+- add a cell to the skills gallery at the top and bump the `skills-N` badge
+- add the skill section before **Install**, and add its plugin pack to the `/plugin install` list and pack table in Option B
+- when `marketplace.json` gains a plugin, bump `metadata.version` (minor) and mention the skill in `metadata.description`
+- README images that are not on the CDN go in `dist/imgs/<skill>/`. They are never packed into the release zip
+
+What goes into a release zip: `pack-skill.mjs` ships exactly what git would ship from `skills/<name>/`
+(tracked + untracked-but-not-ignored files, minus OS / editor junk). Gitignored runtime downloads
+and nested `node_modules/` stay out, so a local `npm run pack` produces the same zip as CI.
+
 ---
 
 ## Cutting a release
@@ -222,7 +235,7 @@ npm run release:dry
 # 3. Cut the releases.
 npm run release
 # Confirm `y` and watch the script bump nothing (initial), commit the README
-# sync, tag all four, and push.
+# sync, tag every skill, and push.
 
 # 4. Watch the per-skill release workflows run in parallel.
 gh run list --workflow=release-skill.yml
@@ -231,7 +244,7 @@ gh run list --workflow=release-skill.yml
 git pull origin main
 ```
 
-After this, the five skills each have a `releases/tag/<skill>-v1.0.0` entry
+After this, every skill has a `releases/tag/<skill>-v1.0.0` entry
 on GitHub, with downloadable zip + sha256, and the README download links
 point at them.
 

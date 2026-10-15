@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>showreel</title>
+<style>
+  /* Self-host fonts in ./fonts and declare them here, e.g.
+     @font-face { font-family: "Display"; src: url(fonts/Display.woff2) format("woff2"); font-weight: 800; } */
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script type="module">
+// STARTER — proves the pipeline (render(t) → frames → MP4, shared timeline with score.mjs).
+// It is a placeholder: replace the look, the shots and the copy entirely with your own direction.
+import { DUR, CUES, SHOTS, b } from './timeline.js';
+import { seg, lerp, ease, glide, snap, spring, springTo, stagger, pulse, shake, stageSize, setupCanvas, camera, loadFonts } from './motion.js';
+
+const { W, H } = stageSize();
+const ctx = setupCanvas(document.getElementById('c'), W, H);
+const U = Math.min(W, H) / 1080;                      // layout unit: design at 1080 short side, scales to any aspect
+const C = { paper: '#ECE8E1', ink: '#121212', accent: '#FF4A1C' };
+const WORD = 'MOTION';
+const FONT = s => `800 ${s}px "Archivo Black", "Arial Black", "Helvetica Neue", sans-serif`;
+const shot = id => SHOTS.find(s => s.id === id);
+const ticks = CUES.filter(c => c.sfx === 'tick').map(c => c.t);
+const HIT = CUES.find(c => c.sfx === 'impact').t;
+
+window.DUR = DUR;
+window.render = t => {
+  const flash = pulse(t, HIT, 0.12);                  // one big hit: invert for a beat
+  const bg = flash > 0.5 ? C.ink : C.paper, fg = flash > 0.5 ? C.paper : C.ink;
+  ctx.save();                                          // setupCanvas() set the device-pixel transform: keep it
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+  const [sx, sy, sr] = shake(t, HIT, 18 * U, 0.22);
+  const zoom = springTo(t, [[0, 1.25], [b(2), 1.0], [HIT, 1.12, { freq: 1.4, damp: 0.9 }], [b(15), 1.25]]);
+  ctx.save(); camera(ctx, W, H, { x: W / 2 + sx, y: H / 2 + sy, zoom, rot: sr });
+
+  const cx = W / 2, cy = H / 2, size = 230 * U;
+  ctx.font = FONT(size); ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  const widths = [...WORD].map(ch => ctx.measureText(ch).width), total = widths.reduce((a, v) => a + v, 0);
+
+  if (t < shot('word').t0) {
+    // HOOK: a dot pops on the first upbeat, then stretches into a bar (leading edge faster than trailing)
+    const r = 26 * U * spring(t - b(0.5), { freq: 2.8, damp: 0.45 });
+    const lead = springTo(t, [[0, 0], [b(2), total / 2]], { freq: 3.2, damp: 0.8 });
+    const trail = springTo(t, [[0, 0], [b(2.5), -total / 2]], { freq: 2.2, damp: 0.85 });
+    ctx.fillStyle = C.accent;
+    roundRect(cx + trail - r, cy - r, lead - trail + 2 * r, 2 * r, r);
+  } else if (t < HIT) {
+    // WORD: the bar wipes upward and each letter springs out from under it, one per tick
+    const wipe = snap(seg(t, b(4), b(5)));
+    let x = cx - total / 2;
+    [...WORD].forEach((ch, i) => {
+      const k = spring(t - (ticks[i] ?? b(4.5) + stagger(i, WORD.length, b(2.5))), { freq: 2.6, damp: 0.7 });
+      ctx.save(); ctx.beginPath(); ctx.rect(x - 4 * U, cy - size * 0.55, widths[i] + 8 * U, size * 0.97); ctx.clip();
+      ctx.fillStyle = fg; ctx.fillText(ch, x, cy + size * 0.36 + (1 - k) * size * 1.1);
+      ctx.restore(); x += widths[i];
+    });
+    const barY = lerp(cy, cy - size * 0.75, wipe), barH = lerp(52 * U, 10 * U, glide(seg(t, b(4), b(6))));
+    ctx.fillStyle = C.accent; ctx.fillRect(cx - total / 2, barY - barH / 2, total, barH);
+  } else {
+    // RESOLVE: letters drop back out of their windows from the centre outwards, an accent disc swells
+    // from the gap and shrinks to nothing on the last beat = the empty first frame (seamless loop)
+    let x = cx - total / 2;
+    [...WORD].forEach((ch, i) => {
+      const k = ease.inBack(seg(t - stagger(i, WORD.length, b(1), { from: 'center' }), HIT + b(1), HIT + b(2)));
+      ctx.save(); ctx.beginPath(); ctx.rect(x - 4 * U, cy - size * 0.55, widths[i] + 8 * U, size * 0.97); ctx.clip();
+      ctx.fillStyle = fg; ctx.fillText(ch, x, cy + size * 0.36 + k * size * 1.1);
+      ctx.restore(); x += widths[i];
+    });
+    const grow = spring(t - (HIT + b(2.5)), { freq: 1.8, damp: 0.6 }), shrink = ease.inBack(seg(t, b(15), b(16)));
+    const r = lerp(size * 0.62 * grow, 0, shrink);   // ends at 0 = the empty first frame
+    ctx.fillStyle = C.accent; ctx.beginPath(); ctx.arc(cx, cy, Math.max(0, r), 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.restore();
+  ctx.restore();
+};
+
+function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, Math.max(w, 0.01), h, Math.min(r, h / 2, Math.abs(w) / 2)); ctx.fill(); }
+
+await loadFonts([FONT(230 * U)]);
+window.render(0);
+window.READY = true;
+</script>
+</body>
+</html>

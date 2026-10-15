@@ -1,0 +1,18 @@
+<!doctype html>
+<html><body style="margin:0"><canvas id="c"></canvas>
+<script type="module">
+// Test fixture: a 1-second deterministic page. Query switches:
+//   ?x=1      required when the test passes --q=mode=ok&x=1 (checks "=" handling in args)
+//   ?throwAt=0.5  render(t) throws for t ≥ 0.5 (checks failure handling)
+const q = new URLSearchParams(location.search), W = +q.get('w'), H = +q.get('h');
+if (q.get('mode') === 'ok' && q.get('x') !== '1') throw new Error('query was truncated: ' + location.search);
+const c = document.getElementById('c'); c.width = W; c.height = H;
+const g = c.getContext('2d');
+window.DUR = 1;
+window.render = t => {
+  if (q.has('throwAt') && t >= +q.get('throwAt')) throw new Error('boom at ' + t);
+  g.fillStyle = '#efebe3'; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#16c172'; g.fillRect(t * (W - 20), H / 2 - 10, 20, 20);
+};
+window.READY = true;
+</script></body></html>

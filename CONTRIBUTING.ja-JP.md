@@ -55,7 +55,9 @@ npm run validate  # CI がすべての PR で実行するのと同じチェッ�
 │   │
 │   ├── web-design-engineer/
 │   ├── gpt-image-2/
-│   └── kb-retriever/
+│   ├── kb-retriever/
+│   ├── beautiful-article/
+│   └── motion-showreel/
 │
 ├── scripts/release/                     ← リリースツール（ゼロ依存 Node ESM）
 │   ├── cut-release.mjs                  ← インタラクティブなリリースヘルパー（メインエントリ）
@@ -159,6 +161,17 @@ description: このスキルが何をして、いつ使うかを明確に説明�
 オプション: `/plugin install` 経由で発見できるようにしたい場合は、
 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) にプラグインパックエントリを追加します。
 
+ルートの多言語 README のチェックリスト（見落としやすい項目です。`validate` が確認するのは DOWNLOAD マーカーだけ）:
+
+- 先頭のスキルギャラリーにセルを追加し、`skills-N` バッジを 1 つ増やす
+- 「インストール」の前にスキルのセクションを追加し、方法 B の `/plugin install` リストとパック表にプラグインパックを追加する
+- `marketplace.json` にプラグインを追加したら、`metadata.version` をマイナーバージョンで上げ、`metadata.description` にスキルを追記する
+- CDN にない README 画像は `dist/imgs/<skill>/` に置く。リリース zip には含まれない
+
+リリース zip に入るもの: `pack-skill.mjs` は `skills/<name>/` のうち、git が出荷する内容だけを固めます
+（追跡済みファイルと、追跡されていないが無視もされていないファイル。OS / エディタのゴミは除外）。gitignore 対象の
+ランタイムダウンロードやネストした `node_modules/` は含まれないため、ローカルの `npm run pack` は CI と同じ zip になります。
+
 ---
 
 ## リリースの切り方
@@ -221,7 +234,7 @@ npm run release:dry
 # 3. リリースを切る。
 npm run release
 # `y` で確認し、スクリプトが何もバンプせず（initial）、README 同期をコミットし、
-# 4 つすべてにタグを付け、プッシュするのを見守ります。
+# 各スキルにタグを付けてプッシュするのを見守ります。
 
 # 4. 各スキルのリリースワークフローが並列で実行されるのを見守る。
 gh run list --workflow=release-skill.yml
@@ -230,7 +243,7 @@ gh run list --workflow=release-skill.yml
 git pull origin main
 ```
 
-これで、4 つのスキルそれぞれが GitHub 上に `releases/tag/<skill>-v1.0.0` エントリを持ち、
+これで、各スキルが GitHub 上に `releases/tag/<skill>-v1.0.0` エントリを持ち、
 ダウンロード可能な zip + sha256 が用意され、README のダウンロードリンクが
 それらを指すようになります。
 

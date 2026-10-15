@@ -4,7 +4,7 @@
 
 [中文文档](./README.zh-CN.md) · [Back to collection root](../../README.md)
 
-![GPT Image 2 Skill](https://cdn.jsdelivr.net/gh/ConardLi/assets@main/imgs/gpt-image-2-skill.webp)
+![GPT Image 2 Skill](../../dist/imgs/covers/gpt-image-2.webp)
 
 ---
 
