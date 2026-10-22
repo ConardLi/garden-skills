@@ -8,9 +8,9 @@ interface Options {
   /** `manual` = no playback. `audio` = play but don't auto-advance.
    *  `auto` = play and auto-advance when finished. */
   mode: PlaybackMode;
-  /** Small breathing pad (ms) after audio finishes before advancing,
-   *  in `auto` mode. Default 200ms. Set to 0 if mp3 already has trailing
-   *  silence. */
+  /** Reading-protection pad (ms) after audio finishes before advancing,
+   *  in `auto` mode. Default 1500ms (舞台剧流水线"读后留 1.5s"标准).
+   *  Set to 0 if mp3 already has trailing silence. */
   trailMs?: number;
   /** Fallback duration (ms) for `auto` mode when the audio file is missing
    *  or fails to play. Typically computed from text length. */
@@ -41,7 +41,7 @@ interface Options {
 export function useAudioPlayer({
   src,
   mode,
-  trailMs = 200,
+  trailMs = 1500,
   estimateFallbackMs = 1500,
   onAutoAdvance,
   autoStarted,

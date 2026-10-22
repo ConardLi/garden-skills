@@ -45,13 +45,16 @@ body {
  * ───────────────────────────────────────────────────────────────────── */
 :root {
   /* ── Type scale (used by primitive classes below; chapters can use
-        these OR write hard-coded sizes — whatever the content needs) ── */
-  --t-display-1:   clamp(140px, 11vw, 200px);
-  --t-display-2:   clamp(80px, 7vw, 128px);
-  --t-h1:          clamp(56px, 5vw, 88px);
-  --t-h2:          clamp(40px, 3.6vw, 60px);
-  --t-body:        20px;
-  --t-micro:       12px;
+        these OR write hard-coded sizes — whatever the content needs) ──
+        2026-10-19：竖版 1080×1440 舞台上 `vw` 只有 10.8px/单位，原 clamp 的
+        下限（80/56/40px）会被触发 → 字偏小、"内容只占屏幕 1/3"。下限按
+        **1080 宽竖版**标定、上限按 1920 宽横版标定。 */
+  --t-display-1:   clamp(168px, 11vw, 200px);
+  --t-display-2:   clamp(132px, 7.5vw, 160px);
+  --t-h1:          clamp(84px, 5.4vw, 104px);
+  --t-h2:          clamp(60px, 3.9vw, 72px);
+  --t-body:        24px;
+  --t-micro:       14px;
 
   /* ── Tracking presets (used by primitive classes) ── */
   --track-tight:   -0.025em;   /* large serif display */
@@ -113,10 +116,14 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 3. Stage chrome — letterbox + fitter + raw STAGE_W×STAGE_H frame.
+ * 3. Stage chrome — fitter + raw STAGE_W×STAGE_H frame.
  *    Stage size comes from stage.config.ts (default 1920×1080 = 16:9).
  *    The fitter/frame dimensions are set inline by Stage.tsx; the px
  *    values below are just a pre-JS fallback.
+ *
+ *    录制视口 == 舞台尺寸（1080×1440 / 1920×1080）时 scale = 1 → 满幅、
+ *    零 letterbox、零重采样。任何 margin > 0 都会让舞台缩小、四周露出
+ *    --shell 底色（ep07 踩坑，见 useStageScale.ts 注释）。
  * ───────────────────────────────────────────────────────────────────── */
 .app-shell {
   position: fixed;
@@ -135,8 +142,9 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 1920px;
-  height: 1080px;
+  /* 尺寸不在此定义：由 Stage.tsx 的 inline style 从 stage.config.ts（单一
+     真相源）注入。这里若写死 16:9 值，绕过 Stage.tsx 直接用本类时会静默
+     拿到错误尺寸（3:4 项目里变横屏框）。 */
   transform-origin: top left;
   background: var(--surface);
   overflow: hidden;
@@ -148,7 +156,10 @@ body {
   border-radius: var(--r-stage, 0);
 }
 
-/* OPTIONAL pattern layer drawn ON the stage so screen recordings catch it */
+/* OPTIONAL pattern layer drawn ON the stage so screen recordings catch it.
+   z-index 走 --surface-pattern-z（默认 1 = 在章节底之下，章节铺不透明底就
+   看不见了）。主题若想露出底纹（warm-keynote 设 3），会画在章节内容之上，
+   形成纸张纹理感 —— 治"大块空色显得空洞"。 */
 .stage-frame::after {
   content: "";
   position: absolute;
@@ -158,7 +169,7 @@ body {
   background-size: var(--surface-pattern-size, auto);
   mix-blend-mode: var(--surface-pattern-blend, normal);
   opacity: var(--surface-pattern-opacity, 1);
-  z-index: 1;
+  z-index: var(--surface-pattern-z, 1);
 }
 /* OPTIONAL radial vignette overlay (chalkboard / cinematic edges) */
 .stage-frame::before {
@@ -172,6 +183,27 @@ body {
 
 /* every chapter root */
 .scene { position: absolute; inset: 0; z-index: 2; }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 3b. 录屏契约（2026-10-19 新增）
+ *
+ * 逐帧截图流水线在"进入 step 后 ~200ms"截图定格。章节若还有 900ms 的
+ * 入场动画 / 650ms 的错峰延迟，截到的就是**半成品画面**（文字缺字、
+ * 元素只画了一半）——看起来像渲染 bug。
+ *
+ * 因此这里统一把章节内的动画/过渡压到 110ms 且延迟归零：截图时一切
+ * 必然已经到位，画面 = 设计终态。**这就是"确定性渲染"的前提**。
+ *
+ * 只做实时演讲（不录屏）时，整块删掉即可恢复错峰演出。
+ * ───────────────────────────────────────────────────────────────────── */
+.scene *,
+.scene *::before,
+.scene *::after {
+  animation-duration: 110ms !important;
+  animation-delay: 0ms !important;
+  transition-duration: 110ms !important;
+  transition-delay: 0ms !important;
+}
 
 /* ─────────────────────────────────────────────────────────────────────
  * 4. Type primitives — chapters compose with these instead of hard sizes.
@@ -214,6 +246,10 @@ body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-mute);
+  /* 2026-10-19：`band-top` 是 flex 行，kicker 会被长标题挤到只剩一个字宽 →
+     中文 kicker 竖排成一列。锁死不收缩、不换行。 */
+  flex: none;
+  white-space: nowrap;
 }
 
 /* hero figure / hero number — theme controls font, style, weight */
@@ -256,6 +292,61 @@ body {
   border-top: var(--bw-2) solid var(--accent);
   width: 100%;
   margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 5b. 舞台三段式版式（2026-10-19 新增，治"画面空洞"）
+ *
+ * 竖版/横版都适用：顶部钩子行 / 中部主视觉（≥55% 高）/ 底部注释行。
+ * 中部主视觉是本版式的硬约束 —— 低于 55% 的高占比 = 画面空洞、观众
+ * 觉得"没东西"，必须放大主视觉或补具象元素（见 components/viz 库）。
+ *
+ * 用法：
+ *   <div className="stage-3band">
+ *     <div className="band-top">…钩子/栏目行…</div>
+ *     <div className="band-main">…hero 图 / viz 元素…</div>
+ *     <div className="band-foot">…注释 / 来源…</div>
+ *   </div>
+ *
+ * 也可以不用这套原语、自由排布；但"中部主视觉 ≥55% 舞台高"这条不变。
+ * ───────────────────────────────────────────────────────────────────── */
+.stage-3band {
+  position: absolute;
+  inset: 0;
+  padding: var(--stage-pad-y) var(--stage-pad-x);
+  display: grid;
+  grid-template-rows: auto minmax(55%, 1fr) auto;
+  row-gap: var(--space-5);
+}
+.band-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 0;
+}
+.band-main {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  position: relative;
+}
+.band-foot {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  min-height: 0;
+}
+/* viz 元素填满中部：给它一个明确的盒，元素内部按比例自适应。
+   2026-10-19 修复：`.band-main` 是 grid + place-items:center，SVG 的
+   `height:100%` 在这种容器里解析失败 → SVG 退化成 viewBox 固有比例
+   （如 PipelineFlow 720×900 在 888 宽盒里变成 1110 高）→ 竖版元素溢出
+   舞台、尾部与 band-foot 重叠。用绝对定位把元素盒钉死在容器上，整好。 */
+.viz-fill { position: relative; width: 100%; height: 100%; }
+.viz-fill > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* ─────────────────────────────────────────────────────────────────────

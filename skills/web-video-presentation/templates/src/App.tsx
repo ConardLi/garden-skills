@@ -24,6 +24,19 @@ function estimateMs(text: string): number {
   return Math.max(1500, text.length * 250);
 }
 
+/**
+ * 阅读保护时间（ms）：音频播完后画面停留、供观众消化信息的时间，
+ * 仅在 auto 模式推进时生效。舞台剧流水线标准 = 1500ms；
+ * 整片可用 URL 参数调（如 `?auto=1&trail=800`），录屏脚本经环境变量透传。
+ * 某步需要更长保护 → 优先拆 step / 加长口播（保持 narrations.ts 单一真相源）。
+ */
+function trailMsFromUrl(): number {
+  const raw = new URLSearchParams(window.location.search).get("trail");
+  if (raw === null) return 1500;
+  const n = Number(raw);
+  return Number.isFinite(n) && n >= 0 ? n : 1500;
+}
+
 export default function App() {
   const stepper = useStepper(CHAPTERS);
   const ch = CHAPTERS[stepper.cursor.chapter]!;
@@ -45,7 +58,7 @@ export default function App() {
   useAudioPlayer({
     src: audioSrc,
     mode,
-    trailMs: 200,
+    trailMs: trailMsFromUrl(),
     estimateFallbackMs: estimateMs(stepText),
     onAutoAdvance,
     autoStarted,

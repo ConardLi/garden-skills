@@ -18,6 +18,9 @@ interface Props {
  *                   and centers it bulletproof on every viewport / DPR.
  *   .stage-frame  ← raw STAGE_W×STAGE_H box, scaled from top-left into the fitter.
  *
+ * 录制时视口 == 舞台尺寸 → scale = 1，舞台满幅铺满整屏（无 letterbox、
+ * 无重采样）。见 useStageScale.ts。
+ *
  * Surface colors come from the active theme's CSS custom properties
  * (var(--shell), var(--surface)) — see themes/<id>/tokens.css.
  */
