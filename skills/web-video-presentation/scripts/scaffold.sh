@@ -180,6 +180,13 @@ cp "$TEMPLATES/src/components/AutoToggle.css"     src/components/AutoToggle.css
 cp "$TEMPLATES/src/registry/types.ts"    src/registry/types.ts
 cp "$TEMPLATES/src/registry/chapters.ts" src/registry/chapters.ts
 
+# 章节视觉元素库（具象元素：浏览器窗 / 文件夹 / 终端 / 文档堆 / 流程…）
+mkdir -p src/components/viz
+cp "$TEMPLATES/src/components/viz/Viz.tsx"   src/components/viz/Viz.tsx
+cp "$TEMPLATES/src/components/viz/viz.css"   src/components/viz/viz.css
+cp "$TEMPLATES/src/components/viz/index.ts"  src/components/viz/index.ts
+cp "$TEMPLATES/src/components/viz/README.md" src/components/viz/README.md
+
 cp "$TEMPLATES/src/chapters/01-example/Example.tsx"     src/chapters/01-example/Example.tsx
 cp "$TEMPLATES/src/chapters/01-example/Example.css"     src/chapters/01-example/Example.css
 cp "$TEMPLATES/src/chapters/01-example/narrations.ts"   src/chapters/01-example/narrations.ts
@@ -194,6 +201,11 @@ mkdir -p scripts/tts-providers
 cp "$TEMPLATES/scripts/tts-providers/README.md"   scripts/tts-providers/README.md
 cp "$TEMPLATES/scripts/tts-providers/minimax.sh"  scripts/tts-providers/minimax.sh
 cp "$TEMPLATES/scripts/tts-providers/openai.sh"   scripts/tts-providers/openai.sh
+
+# 无头截图录制（方案 C：零抖动全自动成片，根治 webm 帧抖动）
+cp "$SKILL_DIR/scripts/record.mjs"          scripts/record.mjs
+cp "$SKILL_DIR/scripts/build_from_shots.py" scripts/build_from_shots.py
+chmod +x scripts/record.mjs
 
 # 非 16:9 时把舞台尺寸写进 stage.config.ts（单一真相源）
 if [[ "$STAGE_W" != "1920" || "$STAGE_H" != "1080" ]]; then
@@ -216,6 +228,8 @@ const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
 p.scripts = Object.assign({}, p.scripts, {
   "extract-narrations": "tsx scripts/extract-narrations.ts",
   "synthesize-audio":   "bash scripts/synthesize-audio.sh",
+  "record": "node scripts/record.mjs",
+  "build:video": "python scripts/build_from_shots.py",
 });
 fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
 '
@@ -281,6 +295,11 @@ cat <<EOF
   • $SKILL_DIR/themes/$THEME/theme.json
       看 descriptionZh / mood / bestFor —— 参考主题气质
       （动画 / 时长 / 字号 / emoji 由 chapter agent 在每章自由决定）
+  • 具象元素库 src/components/viz/（已拷入本工程，含 README.md 选用手册）
+      12 个纯 SVG 元素（浏览器窗 / 终端 / 文件夹 / 文档堆 / 对话气泡 /
+      卡片网格 / 流程管道 / 时间轴 / 数据条 / 循环箭头 / 检索放大镜 / 竖版清单）
+      ★ 每个 step 至少挂 1 个与当拍口播相关的元素；中部主视觉占舞台高
+        ≥55%（治"画面空洞 / 内容只占屏幕三分之一"）
 
 卡壳时可翻：
 
