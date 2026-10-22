@@ -1,20 +1,45 @@
 /* ─────────────────────────────────────────────────────────────────────
- * fonts.css — Google Fonts referenced by the built-in themes.
+ * fonts.css — 离线自足的字体层（2026-10-19 改写）
  *
- * Loaded via @import (not <link>) for portability across Vite versions.
- * If you author a new theme that uses a different family, append it
- * here and to the THEMES.md "fonts loaded by default" list.
+ * 原来这里是一串远程 Google Fonts 的 @import：在无头 Chrome 录制时，@import
+ * 拉取的外部 CSS 会挂住页面的 load 事件 → record.mjs 的 page.goto(waitUntil:
+ * "load") 迟迟不返回、录制卡死。改成纯本地字体栈后，页面 load 不再依赖网络。
+ *
+ * 策略：
+ *   • 不再拉取任何 webfont / 不再有远程 @import。
+ *   • 主题 token 里排在前面的家族名直接命中本机已安装字体（如 Noto Sans SC /
+ *     Noto Sans CJK SC）；未装的「web-only 家族名」用 local() 别名兜底。
+ *   • @font-face 的 src 只用 local(...)：不产生任何网络请求，因此 **不会阻塞
+ *     load**；font-display: swap 保证万一取不到也不卡渲染。若本机没有该字体，
+ *     该 face 视作加载失败，浏览器自动回退到 token 栈的下一项。
  * ───────────────────────────────────────────────────────────────────── */
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+
+/* CJK 正文 / 标题 —— 本机通常已装（Noto Sans SC ↔ Noto Sans CJK SC 互为别名） */
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local("Noto Sans SC"), local("NotoSansSC-VF"),
+       local("Noto Sans CJK SC"), local("Source Han Sans SC");
+}
+
+/* 拉丁 / 数字（主题 --font-display-en / --font-body）—— 本机无 Inter 时用系统无衬线兜底 */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local("Inter"), local("Inter Variable"),
+       local("Segoe UI"), local("Helvetica Neue"), local("Arial");
+}
+
+/* 等宽（主题 --font-mono）—— 本机无 JetBrains Mono 时用系统等宽兜底 */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: local("JetBrains Mono"), local("Cascadia Mono"),
+       local("Consolas"), local("Menlo"), local("Courier New");
+}

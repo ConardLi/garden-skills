@@ -84,7 +84,7 @@ my-video/
 
 | 产出 | 自检清单出处 |
 |---|---|
-| `script.md` | [`SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) 三层自检（形式 / 风骨 / 念出来） |
+| `script.md` | [`SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) 四层自检（形式 / 风骨 / 念出来 / 结构） |
 | `outline.md` | [`OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) 自检 |
 | 单章实现完成 | [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) 完工自检 |
 
@@ -121,6 +121,11 @@ Phase 2.4 的"实现单章"会重复 N 次 —— 每次都要回看核心约束
 > **写章节时只读一份 `CHAPTER-CRAFT.md`**。十条原则 / 开工 self-prompting /
 > 决策树 / 反 AI 味反模式 / 完工自检全部并入这一份单一入口。`EXAMPLES/`
 > **不是必读** —— 先按内容自由设计，卡壳才翻（按 anchor 翻"形"，不要照搬）。
+>
+> **具象元素库**：`templates/src/components/viz/`（11 个纯 SVG 元素，清单见
+> 该目录 `README.md`）—— 每 step 至少挂 1 个与口播相关的元素，主视觉占
+> 舞台高 ≥55%。这是 2026-10-19 起治「画面空洞 / 内容只占屏幕三分之一」的
+> **硬约束**，自检项已并入 `CHAPTER-CRAFT.md` 完工自检。
 
 ---
 
