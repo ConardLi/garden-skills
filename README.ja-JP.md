@@ -43,12 +43,15 @@
 <br/><sub>ローカルナレッジ検索</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top"><a href="#product-design-harness"><strong>product-design-harness</strong></a><br/><sub>製品判断；実験段階、ホスト未検証</sub></td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#コントリビュート)
-[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-7-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -64,6 +67,17 @@
 | [インストール](#インストール)<br>[`skills` CLI（npx）](#方法-a--skills-clinpx)<br>[Claude Code プラグインマーケットプレイス](#方法-b--claude-code-プラグインマーケットプレイス)<br>[Releases のバージョン固定 `.zip`](#方法-c--releases-のバージョン固定-zip)<br>[手動コピー](#方法-d--プロジェクトへ手動コピー)<br>[Git submodule](#方法-e--git-submodule) | [互換性](#互換性)<br>[Skill とは？](#skill-とは) | [コントリビュート](#コントリビュート)<br>[謝辞](#謝辞)<br>[ライセンス](#ライセンス) |
 
 ---
+
+### [`product-design-harness`](./skills/product-design-harness)
+
+Product judgment across User, Evidence, and Business flows before execution and during the next iteration.
+
+この実験的統合は、固定ソース `48965c6b501f61ebbb8130c9c2e4f9af08922b9f` の元の91ファイル（336238バイト）、実行権限およびMITライセンスを保持し、Garden manifestのみ追加します。0.1.0は統合メタデータです。`compat: []` は検証済みホストがないことを示し、要件免除や採用を意味しません。コレクション全体の本番対応・検証済みという記述は、この追加を認証しません。
+
+PythonチェッカーにはPythonとjsonschemaが必要です。任意の外部証拠・モデル利用には提供者の費用が発生する場合があり、ユーザーのホスト・ツール承認が必要です。ツールの事前承認はありません。既知の欠陥は残ります。禁止操作の前後の空白によりoverride検査を回避でき、元のスキルには参照先ux3-model.svg、intersections.svg、product-vs-coding-harness.svgがありません。[PR23](https://github.com/cis2042/ux3-product-design-harness/pull/23)と[PR24](https://github.com/cis2042/ux3-product-design-harness/pull/24)は台北時間2026-10-24 04:22の最終記録では未マージです。このAI支援提案はホスト・モデル・CIの検証やメンテナーの採用を主張しません。
+
+[Source](https://github.com/cis2042/ux3-product-design-harness/tree/48965c6b501f61ebbb8130c9c2e4f9af08922b9f/skills/product-design-harness) · [SKILL.md](./skills/product-design-harness/SKILL.md) · [MIT](./skills/product-design-harness/LICENSE) · <!-- DOWNLOAD:product-design-harness:start -->_（まだリリースされていません）_<!-- DOWNLOAD:product-design-harness:end -->
+
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 
@@ -407,6 +421,7 @@ npx skills remove kb-retriever  # アンインストール
 /plugin install image-generation-skills@garden-skills
 /plugin install motion-showreel-skills@garden-skills
 /plugin install beautiful-article-skills@garden-skills
+/plugin install product-design-harness@garden-skills
 ```
 
 プラグインパックは [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) で宣言されています:
@@ -419,6 +434,7 @@ npx skills remove kb-retriever  # アンインストール
 | `image-generation-skills` | `gpt-image-2` |
 | `motion-showreel-skills` | `motion-showreel` |
 | `beautiful-article-skills` | `beautiful-article` |
+| `product-design-harness` | `product-design-harness` |
 
 ### 方法 C · Releases のバージョン固定 `.zip`
 

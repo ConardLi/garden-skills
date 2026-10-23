@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, GPT Image 2 image generation, beautifully designed single-file HTML articles, and code-rendered motion-graphics short videos.",
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "plugins": [
     {
@@ -57,6 +57,15 @@
       "name": "beautiful-article-skills",
       "description": "Skills for turning URL / PDF / DOCX / Markdown / text / screenshots into beautifully designed, offline-friendly single-file HTML articles via the reacticle component protocol.",
       "source": "./skills/beautiful-article",
+      "strict": false,
+      "skills": [
+        "./"
+      ]
+    },
+    {
+      "name": "product-design-harness",
+      "description": "Product judgment across User, Evidence, and Business flows before execution and during the next iteration.",
+      "source": "./skills/product-design-harness",
       "strict": false,
       "skills": [
         "./"
