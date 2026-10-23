@@ -43,12 +43,15 @@
 <br/><sub>本地知识库检索</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top"><a href="#product-design-harness"><strong>product-design-harness</strong></a><br/><sub>产品判断；实验性，未做宿主测试</sub></td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
-[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-7-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -64,6 +67,17 @@
 | [安装](#安装)<br>[`skills` CLI（npx）](#方式-a--skills-clinpx)<br>[Claude Code 插件市场](#方式-b--claude-code-插件市场)<br>[Releases 钉版本 `.zip`](#方式-c--releases-钉版本-zip)<br>[手动拷贝](#方式-d--手动拷贝到项目)<br>[Git Submodule](#方式-e--git-submodule) | [兼容性](#兼容性)<br>[什么是 Skill？](#什么是-skill) | [贡献](#贡献)<br>[致谢](#致谢)<br>[许可证](#许可证) |
 
 ---
+
+### [`product-design-harness`](./skills/product-design-harness)
+
+Product judgment across User, Evidence, and Business flows before execution and during the next iteration.
+
+本实验性集成保留固定来源 `48965c6b501f61ebbb8130c9c2e4f9af08922b9f` 的全部91个原文件（336238字节）、可执行权限及MIT许可证，仅新增Garden manifest。0.1.0是集成元数据；`compat: []` 表示尚无已测试宿主，不构成资格豁免或接受。集合整体的生产可用及已测试宿主声明不认证此新增技能。
+
+Python检查器依赖Python与jsonschema。可选外部证据或模型可能产生供应商费用，且须取得用户的宿主及工具授权，不预授权工具。已知缺陷保留：禁止动作前后空白可绕过override检查器；原技能缺少引用的ux3-model.svg、intersections.svg、product-vs-coding-harness.svg。[PR23](https://github.com/cis2042/ux3-product-design-harness/pull/23)与[PR24](https://github.com/cis2042/ux3-product-design-harness/pull/24)最后于台北时间2026-10-24 04:22记录为未合并。本AI辅助提案不声称通过宿主、模型、CI或维护者接受。
+
+[Source](https://github.com/cis2042/ux3-product-design-harness/tree/48965c6b501f61ebbb8130c9c2e4f9af08922b9f/skills/product-design-harness) · [SKILL.md](./skills/product-design-harness/SKILL.md) · [MIT](./skills/product-design-harness/LICENSE) · <!-- DOWNLOAD:product-design-harness:start -->_（暂未发布）_<!-- DOWNLOAD:product-design-harness:end -->
+
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 
@@ -410,6 +424,7 @@ npx skills remove kb-retriever  # 卸载
 /plugin install image-generation-skills@garden-skills
 /plugin install motion-showreel-skills@garden-skills
 /plugin install beautiful-article-skills@garden-skills
+/plugin install product-design-harness@garden-skills
 ```
 
 插件包定义在 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)：
@@ -422,6 +437,7 @@ npx skills remove kb-retriever  # 卸载
 | `image-generation-skills` | `gpt-image-2` |
 | `motion-showreel-skills` | `motion-showreel` |
 | `beautiful-article-skills` | `beautiful-article` |
+| `product-design-harness` | `product-design-harness` |
 
 ### 方式 C · Releases 钉版本 `.zip`
 

@@ -43,12 +43,15 @@
 <br/><sub>Local knowledge retrieval</sub>
 </td>
 </tr>
+<tr>
+<td width="50%" valign="top"><a href="#product-design-harness"><strong>product-design-harness</strong></a><br/><sub>Product judgment; experimental, no host tests</sub></td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-7-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -64,6 +67,17 @@
 | [Install](#install)<br>[`skills` CLI (npx)](#option-a--skills-cli-npx)<br>[Claude Code plugin marketplace](#option-b--claude-code-plugin-marketplace)<br>[Pinned `.zip` from Releases](#option-c--pinned-zip-from-releases)<br>[Manual copy](#option-d--manual-copy-into-your-project)<br>[Git submodule](#option-e--git-submodule) | [Compatibility](#compatibility)<br>[What is a Skill?](#what-is-a-skill) | [Contributing](#contributing)<br>[Acknowledgments](#acknowledgments)<br>[License](#license) |
 
 ---
+
+### [`product-design-harness`](./skills/product-design-harness)
+
+Product judgment across User, Evidence, and Business flows before execution and during the next iteration.
+
+This experimental integration preserves all 91 original files (336238 bytes), their executable modes and MIT license at source commit `48965c6b501f61ebbb8130c9c2e4f9af08922b9f`, and adds only a Garden manifest. Version 0.1.0 is integration metadata; `compat: []` records no tested hosts and grants no exception or acceptance. Collection-wide production-ready and tested-host claims do not certify this addition.
+
+Python checkers require Python and jsonschema. Optional external evidence or model use may incur provider costs and requires the user’s host/tool authorization; no tools are preauthorized. Known defects remain: whitespace-padded prohibited actions can evade the override checker, and referenced ux3-model.svg, intersections.svg and product-vs-coding-harness.svg are missing from the original skill. [PR23](https://github.com/cis2042/ux3-product-design-harness/pull/23) and [PR24](https://github.com/cis2042/ux3-product-design-harness/pull/24) were last recorded unmerged at 2026-10-24 04:22 Asia/Taipei. This AI-assisted proposal has no host/model, CI or maintainer-acceptance claim.
+
+[Source](https://github.com/cis2042/ux3-product-design-harness/tree/48965c6b501f61ebbb8130c9c2e4f9af08922b9f/skills/product-design-harness) · [SKILL.md](./skills/product-design-harness/SKILL.md) · [MIT](./skills/product-design-harness/LICENSE) · <!-- DOWNLOAD:product-design-harness:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:product-design-harness:end -->
+
 
 ### [`web-video-presentation`](./skills/web-video-presentation)
 
@@ -410,6 +424,7 @@ more skills together:
 /plugin install image-generation-skills@garden-skills
 /plugin install motion-showreel-skills@garden-skills
 /plugin install beautiful-article-skills@garden-skills
+/plugin install product-design-harness@garden-skills
 ```
 
 Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
@@ -422,6 +437,7 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 | `image-generation-skills` | `gpt-image-2` |
 | `motion-showreel-skills` | `motion-showreel` |
 | `beautiful-article-skills` | `beautiful-article` |
+| `product-design-harness` | `product-design-harness` |
 
 ### Option C · Pinned `.zip` from Releases
 

@@ -1,0 +1,7 @@
+{
+  "name": "product-design-harness",
+  "version": "0.1.0",
+  "category": "Product Judgment",
+  "description": "Product judgment across User, Evidence, and Business flows before execution and during the next iteration.",
+  "compat": []
+}
