@@ -9,33 +9,33 @@
 <table>
 <tr>
 <td width="50%" valign="top">
+<a href="#motion-showreel"><img src="./dist/imgs/covers/motion-showreel.webp" alt="Motion Showreel Skill" width="100%"></a>
+<br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
+<br/><sub>Code-rendered short video</sub>
+</td>
+<td width="50%" valign="top">
 <a href="#web-video-presentation"><img src="./dist/imgs/covers/web-video-presentation.webp" alt="Web Video Presentation Skill" width="100%"></a>
 <br/><a href="#web-video-presentation"><strong>web-video-presentation</strong></a>
 <br/><sub>Web video / presentation</sub>
 </td>
+</tr>
+<tr>
 <td width="50%" valign="top">
 <a href="#web-design-engineer"><img src="./dist/imgs/covers/web-design-engineer.webp" alt="Web Design Skill" width="100%"></a>
 <br/><a href="#web-design-engineer"><strong>web-design-engineer</strong></a>
 <br/><sub>Design / frontend</sub>
 </td>
-</tr>
-<tr>
 <td width="50%" valign="top">
 <a href="#gpt-image-2"><img src="./dist/imgs/covers/gpt-image-2.webp" alt="GPT Image 2 Skill" width="100%"></a>
 <br/><a href="#gpt-image-2"><strong>gpt-image-2</strong></a>
 <br/><sub>Image generation / prompting</sub>
 </td>
+</tr>
+<tr>
 <td width="50%" valign="top">
 <a href="#beautiful-article"><img src="./dist/imgs/covers/beautiful-article.webp" alt="Beautiful Article Skill" width="100%"></a>
 <br/><a href="#beautiful-article"><strong>beautiful-article</strong></a>
 <br/><sub>Any source → beautiful article</sub>
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-<a href="#motion-showreel"><img src="./dist/imgs/covers/motion-showreel.webp" alt="Motion Showreel Skill" width="100%"></a>
-<br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
-<br/><sub>Code-rendered short video</sub>
 </td>
 <td width="50%" valign="top">
 <a href="#kb-retriever"><img src="./dist/imgs/covers/kb-retriever.webp" alt="KB Retriever Skill" width="100%"></a>
@@ -62,6 +62,41 @@
 | Install | Use | Contribute |
 |---|---|---|
 | [Install](#install)<br>[`skills` CLI (npx)](#option-a--skills-cli-npx)<br>[Claude Code plugin marketplace](#option-b--claude-code-plugin-marketplace)<br>[Pinned `.zip` from Releases](#option-c--pinned-zip-from-releases)<br>[Manual copy](#option-d--manual-copy-into-your-project)<br>[Git submodule](#option-e--git-submodule) | [Compatibility](#compatibility)<br>[What is a Skill?](#what-is-a-skill) | [Contributing](#contributing)<br>[Acknowledgments](#acknowledgments)<br>[License](#license) |
+
+---
+
+### [`motion-showreel`](./skills/motion-showreel)
+
+![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
+
+**Category:** Motion Graphics / Code Video
+
+**Best for:** showreels, product films, UI motion, kinetic typography, logo/title sequences, generative loops, retrospectives and narrated explainers. Short pieces typically run 5–60 s; chapter-based films support up to 20 minutes.
+
+`motion-showreel` delivers MP4 plus editable source. It confirms the topic, duration, orientation, independent music/SFX sources and narration mode, then writes a brief and confirms style frames. Deterministic `render(t)` pages are captured frame by frame on a shared audio/picture timeline. Narration follows a user-supplied script or recording; pictures follow actual speech timings. Long films use persistent chapter caches and technical acceptance.
+
+Highlights:
+
+- **Deterministic `render(t)` pipeline**: stills, contact sheets, three-direction boards, proxies and masters all come from the same page. Motion blur, supersampling and film grain are render flags.
+- **One timeline for picture and sound**: cuts, hits and SFX share the same numbers. Music can be synthesized (a zero-dependency built-in synth, or Tone.js with a sampled piano), or cut to the user's own track with beat and drop detection.
+- **A 43-style library as a starting point**: swiss-editorial, ink-wash, risograph, synthwave, soft 3D, cinematic title, pixel game, comic panels, guochao patterns, painterly strokes, whiteboard explainers, concept morphs, illuminated manuscripts and more. Each style defines its look, motion, camera grammar and sound palette, and can be adapted, mixed or replaced with your own.
+- **A sound direction, not a default song**: the brief sets a sound benchmark, groove, harmony, palette and dramatic arc, plus a list of audio defaults to avoid.
+- **Two checkpoints**: confirm requirements, then style frames (three distinct directions when unspecified), followed by autonomous production. Creative freedom remains available.
+- **Narration and long films**: Gemini/MiniMax TTS reads only user-supplied scripts; recordings use real timestamps. Music and SFX have independent sources, yield to speech, and chapter builds support up to 20 minutes.
+- **Technical acceptance kept separate from taste**: size, fps, duration, frame count, black frames, loudness, true peak, loop seam and determinism must all PASS. Review notes go to the user, who makes the final call.
+
+<table>
+<tr>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/afterglow.webp" alt="synthwave-neon" /></a><br /><sub><code>synthwave-neon</code><br />album title</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/boink.webp" alt="soft-3d-toy" /></a><br /><sub><code>soft-3d-toy</code><br />chain reaction</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/last-stroke.webp" alt="stick ink" /></a><br /><sub><code>stick ink</code><br />game trailer</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/umbra.webp" alt="cinematic-title" /></a><br /><sub><code>cinematic-title</code><br />film opening</sub></td>
+</tr>
+</table>
+
+<sub>↑ 4-second excerpts of pieces made with the skill. <a href="./skills/motion-showreel/README.md#showcase"><b>Open the showcase</b></a> for the full set, including the skill's own 80-second trailer and the style gallery.</sub>
+
+Links: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
 
 ---
 
@@ -242,27 +277,6 @@ Links: [README](./skills/gpt-image-2/README.md) · [SKILL.md](./skills/gpt-image
 
 ---
 
-### [`kb-retriever`](./skills/kb-retriever)
-
-![Kb Retriever Skill](./dist/imgs/covers/kb-retriever.webp)
-
-**Category:** Retrieval / Local Knowledge Base  
-**Best for:** answering questions from a local `knowledge/` directory, searching structured documentation, and extracting evidence from Markdown, text, PDF, and Excel files without flooding the agent context.
-
-`kb-retriever` is a local knowledge-base retriever built around careful, progressive search. Instead of loading whole files, it navigates hierarchical index files, narrows the candidate set, processes complex file types correctly, and answers with sources.
-
-Highlights:
-
-- Uses layered `data_structure.md` files to navigate the knowledge base before searching content
-- Enforces a **learn-before-process** rule for PDF and Excel files, using the included reference docs before extraction or analysis
-- Combines precise keyword search, local windowed reads, synonyms, and iterative refinement
-- Bounds retrieval to at most 5 search rounds so exploration stays controlled
-- Includes workflows for `grep`, `pdftotext`, `pdfplumber`, and `pandas`, with source-aware answer formatting
-
-Links: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->[Download v1.0.1 .zip](https://github.com/ConardLi/garden-skills/releases/download/kb-retriever-v1.0.1/kb-retriever-1.0.1.zip)<!-- DOWNLOAD:kb-retriever:end -->
-
----
-
 ### [`beautiful-article`](./skills/beautiful-article)
 
 ![Beautiful Article Skill](./dist/imgs/covers/beautiful-article.webp)
@@ -302,38 +316,24 @@ Links: [README](./skills/beautiful-article/README.md) · [SKILL.md](./skills/bea
 
 ---
 
-### [`motion-showreel`](./skills/motion-showreel)
+### [`kb-retriever`](./skills/kb-retriever)
 
-![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
+![Kb Retriever Skill](./dist/imgs/covers/kb-retriever.webp)
 
-**Category:** Motion Graphics / Code Video
+**Category:** Retrieval / Local Knowledge Base\
+**Best for:** answering questions from a local `knowledge/` directory, searching structured documentation, and extracting evidence from Markdown, text, PDF, and Excel files without flooding the agent context.
 
-**Best for:** showreels, product films, UI motion, kinetic typography, logo/title sequences, generative loops, retrospectives and narrated explainers. Short pieces typically run 5–60 s; chapter-based films support up to 20 minutes.
-
-`motion-showreel` delivers MP4 plus editable source. It confirms the topic, duration, orientation, independent music/SFX sources and narration mode, then writes a brief and confirms style frames. Deterministic `render(t)` pages are captured frame by frame on a shared audio/picture timeline. Narration follows a user-supplied script or recording; pictures follow actual speech timings. Long films use persistent chapter caches and technical acceptance.
+`kb-retriever` is a local knowledge-base retriever built around careful, progressive search. Instead of loading whole files, it navigates hierarchical index files, narrows the candidate set, processes complex file types correctly, and answers with sources.
 
 Highlights:
 
-- **Deterministic `render(t)` pipeline**: stills, contact sheets, three-direction boards, proxies and masters all come from the same page. Motion blur, supersampling and film grain are render flags.
-- **One timeline for picture and sound**: cuts, hits and SFX share the same numbers. Music can be synthesized (a zero-dependency built-in synth, or Tone.js with a sampled piano), or cut to the user's own track with beat and drop detection.
-- **A 43-style library as a starting point**: swiss-editorial, ink-wash, risograph, synthwave, soft 3D, cinematic title, pixel game, comic panels, guochao patterns, painterly strokes, whiteboard explainers, concept morphs, illuminated manuscripts and more. Each style defines its look, motion, camera grammar and sound palette, and can be adapted, mixed or replaced with your own.
-- **A sound direction, not a default song**: the brief sets a sound benchmark, groove, harmony, palette and dramatic arc, plus a list of audio defaults to avoid.
-- **Two checkpoints**: confirm requirements, then style frames (three distinct directions when unspecified), followed by autonomous production. Creative freedom remains available.
-- **Narration and long films**: Gemini/MiniMax TTS reads only user-supplied scripts; recordings use real timestamps. Music and SFX have independent sources, yield to speech, and chapter builds support up to 20 minutes.
-- **Technical acceptance kept separate from taste**: size, fps, duration, frame count, black frames, loudness, true peak, loop seam and determinism must all PASS. Review notes go to the user, who makes the final call.
+- Uses layered `data_structure.md` files to navigate the knowledge base before searching content
+- Enforces a **learn-before-process** rule for PDF and Excel files, using the included reference docs before extraction or analysis
+- Combines precise keyword search, local windowed reads, synonyms, and iterative refinement
+- Bounds retrieval to at most 5 search rounds so exploration stays controlled
+- Includes workflows for `grep`, `pdftotext`, `pdfplumber`, and `pandas`, with source-aware answer formatting
 
-<table>
-<tr>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/afterglow.webp" alt="synthwave-neon" /></a><br /><sub><code>synthwave-neon</code><br />album title</sub></td>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/boink.webp" alt="soft-3d-toy" /></a><br /><sub><code>soft-3d-toy</code><br />chain reaction</sub></td>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/last-stroke.webp" alt="stick ink" /></a><br /><sub><code>stick ink</code><br />game trailer</sub></td>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/umbra.webp" alt="cinematic-title" /></a><br /><sub><code>cinematic-title</code><br />film opening</sub></td>
-</tr>
-</table>
-
-<sub>↑ 4-second excerpts of pieces made with the skill. <a href="./skills/motion-showreel/README.md#showcase"><b>Open the showcase</b></a> for the full set, including the skill's own 80-second trailer and the style gallery.</sub>
-
-Links: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
+Links: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->[Download v1.0.1 .zip](https://github.com/ConardLi/garden-skills/releases/download/kb-retriever-v1.0.1/kb-retriever-1.0.1.zip)<!-- DOWNLOAD:kb-retriever:end -->
 
 ---
 

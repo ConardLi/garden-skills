@@ -9,33 +9,33 @@
 <table>
 <tr>
 <td width="50%" valign="top">
+<a href="#motion-showreel"><img src="./dist/imgs/covers/motion-showreel.webp" alt="Motion Showreel Skill" width="100%"></a>
+<br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
+<br/><sub>コードで描くショート動画</sub>
+</td>
+<td width="50%" valign="top">
 <a href="#web-video-presentation"><img src="./dist/imgs/covers/web-video-presentation.webp" alt="Web Video Presentation Skill" width="100%"></a>
 <br/><a href="#web-video-presentation"><strong>web-video-presentation</strong></a>
 <br/><sub>Web 動画 / プレゼンテーション</sub>
 </td>
+</tr>
+<tr>
 <td width="50%" valign="top">
 <a href="#web-design-engineer"><img src="./dist/imgs/covers/web-design-engineer.webp" alt="Web Design Skill" width="100%"></a>
 <br/><a href="#web-design-engineer"><strong>web-design-engineer</strong></a>
 <br/><sub>デザイン / フロントエンド</sub>
 </td>
-</tr>
-<tr>
 <td width="50%" valign="top">
 <a href="#gpt-image-2"><img src="./dist/imgs/covers/gpt-image-2.webp" alt="GPT Image 2 Skill" width="100%"></a>
 <br/><a href="#gpt-image-2"><strong>gpt-image-2</strong></a>
 <br/><sub>画像生成 / プロンプト</sub>
 </td>
+</tr>
+<tr>
 <td width="50%" valign="top">
 <a href="#beautiful-article"><img src="./dist/imgs/covers/beautiful-article.webp" alt="Beautiful Article Skill" width="100%"></a>
 <br/><a href="#beautiful-article"><strong>beautiful-article</strong></a>
 <br/><sub>あらゆる素材 → 美しい記事</sub>
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-<a href="#motion-showreel"><img src="./dist/imgs/covers/motion-showreel.webp" alt="Motion Showreel Skill" width="100%"></a>
-<br/><a href="#motion-showreel"><strong>motion-showreel</strong></a>
-<br/><sub>コードで描くショート動画</sub>
 </td>
 <td width="50%" valign="top">
 <a href="#kb-retriever"><img src="./dist/imgs/covers/kb-retriever.webp" alt="KB Retriever Skill" width="100%"></a>
@@ -62,6 +62,41 @@
 | インストール | 使い方 | コントリビュート |
 |---|---|---|
 | [インストール](#インストール)<br>[`skills` CLI（npx）](#方法-a--skills-clinpx)<br>[Claude Code プラグインマーケットプレイス](#方法-b--claude-code-プラグインマーケットプレイス)<br>[Releases のバージョン固定 `.zip`](#方法-c--releases-のバージョン固定-zip)<br>[手動コピー](#方法-d--プロジェクトへ手動コピー)<br>[Git submodule](#方法-e--git-submodule) | [互換性](#互換性)<br>[Skill とは？](#skill-とは) | [コントリビュート](#コントリビュート)<br>[謝辞](#謝辞)<br>[ライセンス](#ライセンス) |
+
+---
+
+### [`motion-showreel`](./skills/motion-showreel)
+
+![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
+
+**カテゴリ:** モーショングラフィックス / コード動画
+
+**用途:** ショーリール、製品映像、UI モーション、キネティックタイポグラフィ、ロゴ、ループ、回顧映像、ナレーション付き解説。短編は通常 5〜60 秒、章構成の動画は最長 20 分です。
+
+`motion-showreel` は MP4 と編集可能なソースを出力します。テーマ、尺、縦横、BGM・効果音それぞれの出所、ナレーション方式を確認し、brief とスタイルフレームを作成します。`render(t)` の映像と音声が同じ時間軸を共有し、ナレーションがある場合は実音声の区間に映像を合わせます。長編は章ごとのキャッシュと再構築に対応します。
+
+ハイライト:
+
+- **決定論的な `render(t)` パイプライン**: 静止画、コンタクトシート、3 方向の比較、プロキシ、本番レンダーがすべて同じページから出力されます。モーションブラー、スーパーサンプリング、フィルムグレインはレンダーフラグで指定します
+- **映像と音が 1 つのタイムラインを共有**: カット、ヒット、効果音は同じ数値を使います。音楽は依存ゼロの内蔵シンセ、ピアノのサンプルを使える Tone.js、またはユーザーの楽曲（ビートとドロップを自動検出）から選べます
+- **43 スタイルのライブラリは出発点であって選択肢リストではない**: swiss-editorial、ink-wash、risograph、synthwave、soft 3D、cinematic title、pixel game、コミック、国潮パターン、油彩タッチ、ホワイトボード解説、数学・概念モーフィング、装飾写本など。各スタイルにルック、モーション、カメラ文法、サウンドパレットが定義されていて、改造・ミックス・自作ができます
+- **デフォルトの曲ではなく音の方向性を決める**: ブリーフで音のベンチマーク、グルーヴ、和声、楽器編成、ドラマの曲線を決め、避けるべき音の「デフォルト」リストも用意しています
+- **確認は 2 回**: 要件を確認し、その後スタイルフレームを確認します。スタイル未指定なら 3 方向を提示し、確認後は自律制作します。創作の自由度は維持します
+- **ナレーションと長編**: TTS 原稿はユーザー提供が必須です。Gemini/MiniMax API または録音を使い、BGM と効果音は別々に選択して発話中は抑えます。章構成で最長 20 分に対応します
+- **技術的な受け入れと美的判断を分離**: サイズ、fps、尺、フレーム数、黒フレーム、ラウドネス、トゥルーピーク、ループのつなぎ目、決定論性はすべて PASS が必須です。レビューノートはユーザーに渡し、最終判断はユーザーが行います
+
+<table>
+<tr>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/afterglow.webp" alt="synthwave-neon" /></a><br /><sub><code>synthwave-neon</code><br />アルバムのタイトル</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/boink.webp" alt="soft-3d-toy" /></a><br /><sub><code>soft-3d-toy</code><br />連鎖反応</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/last-stroke.webp" alt="stick ink" /></a><br /><sub><code>stick ink</code><br />ゲームトレーラー</sub></td>
+<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/umbra.webp" alt="cinematic-title" /></a><br /><sub><code>cinematic-title</code><br />映画のオープニング</sub></td>
+</tr>
+</table>
+
+<sub>↑ このスキルで作った作品の 4 秒の抜粋。スキル自身の 80 秒トレーラーやスタイルギャラリーを含む全作品は <a href="./skills/motion-showreel/README.md#showcase"><b>ショーケース</b></a> で。</sub>
+
+リンク: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
 
 ---
 
@@ -242,27 +277,6 @@
 
 ---
 
-### [`kb-retriever`](./skills/kb-retriever)
-
-![Kb Retriever Skill](./dist/imgs/covers/kb-retriever.webp)
-
-**カテゴリ:** 検索 / ローカル知識ベース  
-**用途:** ローカルの `knowledge/` ディレクトリから質問に答え、構造化されたドキュメントを検索し、エージェントのコンテキストを溢れさせることなく Markdown、テキスト、PDF、Excel ファイルから根拠を抽出します。
-
-`kb-retriever` は、慎重で段階的な検索を中心に構築されたローカル知識ベースのリトリーバです。ファイル全体を読み込むのではなく、階層的なインデックスファイルをたどり、候補集合を絞り込み、複雑なファイルタイプを正しく処理し、出典付きで回答します。
-
-主な特徴:
-
-- 階層化された `data_structure.md` ファイルを使用して、コンテンツを検索する前に知識ベース内を移動
-- PDF および Excel ファイルに対して**learn-before-process**ルールを強制し、抽出や分析の前に同梱のリファレンスドキュメントを使用
-- 正確なキーワード検索、ローカルウィンドウ読み込み、同義語、反復的なリファインメントを組み合わせる
-- 検索を最大 5 ラウンドに制限し、探索を制御された範囲に保つ
-- `grep`、`pdftotext`、`pdfplumber`、`pandas` のワークフローと、出典を意識した回答フォーマットを含む
-
-リンク: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->[Download v1.0.1 .zip](https://github.com/ConardLi/garden-skills/releases/download/kb-retriever-v1.0.1/kb-retriever-1.0.1.zip)<!-- DOWNLOAD:kb-retriever:end -->
-
----
-
 ### [`beautiful-article`](./skills/beautiful-article)
 
 ![Beautiful Article Skill](./dist/imgs/covers/beautiful-article.webp)
@@ -302,38 +316,24 @@
 
 ---
 
-### [`motion-showreel`](./skills/motion-showreel)
+### [`kb-retriever`](./skills/kb-retriever)
 
-![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
+![Kb Retriever Skill](./dist/imgs/covers/kb-retriever.webp)
 
-**カテゴリ:** モーショングラフィックス / コード動画
+**カテゴリ:** 検索 / ローカル知識ベース\
+**用途:** ローカルの `knowledge/` ディレクトリから質問に答え、構造化されたドキュメントを検索し、エージェントのコンテキストを溢れさせることなく Markdown、テキスト、PDF、Excel ファイルから根拠を抽出します。
 
-**用途:** ショーリール、製品映像、UI モーション、キネティックタイポグラフィ、ロゴ、ループ、回顧映像、ナレーション付き解説。短編は通常 5〜60 秒、章構成の動画は最長 20 分です。
+`kb-retriever` は、慎重で段階的な検索を中心に構築されたローカル知識ベースのリトリーバです。ファイル全体を読み込むのではなく、階層的なインデックスファイルをたどり、候補集合を絞り込み、複雑なファイルタイプを正しく処理し、出典付きで回答します。
 
-`motion-showreel` は MP4 と編集可能なソースを出力します。テーマ、尺、縦横、BGM・効果音それぞれの出所、ナレーション方式を確認し、brief とスタイルフレームを作成します。`render(t)` の映像と音声が同じ時間軸を共有し、ナレーションがある場合は実音声の区間に映像を合わせます。長編は章ごとのキャッシュと再構築に対応します。
+主な特徴:
 
-ハイライト:
+- 階層化された `data_structure.md` ファイルを使用して、コンテンツを検索する前に知識ベース内を移動
+- PDF および Excel ファイルに対して**learn-before-process**ルールを強制し、抽出や分析の前に同梱のリファレンスドキュメントを使用
+- 正確なキーワード検索、ローカルウィンドウ読み込み、同義語、反復的なリファインメントを組み合わせる
+- 検索を最大 5 ラウンドに制限し、探索を制御された範囲に保つ
+- `grep`、`pdftotext`、`pdfplumber`、`pandas` のワークフローと、出典を意識した回答フォーマットを含む
 
-- **決定論的な `render(t)` パイプライン**: 静止画、コンタクトシート、3 方向の比較、プロキシ、本番レンダーがすべて同じページから出力されます。モーションブラー、スーパーサンプリング、フィルムグレインはレンダーフラグで指定します
-- **映像と音が 1 つのタイムラインを共有**: カット、ヒット、効果音は同じ数値を使います。音楽は依存ゼロの内蔵シンセ、ピアノのサンプルを使える Tone.js、またはユーザーの楽曲（ビートとドロップを自動検出）から選べます
-- **43 スタイルのライブラリは出発点であって選択肢リストではない**: swiss-editorial、ink-wash、risograph、synthwave、soft 3D、cinematic title、pixel game、コミック、国潮パターン、油彩タッチ、ホワイトボード解説、数学・概念モーフィング、装飾写本など。各スタイルにルック、モーション、カメラ文法、サウンドパレットが定義されていて、改造・ミックス・自作ができます
-- **デフォルトの曲ではなく音の方向性を決める**: ブリーフで音のベンチマーク、グルーヴ、和声、楽器編成、ドラマの曲線を決め、避けるべき音の「デフォルト」リストも用意しています
-- **確認は 2 回**: 要件を確認し、その後スタイルフレームを確認します。スタイル未指定なら 3 方向を提示し、確認後は自律制作します。創作の自由度は維持します
-- **ナレーションと長編**: TTS 原稿はユーザー提供が必須です。Gemini/MiniMax API または録音を使い、BGM と効果音は別々に選択して発話中は抑えます。章構成で最長 20 分に対応します
-- **技術的な受け入れと美的判断を分離**: サイズ、fps、尺、フレーム数、黒フレーム、ラウドネス、トゥルーピーク、ループのつなぎ目、決定論性はすべて PASS が必須です。レビューノートはユーザーに渡し、最終判断はユーザーが行います
-
-<table>
-<tr>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/afterglow.webp" alt="synthwave-neon" /></a><br /><sub><code>synthwave-neon</code><br />アルバムのタイトル</sub></td>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/boink.webp" alt="soft-3d-toy" /></a><br /><sub><code>soft-3d-toy</code><br />連鎖反応</sub></td>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/last-stroke.webp" alt="stick ink" /></a><br /><sub><code>stick ink</code><br />ゲームトレーラー</sub></td>
-<td align="center" width="25%"><a href="./skills/motion-showreel/README.md#showcase"><img src="./dist/imgs/motion-showreel/umbra.webp" alt="cinematic-title" /></a><br /><sub><code>cinematic-title</code><br />映画のオープニング</sub></td>
-</tr>
-</table>
-
-<sub>↑ このスキルで作った作品の 4 秒の抜粋。スキル自身の 80 秒トレーラーやスタイルギャラリーを含む全作品は <a href="./skills/motion-showreel/README.md#showcase"><b>ショーケース</b></a> で。</sub>
-
-リンク: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
+リンク: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retriever/SKILL.md) · <!-- DOWNLOAD:kb-retriever:start -->[Download v1.0.1 .zip](https://github.com/ConardLi/garden-skills/releases/download/kb-retriever-v1.0.1/kb-retriever-1.0.1.zip)<!-- DOWNLOAD:kb-retriever:end -->
 
 ---
 
