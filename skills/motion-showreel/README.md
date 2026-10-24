@@ -92,7 +92,7 @@ See [`references/narration.md`](./references/narration.md) for TTS, recording ti
 
 ## Style Library
 
-43 styles in 8 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, illustration & comics, handmade, cinematic. A few of them, rendered by the skill:
+43 styles in 8 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, illustration & comics, handmade, cinematic. Rendered style previews (the final three are 4-second seamless loops at 20 fps):
 
 <table>
 <tr>
@@ -127,13 +127,13 @@ See [`references/narration.md`](./references/narration.md) for TTS, recording ti
 </tr>
 <tr>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-soft-organic.webp" alt="soft-organic" /><br /><sub><code>soft-organic</code></sub></td>
-<td width="25%"></td>
-<td width="25%"></td>
-<td width="25%"></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-hologram-hud.webp" alt="hologram-hud" /><br /><sub><code>hologram-hud</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-particle-field.webp" alt="particle-field" /><br /><sub><code>particle-field</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-art-deco.webp" alt="art-deco" /><br /><sub><code>art-deco</code></sub></td>
 </tr>
 </table>
 
-<sub>Also in the library: <code>dark-keynote</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>. See <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a> for the directory, the three-direction rule and how to mix styles.</sub>
+<sub>Also in the library: <code>dark-keynote</code> · <code>soft-3d-toy</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>. See <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a> for the directory, the three-direction rule and how to mix styles.</sub>
 
 More style guides: [Art Deco](./references/styles/art-deco.md), [One-Line](./references/styles/one-line.md), [Blueprint](./references/styles/blueprint.md), [Hologram HUD](./references/styles/hologram-hud.md), [Stained Glass](./references/styles/stained-glass.md), [Tilt-Shift Miniature](./references/styles/tilt-shift-miniature.md), [Pixel Diorama](./references/styles/pixel-diorama.md), [80s Cel Animation](./references/styles/cel-anime-80s.md), [Rubber Hose](./references/styles/rubber-hose.md), and [Shadow Puppet](./references/styles/shadow-puppet.md). Each follows the same template, with material and motion rules plus optional implementation directions.
 

@@ -92,7 +92,7 @@
 
 ## 风格库
 
-43 种风格，分 8 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、插画与漫画、手作、电影感。下面几种是 Skill 自己渲出来的：
+43 种风格，分 8 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、插画与漫画、手作、电影感。下面是代码渲染的风格样片，最后新增的三段均为 4 秒、20 fps 的无缝循环动图：
 
 <table>
 <tr>
@@ -127,13 +127,13 @@
 </tr>
 <tr>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-soft-organic.webp" alt="soft-organic" /><br /><sub><code>soft-organic</code> 柔光有机</sub></td>
-<td width="25%"></td>
-<td width="25%"></td>
-<td width="25%"></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-hologram-hud.webp" alt="hologram-hud" /><br /><sub><code>hologram-hud</code> 全息空间界面</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-particle-field.webp" alt="particle-field" /><br /><sub><code>particle-field</code> 粒子场</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-art-deco.webp" alt="art-deco" /><br /><sub><code>art-deco</code> 装饰艺术</sub></td>
 </tr>
 </table>
 
-<sub>库里还有：<code>dark-keynote</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>。目录、三方向规则和混搭方法见 <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a>。</sub>
+<sub>库里还有：<code>dark-keynote</code> · <code>soft-3d-toy</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>。目录、三方向规则和混搭方法见 <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a>。</sub>
 
 其他风格规则：[装饰艺术](./references/styles/art-deco.md)、[一笔线描](./references/styles/one-line.md)、[工程蓝图](./references/styles/blueprint.md)、[全息空间界面](./references/styles/hologram-hud.md)、[彩色玻璃镶嵌](./references/styles/stained-glass.md)、[移轴微缩](./references/styles/tilt-shift-miniature.md)、[像素立体场景](./references/styles/pixel-diorama.md)、[80 年代赛璐璐动画](./references/styles/cel-anime-80s.md)、[橡皮管动画](./references/styles/rubber-hose.md)、[透光皮影](./references/styles/shadow-puppet.md)。沿用同一模板，写明材质、运动规则和可选技术方向。
 
