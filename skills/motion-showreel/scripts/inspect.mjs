@@ -102,8 +102,8 @@ async function loop() {
 }
 function detect() {
   const freezeMin = +(opt.freeze || 0.8);
-  const r = spawnSync('ffmpeg', ['-hide_banner', '-i', video, '-vf', `freezedetect=n=0.0005:d=${freezeMin},blackdetect=d=0.04:pix_th=0.06,select='gt(scene,0.32)',metadata=print:key=lavfi.scene_score:file=-`, '-an', '-f', 'null', '-'], { encoding: 'utf8' });
-  if (r.status !== 0) die(`ffmpeg could not analyse ${video}: ${r.stderr.trim().split('\n').pop()}`);
+  const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', video, '-vf', `freezedetect=n=0.0005:d=${freezeMin},blackdetect=d=0.04:pix_th=0.06,select='gt(scene,0.32)',metadata=print:key=lavfi.scene_score:file=-`, '-an', '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  if (r.error || r.status !== 0) die(`ffmpeg could not analyse ${video}: ${r.error?.message || r.stderr.trim().split('\n').pop()}`);
   const txt = r.stdout + '\n' + r.stderr;
   // freezes: pair starts with ends in order; a freeze still open at EOF runs to the end of the video
   const freezes = [];
@@ -220,9 +220,16 @@ async function heat() {
 }
 
 function loudness(file) {
-  const st = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', file, '-af', 'ebur128=peak=true', '-f', 'null', '-'], { encoding: 'utf8' }).stderr;
+  // Per-frame ebur128 messages are verbose; keep only the final info-level summary.
+  // Capturing 10 log lines/s overflowed spawnSync's buffer on videos around ten minutes long.
+  const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-loglevel', 'info', '-i', file, '-vn', '-af', 'ebur128=peak=true:framelog=verbose', '-f', 'null', '-'], { encoding: 'utf8' });
+  if (r.error || r.status !== 0) die(`could not measure loudness: ${r.error?.message || r.stderr.trim().split('\n').pop()}`);
+  const st = r.stderr;
+  if (!st.includes('Summary:')) die('could not measure loudness: ffmpeg returned no ebur128 summary');
   const sum = st.slice(st.lastIndexOf('Summary:'));
-  return { I: +(/I:\s+(-?[\d.]+) LUFS/.exec(sum)?.[1] ?? NaN), TP: +(/Peak:\s+(-?[\d.]+) dBFS/.exec(sum)?.[1] ?? NaN) };
+  const I = +(/I:\s+(-?[\d.]+) LUFS/.exec(sum)?.[1] ?? NaN), TP = +(/Peak:\s+(-?(?:[\d.]+|inf)) dBFS/.exec(sum)?.[1]?.replace('-inf', '-Infinity') ?? NaN);
+  if (Number.isNaN(I) || Number.isNaN(TP)) die('could not measure loudness: malformed ebur128 summary');
+  return { I, TP };
 }
 
 async function qa() {

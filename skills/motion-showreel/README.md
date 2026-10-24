@@ -1,6 +1,6 @@
 # Motion Showreel Skill
 
-**Stunning short videos made entirely in code: motion showreels, product films, UI motion, kinetic typography, logo stings, generative loops and era-spanning retrospectives, with optional beat-synced music.**
+**Code-rendered motion videos, from logo stings to chapter-based films up to 20 minutes, with independent music/SFX sources, supplied narration or TTS, and editable source.**
 
 [中文文档](./README.zh-CN.md) · [Back to collection root](../../README.md)
 
@@ -10,7 +10,7 @@
 
 ## What Is This?
 
-`motion-showreel` turns one sentence into a finished short video (MP4 plus editable source). The kind of video it makes is mostly graphics, type or interface animation. The agent writes a web page whose picture is a pure function of time, renders it frame by frame, scores it on the same timeline and checks the result before handing it over.
+`motion-showreel` turns an idea into a finished video (MP4 plus editable source), mostly graphics, type or interface animation. After confirming the requirements and style frames, the agent renders a deterministic web page frame by frame. Picture and sound share one timeline; narrated films follow the actual speech timings.
 
 It is designed for:
 
@@ -22,7 +22,11 @@ It is designed for:
 - Generative-art loops and data "number drops"
 - Era-spanning retrospectives that change medium as they go (pixel → vector → 3D …)
 
-Typical length is 5–60 s; music-driven pieces without narration can run to about 2 minutes. Out of scope: narrated explainers (use [`web-video-presentation`](../web-video-presentation)), web pages and prototypes (use [`web-design-engineer`](../web-design-engineer)), photoreal people, live footage and editing existing video.
+Short pieces typically run 5–60 s; chapter-based videos can run up to **20 minutes**, with or without narration. Use [`web-video-presentation`](../web-video-presentation) for click-driven talks or article-to-script work, and [`web-design-engineer`](../web-design-engineer) for websites/prototypes. Photoreal people, filming and general video editing remain outside this skill.
+
+Required before production: **topic/content, duration, landscape or portrait, music source, SFX source, and narration mode**. Music and SFX independently use AI synthesis, user files or an explicit off choice. Narration can be absent, user audio, or TTS; **TTS must read a script supplied by the user**, with a configured API (Gemini, MiniMax or a custom adapter). Duration conflicts require confirmation; speech is never silently cut, sped up or rewritten.
+
+Supporting material, audience/platform and style are optional. Specific user instructions or the supplied script can provide the content; otherwise request concrete material or research the topic, preserving factual sources. With no style specified, offer three distinct directions.
 
 ---
 
@@ -59,9 +63,11 @@ Technical checks (all PASS) and an honest review log
 - **Picture = a function of time.** The page exposes a deterministic `window.render(t)` (no `Math.random`, timers, rAF or CSS animation). Playwright captures every frame and ffmpeg encodes the MP4. Motion blur (`--subframes`), supersampling (`--dpr`) and film grain (`--grain`) are render flags, not page code.
 - **One timeline for picture and sound.** `timeline.js` holds every cut, hit and cue; the page and the score both import it, so hits land on the exact frame.
 - **Benchmark first, then three structures.** Before anything is drawn, the agent picks 1–2 reference works (what to learn, what not to copy) and writes down three candidate structures. A reference video can be measured: `inspect.mjs grid` finds its cuts and the beat grid they sit on, `heat` shows where each segment moves. The first idea that comes to mind is usually the style's cliché.
-- **A style library that is a starting point, not a menu.** 28 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Every style also lists 8–12 recognition signals to pick 2–3 from and spells out its own cliché, so choosing "synthwave" does not mean the same grid-and-sunset every time. Use one, adapt it, mix two, or write your own from the template.
+- **A style library that is a starting point, not a menu.** 40 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Every style also lists 8–12 recognition signals to pick 2–3 from and spells out its own cliché, so choosing "synthwave" does not mean the same grid-and-sunset every time. Use one, adapt it, mix two, or write your own from the template.
 - **Sound gets its own direction.** The brief covers sound too: a reference, groove, harmony, palette and dramatic arc. A list of audio defaults keeps pieces from all ending up with the same song.
-- **One checkpoint, then all-out.** The only stop is the style-frame review. If no style was given, the agent offers three deliberately different directions, one key frame each. After that it builds autonomously.
+- **Two checkpoints, then autonomous production.** Confirm the completed requirements, then the style frames. With no style specified, offer three distinct directions. Creative freedom does not silently choose missing production specifications.
+- **Voice-led timing and chapter builds.** TTS reads the user's script; imported recordings use real segment timestamps. Pictures follow speech, music/SFX yield during narration, and long builds reuse persistent chapter caches after failures.
+- **Continuous scenes.** Storyboards track object states and spatial continuity across sentences. Keyword events use measured word timestamps or manual anchors; audio preview supports scrubbing and frame stepping. Representative motion samples accompany style confirmation when the direction depends on movement.
 - **Technical acceptance is separate from taste.** Programmatic checks (size, fps, duration, frame count, black frames, loudness, true peak, loop seams, determinism) must all pass. Measured review material sits next to them without blocking anything: per-shot motion with sudden jumps and one-frame flashes, and a text-framing pass (text cut by the frame, overlapping, in the safe zone, too small). The agent's review notes help the user watch faster; they never replace the user's own viewing.
 - **Free mode.** Say "go all out" or "surprise me" and the agent keeps only the baseline rules and the technical pipeline. Style, structure and technique are left to the model.
 
@@ -71,20 +77,22 @@ Technical checks (all PASS) and an honest review log
 
 ```text
 0  Environment check (once)
-1  Ask once ─────────── max 5 questions; anything inferable is not asked
-2  brief.md ─────────── benchmark → format + style → Reel Read → beat grid + shot list + forbidden list
-3  Style frames ─────── 🛑 the only checkpoint: style given → 3 frames; no style → 3 directions × 1 frame
-4  Build ────────────── timeline → shot by shot → stills → determinism → proxy → master
-5  Sound (optional) ─── synthesized / user's track / silent
+1  Requirements ─────── fill missing required choices, summarize; 🛑 wait for confirmation
+2  brief.md ─────────── benchmark → format + style → Reel Read → shot list + audio plan
+3  Style frames ─────── style given → 3 frames; no style → 3 directions × 1 frame; 🛑 wait for confirmation
+4  Build ────────────── prepare real narration timings if used → timeline → shots → checks → master
+5  Music / SFX / mix ── independent sources; voice has priority
 6  Acceptance ───────── technical checks (must PASS) + review notes for the user
 7  Delivery
 ```
+
+See [`references/narration.md`](./references/narration.md) for TTS, recording timestamps and independent-track mixing; [`references/long-form.md`](./references/long-form.md) for chapter caching, recovery and audio preparation over two minutes. All existing styles, audio engines, beat tools, loops and rendering controls remain available.
 
 ---
 
 ## Style Library
 
-28 styles in 8 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, illustration & comics, handmade, cinematic. A few of them, rendered by the skill:
+40 styles in 8 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, illustration & comics, handmade, cinematic. A few of them, rendered by the skill:
 
 <table>
 <tr>
@@ -119,7 +127,9 @@ Technical checks (all PASS) and an honest review log
 </tr>
 </table>
 
-<sub>Also in the library: <code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>. See <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a> for the directory, the three-direction rule and how to mix styles.</sub>
+<sub>Also in the library: <code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>. See <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a> for the directory, the three-direction rule and how to mix styles.</sub>
+
+New style guides (awaiting visual validation): [Art Deco](./references/styles/art-deco.md), [One-Line](./references/styles/one-line.md), [Blueprint](./references/styles/blueprint.md), [Hologram HUD](./references/styles/hologram-hud.md), [Stained Glass](./references/styles/stained-glass.md), [Tilt-Shift Miniature](./references/styles/tilt-shift-miniature.md), [Pixel Diorama](./references/styles/pixel-diorama.md), [80s Cel Animation](./references/styles/cel-anime-80s.md), [Rubber Hose](./references/styles/rubber-hose.md), [Ukiyo-e](./references/styles/ukiyo-e.md), and [Shadow Puppet](./references/styles/shadow-puppet.md). Each follows the same template, with material and motion rules plus optional implementation directions.
 
 ---
 
@@ -143,10 +153,12 @@ skills/motion-showreel/
 ├── README.md / README.zh-CN.md
 ├── manifest.json
 ├── references/
-│   ├── formats.md           9 formats (showreel, product film, UI motion, kinetic type, logo, loop, data, era, green-screen)
-│   ├── styles/              INDEX.md + _template.md + 28 style files
+│   ├── formats.md           Formats, including narration and chapter-based films
+│   ├── styles/              INDEX.md + _template.md + 40 style files
 │   ├── craft.md             rhythm, motion, transitions, camera, type, colour, texture, signature moments, default-look blocklist
 │   ├── sound.md             sound direction, synth API, Tone.js, arcs, groove / harmony vocabulary, mixing, audio defaults
+│   ├── narration.md         user-script TTS, recording timestamps, keyword events and voice-first mixing
+│   ├── long-form.md         up to 20 minutes, chapter manifests, caching and recovery
 │   ├── stack.md             page contract, determinism, per-tech pitfalls, fonts, multi-format, performance
 │   ├── recipes.md           ready-made snippets (masked type, morph chains, particle type, seamless loops, WebGL post, canvas pseudo-3-D …)
 │   ├── brief-template.md    the structured prompt every piece starts from
@@ -156,10 +168,13 @@ skills/motion-showreel/
 │   ├── setup.sh · check-env.mjs · scaffold.sh
 │   ├── render.mjs           stills, sheets, three directions, poster, determinism, text framing, proxy, master
 │   ├── audio.mjs            build · check · beats · samples · mux
+│   ├── narration.mjs        tts · import · mix · check
+│   ├── preview.mjs          audio playback, scrubbing, frame stepping and preview speed
+│   ├── build-long.mjs       Persistent chapter cache, retry, assembly and acceptance
 │   ├── inspect.mjs          qa · sheet · phone · strip · frames · motion · loop · grid · heat
 │   ├── lib/                 synth, Tone.js renderer, FFT, browser, project, frame analysis, text hook
 │   └── test/                regression tests (npm test)
-└── assets/starter/          index.html · motion.js · timeline.js · score.mjs · score.tone.js · score.layer.mjs · build.sh
+└── assets/starter/          page, motion/timeline/narration helpers, preview controls, scores and build.sh
 ```
 
 ---
@@ -183,11 +198,13 @@ Turn these three screenshots into a 20-second product teaser, with music.
 A 6-second seamless generative loop, no sound.
 ```
 
-The agent scaffolds `<slug>/`, shows you style frames once, then builds, scores, checks and delivers. To rebuild or tweak later:
+The agent first confirms the completed requirements, then scaffolds `<slug>/` and shows the style frames. After the second confirmation it builds, scores, checks and delivers. Short requests above start the conversation; missing production choices are asked instead of silently defaulted. To rebuild or tweak later:
 
 ```bash
 sh <slug>/build.sh                                   # full rebuild with the spec at the top of build.sh
+node scripts/preview.mjs <slug> --size 1920x1080 --fps 30   # audio-led preview
 node scripts/render.mjs <slug> --start 6 --duration 3 --out out/seg.mp4   # re-render one segment
+node scripts/build-long.mjs <slug>/chapters.json       # persistent chapter rebuild
 ```
 
 Tools ship with their own regression tests: `cd scripts && npm test`.

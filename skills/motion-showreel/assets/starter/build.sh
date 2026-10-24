@@ -3,7 +3,7 @@
 # The spec below drives BOTH the render and the checks, so they cannot drift apart:
 #   FPS / SIZE  → render.mjs --fps / --size   and   inspect.mjs qa --expect-fps / --expect-size
 #   duration    → DUR from timeline.js         →   --expect-duration
-#   AUDIO       → synth: score.mjs · tone: score.tone.js · layer: score.tone.js (raw) loaded by score.mjs · none: silent
+#   AUDIO       → synth: score.mjs · tone: score.tone.js · layer: both · file: AUDIO_FILE final mix · none: silent
 #                 (anything but none also makes qa require an audio track)
 #   LOOP=1      → qa also checks the loop seam
 #   DETERMINISM → 1 (default): render.mjs --determinism must pass before the film is rendered; 0 skips it (quick iterations only)
@@ -17,10 +17,23 @@ SKILL="${SKILL:-__SKILL_DIR__}"
 FPS=${FPS:-30}
 SIZE=${SIZE:-1920x1080}
 AUDIO=${AUDIO:-__AUDIO__}
+AUDIO_FILE=${AUDIO_FILE:-audio/final.wav}
 LOOP=${LOOP:-0}
 DETERMINISM=${DETERMINISM:-1}
 TEXTCHECK=${TEXTCHECK:-1}
 cd "$HERE"
+
+DUR=$(node --input-type=module -e 'import { pathToFileURL } from "node:url"; const m = await import(pathToFileURL(process.argv[1]).href); console.log(m.DUR ?? "")' "$HERE/timeline.js")
+# Refuse a conflicting prepared mix before rendering; never silently cut speech to the picture.
+node --input-type=module -e '
+import { execFileSync } from "node:child_process";
+const [raw, fps, mode, file] = process.argv.slice(1), dur = Number(raw);
+if (!Number.isFinite(dur) || dur <= 0 || dur > 1200) throw new Error("timeline DUR must be positive and at most 1200 seconds; confirm a duration conflict with the user");
+if (mode === "file") {
+  const n = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file], {encoding:"utf8"}).trim());
+  if (!Number.isFinite(n) || Math.abs(n - dur) > 1.5 / Number(fps)) throw new Error("prepared audio duration conflicts with timeline; confirm the duration before building (no automatic trimming or speed change)");
+}
+' "$DUR" "$FPS" "$AUDIO" "$AUDIO_FILE"
 
 for a in "$@"; do case "$a" in
   --fps*|--size*|--out*|--audio*|--start*|--duration*)
@@ -28,7 +41,7 @@ for a in "$@"; do case "$a" in
     echo "  for a segment or a one-off output, call render.mjs directly"; exit 1;;
 esac; done
 
-need() { [ -f "$1" ] || { echo "✗ AUDIO=$AUDIO needs $1 (or set AUDIO=synth|tone|layer|none in build.sh)"; exit 1; }; }
+need() { [ -f "$1" ] || { echo "✗ AUDIO=$AUDIO needs $1 (or set AUDIO=synth|tone|layer|file|none in build.sh)"; exit 1; }; }
 ignored() { [ -f "$1" ] && echo "! $1 is ignored (AUDIO=$AUDIO). Delete it, or set AUDIO=layer to use both." || true; }
 audio() { node "$SKILL/scripts/audio.mjs" "$@"; }
 case "$AUDIO" in
@@ -39,17 +52,26 @@ case "$AUDIO" in
          audio build score.tone.js --raw --out audio/tone.wav     # score.mjs loads it: S.load(<project>/audio/tone.wav)
          audio build score.mjs --out audio/music.wav ;;
   none)  ignored score.mjs; ignored score.tone.js ;;
-  *) echo "✗ AUDIO must be synth | tone | layer | none (got '$AUDIO')"; exit 1 ;;
+  file)  need "$AUDIO_FILE" ;;
+  *) echo "✗ AUDIO must be synth | tone | layer | file | none (got '$AUDIO')"; exit 1 ;;
 esac
 
-if [ "$AUDIO" = none ]; then MUX=""; EXPECT_AUDIO=none; else MUX="--audio audio/music.wav"; EXPECT_AUDIO=required; fi
+if [ "$AUDIO" = file ] && [ -f audio/narration.json ]; then
+  node "$SKILL/scripts/narration.mjs" check . --duration "$DUR" --audio "$AUDIO_FILE"
+fi
+
+if [ "$AUDIO" = file ]; then FINAL_AUDIO=$AUDIO_FILE; else FINAL_AUDIO=audio/music.wav; fi
+if [ "$AUDIO" = none ]; then EXPECT_AUDIO=none; else EXPECT_AUDIO=required; fi
 # a film that cannot be re-rendered identically cannot be fixed segment by segment: refuse to publish it
 if [ "$DETERMINISM" = 1 ]; then node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --determinism
 else echo "! DETERMINISM=0: determinism not checked (fine for drafts, not for delivery)"; fi
-node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --out out/final.mp4 $MUX "$@"
+if [ "$AUDIO" = none ]; then
+  node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --out out/final.mp4 "$@"
+else
+  node "$SKILL/scripts/render.mjs" . --fps "$FPS" --size "$SIZE" --out out/final.mp4 --audio "$FINAL_AUDIO" "$@"
+fi
 if [ "$TEXTCHECK" = 1 ]; then node "$SKILL/scripts/render.mjs" . --size "$SIZE" --text-check --out qa/text || echo "! text check could not run (review material only; the build goes on)"; fi
 
-DUR=$(node --input-type=module -e 'import { pathToFileURL } from "node:url"; const m = await import(pathToFileURL(process.argv[1]).href); console.log(m.DUR ?? "")' "$HERE/timeline.js" 2>/dev/null || true)
 EXPECT="--expect-size $SIZE --expect-fps $FPS --audio $EXPECT_AUDIO"
 if [ -n "$DUR" ]; then EXPECT="$EXPECT --expect-duration $DUR"; else echo "! no DUR in timeline.js: duration will not be checked"; fi
 [ "$LOOP" = 1 ] && EXPECT="$EXPECT --loop"

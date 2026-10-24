@@ -1,6 +1,6 @@
 # Motion Showreel Skill
 
-**用代码做「一眼惊艳」的短视频：动效作品集、产品宣传短片、UI 动效、动态排版、Logo 演绎、生成艺术循环、年代回顾，配乐可选、卡点精确到帧。**
+**用代码制作动效视频：从几秒的 Logo 演绎到最长 20 分钟的分章内容，支持配乐、音效、用户口播和 TTS，交付 MP4 与可编辑源码。**
 
 [English](./README.md) · [返回集合首页](../../README.zh-CN.md)
 
@@ -10,7 +10,7 @@
 
 ## 这是什么？
 
-`motion-showreel` 把一句话变成一支做完的短视频（MP4 + 可编辑源码），内容以图形、文字或界面动画为主。Agent 写一个「画面只由时间决定」的网页，逐帧渲染，在同一张时间表上配乐和音效，检查无误后再交付。
+`motion-showreel` 把想法做成完整视频（MP4 + 可编辑源码），内容以图形、文字或界面动画为主。Agent 先与你确认需求和风格，再写一个「画面只由时间决定」的网页逐帧渲染。画面与声音共用时间表；有口播时先确定真实语音节奏，再制作画面。
 
 适合：
 
@@ -22,7 +22,11 @@
 - 生成艺术循环、数据爆点
 - 年代回顾：随段落切换媒介（像素 → 矢量 → 3D……）
 
-常见时长 5–60 秒；没有旁白、纯音乐驱动的片子可以做到 2 分钟左右。不做：口播讲解（用 [`web-video-presentation`](../web-video-presentation)）、网页和原型（用 [`web-design-engineer`](../web-design-engineer)）、写实人物、实拍、剪辑已有视频。
+短片常见 5–60 秒，也支持最长 **20 分钟**的分章视频，以及根据用户原稿或录音制作的口播讲解。需要点击推进的演示或文章转口播稿，用 [`web-video-presentation`](../web-video-presentation)；网页和原型用 [`web-design-engineer`](../web-design-engineer)。不生成写实人物、不拍摄实景，也不承担一般视频剪辑。
+
+开始前需要明确：**核心主题与内容、时长、横屏或竖屏、BGM 来源、音效来源、口播方式**。BGM 与音效分别选择 AI 合成、用户提供，也可关闭。口播可选无口播、TTS 或用户录音；**使用 TTS 时，口播稿必须由用户提供**，并配置相应服务的 API（支持 Gemini、MiniMax 和自定义适配器）。已有配置可复用。指定时长与真实口播冲突时会先确认，不会自动截断、变速或改稿。
+
+相关资料、受众与平台、风格可选。你已说明具体内容并希望 AI 生成时，Agent 据此制作；内容不足时补问资料或调研，口播稿里的信息会直接使用。真实事实和品牌素材仍需准确。未指定风格时，提供三个方向供你选择。
 
 ---
 
@@ -59,9 +63,11 @@
 - **画面 = 时间的函数**：页面暴露确定性的 `window.render(t)`（不用 `Math.random`、定时器、rAF、CSS 动画），Playwright 逐帧截图，ffmpeg 合成 MP4。运动模糊（`--subframes`）、超采样（`--dpr`）、胶片颗粒（`--grain`）都是渲染参数，不写在页面里。
 - **画面和声音共用一张时间表**：`timeline.js` 里写着每个切点、撞击和音效，页面和配乐都从它读取，卡点精确到帧。
 - **先找对标，再想三个结构**：动笔前先挑 1–2 个对标作品，写清学什么、不学什么，再写三个候选结构。第一个冒出来的想法往往是这个风格的陈词滥调。参考视频可以量：`inspect.mjs grid` 找出剪点和它们落的节拍网格，`heat` 看每段里哪里在动。
-- **风格库是起点，不是选择题**：28 种风格，每种写明不变的规则（质感、配色、字体、运动、镜头语法、声音调色板、原生手法、坑）。每种还列了 8–12 个辨识信号（按主题挑 2–3 个），并把这个风格最俗的版本直接写出来，选了合成波也不会每次都是网格加日落。可以直接用、改造、混搭，也可以按模板自定义。
+- **风格库是起点，不是选择题**：40 种风格，每种写明不变的规则（质感、配色、字体、运动、镜头语法、声音调色板、原生手法、坑）。每种还列了 8–12 个辨识信号（按主题挑 2–3 个），并把这个风格最俗的版本直接写出来，选了合成波也不会每次都是网格加日落。可以直接用、改造、混搭，也可以按模板自定义。
 - **声音也要先定方向**：brief 里声音和画面同等对待，写清对标、律动、和声、配器、戏剧曲线；再配一份声音的「默认味」清单，免得几支片子听起来像同一首歌。
-- **一次确认，然后全力以赴**：唯一的停顿点是风格帧。用户没定风格时，给 3 个拉开差距的方向，每个一张关键帧；确认之后全部自主完成。
+- **两次确认，然后自主制作**：先补齐必填信息并确认需求，再确认风格帧。用户没定风格时给 3 个拉开差距的方向；「给我惊喜」保留创意自由，不代表替用户默认制作规格。
+- **口播优先**：TTS 使用用户原稿，或导入用户录音与真实句段时间戳；画面跟随讲述，BGM 和音效在说话期间收敛。长片按章构建并保留缓存，失败后可继续。
+- **连续画面**：分镜记录对象的前后状态和空间承接，镜头可跨句发展。关键词事件使用真实词时间或人工锚点；带声音预览支持拖动和逐帧检查。依赖运动的方向，随风格帧一起确认连续小样。
 - **技术验收和审美判断分开**：尺寸、帧率、时长、帧数、黑帧、响度、真峰值、循环接缝、确定性这些由程序判定，必须全部 PASS。旁边还有量出来的审片材料，不挡构建：按镜头的运动（含突然的跳变和单帧闪），以及文字框景（字被画面切掉、叠字、落进安全区、字太小）。审片记录只是帮用户更快地看片，不能代替用户自己看。
 - **放手模式**：用户说「全力以赴」「给我惊喜」时，只守底线和技术管线，风格、结构、手法都交给模型判断。
 
@@ -71,20 +77,22 @@
 
 ```text
 0  环境检查（一次）
-1  一次问清 ─────────── 最多 5 个问题，能推断的就不问
-2  brief.md ─────────── 对标 → 用途 + 风格 → Reel Read → 节拍网格 + 分镜 + 禁止清单
-3  风格帧 ───────────── 🛑 唯一停顿点：已定风格 → 3 张帧；未定风格 → 3 个方向各 1 张
-4  制作 ─────────────── timeline → 逐镜头 → 静帧自检 → 确定性检查 → 小样 → 正片
-5  声音（可选）──────── 代码合成 / 用户曲子 / 无声
+1  需求确认 ─────────── 补齐必要信息、汇总要求 → 🛑 等你确认
+2  brief.md ─────────── 对标 → 用途 + 风格 → 分镜 + 声音计划
+3  风格帧 ───────────── 已定风格：3 张帧；未定风格：3 个方向各 1 张 → 🛑 等你确认
+4  制作 ─────────────── 有口播先确定真实音频时间轴 → 逐镜头 → 自检 → 正片
+5  配乐与混音 ───────── BGM / 音效独立来源；人声优先
 6  验收 ─────────────── 技术检查（必须 PASS）+ 审片（交给用户终审）
 7  交付
 ```
+
+口播与独立轨混音见 [`references/narration.md`](./references/narration.md)；超过 2 分钟的章节构建、缓存与审片见 [`references/long-form.md`](./references/long-form.md)。旧短片的全部风格、两档配乐、卡点、循环和渲染参数继续保留。
 
 ---
 
 ## 风格库
 
-28 种风格，分 8 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、插画与漫画、手作、电影感。下面几种是 Skill 自己渲出来的：
+40 种风格，分 8 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、插画与漫画、手作、电影感。下面几种是 Skill 自己渲出来的：
 
 <table>
 <tr>
@@ -119,7 +127,9 @@
 </tr>
 </table>
 
-<sub>库里还有：<code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>。目录、三方向规则和混搭方法见 <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a>。</sub>
+<sub>库里还有：<code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>。目录、三方向规则和混搭方法见 <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a>。</sub>
+
+新增风格规则（待视觉验证）：[装饰艺术](./references/styles/art-deco.md)、[一笔线描](./references/styles/one-line.md)、[工程蓝图](./references/styles/blueprint.md)、[全息空间界面](./references/styles/hologram-hud.md)、[彩色玻璃镶嵌](./references/styles/stained-glass.md)、[移轴微缩](./references/styles/tilt-shift-miniature.md)、[像素立体场景](./references/styles/pixel-diorama.md)、[80 年代赛璐璐动画](./references/styles/cel-anime-80s.md)、[橡皮管动画](./references/styles/rubber-hose.md)、[浮世绘木版](./references/styles/ukiyo-e.md)、[透光皮影](./references/styles/shadow-puppet.md)。沿用同一模板，写明材质、运动规则和可选技术方向。
 
 ---
 
@@ -143,10 +153,12 @@ skills/motion-showreel/
 ├── README.md / README.zh-CN.md
 ├── manifest.json
 ├── references/
-│   ├── formats.md           9 种用途（作品集、宣传片、UI 动效、排版卡点、Logo、循环、数据、年代回顾、绿幕合成）
-│   ├── styles/              INDEX.md + _template.md + 28 个风格文件
+│   ├── formats.md           用途（含口播讲解与分章长片）
+│   ├── styles/              INDEX.md + _template.md + 40 个风格文件
 │   ├── craft.md             节奏、运动、转场、镜头、排版、配色、质感、签名时刻、默认味清单
 │   ├── sound.md             声音方向、合成 API、Tone.js、戏剧曲线、律动 / 和声词汇、混音、声音默认味
+│   ├── narration.md         用户原稿 TTS、录音时间戳、关键词事件与人声优先混音
+│   ├── long-form.md         最长 20 分钟、章节清单、缓存和断点重建
 │   ├── stack.md             页面契约、确定性、各技术的坑、字体、多画幅、性能
 │   ├── recipes.md           现成写法（遮罩逐字、形变链、粒子组字、无缝循环、WebGL 后期、Canvas 伪 3D……）
 │   ├── brief-template.md    每支片子的结构化提示词模板
@@ -156,10 +168,13 @@ skills/motion-showreel/
 │   ├── setup.sh · check-env.mjs · scaffold.sh
 │   ├── render.mjs           静帧、拼图、三方向、封面、确定性、文字框景、小样、正片
 │   ├── audio.mjs            build · check · beats · samples · mux
+│   ├── narration.mjs        tts · import · mix · check
+│   ├── preview.mjs          带声音播放、拖动、逐帧与预览倍速
+│   ├── build-long.mjs       持久章节缓存、失败重试、拼接与验收
 │   ├── inspect.mjs          qa · sheet · phone · strip · frames · motion · loop · grid · heat
 │   ├── lib/                 合成器、Tone.js 渲染、FFT、浏览器、项目工具、帧分析、文字钩子
 │   └── test/                回归测试（npm test）
-└── assets/starter/          index.html · motion.js · timeline.js · score.mjs · score.tone.js · score.layer.mjs · build.sh
+└── assets/starter/          页面、motion/timeline/narration 工具、预览控件、配乐与 build.sh
 ```
 
 ---
@@ -183,11 +198,13 @@ sh scripts/setup.sh        # 安装 Playwright + Chromium + Tone.js，再做环�
 做一个 6 秒的无缝循环生成艺术，不要声音。
 ```
 
-Agent 会建好 `<slug>/`，给你看一次风格帧，然后自己完成制作、配乐、检查和交付。之后想重建或微调：
+Agent 会先补问缺失项并停下来确认，再建好 `<slug>/`、给你看风格帧；第二次确认后自主完成制作、配乐、检查和交付。上面的简短需求可直接发起，但缺失的时长、画幅、BGM/音效来源和口播方式不会被静默填成默认值。之后想重建或微调：
 
 ```bash
 sh <slug>/build.sh                                   # 按 build.sh 顶部的规格整片重建
+node scripts/preview.mjs <slug> --size 1920x1080 --fps 30   # 随音频预览
 node scripts/render.mjs <slug> --start 6 --duration 3 --out out/seg.mp4   # 只重渲一段
+node scripts/build-long.mjs <slug>/chapters.json       # 长片按章构建，再次运行复用有效缓存
 ```
 
 工具自带回归测试：`cd scripts && npm test`。

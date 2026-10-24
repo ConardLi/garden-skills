@@ -248,15 +248,16 @@ async function contactSheet(shots, file, { below = false } = {}) {
 // ───────────────────────────── determinism ─────────────────────────────
 async function determinism() {
   const probe = await open();
-  const dur = +(opt.duration || await probe.evaluate(() => window.DUR));
+  const start = +(opt.start || 0);
+  const dur = +(opt.duration || ((await probe.evaluate(() => window.DUR)) - start));
   if (!(dur > 0)) die('window.DUR is missing; pass --duration');
-  const ts = [0.11, 0.37, 0.5, 0.73, 0.93].map(k => +(k * dur).toFixed(3)).concat(+(dur - 1 / FPS).toFixed(3));
+  const ts = [0.11, 0.37, 0.5, 0.73, 0.93].map(k => +(start + k * dur).toFixed(3)).concat(+(start + Math.max(0, dur - 1 / FPS)).toFixed(3));
   const a = [];
   for (const t of ts) a.push(await shoot(probe, t, 'png'));
   const fresh = await open();
   const b = new Array(ts.length);
   for (const i of [...ts.keys()].reverse()) {
-    await fresh.evaluate(t => window.render(t), (ts[i] * 0.61 + 0.17) % dur); // render something unrelated first
+    await fresh.evaluate(t => window.render(t), start + ((ts[i] - start) * 0.61 + 0.17) % dur); // render something unrelated first
     b[i] = await shoot(fresh, ts[i], 'png');
   }
   // GPU canvas rasterisation may differ by a level or two on antialiased edges between pages: tolerate that.

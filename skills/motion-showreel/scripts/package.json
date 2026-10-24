@@ -8,6 +8,6 @@
     "tone": "15.1.22"
   },
   "scripts": {
-    "test": "node --test --test-concurrency=1 test/tools.test.mjs"
+    "test": "node --test --test-concurrency=1 test/*.test.mjs"
   }
 }

@@ -4,7 +4,7 @@
     "name": "ConardLi"
   },
   "metadata": {
-    "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, GPT Image 2 image generation, beautifully designed single-file HTML articles, and code-rendered motion-graphics short videos.",
+    "description": "A curated collection of agent skills covering web video presentations, visual web design, local knowledge-base retrieval, GPT Image 2 image generation, beautifully designed single-file HTML articles, and code-rendered motion videos with narration and chapter builds.",
     "version": "0.5.0"
   },
   "plugins": [
@@ -46,7 +46,7 @@
     },
     {
       "name": "motion-showreel-skills",
-      "description": "Skills for stunning code-rendered short videos: showreels, teasers, UI morphs, kinetic type and logo stings with optional synthesized, beat-synced music.",
+      "description": "Code-rendered motion videos up to 20 minutes: showreels, product films, UI motion, kinetic type, logo stings and narrated explainers. Independent music/SFX sources, Gemini/MiniMax TTS from user scripts, voice-led timing and cached chapter builds.",
       "source": "./skills/motion-showreel",
       "strict": false,
       "skills": [

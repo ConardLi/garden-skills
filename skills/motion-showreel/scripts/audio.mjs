@@ -15,9 +15,10 @@
 //          Drops (--drops, or DROPS = [t, …] in the project's timeline.js): the breath before each hit (last half-beat vs
 //          the bar before it) and how much the hit lifts the level.
 //   mux    node audio.mjs mux <video.mp4> <audio.wav> [--out final.mp4]
+//   loudness node audio.mjs loudness <file>   streaming LUFS / true peak / range as JSON (also works for long tracks)
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync, spawnSync, spawn } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { session, writeWav, loadAudio, lufs, master, SR } from './lib/synth.mjs';
 import { renderTone, fetchPack, PACKS, SAMPLES_DIR } from './lib/tone-render.mjs';
@@ -27,8 +28,8 @@ import { findTimeline, loadTimeline, sameClock } from './lib/project.mjs';
 
 const { pos, opt } = args(process.argv.slice(2));
 const cmd = pos[0];
-const cmds = { build, beats, check, mux, samples };
-if (!cmds[cmd]) die('usage: audio.mjs build|samples|beats|check|mux …  (see the header of this file)');
+const cmds = { build, beats, check, mux, samples, loudness };
+if (!cmds[cmd]) die('usage: audio.mjs build|samples|beats|check|mux|loudness …  (see the header of this file)');
 await cmds[cmd]();
 
 async function build() {
@@ -148,9 +149,7 @@ async function check() {
   if (opt.drops !== undefined && (opt.drops === true || String(opt.drops).split(',').some(v => v.trim() === '' || !Number.isFinite(+v)))) die(`bad --drops ${opt.drops === true ? '(no value)' : opt.drops}: comma-separated seconds, e.g. --drops 12,24.5`);
   const prefix = path.resolve(typeof opt.out === 'string' ? opt.out : path.join(path.dirname(path.resolve(file)), '..', 'qa', 'audio'));
   try { fs.mkdirSync(path.dirname(prefix), { recursive: true }); } catch (e) { die(`cannot create ${path.dirname(prefix)}: ${e.code || e.message}`); }
-  const st = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', file, '-af', 'ebur128=peak=true', '-f', 'null', '-'], { encoding: 'utf8' }).stderr;
-  const sum = st.slice(st.lastIndexOf('Summary:'));
-  const I = +(/I:\s+(-?[\d.]+) LUFS/.exec(sum)?.[1]), LRA = +(/LRA:\s+(-?[\d.]+) LU/.exec(sum)?.[1]), TP = +(/Peak:\s+(-?[\d.inf]+) dBFS/.exec(sum)?.[1]);
+  const { I, LRA, TP } = measureLoudness(file);
   // the pictures are the only way to "listen": an image that was not written is an error, not a path to print
   const picture = (argv, png) => {
     fs.rmSync(png, { force: true });                       // a stale image from an earlier run must not pass for this one
@@ -159,31 +158,20 @@ async function check() {
   };
   picture(['-filter_complex', 'showwavespic=s=1600x320:split_channels=1:colors=0x4fd1c5|0xf6ad55', '-frames:v', '1'], `${prefix}-wave.png`);
   picture(['-lavfi', 'showspectrumpic=s=1600x520:legend=1:scale=log'], `${prefix}-spectrum.png`);
-  const { L, R } = loadAudio(file), n = L.length, dur = n / SR;
-  const mono = new Float32Array(n); let clip = 0;
-  for (let i = 0; i < n; i++) { mono[i] = (L[i] + R[i]) / 2; if (Math.abs(L[i]) >= 0.999 || Math.abs(R[i]) >= 0.999) clip++; }
-  // band balance from an averaged spectrum
-  const sp = stft(mono, 4096, 2048), bins = new Float64Array(2049);
-  for (const f of sp) for (let k = 0; k < f.length; k++) bins[k] += f[k] * f[k];
+  // Decode and analyse incrementally: full-length stereo + mono + every FFT frame used
+  // several GB on 20-minute audio. This retains only one FFT window and 10 ms RMS buckets.
+  const { n, clip, bins, quiet, rmsDb } = await analyseAudio(file), dur = n / SR;
   // power per octave band (pink noise = flat), in dB relative to the 1 kHz octave
   const band = (a, b) => { let s = 0; for (let k = Math.round(a * 4096 / SR); k < Math.round(b * 4096 / SR); k++) s += bins[k] || 0; return s; };
   const OCT = [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000], pw = OCT.map(c => band(c / Math.SQRT2, c * Math.SQRT2) + 1e-20);
   const ref = pw[5], db = OCT.map((c, i) => +(10 * Math.log10(pw[i] / ref)).toFixed(1));
   const label = c => (c >= 1000 ? c / 1000 + 'k' : String(c));
   const lowDb = 10 * Math.log10((pw[0] + pw[1] + pw[2]) / 3 / ref), highDb = 10 * Math.log10((pw[7] + pw[8]) / 2 / ref);
-  // silences ≥ 0.6 s below −50 dBFS (inside the piece)
-  const win = Math.round(0.05 * SR), quiet = []; let runStart = -1;
-  for (let s = 0; s + win <= n; s += win) {
-    let m = 0; for (let i = s; i < s + win; i++) m += mono[i] * mono[i];
-    const db = 10 * Math.log10(m / win + 1e-12);
-    if (db < -50) { if (runStart < 0) runStart = s; } else { if (runStart >= 0 && (s - runStart) / SR >= 0.6) quiet.push([+(runStart / SR).toFixed(2), +(s / SR).toFixed(2)]); runStart = -1; }
-  }
   // drops: is there a breath before each hit, and does the hit land louder than what came before?
   const tl = await loadTimeline(findTimeline(file, opt.timeline));
   const tlOk = sameClock(tl, dur);
   const drops = typeof opt.drops === 'string' ? opt.drops.split(',').map(Number).filter(v => v > 0 && v < dur) : tlOk ? tl.DROPS.filter(v => v > 0 && v < dur) : [];
   const beat = (tlOk && tl.BEAT > 0 ? tl.BEAT : 0.5);
-  const rmsDb = (a, b) => { const i0 = Math.max(0, Math.round(a * SR)), i1 = Math.min(n, Math.round(b * SR)); if (i1 - i0 < 64) return NaN; let s = 0; for (let i = i0; i < i1; i++) s += mono[i] * mono[i]; return 10 * Math.log10(s / (i1 - i0) + 1e-12); };
   const dropLines = [], dropWarn = [];
   for (const d of drops) {
     const breath = rmsDb(d - beat / 2, d - 0.01), bar = rmsDb(d - beat / 2 - 4 * beat, d - beat / 2), hit = rmsDb(d, d + 2 * beat);
@@ -204,12 +192,73 @@ async function check() {
   if (highDb > -2) warn.push(`harsh/hissy: 4–8 kHz is ${highDb.toFixed(1)} dB re 1 kHz; tame noise layers, hats, risers`);
   if (quiet.length) warn.push(`silences: ${quiet.map(q => q.join('–') + 's').join(', ')} (fine only if intentional, e.g. the breath before a drop)`);
   warn.push(...dropWarn);
-  console.log(`${file}\n  duration ${dur.toFixed(2)}s · ${I} LUFS · LRA ${LRA} LU · true peak ${TP} dBFS · internal LUFS ${lufs(L, R).toFixed(1)}`);
+  console.log(`${file}\n  duration ${dur.toFixed(2)}s · ${I} LUFS · LRA ${LRA} LU · true peak ${TP} dBFS · streaming analysis (10 ms RMS buckets)`);
   console.log('  octave power, dB re 1 kHz (pink noise = all 0): ' + OCT.map((c, i) => `${label(c)} ${db[i] > 0 ? '+' : ''}${db[i]}`).join(' · '));
   if (dropLines.length) console.log('  ' + dropLines.join('\n  '));
   else if (tlOk && !tl.hasDrops) console.log('  drops: none declared (export DROPS = [t, …] in timeline.js to measure the breath before each hit)');
   console.log(`  images: ${prefix}-wave.png, ${prefix}-spectrum.png`);
   console.log(warn.length ? '  WARN\n   - ' + warn.join('\n   - ') : '  OK: loudness, peaks and band balance look sane');
+}
+
+function measureLoudness(file) {
+  const meter = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-loglevel', 'info', '-i', file, '-vn', '-af', 'ebur128=peak=true:framelog=verbose', '-f', 'null', '-'], { encoding: 'utf8' });
+  if (meter.error || meter.status !== 0) die(`could not measure audio: ${meter.error?.message || meter.stderr.trim().split('\n').pop()}`);
+  if (!meter.stderr.includes('Summary:')) die('could not measure audio: ffmpeg returned no ebur128 summary');
+  const sum = meter.stderr.slice(meter.stderr.lastIndexOf('Summary:'));
+  const I = +(/I:\s+(-?[\d.]+) LUFS/.exec(sum)?.[1] ?? NaN), LRA = +(/LRA:\s+(-?[\d.]+) LU/.exec(sum)?.[1] ?? NaN), TP = +(/Peak:\s+(-?(?:[\d.]+|inf)) dBFS/.exec(sum)?.[1]?.replace('-inf', '-Infinity') ?? NaN);
+  if ([I, LRA, TP].some(Number.isNaN)) die('could not measure audio: malformed ebur128 summary');
+  return { I, LRA, TP };
+}
+
+async function loudness() {
+  const file = pos[1]; if (!file || !fs.existsSync(file)) die('usage: audio.mjs loudness <file>');
+  const values = measureLoudness(file);
+  console.log(JSON.stringify(values, (_, value) => value === -Infinity ? '-Infinity' : value));
+}
+
+async function analyseAudio(file) {
+  const ff = spawn('ffmpeg', ['-v', 'error', '-i', file, '-vn', '-f', 'f32le', '-ac', '2', '-ar', String(SR), '-'], { stdio: ['ignore', 'pipe', 'pipe'] });
+  let err = '', pending = Buffer.alloc(0), n = 0, clip = 0, count = 0, energy = 0, quietStart = -1;
+  const fftWindow = new Float32Array(4096), bins = new Float64Array(2049), energies = [], quiet = [];
+  const bucketSize = Math.round(SR * 0.01), quietSize = Math.round(SR * 0.05);
+  let bucketEnergy = 0, quietEnergy = 0;
+  ff.stderr.on('data', d => { err = (err + d).slice(-4096); });
+  const closed = new Promise((resolve, reject) => { ff.on('error', reject); ff.on('close', code => code === 0 ? resolve() : reject(new Error(`audio decode failed: ${err.trim() || 'exit ' + code}`))); });
+  // Observe rejection while stdout is consumed, then propagate it below.
+  closed.catch(() => {});
+  for await (const chunk of ff.stdout) {
+    const buf = pending.length ? Buffer.concat([pending, chunk]) : chunk, end = buf.length - buf.length % 8;
+    for (let i = 0; i < end; i += 8) {
+      const l = buf.readFloatLE(i), r = buf.readFloatLE(i + 4), mono = (l + r) / 2;
+      if (Math.abs(l) >= 0.999 || Math.abs(r) >= 0.999) clip++;
+      energy = mono * mono; bucketEnergy += energy; quietEnergy += energy;
+      fftWindow[count++] = mono; n++;
+      if (count === fftWindow.length) {
+        const spectrum = stft(fftWindow, 4096, 2048)[0];
+        for (let k = 0; k < spectrum.length; k++) bins[k] += spectrum[k] * spectrum[k];
+        fftWindow.copyWithin(0, 2048); count = 2048;
+      }
+      if (n % bucketSize === 0) { energies.push(bucketEnergy); bucketEnergy = 0; }
+      if (n % quietSize === 0) {
+        const s = n - quietSize, db = 10 * Math.log10(quietEnergy / quietSize + 1e-12);
+        if (db < -50) { if (quietStart < 0) quietStart = s; }
+        else { if (quietStart >= 0 && (s - quietStart) / SR >= 0.6) quiet.push([+(quietStart / SR).toFixed(2), +(s / SR).toFixed(2)]); quietStart = -1; }
+        quietEnergy = 0;
+      }
+    }
+    pending = Buffer.from(buf.subarray(end));
+  }
+  await closed;
+  if (!n || pending.length) throw new Error('audio decoder returned empty or truncated PCM');
+  if (n % bucketSize) energies.push(bucketEnergy);
+  if (quietStart >= 0 && (n - quietStart) / SR >= 0.6) quiet.push([+(quietStart / SR).toFixed(2), +(n / SR).toFixed(2)]);
+  const rmsDb = (a, b) => {
+    const i0 = Math.max(0, Math.round(a * SR / bucketSize)), i1 = Math.min(energies.length, Math.round(b * SR / bucketSize));
+    if (i1 <= i0) return NaN;
+    let sum = 0; for (let i = i0; i < i1; i++) sum += energies[i];
+    return 10 * Math.log10(sum / ((i1 - i0) * bucketSize) + 1e-12);
+  };
+  return { n, clip, bins, quiet, rmsDb };
 }
 
 async function mux() {

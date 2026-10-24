@@ -1,8 +1,8 @@
 {
   "name": "motion-showreel",
-  "version": "0.1.0",
-  "category": "Motion Graphics / Short Video",
-  "description": "Make stunning short videos entirely in code (5-60s, up to ~2 min for music-driven pieces): showreels, product films, UI motion, kinetic typography, logo stings, generative loops, era-spanning retrospectives. Deterministic render(t) pages rendered frame by frame with Playwright + ffmpeg; a 28-style library used as a starting point (each style lists recognition signals to pick from and names its own cliché; adapt, mix or write your own); two audio tiers (built-in synth, Tone.js with sampled instruments) sharing one timeline with the picture; one checkpoint with three directions when no style is given; programmatic technical acceptance kept separate from human review.",
+  "version": "0.2.0",
+  "category": "Motion Graphics / Code Video",
+  "description": "Make code-rendered motion videos and narrated explainers up to 20 minutes, with MP4 and editable source. Confirm requirements and style frames before production. Preserve the 40-style library, deterministic render(t), beat tools, built-in synthesis and Tone.js; add independent music/SFX sources, Gemini/MiniMax TTS using user-supplied scripts, recording timestamps, voice-first mixing, persistent chapter builds and technical acceptance separate from human review.",
   "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/motion-showreel",
   "compat": [
     "claude-code",

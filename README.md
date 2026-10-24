@@ -306,18 +306,20 @@ Links: [README](./skills/beautiful-article/README.md) · [SKILL.md](./skills/bea
 
 ![Motion Showreel Skill](./dist/imgs/covers/motion-showreel.webp)
 
-**Category:** Motion Graphics / Short Video  
-**Best for:** motion showreels, product teasers, UI motion demos, kinetic typography, logo stings and title sequences, generative loops, data "number drops", and era-spanning retrospectives: short videos (5–60 s, up to ~2 min for music-driven pieces) built from graphics, type and interface animation.
+**Category:** Motion Graphics / Code Video
 
-`motion-showreel` turns one sentence into a finished MP4 plus editable source, made entirely in code. The agent writes a page whose picture is a pure function of time (`render(t)`). Playwright captures it frame by frame, ffmpeg encodes it, and the score is written against the same `timeline.js`, so every hit lands on its frame. Before building, the agent picks a benchmark and sketches three candidate structures. It stops once for style frames, then produces autonomously and only hands over after the programmatic checks pass.
+**Best for:** showreels, product films, UI motion, kinetic typography, logo/title sequences, generative loops, retrospectives and narrated explainers. Short pieces typically run 5–60 s; chapter-based films support up to 20 minutes.
+
+`motion-showreel` delivers MP4 plus editable source. It confirms the topic, duration, orientation, independent music/SFX sources and narration mode, then writes a brief and confirms style frames. Deterministic `render(t)` pages are captured frame by frame on a shared audio/picture timeline. Narration follows a user-supplied script or recording; pictures follow actual speech timings. Long films use persistent chapter caches and technical acceptance.
 
 Highlights:
 
 - **Deterministic `render(t)` pipeline**: stills, contact sheets, three-direction boards, proxies and masters all come from the same page. Motion blur, supersampling and film grain are render flags.
 - **One timeline for picture and sound**: cuts, hits and SFX share the same numbers. Music can be synthesized (a zero-dependency built-in synth, or Tone.js with a sampled piano), or cut to the user's own track with beat and drop detection.
-- **A 28-style library as a starting point**: swiss-editorial, ink-wash, risograph, synthwave, soft 3D, cinematic title, pixel game, comic panels, guochao patterns, painterly strokes and more. Each style defines its look, motion, camera grammar and sound palette, and can be adapted, mixed or replaced with your own.
+- **A 40-style library as a starting point**: swiss-editorial, ink-wash, risograph, synthwave, soft 3D, cinematic title, pixel game, comic panels, guochao patterns, painterly strokes and more. Each style defines its look, motion, camera grammar and sound palette, and can be adapted, mixed or replaced with your own.
 - **A sound direction, not a default song**: the brief sets a sound benchmark, groove, harmony, palette and dramatic arc, plus a list of audio defaults to avoid.
-- **One checkpoint**: style frames (or three distinct directions with one key frame each), then all-out autonomous production. "Free mode" leaves taste to the model.
+- **Two checkpoints**: confirm requirements, then style frames (three distinct directions when unspecified), followed by autonomous production. Creative freedom remains available.
+- **Narration and long films**: Gemini/MiniMax TTS reads only user-supplied scripts; recordings use real timestamps. Music and SFX have independent sources, yield to speech, and chapter builds support up to 20 minutes.
 - **Technical acceptance kept separate from taste**: size, fps, duration, frame count, black frames, loudness, true peak, loop seam and determinism must all PASS. Review notes go to the user, who makes the final call.
 
 <table>

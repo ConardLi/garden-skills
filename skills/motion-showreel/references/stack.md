@@ -16,6 +16,22 @@ window.READY = true;              // 字体、图片、模型、纹理全部加�
 - 页面里的 JS 报错、必需的脚本 404，工具都会立刻退出并打印错误；可选文件 404 只会警告。
 - 预览：`npx serve <slug>` 或任意静态服务，打开 `index.html?w=1920&h=1080`，在控制台调用 `render(3.2)` 就能看第 3.2 秒。也可以临时加一个 `?play=1` 分支，用 rAF 驱动 `render(performance.now()/1000 % DUR)` 方便调试，但**渲染时这个分支不能运行**。
 
+### 带声音预览
+
+`preview.mjs` 在内存中加入控件，不修改项目源文件，旧项目可直接使用。新脚手架也包含 `preview.js`，便于通过普通静态服务预览；手动接入时复制该文件，并在 `body` 中加入 `<script type="module" src="./preview.js"></script>`。控件只在 `?preview=1` 且不是 `render=1` 时运行，不改变页面的 `render(t)`。
+
+```bash
+node <skill>/scripts/preview.mjs <slug> --size 1920x1080 --fps 30
+# 指定项目内音轨（路径相对项目）：
+node <skill>/scripts/preview.mjs <slug> --size 1080x1920 --audio audio/final.wav
+```
+
+打开打印的本机地址，点击播放。支持暂停、拖动、左右逐帧和预览倍速；有音轨时以 `audio.currentTime` 驱动画面，无音轨时用预览时钟。未指定音轨时按 `audio/final.wav`、`audio/narration.wav`、`audio/music.wav` 查找。音轨尚未生成就做无声动作预演，不能据此宣称音画已对齐。
+
+画面按指定宽高等比适配窗口，并给控件留出空间；缩放窗口不改变取帧尺寸。场景布局仍按页面契约使用 `stageSize()`，不要依赖预览窗口的 `innerWidth` 或 `vw/vh`。
+
+预览控件与实时状态只负责调用 `render(t)`，正式渲染仍按确定性时间取帧；`?render=1` 时不创建播放器、控件或动画循环。倍速只影响预览，不改变原稿、音频文件或导出规格。用代表性连续片段检查主体状态、镜头承接与关键词事件，不以帧率数字代替观感审查。
+
 ## 2. 确定性
 
 渲染器会按任意顺序、任意次数调用 `render(t)`：多个 worker 分段并行、单帧预览、只重渲一段、运动模糊的子帧。只要有一点状态藏在上一帧里，重渲出来的画面就会不一样。
@@ -111,6 +127,8 @@ window.READY = true;              // 字体、图片、模型、纹理全部加�
 - 不要把 16:9 的成片直接裁成竖屏。
 
 ## 12. 性能与渲染时间
+
+超过 2 分钟使用 `long-form.md` 的分章构建器，最大 1200 秒。原 `render.mjs --start --duration` 保留为取帧工具；`build-long.mjs` 在其上提供持久缓存、重试和断点恢复。音频合成也按章，不能让多个整片 PCM bus 耗尽内存。有口播时先按 `narration.md` 准备真实音频和句段时间，再写镜头时间轴。
 
 - 渲染工具会打印每个样本的毫秒数。预估：**总时间 ≈ 单帧耗时 × 帧数 × 子帧数 ÷ worker 数 × 1.2**。
 - 参考量级（Apple Silicon、1080p）：Canvas 2D 简单场景 15–40 毫秒/帧，DOM 排版 30–60 毫秒，WebGL 后期 +20–80 毫秒，Three.js 带后期 80–300 毫秒。
