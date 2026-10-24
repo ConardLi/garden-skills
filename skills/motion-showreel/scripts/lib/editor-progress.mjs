@@ -18,7 +18,7 @@ const stateFile = root => path.join(root, '.showreel-progress', 'status.json');
 const blank = () => ({ version: 1, stages: STAGES.map(([id, name]) => ({ id, name, status: 'pending', message: '', done: null, total: null })), current: 'brief', preview: null, previews: [], shots: [], artifacts: [] });
 const exclusions = new Set(['.git', '.showreel-progress', '.showreel-editor', '.showreel-cache', 'out', 'qa', '__pycache__']);
 
-export function updateProgress(root, { stage, status = 'running', message = '', done, total } = {}, extra = {}) {
+export function updateProgress(root, { stage, status = 'running', message = '', done, total, reopen = false } = {}, extra = {}) {
   if (!STAGES.some(([id]) => id === stage) || !statuses.has(status)) throw new Error('Use a known stage and pending/running/ready/failed/skipped/waiting status');
   if (typeof message !== 'string' || message.length > 2000) throw new Error('Progress message must be at most 2000 characters');
   if ((done !== undefined || total !== undefined) && (!Number.isInteger(done) || !Number.isInteger(total) || done < 0 || total < 1 || done > total)) throw new Error('Progress counts need integers 0 <= done <= total');
@@ -26,9 +26,46 @@ export function updateProgress(root, { stage, status = 'running', message = '', 
   const state = readJSON(stateFile(root), blank());
   if (state.version !== 1 || !Array.isArray(state.stages)) throw new Error('Invalid progress state');
   const item = state.stages.find(s => s.id === stage);
+  if (reopen && status !== 'waiting') throw new Error('--reopen requires status waiting');
+  if (status === 'waiting' && item.confirmedAt && !reopen) throw new Error('This stage was confirmed; use --reopen to request feedback on a revised result');
+  if (reopen) delete item.confirmedAt;
   Object.assign(item, { status, message, ...(done === undefined ? {} : { done, total }), updatedAt: new Date().toISOString() });
-  Object.assign(state, extra, { current: stage, updatedAt: item.updatedAt });
+  // Attaching an old result must not take focus from work already in progress.
+  const behind = STAGES.findIndex(([id]) => id === stage) < STAGES.findIndex(([id]) => id === state.current);
+  const keepCurrent = behind && ['ready', 'skipped', 'pending'].includes(status);
+  Object.assign(state, extra, { current: keepCurrent ? state.current : stage, updatedAt: item.updatedAt });
   atomicJSON(stateFile(root), state); return state;
+}
+
+// Only the producer, after receiving real user feedback, may call this transition.
+// Confirming requirements resumes brief work; it does not claim the brief is done.
+export function confirmProgress(root, { stage, next, message } = {}) {
+  const index = STAGES.findIndex(([id]) => id === stage), nextIndex = STAGES.findIndex(([id]) => id === next);
+  if (index < 0 || (next !== undefined && nextIndex <= index)) throw new Error('Confirmation needs a known stage and an optional later --next stage');
+  if (message !== undefined && (typeof message !== 'string' || message.length > 2000)) throw new Error('Progress message must be at most 2000 characters');
+  const state = readJSON(stateFile(root), blank());
+  if (state.version !== 1 || !Array.isArray(state.stages)) throw new Error('Invalid progress state');
+  const item = state.stages.find(s => s.id === stage);
+  if (!item.confirmedAt && item.status !== 'waiting') throw new Error('Only a stage awaiting feedback can be confirmed');
+  if (item.confirmedAt && (!next || STAGES.findIndex(([id]) => id === state.current) >= nextIndex)) return state;
+  const now = new Date().toISOString();
+  Object.assign(item, { confirmedAt: item.confirmedAt || now, updatedAt: now, status: next ? 'ready' : 'running', message: next ? '已确认' : message || '已收到确认，继续制作' });
+  if (next) Object.assign(state.stages.find(s => s.id === next), { status: 'running', updatedAt: now, message: message || '已收到上一阶段确认，开始制作' });
+  Object.assign(state, { current: next || stage, updatedAt: now });
+  atomicJSON(stateFile(root), state); return state;
+}
+
+// A diagnostic only: edits never approve requirements or publish unfinished work.
+function syncWarning(root, state) {
+  const active = state.stages.find(s => s.id === state.current);
+  const updated = Date.parse(active?.updatedAt || state.updatedAt);
+  if (active?.status !== 'waiting' || !Number.isFinite(updated)) return null;
+  const inputs = fs.readdirSync(root, { withFileTypes: true }).filter(entry =>
+    entry.isFile() && /\.(?:html|[cm]?js|json|md)$/.test(entry.name) || entry.isDirectory() && ['fonts', 'assets', 'audio', 'shots'].includes(entry.name));
+  const changed = inputs.some(entry => {
+    try { return fs.statSync(path.join(root, entry.name)).mtimeMs > updated + 2000; } catch { return false; }
+  });
+  return changed ? '制作文件已更新，但进度仍停在待确认；制作端可能尚未同步状态。' : null;
 }
 
 export async function publishArtifact(root, file, options) {
@@ -48,6 +85,9 @@ export async function publishArtifact(root, file, options) {
 export async function publishPreview(root, sourceDirectory, options = {}) {
   if (!STAGES.some(([id]) => id === options.stage)) throw new Error('Unknown stage');
   if (options.final && options.stage !== 'review') throw new Error('--final is only valid for the review stage');
+  const requestedStatus = options.status || (options.final ? 'waiting' : 'running');
+  if (options.reopen && requestedStatus !== 'waiting') throw new Error('--reopen requires status waiting');
+  if (requestedStatus === 'waiting' && readJSON(stateFile(root), blank()).stages.find(s => s.id === options.stage)?.confirmedAt && !options.reopen) throw new Error('This stage was confirmed; use --reopen to request feedback on a revised result');
   const quality = options.quality || {}, limits = { workers: [1, 16], subframes: [1, 16], shutter: [0, 1], dpr: [1, 4], grain: [0, 100], crf: [0, 51] };
   for (const [key, value] of Object.entries(quality)) if (!limits[key] || !Number.isFinite(value) || value < limits[key][0] || value > limits[key][1] || (['workers', 'subframes'].includes(key) && !Number.isInteger(value))) throw new Error(`Invalid quality option ${key}`);
   if (options.shot && (options.stage !== 'scenes' || options.final || !/^[a-zA-Z0-9_-]{1,64}$/.test(options.shot) || !Number.isInteger(options.total) || options.total < 1)) throw new Error('--shot needs stage scenes, --total, and a safe unique shot id; it cannot be final');
@@ -115,7 +155,7 @@ export async function createProgressServer(directory, options = {}, createChild)
         try { activePreview = await openPreview(preview); activationError = ''; }
         catch (error) { activationError = error.message; }
       }
-      return { ...state, preview: activePreview, error: activationError };
+      return { ...state, preview: activePreview, error: activationError, syncWarning: syncWarning(root, state) };
     }); return activation;
   };
   const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.avif': 'image/avif', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.ogg': 'audio/ogg', '.flac': 'audio/flac', '.md': 'text/plain; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.json': 'application/json; charset=utf-8' };

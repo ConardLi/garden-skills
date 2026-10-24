@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 import path from 'node:path';
 import { args } from './lib/browser.mjs';
-import { updateProgress, publishArtifact, publishPreview } from './lib/editor-progress.mjs';
+import { updateProgress, confirmProgress, publishArtifact, publishPreview } from './lib/editor-progress.mjs';
 
 const { pos, opt } = args(process.argv.slice(2));
 try {
   if (opt.help) console.log(`Stage progress (optional, when the user wants to watch production):
   node editor.mjs <project> --progress
+  node progress.mjs <project> --stage brief --confirm --message "需求已确认，正在整理脚本与分镜"
+  node progress.mjs <project> --stage style --confirm --next scenes --message "风格已确认，开始制作镜头"
   node progress.mjs <project> --stage scenes --status running --done 2 --total 8 --message "已完成两个镜头"
   node progress.mjs <project> --stage style --preview qa/style.png --message "风格帧"
   node progress.mjs <project> --stage scenes --publish . --size 1920x1080 --fps 30
@@ -15,19 +17,24 @@ Publication can also carry --audio and the same --workers/--subframes/--shutter/
 Publish each checked shot immediately (independent scene directory, no full-film dependency):
   node progress.mjs <project> --stage scenes --shot s01 --total 8 --name "镜头1：种子" --publish shots/s01 --size 1920x1080 --fps 30
 --preview also accepts .md/.txt/.json results; --status waiting means awaiting user feedback.
+Use --confirm immediately after real user confirmation, before further production work.
+Use --status waiting --reopen for revised results that need another review; --confirm never exports MP4.
 Stages: brief, style, narration, scenes, audio, review. Publishing validates an immutable copy; it does not encode MP4.`);
   else {
     if (pos.length !== 1 || !opt.stage) throw new Error('Supply a project directory and --stage');
     const qualityKeys = ['workers', 'subframes', 'shutter', 'dpr', 'grain', 'crf'];
-    const allowed = ['stage', 'status', 'message', 'done', 'total', 'preview', 'publish', 'size', 'fps', 'duration', 'audio', 'final', 'shot', 'name', ...qualityKeys];
-    for (const [key, value] of Object.entries(opt)) if (!allowed.includes(key) || (value === true && key !== 'final')) throw new Error(`Invalid --${key}`);
+    const flags = ['final', 'confirm', 'reopen'];
+    const allowed = ['stage', 'status', 'message', 'done', 'total', 'preview', 'publish', 'size', 'fps', 'duration', 'audio', 'final', 'shot', 'name', 'confirm', 'next', 'reopen', ...qualityKeys];
+    for (const [key, value] of Object.entries(opt)) if (!allowed.includes(key) || (value === true && !flags.includes(key)) || (flags.includes(key) && value !== true)) throw new Error(`Invalid --${key}`);
+    if (opt.next && !opt.confirm) throw new Error('--next requires --confirm');
+    if (opt.confirm && Object.keys(opt).some(key => !['stage', 'confirm', 'next', 'message'].includes(key))) throw new Error('--confirm only accepts --stage, --next and --message');
     if (opt.preview && opt.publish) throw new Error('Use --preview for an artifact or --publish for a playable project');
     if (opt.final && !opt.publish) throw new Error('--final requires --publish');
     if (opt.final !== undefined && opt.final !== true) throw new Error('--final is a flag');
-    const root = path.resolve(pos[0]), options = { stage: opt.stage, shot: opt.shot, name: opt.name, status: opt.status, message: opt.message, done: opt.done === undefined ? undefined : +opt.done, total: opt.total === undefined ? undefined : +opt.total,
+    const root = path.resolve(pos[0]), options = { stage: opt.stage, reopen: !!opt.reopen, shot: opt.shot, name: opt.name, status: opt.status, message: opt.message, done: opt.done === undefined ? undefined : +opt.done, total: opt.total === undefined ? undefined : +opt.total,
       quality: Object.fromEntries(qualityKeys.filter(k => opt[k] !== undefined).map(k => [k, +opt[k]])), audio: opt.audio,
       size: opt.size, fps: opt.fps === undefined ? 30 : +opt.fps, duration: opt.duration === undefined ? undefined : +opt.duration, final: !!opt.final };
-    const state = opt.publish ? await publishPreview(root, opt.publish, options) : opt.preview ? await publishArtifact(root, opt.preview, options) : updateProgress(root, options);
+    const state = opt.confirm ? confirmProgress(root, { stage: opt.stage, next: opt.next, message: opt.message }) : opt.publish ? await publishPreview(root, opt.publish, options) : opt.preview ? await publishArtifact(root, opt.preview, options) : updateProgress(root, options);
     console.log(`${state.current}: ${state.stages.find(s => s.id === state.current).status}${state.preview ? ` · preview ${state.preview.id}` : ''}`);
   }
 } catch (error) { console.error(`progress failed: ${error.message}`); process.exitCode = 1; }

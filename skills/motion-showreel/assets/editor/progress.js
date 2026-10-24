@@ -101,6 +101,15 @@ export function setupProgress({ url, hasProject = false, revision = null, pause 
     $('current-stage').textContent = active ? `${active.name}${active.total ? ` ${active.done}/${active.total}` : ''} · ${labels[active.status] || ''}` : '制作进度';
     $('current-stage').title = active?.message || labels[active?.status] || '';
     $('progress-message').textContent = data.error ? `新版未载入：${data.error}` : active?.message || '';
+    const age = Date.now() - Date.parse(active?.updatedAt || data.updatedAt);
+    const stale = age > 180000 && ['running', 'waiting'].includes(active?.status);
+    const warning = data.syncWarning || (stale ? active.status === 'waiting'
+      ? `该待确认状态已 ${Math.floor(age / 60000)} 分钟未更新；如果你已回复，制作端可能还没同步。`
+      : `制作进度已 ${Math.floor(age / 60000)} 分钟未上报，当前画面保留已发布版本。` : '');
+    $('progress-sync-warning').textContent = warning;
+    $('progress-sync-warning').hidden = !warning;
+    toggle.dataset.stale = String(!!warning);
+    if (warning) $('current-stage').textContent += ' · 状态未更新';
     const previews = [...(data.previews || [])];
     if (data.preview && !previews.some(p => p.id === data.preview.id)) previews.push(data.preview);
     const artifacts = data.artifacts || [], shots = data.shots || [];
