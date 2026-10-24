@@ -41,6 +41,7 @@
 | | `editorial-collage.md` | 杂志拼贴：剪纸边、胶带、照片碎片、手写标注 | Canvas / DOM | 宣传片、金句 | 活泼、潮流 | 样帧 |
 | | `art-deco.md` | 装饰艺术：阶梯、扇面、平行镶条，装饰组织构图与开合 | Canvas / SVG / Three.js | 品牌宣传、片头、Logo | 庄重、精致 | 待验证 |
 | | `one-line.md` | 一笔线描：连续路径勾出轮廓，也串起事物之间的关系 | Canvas / SVG | 品牌故事、讲解、Logo、循环 | 简洁、轻巧 | 待验证 |
+| | `concept-morph.md` | 数学／概念形变：保住对象对应关系，让推理在连续变化中可见 | Canvas / SVG / Manim | 数学讲解、科学概念、算法原理 | 清楚、专注 | 整片技术通过，待终审（[把圆展开](../../../../motion-samples/circle-unfold/README.md)，15 秒；87,241 点几何检查） |
 | 界面与产品 | `minimal-ui.md` | 浅色、干净、弹簧手感的界面动效 | DOM / SVG / Canvas | UI 演示、宣传片 | 精致、友好 | 样帧 |
 | | `dark-keynote.md` | 发布会：深色舞台、聚光、大数字、产品英雄镜头 | DOM / Canvas / Three.js | 宣传片、数据 | 隆重、高级 | 样帧 |
 | | `isometric-infographic.md` | 等距视角的小世界，信息层层搭起来 | Canvas / SVG | 讲解、宣传片 | 清晰、俏皮 | 样帧 |
@@ -67,12 +68,14 @@
 | | `painterly.md` | 油画笔触：方向场笔触、区域色组，画是活的 | Canvas | 品牌情绪片、文化艺术、片头 | 浓烈、怀旧 | 样帧 |
 | | `cel-anime-80s.md` | 80 年代赛璐璐动画：手绘背景、硬边色层、有限姿态与摄影台镜头 | Canvas / PixiJS / Three.js | 角色宣传、故事片头、预告 | 鲜明、戏剧感 | 待验证 |
 | | `rubber-hose.md` | 橡皮管动画：连续曲肢、挤压伸展、蓄力与反应驱动表演 | Canvas / SVG | 吉祥物、轻喜剧讲解、Logo | 诙谐、活泼 | 整片技术通过，待终审（[OFF BEAT](../../../../motion-samples/offbeat-note/README.md)，15 秒） |
+| | `whiteboard-explainer.md` | 白板手绘解说：分笔绘制与箭头逐步说明关系，保留可回看的全局图 | Canvas / SVG | 原理讲解、流程说明、课程片段 | 亲近、清晰 | 整片技术通过，待终审（[反馈让想法长大](../../../../motion-samples/feedback-board/README.md)，15 秒；绘制与笔声已测，未测口播同步） |
 | 手作 | `crayon-storybook.md` | 蜡笔、彩铅、水彩的绘本 | p5.js + p5.brush | 故事向宣传、讲解 | 童趣、温暖 | 样帧 |
 | | `ink-wash.md` | 水墨：晕染、飞白、留白 | Canvas / WebGL | 东方题材、片头 | 意境、沉静 | 样帧 |
 | | `paper-cut.md` | 纸艺分层：剪纸、投影、纸纹、立体书 | Canvas / Three.js | 宣传片、节日、讲解 | 温暖、精巧 | 样帧 |
 | | `copperplate-engraving.md` | 铜版雕刻：随形排线、交叉刻线、纸上图谱 | Canvas / SVG / WebGL | 工艺宣传、讲解、产品细节、片头 | 精细、沉静 | 待验证 |
 | | `ukiyo-e.md` | 浮世绘木版：主版墨线、分版套色、局部渐层与斜向截景 | Canvas / SVG / WebGL | 文化工艺、旅行片头、品牌故事 | 平和、有力 | 待验证 |
 | | `shadow-puppet.md` | 透光皮影：染色镂空、关节操纵与幕布背光，叠片加深 | Canvas / SVG / PixiJS | 文化宣传、故事讲解、Logo | 温暖、戏剧感 | 待验证 |
+| | `illuminated-manuscript.md` | 泥金手抄本：羊皮纸、墨字与金饰组成书页，装饰里发生局部故事 | Canvas / SVG / Three.js | 文学片头、文化工艺、短寓言 | 珍重、静谧 | 整片技术通过，待终审（[一页春生](../../../../motion-samples/gilded-garden/README.md)，15 秒；反光分区与局部动作已测） |
 | 电影感 | `cinematic-title.md` | 电影片头：宽银幕、胶片颗粒、慢推、衬线大字 | Canvas / DOM + WebGL | 片头、预告、Logo | 史诗、沉稳 | 成片 1（UMBRA） |
 | | `mixed-media-era.md` | 每个年代一种媒介，一根线串起整部片 | 混合 | 历史回顾、作品集 | 史诗、动人 | 成片 1（宣传片） |
 

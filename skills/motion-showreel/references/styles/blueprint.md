@@ -2,7 +2,6 @@
 
 > 轮廓、尺寸线和剖面逐层出现，把一个对象怎样组成、怎样配合讲清楚。
 > 参照（只学语法）：晒图工艺、工程制图、建筑图纸与装配说明。不照搬具体工程图、产品结构和机构标识。
-> 借鉴方向：[lemo-opuscar 的 Blueprint](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/blueprint/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

@@ -2,7 +2,6 @@
 
 > 彩色玻璃被深色金属条分隔，背后的光穿过色片，把图案投到周围空间。
 > 参照（只学语法）：铅条镶嵌彩窗、几何玻璃屏风、彩色玻璃上的烧绘工艺。不照搬具体宗教图像、建筑彩窗和现代艺术作品。
-> 借鉴方向：[lemo-opuscar 的 Stained Glass](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/stained-glass/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

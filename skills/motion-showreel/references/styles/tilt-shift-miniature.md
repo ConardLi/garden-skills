@@ -2,7 +2,6 @@
 
 > 从稍高的角度看一个缩小的世界，清晰范围落在正在发生的事上，周围的景物逐渐失焦。
 > 参照（只学语法）：移轴微缩摄影、实体沙盘、微缩布景的定格与延时影像。不照搬具体城市沙盘、摄影构图和模型资产。
-> 借鉴方向：[lemo-opuscar 的 Tilt-Shift](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/tilt-shift/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

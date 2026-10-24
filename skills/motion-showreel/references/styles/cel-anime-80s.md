@@ -2,7 +2,6 @@
 
 > 手绘背景托住硬边色块的角色，少量关键姿态、局部动作和摄影台镜头共同完成表演。
 > 参照（只学语法）：20 世纪 80 年代赛璐璐动画的上色与合成、有限动画、手绘背景和多层摄影。不照搬具体角色、机体、标志性镜头或配乐。
-> 借鉴方向：[lemo-opuscar 的 Cel Anime 80s](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/cel-anime-80s/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

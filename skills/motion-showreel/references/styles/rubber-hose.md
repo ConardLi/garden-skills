@@ -2,7 +2,6 @@
 
 > 四肢像柔软的管子一样弯曲，角色先蓄力再弹出去，连身边的器物也会跟着节奏做出反应。
 > 参照（只学语法）：早期橡皮管动画、无明显肘膝的曲线角色、音乐驱动的拟人表演。不照搬经典卡通角色、轮廓组合、标志性道具或旋律。
-> 借鉴方向：[lemo-opuscar 的 Rubber Hose](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/rubber-hose/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

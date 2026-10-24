@@ -2,7 +2,6 @@
 
 > 主版墨线框住平涂色面，水、云、衣褶各有概括方式，留白与斜向构图把观看顺序连起来。
 > 参照（只学语法）：浮世绘锦绘的主版与套色、名所绘的空间组织、木版渐层与纸墨工艺。不照搬具体名作构图、人物、题签和印章。
-> 借鉴方向：[lemo-opuscar 的 Ukiyo-e](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/ukiyoe/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

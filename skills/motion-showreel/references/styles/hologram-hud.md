@@ -2,7 +2,6 @@
 
 > 一个有空间关系的对象悬在暗处，线框、切面和标注围绕它展开，信息始终指得回对象。
 > 参照（只学语法）：科幻空间界面、线框可视化、体积扫描图形。不照搬影视界面、军用标识或具体产品屏幕。
-> 借鉴方向：[lemo-opuscar 的 Hologram HUD](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/hologram-hud/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

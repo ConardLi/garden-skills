@@ -2,7 +2,6 @@
 
 > 一条线在画面里延伸、转弯、回看，物体和关系沿着它逐渐被看见。
 > 参照（只学语法）：连续轮廓绘画、极简线描动画、以路径组织叙事的动态图形。不照搬具体肖像、线稿和标志。
-> 借鉴方向：[lemo-opuscar 的 One-Line Art](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/one-line/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

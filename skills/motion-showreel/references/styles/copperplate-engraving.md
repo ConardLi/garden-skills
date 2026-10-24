@@ -2,7 +2,6 @@
 
 > 细密的刻线沿着形体转折，疏密之间显出明暗；纸上的图谱可以被放大、标注，也可以一层层印出来。
 > 参照（只学语法）：铜版雕刻的排线与刻刀线、古典博物图谱、手工设色版画。不照搬具体图版、构图、标本姿态和装饰边框。
-> 借鉴方向：[lemo-opuscar 的 Copperplate Engraving](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/engraving/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

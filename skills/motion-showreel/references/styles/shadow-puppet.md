@@ -2,7 +2,6 @@
 
 > 染色皮革与镂空纹样在背光幕布上显出形象，关节和操纵杆让人物以清楚的侧影表演。
 > 参照（只学语法）：中国皮影的刻制、染色与操纵、幕布背光舞台、关节偶的表演方式。不照搬具体流派的整套人物、传统戏目造型或唱段。
-> 借鉴方向：[lemo-opuscar 的 Shadow Puppet](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/shadow-puppet/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

@@ -2,7 +2,6 @@
 
 > 阶梯、扇面和成组的平行线围绕一根秩序清楚的轴线展开，装饰本身负责组织画面。
 > 参照（只学语法）：装饰艺术建筑立面、交通海报、金属镶嵌与漆面工艺。不照搬具体建筑轮廓、海报构图、商标和字体文件。
-> 借鉴方向：[lemo-opuscar 的 Art Deco](https://github.com/lemomo-ai/lemo-opuscar/blob/main/styles/art-deco/STYLE.md)，按本库结构重新整理，技术实现由 Agent 按主题探索。
 
 ## 本质 / 不是什么
 

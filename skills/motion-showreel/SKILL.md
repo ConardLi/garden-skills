@@ -240,7 +240,7 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | 文件 | 什么时候读 |
 |---|---|
 | `references/formats.md` | 第 2 步：用途，比如宣传短片、作品集、UI 动效、排版卡点、Logo、数据爆点、绿幕合成 |
-| `references/styles/INDEX.md` | 第 2 步：40 种风格的目录、三方向规则、混搭规则；然后只读选中的 `styles/<slug>.md`。自定义用 `styles/_template.md` |
+| `references/styles/INDEX.md` | 第 2 步：43 种风格的目录、三方向规则、混搭规则；然后只读选中的 `styles/<slug>.md`。自定义用 `styles/_template.md` |
 | `references/craft.md` | 第 2 和第 4 步：节奏、运动、转场、镜头、排版、配色、质感、记忆点、默认味清单 |
 | `references/brief-template.md` | 写 brief 时 |
 | `references/stack.md` | 第 4 步：页面契约、确定性、各技术的坑、字体、素材、多画幅、性能 |

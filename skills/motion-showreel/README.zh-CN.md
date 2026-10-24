@@ -63,7 +63,7 @@
 - **画面 = 时间的函数**：页面暴露确定性的 `window.render(t)`（不用 `Math.random`、定时器、rAF、CSS 动画），Playwright 逐帧截图，ffmpeg 合成 MP4。运动模糊（`--subframes`）、超采样（`--dpr`）、胶片颗粒（`--grain`）都是渲染参数，不写在页面里。
 - **画面和声音共用一张时间表**：`timeline.js` 里写着每个切点、撞击和音效，页面和配乐都从它读取，卡点精确到帧。
 - **先找对标，再想三个结构**：动笔前先挑 1–2 个对标作品，写清学什么、不学什么，再写三个候选结构。第一个冒出来的想法往往是这个风格的陈词滥调。参考视频可以量：`inspect.mjs grid` 找出剪点和它们落的节拍网格，`heat` 看每段里哪里在动。
-- **风格库是起点，不是选择题**：40 种风格，每种写明不变的规则（质感、配色、字体、运动、镜头语法、声音调色板、原生手法、坑）。每种还列了 8–12 个辨识信号（按主题挑 2–3 个），并把这个风格最俗的版本直接写出来，选了合成波也不会每次都是网格加日落。可以直接用、改造、混搭，也可以按模板自定义。
+- **风格库是起点，不是选择题**：43 种风格，每种写明不变的规则（质感、配色、字体、运动、镜头语法、声音调色板、原生手法、坑）。每种还列了 8–12 个辨识信号（按主题挑 2–3 个），并把这个风格最俗的版本直接写出来，选了合成波也不会每次都是网格加日落。可以直接用、改造、混搭，也可以按模板自定义。
 - **声音也要先定方向**：brief 里声音和画面同等对待，写清对标、律动、和声、配器、戏剧曲线；再配一份声音的「默认味」清单，免得几支片子听起来像同一首歌。
 - **两次确认，然后自主制作**：先补齐必填信息并确认需求，再确认风格帧。用户没定风格时给 3 个拉开差距的方向；「给我惊喜」保留创意自由，不代表替用户默认制作规格。
 - **口播优先**：TTS 使用用户原稿，或导入用户录音与真实句段时间戳；画面跟随讲述，BGM 和音效在说话期间收敛。长片按章构建并保留缓存，失败后可继续。
@@ -92,7 +92,7 @@
 
 ## 风格库
 
-40 种风格，分 8 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、插画与漫画、手作、电影感。下面几种是 Skill 自己渲出来的：
+43 种风格，分 8 组：图形与排版、界面与产品、复古与屏幕、3D 与材质、生成与抽象、插画与漫画、手作、电影感。下面几种是 Skill 自己渲出来的：
 
 <table>
 <tr>
@@ -130,6 +130,8 @@
 <sub>库里还有：<code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>。目录、三方向规则和混搭方法见 <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a>。</sub>
 
 新增风格规则（待视觉验证）：[装饰艺术](./references/styles/art-deco.md)、[一笔线描](./references/styles/one-line.md)、[工程蓝图](./references/styles/blueprint.md)、[全息空间界面](./references/styles/hologram-hud.md)、[彩色玻璃镶嵌](./references/styles/stained-glass.md)、[移轴微缩](./references/styles/tilt-shift-miniature.md)、[像素立体场景](./references/styles/pixel-diorama.md)、[80 年代赛璐璐动画](./references/styles/cel-anime-80s.md)、[橡皮管动画](./references/styles/rubber-hose.md)、[浮世绘木版](./references/styles/ukiyo-e.md)、[透光皮影](./references/styles/shadow-puppet.md)。沿用同一模板，写明材质、运动规则和可选技术方向。
+
+另补有[白板手绘解说](./references/styles/whiteboard-explainer.md)、[数学／概念形变](./references/styles/concept-morph.md)和[泥金手抄本](./references/styles/illuminated-manuscript.md)，各附一支 15 秒完整验证样片。技术检查与审片状态见[风格目录](./references/styles/INDEX.md)。
 
 ---
 

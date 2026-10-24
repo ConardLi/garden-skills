@@ -63,7 +63,7 @@ Technical checks (all PASS) and an honest review log
 - **Picture = a function of time.** The page exposes a deterministic `window.render(t)` (no `Math.random`, timers, rAF or CSS animation). Playwright captures every frame and ffmpeg encodes the MP4. Motion blur (`--subframes`), supersampling (`--dpr`) and film grain (`--grain`) are render flags, not page code.
 - **One timeline for picture and sound.** `timeline.js` holds every cut, hit and cue; the page and the score both import it, so hits land on the exact frame.
 - **Benchmark first, then three structures.** Before anything is drawn, the agent picks 1–2 reference works (what to learn, what not to copy) and writes down three candidate structures. A reference video can be measured: `inspect.mjs grid` finds its cuts and the beat grid they sit on, `heat` shows where each segment moves. The first idea that comes to mind is usually the style's cliché.
-- **A style library that is a starting point, not a menu.** 40 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Every style also lists 8–12 recognition signals to pick 2–3 from and spells out its own cliché, so choosing "synthwave" does not mean the same grid-and-sunset every time. Use one, adapt it, mix two, or write your own from the template.
+- **A style library that is a starting point, not a menu.** 43 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Every style also lists 8–12 recognition signals to pick 2–3 from and spells out its own cliché, so choosing "synthwave" does not mean the same grid-and-sunset every time. Use one, adapt it, mix two, or write your own from the template.
 - **Sound gets its own direction.** The brief covers sound too: a reference, groove, harmony, palette and dramatic arc. A list of audio defaults keeps pieces from all ending up with the same song.
 - **Two checkpoints, then autonomous production.** Confirm the completed requirements, then the style frames. With no style specified, offer three distinct directions. Creative freedom does not silently choose missing production specifications.
 - **Voice-led timing and chapter builds.** TTS reads the user's script; imported recordings use real segment timestamps. Pictures follow speech, music/SFX yield during narration, and long builds reuse persistent chapter caches after failures.
@@ -92,7 +92,7 @@ See [`references/narration.md`](./references/narration.md) for TTS, recording ti
 
 ## Style Library
 
-40 styles in 8 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, illustration & comics, handmade, cinematic. A few of them, rendered by the skill:
+43 styles in 8 groups: graphics & type, interface & product, retro & screens, 3D & material, generative & abstract, illustration & comics, handmade, cinematic. A few of them, rendered by the skill:
 
 <table>
 <tr>
@@ -130,6 +130,8 @@ See [`references/narration.md`](./references/narration.md) for TTS, recording ti
 <sub>Also in the library: <code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>. See <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a> for the directory, the three-direction rule and how to mix styles.</sub>
 
 New style guides (awaiting visual validation): [Art Deco](./references/styles/art-deco.md), [One-Line](./references/styles/one-line.md), [Blueprint](./references/styles/blueprint.md), [Hologram HUD](./references/styles/hologram-hud.md), [Stained Glass](./references/styles/stained-glass.md), [Tilt-Shift Miniature](./references/styles/tilt-shift-miniature.md), [Pixel Diorama](./references/styles/pixel-diorama.md), [80s Cel Animation](./references/styles/cel-anime-80s.md), [Rubber Hose](./references/styles/rubber-hose.md), [Ukiyo-e](./references/styles/ukiyo-e.md), and [Shadow Puppet](./references/styles/shadow-puppet.md). Each follows the same template, with material and motion rules plus optional implementation directions.
+
+Also available: [Whiteboard Explainer](./references/styles/whiteboard-explainer.md), [Math / Concept Morph](./references/styles/concept-morph.md), and [Illuminated Manuscript](./references/styles/illuminated-manuscript.md). Each has a complete 15-second validation sample; see the [style index](./references/styles/INDEX.md) for technical and review status.
 
 ---
 
