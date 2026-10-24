@@ -46,7 +46,7 @@
 <tr>
 <td width="50%" valign="top"><img src="../../dist/imgs/motion-showreel/umbra.webp" alt="UMBRA 本影 日全食电影片头" width="100%"><br/><strong>UMBRA 本影</strong> · 27 秒 · <code>cinematic-title</code><br/><sub>一部虚构的日全食电影的片头，2.39:1 黑边。一拍绝对静音之后，最后一颗贝利珠炸成钻石环，片名在月亮的黑盘里显影。钢琴用 Salamander 采样（第 2 档），上面叠第 1 档合成的预告片音效（boom、braam）。</sub></td>
 <td width="50%" valign="top"><br/><strong>每支片子交付什么</strong><br/><sub>
-<code>out/final.mp4</code> + <code>out/poster.png</code><br/>
+实际导出的 MP4（工作区版为 <code>out/editor-&lt;task-id&gt;.mp4</code>）+ <code>out/poster.png</code><br/>
 <code>brief.md</code>：可以复用的结构化提示词<br/>
 <code>index.html</code> / <code>timeline.js</code> / <code>score.mjs</code>：可编辑的源码<br/>
 <code>sh build.sh</code>：整片重建，也可以只重渲一段<br/>
@@ -65,7 +65,8 @@
 - **先找对标，再想三个结构**：动笔前先挑 1–2 个对标作品，写清学什么、不学什么，再写三个候选结构。第一个冒出来的想法往往是这个风格的陈词滥调。参考视频可以量：`inspect.mjs grid` 找出剪点和它们落的节拍网格，`heat` 看每段里哪里在动。
 - **风格库是起点，不是选择题**：43 种风格，每种写明不变的规则（质感、配色、字体、运动、镜头语法、声音调色板、原生手法、坑）。每种还列了 8–12 个辨识信号（按主题挑 2–3 个），并把这个风格最俗的版本直接写出来，选了合成波也不会每次都是网格加日落。可以直接用、改造、混搭，也可以按模板自定义。
 - **声音也要先定方向**：brief 里声音和画面同等对待，写清对标、律动、和声、配器、戏剧曲线；再配一份声音的「默认味」清单，免得几支片子听起来像同一首歌。
-- **两次确认，然后自主制作**：先补齐必填信息并确认需求，再确认风格帧。用户没定风格时给 3 个拉开差距的方向；「给我惊喜」保留创意自由，不代表替用户默认制作规格。
+- **想看过程，就提前打开。** 初始反馈中表达「边做边看」「实时进度」时，Agent 会打开制作进度页，逐阶段展示风格帧、口播样例、镜头和混音；完成后在同一页预览确认。只发布已自查的阶段成果，沿用原制作和验收标准，见 [`references/progress.md`](./references/progress.md)。
+- **需求、风格与最终预览分别确认**：先补齐必填信息并确认需求，再确认风格帧；制作完成后主动打开工作区，预览通过再导出 MP4。用户没定风格时给 3 个拉开差距的方向；「给我惊喜」保留创意自由，不代表替用户默认制作规格。
 - **口播优先**：TTS 使用用户原稿，或导入用户录音与真实句段时间戳；画面跟随讲述，BGM 和音效在说话期间收敛。长片按章构建并保留缓存，失败后可继续。
 - **连续画面**：分镜记录对象的前后状态和空间承接，镜头可跨句发展。关键词事件使用真实词时间或人工锚点；带声音预览支持拖动和逐帧检查。依赖运动的方向，随风格帧一起确认连续小样。
 - **技术验收和审美判断分开**：尺寸、帧率、时长、帧数、黑帧、响度、真峰值、循环接缝、确定性这些由程序判定，必须全部 PASS。旁边还有量出来的审片材料，不挡构建：按镜头的运动（含突然的跳变和单帧闪），以及文字框景（字被画面切掉、叠字、落进安全区、字太小）。审片记录只是帮用户更快地看片，不能代替用户自己看。
@@ -80,13 +81,14 @@
 1  需求确认 ─────────── 补齐必要信息、汇总要求 → 🛑 等你确认
 2  brief.md ─────────── 对标 → 用途 + 风格 → 分镜 + 声音计划
 3  风格帧 ───────────── 已定风格：3 张帧；未定风格：3 个方向各 1 张 → 🛑 等你确认
-4  制作 ─────────────── 有口播先确定真实音频时间轴 → 逐镜头 → 自检 → 正片
+4  制作 ─────────────── 有口播先确定真实音频时间轴 → 逐镜头 → 网页自检
 5  配乐与混音 ───────── BGM / 音效独立来源；人声优先
-6  验收 ─────────────── 技术检查（必须 PASS）+ 审片（交给用户终审）
-7  交付
+6  工作区预览 ───────── 主动打开工作区，修改后复看 → 🛑 等你确认导出
+7  导出与验收 ───────── 合成 MP4 → 技术检查（必须 PASS）+ 成片复核
+8  交付
 ```
 
-口播与独立轨混音见 [`references/narration.md`](./references/narration.md)；超过 2 分钟的章节构建、缓存与审片见 [`references/long-form.md`](./references/long-form.md)。旧短片的全部风格、两档配乐、卡点、循环和渲染参数继续保留。
+默认工作区与导出确认见 [`references/editor.md`](./references/editor.md)。口播与独立轨混音见 [`references/narration.md`](./references/narration.md)；超过 2 分钟的章节构建、缓存与审片见 [`references/long-form.md`](./references/long-form.md)。旧短片的全部风格、两档配乐、卡点、循环和渲染参数继续保留。
 
 ---
 
@@ -176,7 +178,9 @@ skills/motion-showreel/
 │   ├── render.mjs           静帧、拼图、三方向、封面、确定性、文字框景、小样、正片
 │   ├── audio.mjs            build · check · beats · samples · mux
 │   ├── narration.mjs        tts · import · mix · check
-│   ├── preview.mjs          带声音播放、拖动、逐帧与预览倍速
+│   ├── progress.mjs         按需发布制作阶段、图片/音频成果与稳定预览
+│   ├── editor.mjs           默认审片工作区、分轨编辑、保存、确认后导出
+│   ├── preview.mjs          轻量调试：带声音播放、拖动、逐帧与预览倍速
 │   ├── build-long.mjs       持久章节缓存、失败重试、拼接与验收
 │   ├── inspect.mjs          qa · sheet · phone · strip · frames · motion · loop · grid · heat
 │   ├── lib/                 合成器、Tone.js 渲染、FFT、浏览器、项目工具、帧分析、文字钩子
@@ -205,11 +209,12 @@ sh scripts/setup.sh        # 安装 Playwright + Chromium + Tone.js，再做环�
 做一个 6 秒的无缝循环生成艺术，不要声音。
 ```
 
-Agent 会先补问缺失项并停下来确认，再建好 `<slug>/`、给你看风格帧；第二次确认后自主完成制作、配乐、检查和交付。上面的简短需求可直接发起，但缺失的时长、画幅、BGM/音效来源和口播方式不会被静默填成默认值。之后想重建或微调：
+Agent 会先补问缺失项并停下来确认，再建好 `<slug>/`、给你看风格帧；风格确认后自主完成画面和配乐，再默认打开剪辑工作区让你预览；你点击导出或确认当前版本可以导出后，才生成 MP4、验收和交付。无声片、循环片也先预览，长片先逐章预览。上面的简短需求可直接发起，但缺失的时长、画幅、BGM/音效来源和口播方式不会被静默填成默认值。之后想重建或微调：
 
 ```bash
-sh <slug>/build.sh                                   # 按 build.sh 顶部的规格整片重建
-node scripts/preview.mjs <slug> --size 1920x1080 --fps 30   # 随音频预览
+node scripts/editor.mjs <slug> --size 1920x1080 --fps 30   # 默认先打开工作区，预览通过后点击导出
+sh <slug>/build.sh                                   # 用户确认后重建原版，不自动读取工作区音轨编辑
+node scripts/preview.mjs <slug> --size 1920x1080 --fps 30   # 轻量调试预览
 node scripts/render.mjs <slug> --start 6 --duration 3 --out out/seg.mp4   # 只重渲一段
 node scripts/build-long.mjs <slug>/chapters.json       # 长片按章构建，再次运行复用有效缓存
 ```

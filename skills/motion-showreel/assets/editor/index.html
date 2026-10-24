@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Motion Studio</title>
+  <link rel="stylesheet" href="/__showreel-editor/editor.css">
+  <link rel="stylesheet" href="/__showreel-editor/viewport.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://github.com/ConardLi/garden-skills" target="_blank" rel="noopener noreferrer" title="打开 garden skills GitHub 仓库">garden skills</a>
+    <span class="project-title" id="project-name">工作区</span>
+    <div class="top-actions">
+      <button id="toggle-progress" aria-expanded="false" aria-controls="progress-panel" hidden><i class="status-dot"></i><span class="sr-only">制作进度</span><span id="current-stage">制作进度</span></button>
+      <button id="toggle-inspector" aria-expanded="false" aria-controls="sound-panel">调音</button>
+      <button id="save" aria-label="保存" title="保存编辑（⌘/Ctrl S）">保存</button>
+      <button id="export" class="primary">导出视频 <span aria-hidden="true">↗</span></button>
+    </div>
+  </header>
+  <main id="workspace">
+    <section class="viewer-panel" aria-label="视频预览">
+      <div class="viewer-heading">
+        <span class="viewer-title">预览</span><span id="stage-label"></span><span id="spec"></span><button id="switch" hidden>查看新版本</button>
+        <div class="view-tools" role="group" aria-label="画面显示">
+          <button id="zoom-out" aria-label="缩小画面" title="缩小画面">−</button>
+          <select id="viewer-zoom" aria-label="画面缩放"><option value="fit">适应</option><option value="25">25%</option><option value="50">50%</option><option value="100">100%</option><option value="150">150%</option><option value="200">200%</option></select>
+          <button id="zoom-in" aria-label="放大画面" title="放大画面">+</button>
+          <button id="fit-view" aria-label="适应窗口" title="适应窗口">⊡</button>
+          <button id="maximize-view" aria-label="最大化预览" aria-pressed="false" title="最大化预览">⛶</button>
+        </div>
+      </div>
+      <div class="viewer" id="viewer">
+        <div class="frame-wrap" id="frame-wrap"><iframe id="scene" title="原始动画场景" sandbox="allow-scripts allow-same-origin"></iframe></div>
+        <div class="viewer-loading" id="loading"><span>正在加载预览…</span></div>
+        <div id="placeholder" hidden><div class="placeholder-symbol">◫</div><h1>等待首个阶段成果</h1><p>完成的画面与声音会显示在这里</p></div>
+        <section id="artifact-view" aria-label="阶段成果预览" hidden><button id="close-artifact" aria-label="关闭阶段成果">返回预览 <span aria-hidden="true">×</span></button><div id="artifact-content"></div></section>
+      </div>
+      <div class="transport">
+        <div class="clock-group"><span class="timecode" id="clock">00:00.00</span><span class="duration" id="duration"></span></div>
+        <div class="play-controls"><button id="prev" aria-label="上一帧" title="上一帧（←）">Ⅰ‹</button><button id="play" aria-label="播放" title="播放 / 暂停（Space）" class="play">▶</button><button id="next" aria-label="下一帧" title="下一帧（→）">›Ⅰ</button></div>
+        <a id="scene-link" target="_blank" rel="noopener" title="单独打开原场景">原画面 ↗</a>
+      </div>
+    </section>
+    <aside class="inspector" id="sound-panel" aria-label="声音调整">
+      <div class="panel-heading"><strong>声音调整</strong><button id="reset">恢复原版</button></div>
+      <div id="inspector"></div>
+      <details class="source-details"><summary>音频素材 <span id="source-count"></span></summary><div id="sources"></div></details>
+    </aside>
+    <div id="panel-divider" role="separator" aria-label="调整画面与时间线高度" aria-orientation="horizontal" tabindex="0" title="上下拖动调整区域高度；双击恢复"><span></span></div>
+    <section class="timeline-panel" aria-label="时间线">
+      <div class="timeline-toolbar">
+        <div class="tool-group"><button id="undo" title="撤销（⌘/Ctrl Z）" aria-label="撤销">↶</button><button id="redo" title="重做（⌘/Ctrl Shift Z）" aria-label="重做">↷</button><span class="separator"></span><button id="split" title="在播放头切分 BGM 或音效（S）">切分</button><button id="delete" title="移除选中片段">移除</button></div>
+        <span id="audio-state" role="status" class="sr-only"></span>
+        <div class="zoom-controls"><button id="apply" title="重新生成当前编辑的试听音频">更新试听</button><label title="时间线缩放"><span class="timeline-zoom-label">时间线</span><input id="zoom" type="range" min="1" max="12" step="0.25" value="1" aria-label="时间线缩放"></label></div>
+      </div>
+      <div class="timeline-scroll" id="timeline-scroll"><div class="timeline-content" id="timeline-content">
+        <div class="ruler-row"><div class="track-label ruler-label">轨道 <span>秒</span></div><div class="ruler" id="ruler"></div></div>
+        <div id="tracks"></div><div class="playhead" id="playhead"><span></span></div>
+      </div></div>
+      <div class="timeline-footer"><label class="loop-toggle"><input id="loop" type="checkbox">循环选区</label><div class="range-fields"><input id="range-start" type="number" min="0" step="0.1" value="0" aria-label="选区开始"><span>—</span><input id="range-end" type="number" min="0" step="0.1" aria-label="选区结束"><span>s</span></div></div>
+    </section>
+  </main>
+  <aside id="progress-panel" aria-label="制作进度" hidden>
+    <div class="panel-heading"><strong>制作进度</strong><button id="close-progress" aria-label="关闭制作进度">×</button></div>
+    <p id="progress-message" role="status"></p><div id="artifacts"><div id="stages"></div></div>
+    <div class="progress-settings"><label><input type="checkbox" id="auto" checked>自动切换阶段版本</label></div>
+    <span id="progress-connection"></span>
+  </aside>
+  <footer class="statusbar"><span id="message" role="status"></span><span id="save-status" role="status"></span></footer>
+  <section class="job-panel" id="job-panel" hidden aria-label="导出任务"><div><strong id="job-title">正在处理</strong><button id="cancel-job">取消任务</button></div><progress id="job-progress" max="1" value="0"></progress><p id="job-phase"></p><pre id="job-log"></pre><a id="download" hidden download>下载 MP4 ↗</a><button id="close-job" hidden>关闭</button></section>
+  <script type="module" src="/__showreel-editor/editor.js"></script>
+</body>
+</html>

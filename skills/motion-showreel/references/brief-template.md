@@ -14,6 +14,7 @@
 观众记住的一句话 / 一个画面：……
 素材：……（文件路径；参考视频只学结构和手法；用户的曲子写明授权）
 规格：…秒（≤1200，严格 / 允许浮动…秒）· 横屏/竖屏 · …×… · …fps
+制作过程预览：启用 / 未提出；用户反馈依据……；进度页链接……（启用时按 progress.md 更新阶段成果）
 受众 / 平台：……（用户提供 / 根据……推断）
 内容依据：……（用户具体描述 / 用户口播稿 / 资料 / 调研来源；哪些素材由 AI 生成）
 品牌：主色 #…，强调色 #…，字体 …（文件在 fonts/）
@@ -29,6 +30,7 @@ BGM：AI 合成 / 用户提供 / 关闭；引擎或文件……；声音方向�
 <confirmations>
 需求确认：用户已确认的摘要、日期/消息依据……
 风格帧确认：用户选中的方向、声音方向与确认依据……（第 3 步确认后填写）
+最终预览与导出确认：工作区链接、当前版本、反馈与修改、用户点击导出或对话确认的依据……（第 6 步后填写）
 若用户明确免除某次确认：记录原话及免除范围，不把「给我惊喜」当作免确认。
 时长冲突及处理：无 / ……（冲突须用户确认；不擅自裁切、变速或改稿）
 </confirmations>
@@ -77,8 +79,8 @@ Reel Read:
 3. 所有时间点写在 timeline.js，页面和 score.mjs 都从它 import；镜头表写进 SHOTS；无口播时，要对拍的转场用 revealOn(拍点, 时长, 揭开点) 倒推起点。有口播时先合成或分析真实音频，再用句段时间戳定镜头，不用估时冒充对齐。
 4. 渲染：render.mjs 逐帧截图 → ffmpeg；参数：--fps … --size … [--subframes 4] [--dpr 2] [--grain …]。
 5. BGM、音效分别取确认的来源，保留第 1 档 score.mjs / 第 2 档 score.tone.js。口播按 narration.md 准备；独立轨用 narration.mjs mix，最终混音统一响度与峰值。有音效的动作落在动作那一帧；有口播时收敛配器与音效。三轨都关闭才写「无声」。长片音频按章构建，不用整片 Float32 合成代替分段处理。
-6. 每个镜头做完渲 3 张静帧检查；关键状态变化和镜头接缝看连续小样，使用带声音预览检查事件同步与动作承接。全部完成后跑 --determinism，出低清小样确认节奏，再出正片。
-7. 验收：sh build.sh（FPS / SIZE / AUDIO / LOOP 写在 build.sh 顶部，时长取 timeline.js 的 DUR），等价于 inspect.mjs qa --expect-size … --expect-fps … --expect-duration … --audio required|none [--loop]；技术检查全部 PASS，且没有 NOT CHECKED。timeline.js 里声明 HOLDS（刻意的停留）和 DROPS（要留呼吸的重拍）。build.sh 还会出文字框景（qa/text.json）和按镜头的运动报告，这两份是审片材料，每一条都要看过。
+6. 每个镜头做完渲 3 张静帧检查；关键状态变化和镜头接缝在工作区连续播放，检查事件同步与动作承接。全部完成后跑 --determinism，主动打开 editor.mjs 工作区供用户预览，不先出低清 MP4；用户确认当前版本可以导出后再出正片。
+7. 用户确认预览通过后导出并验收：工作区导出，或未改音轨时 sh build.sh（FPS / SIZE / AUDIO / LOOP 写在 build.sh 顶部，时长取 timeline.js 的 DUR），等价于 inspect.mjs qa --expect-size … --expect-fps … --expect-duration … --audio required|none [--loop]；技术检查全部 PASS，且没有 NOT CHECKED。timeline.js 里声明 HOLDS（刻意的停留）和 DROPS（要留呼吸的重拍）。build.sh 还会出文字框景（qa/text.json）和按镜头的运动报告，这两份是审片材料，每一条都要看过。
 8. 混合音轨使用 AUDIO=file AUDIO_FILE=audio/final.wav sh build.sh；长片使用 build-long.mjs chapters.json，保持章节缓存。有口播时检查 narration.json 和实际音频时长、逐句声画对应、原稿完整性；长片逐章检查并复核接缝。
 </build>
 
@@ -90,6 +92,6 @@ Reel Read:
 （按情况只保留下面一段）
 【要确认 · 默认】需求已确认，才进入本 brief。已定风格：先出 hook、记忆点、结尾三张风格帧给我确认；未定风格：先给 3 个拉开差距的方向，各一张关键帧（render.mjs --directions）让我选。连续动作是核心时同时附代表性运动小样；TTS 给用户原稿的分段方案和音色短样。放在同一次风格确认里，等我回复后再正式制作。
 【不用确认 · 用户明确免除风格帧确认】仍先出风格帧，自己看图选一个，把选择和理由写进 brief，然后继续。「你决定」只授权审美选择，不自动免除确认。
-之后：有口播先锁定实测时间轴，再按镜头顺序制作，每个镜头完成后自检；短片用 build.sh，长片用 build-long.mjs，技术检查全部 PASS、没有 NOT CHECKED 后，附上审片记录交付，由用户终审。
+之后：有口播先锁定实测时间轴，再按镜头顺序制作，每个镜头完成后自检；画面与混音准备好后默认打开 editor.mjs 工作区（长片逐章预览），等我确认当前版本可以导出后才生成 MP4。工作区音频编辑随当前会话导出；没有音轨编辑时短片也可用 build.sh，长片按 long-form.md 用 build-long.mjs。技术检查全部 PASS、没有 NOT CHECKED 后，附上审片记录交付。
 </start>
 ```

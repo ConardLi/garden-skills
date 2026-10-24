@@ -42,5 +42,8 @@ case "$AUDIO" in
   none)  echo "  music:   none (silent piece; qa will expect no audio track)" ;;
   file)  echo "  audio:   prepare audio/final.wav, or set AUDIO_FILE to your final mix" ;;
 esac
-echo "  film:    sh $DEST/build.sh   (FPS / SIZE / AUDIO / LOOP at the top of build.sh; it also runs the technical checks)"
-echo "  preview: node $SKILL/scripts/preview.mjs $DEST --size 1920x1080 --fps 30"
+echo "  preview: node $SKILL/scripts/editor.mjs $DEST --size 1920x1080 --fps 30"
+echo "           Open the workspace first; use the confirmed SIZE / FPS and wait for preview approval before exporting."
+echo "  export:  Click Export in the workspace after review; MP4 rendering starts only then."
+echo "  rebuild: sh $DEST/build.sh   (after approval, without workspace audio edits; FPS / SIZE / AUDIO / LOOP at the top)"
+echo "  debug:   node $SKILL/scripts/preview.mjs $DEST --size 1920x1080 --fps 30   (lightweight debugging)"

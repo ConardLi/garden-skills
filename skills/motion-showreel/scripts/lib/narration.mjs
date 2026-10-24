@@ -234,7 +234,7 @@ export async function mixNarration({ root, bgm = 'none', bgmSource = 'none', sfx
     const actual = audioDuration(tmp);
     if (Math.abs(actual - duration) > 0.003) throw new Error('Mixed audio duration does not match the requested timeline');
     fs.renameSync(tmp, out);
-    const data = { version: 1, duration: actual, file: rel(p.root, out), audioSha256: sha(fs.readFileSync(out)), narration: voice ? 'enabled' : 'none', sources, duckDb, intervals: intervals.map(([start, end]) => ({ start: round(start), end: round(end) })) };
+    const data = { version: 1, duration: actual, file: rel(p.root, out), audioSha256: sha(fs.readFileSync(out)), narration: voice ? 'enabled' : 'none', sources, gains: { voice: 1, bgm: bgmGain, sfx: sfxGain }, duckDb, intervals: intervals.map(([start, end]) => ({ start: round(start), end: round(end) })) };
     json(path.join(p.audio, 'mix.json'), data);
     if (!metadata && !voice) json(metadataFile, { version: 1, source: { type: 'none' }, alignment: 'none', duration, segments: [], missing: [] });
     return data;

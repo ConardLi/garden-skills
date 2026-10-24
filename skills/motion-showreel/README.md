@@ -46,7 +46,7 @@ Every clip below was made by an agent with this skill from a short request. For 
 <tr>
 <td width="50%" valign="top"><img src="../../dist/imgs/motion-showreel/umbra.webp" alt="UMBRA cinematic eclipse title" width="100%"><br/><strong>UMBRA</strong> · 27 s · <code>cinematic-title</code><br/><sub>Opening titles for a fictional film about a total eclipse, letterboxed at 2.39:1. A beat of absolute silence, then the last Baily's bead flares into the diamond ring and the title develops inside the moon. The piano is a sampled Salamander grand (tier 2) with synthesized trailer sound design (booms, braam) layered on top.</sub></td>
 <td width="50%" valign="top"><br/><strong>What you get for every piece</strong><br/><sub>
-<code>out/final.mp4</code> + <code>out/poster.png</code><br/>
+The exported MP4 (<code>out/editor-&lt;task-id&gt;.mp4</code> from the workspace) + <code>out/poster.png</code><br/>
 <code>brief.md</code>: a reusable structured prompt<br/>
 <code>index.html</code> / <code>timeline.js</code> / <code>score.mjs</code>: editable source<br/>
 <code>sh build.sh</code>: rebuild everything, or one segment<br/>
@@ -65,7 +65,8 @@ Technical checks (all PASS) and an honest review log
 - **Benchmark first, then three structures.** Before anything is drawn, the agent picks 1–2 reference works (what to learn, what not to copy) and writes down three candidate structures. A reference video can be measured: `inspect.mjs grid` finds its cuts and the beat grid they sit on, `heat` shows where each segment moves. The first idea that comes to mind is usually the style's cliché.
 - **A style library that is a starting point, not a menu.** 43 styles, each with fixed rules for look, palette, type, motion, camera grammar, sound palette, native moves and pitfalls. Every style also lists 8–12 recognition signals to pick 2–3 from and spells out its own cliché, so choosing "synthwave" does not mean the same grid-and-sunset every time. Use one, adapt it, mix two, or write your own from the template.
 - **Sound gets its own direction.** The brief covers sound too: a reference, groove, harmony, palette and dramatic arc. A list of audio defaults keeps pieces from all ending up with the same song.
-- **Two checkpoints, then autonomous production.** Confirm the completed requirements, then the style frames. With no style specified, offer three distinct directions. Creative freedom does not silently choose missing production specifications.
+- **Watch production when requested.** If the initial feedback asks to watch progress, the agent opens a stable progress page early and publishes checked style frames, voice samples, scenes and mixes. Final preview and export stay in the same page, with the existing production and acceptance checks. See [`references/progress.md`](./references/progress.md).
+- **Approve requirements, style and the finished preview.** Confirm the completed requirements and style frames, then review the finished scenes in the workspace before exporting MP4. With no style specified, offer three distinct directions. Creative freedom does not silently choose missing production specifications.
 - **Voice-led timing and chapter builds.** TTS reads the user's script; imported recordings use real segment timestamps. Pictures follow speech, music/SFX yield during narration, and long builds reuse persistent chapter caches after failures.
 - **Continuous scenes.** Storyboards track object states and spatial continuity across sentences. Keyword events use measured word timestamps or manual anchors; audio preview supports scrubbing and frame stepping. Representative motion samples accompany style confirmation when the direction depends on movement.
 - **Technical acceptance is separate from taste.** Programmatic checks (size, fps, duration, frame count, black frames, loudness, true peak, loop seams, determinism) must all pass. Measured review material sits next to them without blocking anything: per-shot motion with sudden jumps and one-frame flashes, and a text-framing pass (text cut by the frame, overlapping, in the safe zone, too small). The agent's review notes help the user watch faster; they never replace the user's own viewing.
@@ -80,13 +81,14 @@ Technical checks (all PASS) and an honest review log
 1  Requirements ─────── fill missing required choices, summarize; 🛑 wait for confirmation
 2  brief.md ─────────── benchmark → format + style → Reel Read → shot list + audio plan
 3  Style frames ─────── style given → 3 frames; no style → 3 directions × 1 frame; 🛑 wait for confirmation
-4  Build ────────────── prepare real narration timings if used → timeline → shots → checks → master
+4  Create ───────────── prepare real narration timings if used → timeline → shots → web checks
 5  Music / SFX / mix ── independent sources; voice has priority
-6  Acceptance ───────── technical checks (must PASS) + review notes for the user
-7  Delivery
+6  Workspace preview ─ open the editor, review and revise; 🛑 wait for export approval
+7  Export / acceptance  encode MP4 → technical checks (must PASS) + final review
+8  Delivery
 ```
 
-See [`references/narration.md`](./references/narration.md) for TTS, recording timestamps and independent-track mixing; [`references/long-form.md`](./references/long-form.md) for chapter caching, recovery and audio preparation over two minutes. All existing styles, audio engines, beat tools, loops and rendering controls remain available.
+See [`references/editor.md`](./references/editor.md) for the default review workspace and export approval; [`references/narration.md`](./references/narration.md) for TTS, recording timestamps and independent-track mixing; [`references/long-form.md`](./references/long-form.md) for chapter caching, recovery and audio preparation over two minutes. All existing styles, audio engines, beat tools, loops and rendering controls remain available.
 
 ---
 
@@ -176,7 +178,9 @@ skills/motion-showreel/
 │   ├── render.mjs           stills, sheets, three directions, poster, determinism, text framing, proxy, master
 │   ├── audio.mjs            build · check · beats · samples · mux
 │   ├── narration.mjs        tts · import · mix · check
-│   ├── preview.mjs          audio playback, scrubbing, frame stepping and preview speed
+│   ├── progress.mjs         Optional stage updates, image/audio artifacts and stable previews
+│   ├── editor.mjs           default review workspace, track edits, saves and approved exports
+│   ├── preview.mjs          lightweight audio playback, scrubbing, frame stepping and speed
 │   ├── build-long.mjs       Persistent chapter cache, retry, assembly and acceptance
 │   ├── inspect.mjs          qa · sheet · phone · strip · frames · motion · loop · grid · heat
 │   ├── lib/                 synth, Tone.js renderer, FFT, browser, project, frame analysis, text hook
@@ -205,11 +209,12 @@ Turn these three screenshots into a 20-second product teaser, with music.
 A 6-second seamless generative loop, no sound.
 ```
 
-The agent first confirms the completed requirements, then scaffolds `<slug>/` and shows the style frames. After the second confirmation it builds, scores, checks and delivers. Short requests above start the conversation; missing production choices are asked instead of silently defaulted. To rebuild or tweak later:
+The agent first confirms the completed requirements, then scaffolds `<slug>/` and shows the style frames. After style approval it creates the scenes and sound, then opens the editing workspace by default. MP4 rendering starts only after you click Export or approve the current preview in chat. Silent pieces and loops follow the same sequence; multi-page films are previewed chapter by chapter. Short requests above start the conversation; missing production choices are asked instead of silently defaulted. To rebuild or tweak later:
 
 ```bash
-sh <slug>/build.sh                                   # full rebuild with the spec at the top of build.sh
-node scripts/preview.mjs <slug> --size 1920x1080 --fps 30   # audio-led preview
+node scripts/editor.mjs <slug> --size 1920x1080 --fps 30   # default: review in the workspace before Export
+sh <slug>/build.sh                                   # approved rebuild; does not apply workspace audio edits
+node scripts/preview.mjs <slug> --size 1920x1080 --fps 30   # lightweight debugging
 node scripts/render.mjs <slug> --start 6 --duration 3 --out out/seg.mp4   # re-render one segment
 node scripts/build-long.mjs <slug>/chapters.json       # persistent chapter rebuild
 ```

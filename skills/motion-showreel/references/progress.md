@@ -1,0 +1,83 @@
+# 按需展示制作进度
+
+需求问答时留意用户是否说「想看制作过程」「边做边看」「实时看进度」「每个阶段给我看看」。意思明确就启用，不再重复询问；未表达时保持默认的最终工作区预览，不额外增加一道必答题。在需求摘要和 brief 中记录用户原话、是否启用、进度页链接。用户中途提出也可开启，已有成果可直接发布。
+
+这是同一个制作流程的展示入口。原来的需求确认、风格确认、真实口播时间轴、逐镜自查、最终导出确认和成片验收照常进行，不要求用户在每一个进度更新后回复。不得为了展示进度降低画质、简化镜头、改稿、使用估算口播，或额外调用付费 TTS。更新已有成果即可。
+
+## 尽早打开稳定入口
+
+用户提出后，在约定的项目目录上启动：
+
+```sh
+node <skill>/scripts/editor.mjs <project> --progress
+```
+
+主动打开输出的本机网址。进度与剪辑共用一个工作区，顶栏「制作进度」打开阶段抽屉，只保留一套顶栏与画面控件。可以先是空目录，还没有 `index.html`、音频或制作规格；此时显示需求阶段与说明，不生成占位样片，不擅自决定时长和帧率。确认需求后正常 scaffold 同一个目录。保持服务运行，这个链接始终作为项目入口。可播放版本准备好后自动打开该版本的完整工作区，浏览器地址会变为版本地址，用户无需手动换链接。
+
+## 制作时更新
+
+阶段 ID：`brief` 需求与脚本、`style` 风格与画面、`narration` 口播样例、`scenes` 镜头制作、`audio` 配乐与音效、`review` 最终预览。状态可用 `pending`、`running`、`ready`、`failed`、`skipped`、`waiting`（等待用户反馈）；无口播/无声等阶段明确标为不需要。
+
+```sh
+node <skill>/scripts/progress.mjs <project> --stage brief --status running --message "正在确认内容、画幅与声音方案"
+node <skill>/scripts/progress.mjs <project> --stage scenes --status running --done 2 --total 8 --message "两个镜头已完成自查，继续制作第三个"
+node <skill>/scripts/progress.mjs <project> --stage narration --status skipped --message "本片不需要口播"
+```
+
+没有填写新计数时保留已有完成数。发布部分镜头默认仍为制作中；整个阶段完成时才设置 `--status ready`。数量只填实际完成数，不用计时器编造百分比。一个阶段的子任务完成时可更新计数，不按每次敲代码刷新。开始新阶段、得到可预览成果、遇到需用户处理的问题时更新说明。进行中会显示旋转图标，顶栏保留当前阶段和完成数；动画只表达任务未结束，不模拟完成比例。等待确认时用 `waiting`，不要保持旋转造成仍在运算的错觉。
+
+风格帧和音色短样沿用原流程产物，自查后发布：
+
+```sh
+node <skill>/scripts/progress.mjs <project> --stage brief --preview brief.md --name "需求与分镜" --status ready
+node <skill>/scripts/progress.mjs <project> --stage style --preview qa/directions.png --name "风格方向" --status waiting --message "三个风格方向，等待你选择"
+node <skill>/scripts/progress.mjs <project> --stage narration --preview audio/voice-sample.wav --message "使用你提供的原稿生成的音色短样"
+```
+
+只接受项目内的图片、音频或 `.md/.txt/.json` 文档；复制为独立成果，源文件继续修改不会破坏正在查看的样例。每个阶段下面直接显示相应成果按钮，可查看图片/文档、试听音频，或打开该阶段动画；阶段已就绪不等于用户已批准。需求/脚本阶段显示真实文字进展；有画面或音频后才展示对应成果。
+
+## 镜头做完一个，就发布一个
+
+这一步是制作方式，不是事后补进度。开做第一镜前确定总数、更新 `0/N running`；第一镜完成并自查后立即发布，让用户可以先看，再继续第二镜。长片优先复用原来的章节/镜头模块和素材缓存，将已完成的镜头打包为独立可播放目录；该目录有自己的 `index.html`、`DUR` 与实际依赖，渲染使用同一个镜头实现，不另做低质代理或近似动画。整片尚未存在也能发布第一镜，不检查尚未制作的其他镜头。
+
+```sh
+node <skill>/scripts/progress.mjs <project> --stage scenes --status running --done 0 --total 8 --message "正在做第一镜"
+node <skill>/scripts/progress.mjs <project> --stage scenes --shot s01 --total 8 --name "镜头1：种子落下" --publish shots/s01 --size 1920x1080 --fps 30 --message "第一镜已自查并可播放，继续制作第二镜"
+node <skill>/scripts/progress.mjs <project> --stage scenes --shot s02 --total 8 --name "镜头2：叶片展开" --publish shots/s02 --size 1920x1080 --fps 30
+```
+
+`--shot` 仅用于 scenes，必须有稳定 ID 与 `--total`。通过检查才加入成果列表并自动更新完成数；同 ID 修订替换原成果，不重复计数。失败保留旧成果和原数量。独立预览只需复制和检查该镜目录，不要求先制作整片，不编码 MP4。用户可以点任意已完成镜头回看；主动回看会暂停自动切换，避免立即被拉回最新版。最终合片继续使用原时间轴、声音和验收流程，不自动将这些预览拼成成片。
+
+旧的单页面项目也可作为完整阶段发布，但不能为了这一种入口，等整批镜头写完才展示。相同原则用于长片：先给第一镜/第一章，而不是整片做完再更新进度。
+
+## 发布可播放的阶段版本
+
+完成一个可独立检查的镜头或阶段，**先按原流程自查**，再发布可播放项目。规格用用户已经确认的值：
+
+```sh
+node <skill>/scripts/progress.mjs <project> --stage scenes --publish . --size 1920x1080 --fps 30 --message "当前已完成的镜头；尚未加入最终配乐"
+```
+
+`--publish .` 把当前项目复制成独立版本，带上素材、字体、音频与运行依赖，在副本中跑原有确定性检查后发布；不会编码 MP4。可以发布 `<project>` 内的另一个完整项目目录（需 `index.html`），例如章节或独立动作预演。未做好的部分要在说明中写清，不用 starter 冒充已完成镜头。尚无混音时可无声预演；不把预演声称为口播对齐完成。
+
+进度页每秒读取一次状态。新版本通过发布检查后在完整工作区打开，加载原场景、字体和真实试听；发布失败保留上一版。正在写的代码不直接热重载进用户页面。用户可以关闭「自动切换阶段版本」，自行选择切换时机。阶段版只读，保留播放、拖动和逐帧检查，不开放音轨编辑与导出。
+
+音频完成后用同样方式发布 `--stage audio`，让用户查看画面与当前实际混音。不要为进度页另外制作近似配乐、占位口播或降低画面复杂度。每次复制与检查仍有少量开销，按有意义的成果发布，不按击键发布；版本和状态保存在 `.showreel-progress/`，不改原始制作文件。依赖规模较大时优先按章节发布，保留现有章节缓存。
+
+## 最终预览与导出
+
+完成正常的画面与音频自查后，发布最终预览：
+
+```sh
+node <skill>/scripts/progress.mjs <project> --stage review --publish . --size 1920x1080 --fps 30 --final --status waiting --message "最终画面与混音已准备好，请预览后确认导出"
+```
+
+发布最终版时，若 brief 含 `--subframes`、`--shutter`、`--dpr`、`--grain`、`--crf` 或 `--workers`，将同一组参数附在这条命令上；原始混音需显式指定时传 `--audio audio/final.wav`。不能因进度页提前打开，就沿用当时尚未确认的默认导出质量。
+
+只有 `review --final` 开放独立音轨编辑和导出。进入最终版本时自动关闭版本切换，保护用户的调音与正在进行的导出；新版本准备好后，预览工具栏出现「查看新版本」，用户手动切换。当前任务尚未结束或编辑未保存时暂缓切换。用户点击「导出视频」即确认导出，沿用 [`editor.md`](editor.md) 的原场景渲染、音频和技术验收。仅看过制作进度不代表确认最终导出。
+
+最终版在 `.showreel-progress/revisions/<版本>/project/` 中运行；编辑保存、导出文件、验收材料和 receipt 都位于这个版本内。交付时给实际输出路径和该版本的源码/编辑记录，不误指向根目录的旧 `out/final.mp4`。如果用户在对话中批准，导出同一最终版本：有音轨编辑时仍从该版本的工作区导出，保留 `.showreel-editor/session.json`；未改音轨时也可对同一版本按原构建流程导出。不能把未预览的工作文件当作已批准版本。
+
+长片的进度页按章展示，注明章名和全片位置；当前工作区仍是单页时间线。不要将一个章节用 `--final` 冒充全片；完成各章预览并取得整片导出确认后，仍按 `long-form.md` 的 `build-long.mjs` 合成全片，保留分章缓存与跨章验收。若用户要独立导出某章，再明确作为单独交付处理。
+
+预览不能代替原来的确定性检查、音画对齐自查、成片技术验收和人工复核。实时播放可能掉帧，导出中的子帧混合、DPR 超采样和后期颗粒仍见 `editor.md` 的预览限制。

@@ -1,0 +1,4 @@
+.viewer.viewport-pannable{cursor:grab;touch-action:none;user-select:none}
+.viewer.viewport-panning,.viewer.viewport-panning *{cursor:grabbing!important}
+body.viewport-resizing,body.viewport-resizing *{cursor:row-resize!important;user-select:none!important}
+[role=separator][aria-orientation=horizontal]{touch-action:none;cursor:row-resize}
