@@ -96,42 +96,48 @@
 
 <table>
 <tr>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-ukiyo-e.webp" alt="ukiyo-e" /><br /><sub><code>ukiyo-e</code> 浮世绘木版</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glass-material.webp" alt="glass-material" /><br /><sub><code>glass-material</code> 玻璃金属材质</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-kinetic-brutalist.webp" alt="kinetic-brutalist" /><br /><sub><code>kinetic-brutalist</code> 粗野动态排版</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-swiss-editorial.webp" alt="swiss-editorial" /><br /><sub><code>swiss-editorial</code> 瑞士编辑</sub></td>
+</tr>
+<tr>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-ink-wash.webp" alt="ink-wash" /><br /><sub><code>ink-wash</code> 水墨</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-risograph-print.webp" alt="risograph-print" /><br /><sub><code>risograph-print</code> 孔版印刷</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-editorial-collage.webp" alt="editorial-collage" /><br /><sub><code>editorial-collage</code> 杂志拼贴</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-isometric-infographic.webp" alt="isometric-infographic" /><br /><sub><code>isometric-infographic</code> 等距信息图</sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-isometric-infographic.webp" alt="isometric-infographic" /><br /><sub><code>isometric-infographic</code> 等距信息图</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-liquid-shader.webp" alt="liquid-shader" /><br /><sub><code>liquid-shader</code> 液态着色器</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-data-motion.webp" alt="data-motion" /><br /><sub><code>data-motion</code> 数据动效</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-generative-geometry.webp" alt="generative-geometry" /><br /><sub><code>generative-geometry</code> 生成几何</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-pixel-game.webp" alt="pixel-game" /><br /><sub><code>pixel-game</code> 像素游戏</sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-pixel-game.webp" alt="pixel-game" /><br /><sub><code>pixel-game</code> 像素游戏</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-synthwave-neon.webp" alt="synthwave-neon" /><br /><sub><code>synthwave-neon</code> 合成波霓虹</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-paper-cut.webp" alt="paper-cut" /><br /><sub><code>paper-cut</code> 剪纸</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-minimal-ui.webp" alt="minimal-ui" /><br /><sub><code>minimal-ui</code> 极简界面</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-comic-pop.webp" alt="comic-pop" /><br /><sub><code>comic-pop</code> 漫画分格</sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-comic-pop.webp" alt="comic-pop" /><br /><sub><code>comic-pop</code> 漫画分格</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-flat-vector.webp" alt="flat-vector" /><br /><sub><code>flat-vector</code> 扁平插画</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-guochao.webp" alt="guochao" /><br /><sub><code>guochao</code> 国潮纹样</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-painterly.webp" alt="painterly" /><br /><sub><code>painterly</code> 油画笔触</sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glitch-digital.webp" alt="glitch-digital" /><br /><sub><code>glitch-digital</code> 数字故障</sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glitch-digital.webp" alt="glitch-digital" /><br /><sub><code>glitch-digital</code> 数字故障</sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-soft-organic.webp" alt="soft-organic" /><br /><sub><code>soft-organic</code> 柔光有机</sub></td>
+<td width="25%"></td>
 <td width="25%"></td>
 <td width="25%"></td>
 </tr>
 </table>
 
-<sub>库里还有：<code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>。目录、三方向规则和混搭方法见 <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a>。</sub>
+<sub>库里还有：<code>dark-keynote</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>。目录、三方向规则和混搭方法见 <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a>。</sub>
 
-新增风格规则（待视觉验证）：[装饰艺术](./references/styles/art-deco.md)、[一笔线描](./references/styles/one-line.md)、[工程蓝图](./references/styles/blueprint.md)、[全息空间界面](./references/styles/hologram-hud.md)、[彩色玻璃镶嵌](./references/styles/stained-glass.md)、[移轴微缩](./references/styles/tilt-shift-miniature.md)、[像素立体场景](./references/styles/pixel-diorama.md)、[80 年代赛璐璐动画](./references/styles/cel-anime-80s.md)、[橡皮管动画](./references/styles/rubber-hose.md)、[浮世绘木版](./references/styles/ukiyo-e.md)、[透光皮影](./references/styles/shadow-puppet.md)。沿用同一模板，写明材质、运动规则和可选技术方向。
+其他风格规则：[装饰艺术](./references/styles/art-deco.md)、[一笔线描](./references/styles/one-line.md)、[工程蓝图](./references/styles/blueprint.md)、[全息空间界面](./references/styles/hologram-hud.md)、[彩色玻璃镶嵌](./references/styles/stained-glass.md)、[移轴微缩](./references/styles/tilt-shift-miniature.md)、[像素立体场景](./references/styles/pixel-diorama.md)、[80 年代赛璐璐动画](./references/styles/cel-anime-80s.md)、[橡皮管动画](./references/styles/rubber-hose.md)、[透光皮影](./references/styles/shadow-puppet.md)。沿用同一模板，写明材质、运动规则和可选技术方向。
 
-另补有[白板手绘解说](./references/styles/whiteboard-explainer.md)、[数学／概念形变](./references/styles/concept-morph.md)和[泥金手抄本](./references/styles/illuminated-manuscript.md)，各附一支 15 秒完整验证样片。技术检查与审片状态见[风格目录](./references/styles/INDEX.md)。
+也可选择[白板手绘解说](./references/styles/whiteboard-explainer.md)、[数学／概念形变](./references/styles/concept-morph.md)和[泥金手抄本](./references/styles/illuminated-manuscript.md)。
 
 ---
 
@@ -164,8 +170,7 @@ skills/motion-showreel/
 │   ├── stack.md             页面契约、确定性、各技术的坑、字体、多画幅、性能
 │   ├── recipes.md           现成写法（遮罩逐字、形变链、粒子组字、无缝循环、WebGL 后期、Canvas 伪 3D……）
 │   ├── brief-template.md    每支片子的结构化提示词模板
-│   ├── review.md            技术检查、审片表、独立审片、常见问题、交付清单
-│   └── field-notes.md       真片子里被证明有效的做法和证据（每次交付后回写）
+│   └── review.md            技术检查、审片表、独立审片、常见问题、交付清单
 ├── scripts/
 │   ├── setup.sh · check-env.mjs · scaffold.sh
 │   ├── render.mjs           静帧、拼图、三方向、封面、确定性、文字框景、小样、正片

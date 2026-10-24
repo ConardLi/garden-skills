@@ -29,56 +29,52 @@
 
 ## 目录
 
-「实做记录」是用这个风格做完并通过验收的片子数，「样帧」表示目前只渲过风格帧，规则还没在整片里经受过检验，「待验证」表示规则刚写好、连风格帧都还没渲过。规则越没被检验过，越要在第 3 步多看几张帧。每做完一支就更新这一格；做的过程里发现的短板写进那个风格文件的「坑」，验证有效的做法记进 `../field-notes.md`（见 SKILL.md 第 7 步）。
-
-「整片技术通过，待终审」表示已经生成完整样片并通过规格、确定性与音频计量检查，用户尚未确认播放观感和听感，不计作用户验收通过。
-
-| 分组 | 文件 | 一句话 | 主要技术 | 常配用途 | 情绪 | 实做记录 |
-|---|---|---|---|---|---|---|
-| 图形与排版 | `swiss-editorial.md` | 网格、一种字体、一个信号色，像印刷机一样精确 | Canvas / DOM | 作品集、Logo、数据 | 理性、克制 | 样帧 |
-| | `kinetic-brutalist.md` | 巨字、硬切、高对比，字就是画面 | Canvas / DOM | 金句卡点、作品集 | 冲击、躁动 | 样帧 |
-| | `risograph-print.md` | 孔版印刷：套色错位、半调网点、纸纹 | Canvas + WebGL | 宣传片、Logo、排版 | 温暖、手作 | 样帧 |
-| | `editorial-collage.md` | 杂志拼贴：剪纸边、胶带、照片碎片、手写标注 | Canvas / DOM | 宣传片、金句 | 活泼、潮流 | 样帧 |
-| | `art-deco.md` | 装饰艺术：阶梯、扇面、平行镶条，装饰组织构图与开合 | Canvas / SVG / Three.js | 品牌宣传、片头、Logo | 庄重、精致 | 待验证 |
-| | `one-line.md` | 一笔线描：连续路径勾出轮廓，也串起事物之间的关系 | Canvas / SVG | 品牌故事、讲解、Logo、循环 | 简洁、轻巧 | 待验证 |
-| | `concept-morph.md` | 数学／概念形变：保住对象对应关系，让推理在连续变化中可见 | Canvas / SVG / Manim | 数学讲解、科学概念、算法原理 | 清楚、专注 | 整片技术通过，待终审（[把圆展开](../../../../motion-samples/circle-unfold/README.md)，15 秒；87,241 点几何检查） |
-| 界面与产品 | `minimal-ui.md` | 浅色、干净、弹簧手感的界面动效 | DOM / SVG / Canvas | UI 演示、宣传片 | 精致、友好 | 样帧 |
-| | `dark-keynote.md` | 发布会：深色舞台、聚光、大数字、产品英雄镜头 | DOM / Canvas / Three.js | 宣传片、数据 | 隆重、高级 | 样帧 |
-| | `isometric-infographic.md` | 等距视角的小世界，信息层层搭起来 | Canvas / SVG | 讲解、宣传片 | 清晰、俏皮 | 样帧 |
-| | `data-motion.md` | 数字和图表本身就是主角 | Canvas / SVG | 数据爆点、宣传片 | 可信、利落 | 样帧 |
-| | `blueprint.md` | 工程蓝图：投影、尺寸线、剖面与装配关系，逐层解释结构 | Canvas / SVG / Three.js | 原理讲解、产品结构、方案对比 | 精确、理性 | 待验证 |
-| | `hologram-hud.md` | 全息空间界面：有深度的线框、扫描切面、锚定对象的标注 | Three.js + SVG / DOM | 技术概念、系统讲解、片头 | 冷静、未来感 | 待验证 |
-| 复古与屏幕 | `pixel-game.md` | 16-bit 像素：小画布放大、步进、调色板 | Canvas + WebGL | 作品集、循环、Logo | 怀旧、可爱 | 样帧 |
-| | `pixel-diorama.md` | 像素立体场景：平面像素角色走入有光照、遮挡与纵深的布景 | Three.js + Canvas | 故事宣传、游戏概念、片头、循环 | 怀旧、沉浸 | 待验证 |
-| | `crt-vhs.md` | 显像管和录像带：扫描线、色差、跟踪噪声 | Canvas + WebGL | 片头、怀旧主题 | 怀旧、诡异 | 样帧 |
-| | `terminal-ascii.md` | 终端：等宽字符、光标、ASCII 图形 | Canvas | 开发者产品、片头 | 极客、冷静 | 样帧 |
-| | `glitch-digital.md` | 数字故障：块状错位、像素排序、乱码重排，故障落在拍上 | Canvas + WebGL | 片头、金句卡点、电子音乐 | 叛逆、紧张 | 样帧 |
-| | `synthwave-neon.md` | 合成波：80 年代想象的未来，夜色、霓虹、镀铬，信号按主题挑 | Canvas + WebGL / Three.js | 片头、音乐向 | 热烈、复古未来 | 成片 1（AFTERGLOW） |
-| 3D 与材质 | `glass-material.md` | 玻璃、金属和光，镜头在空间里慢慢运动 | Three.js | 产品宣传、Logo | 高级、精密 | 样帧 |
-| | `soft-3d-toy.md` | 软萌 3D：圆润、哑光、黏土和玩具感 | Three.js | 宣传片、吉祥物、讲解 | 亲和、愉快 | 成片 1（boink） |
-| | `liquid-shader.md` | 液态与流体：融球、金属液、噪声流动 | WebGL 着色器 | 片头、转场、Logo | 迷幻、流动 | 样帧 |
-| | `stained-glass.md` | 彩色玻璃镶嵌：金属接缝分隔透光色片，彩光随背光落入空间 | Canvas / SVG / Three.js | 文化工艺、品牌情绪、Logo | 通透、静谧 | 整片技术通过，待终审（[LUMEN](../../../../motion-samples/lumen-butterfly/README.md)，15 秒） |
-| | `tilt-shift-miniature.md` | 移轴微缩：俯斜视角、选择性焦点和局部活动，缩小一个世界 | Three.js / 分层 Canvas | 服务流程、空间概览、循环 | 精巧、专注 | 待验证 |
-| 生成与抽象 | `generative-geometry.md` | 规则生成的阵列、波、对称图形 | Canvas / WebGL | 循环、作品集、片头 | 催眠、秩序 | 样帧 |
-| | `particle-field.md` | 成千上万的点：流动、聚合、组字、炸开 | Canvas / WebGL / Three.js | 签名时刻、Logo | 宏大、科技 | 样帧 |
-| | `soft-organic.md` | 柔光有机：颗粒渐变、慢慢变形的形状、衬线斜体 | WebGL / Canvas | 品牌情绪片、生活方式宣传 | 温暖、安静 | 样帧 |
-| 插画与漫画 | `comic-pop.md` | 漫画分格：粗墨线、网点、速度线、拟声大字 | Canvas | 金句卡点、游戏预告、功能演示 | 热血、幽默 | 样帧 |
-| | `flat-vector.md` | 扁平插画：无描边色块的小世界，镜头在尺度之间穿行 | Canvas / SVG | 原理讲解、品牌故事 | 清晰、亲和 | 样帧 |
-| | `guochao.md` | 国潮纹样：传统纹样和色彩，现代的版式和节奏 | Canvas / SVG | 节庆营销、国货宣传、Logo | 喜庆、雅致 | 样帧 |
-| | `painterly.md` | 油画笔触：方向场笔触、区域色组，画是活的 | Canvas | 品牌情绪片、文化艺术、片头 | 浓烈、怀旧 | 样帧 |
-| | `cel-anime-80s.md` | 80 年代赛璐璐动画：手绘背景、硬边色层、有限姿态与摄影台镜头 | Canvas / PixiJS / Three.js | 角色宣传、故事片头、预告 | 鲜明、戏剧感 | 待验证 |
-| | `rubber-hose.md` | 橡皮管动画：连续曲肢、挤压伸展、蓄力与反应驱动表演 | Canvas / SVG | 吉祥物、轻喜剧讲解、Logo | 诙谐、活泼 | 整片技术通过，待终审（[OFF BEAT](../../../../motion-samples/offbeat-note/README.md)，15 秒） |
-| | `whiteboard-explainer.md` | 白板手绘解说：分笔绘制与箭头逐步说明关系，保留可回看的全局图 | Canvas / SVG | 原理讲解、流程说明、课程片段 | 亲近、清晰 | 整片技术通过，待终审（[反馈让想法长大](../../../../motion-samples/feedback-board/README.md)，15 秒；绘制与笔声已测，未测口播同步） |
-| 手作 | `crayon-storybook.md` | 蜡笔、彩铅、水彩的绘本 | p5.js + p5.brush | 故事向宣传、讲解 | 童趣、温暖 | 样帧 |
-| | `ink-wash.md` | 水墨：晕染、飞白、留白 | Canvas / WebGL | 东方题材、片头 | 意境、沉静 | 样帧 |
-| | `paper-cut.md` | 纸艺分层：剪纸、投影、纸纹、立体书 | Canvas / Three.js | 宣传片、节日、讲解 | 温暖、精巧 | 样帧 |
-| | `copperplate-engraving.md` | 铜版雕刻：随形排线、交叉刻线、纸上图谱 | Canvas / SVG / WebGL | 工艺宣传、讲解、产品细节、片头 | 精细、沉静 | 待验证 |
-| | `ukiyo-e.md` | 浮世绘木版：主版墨线、分版套色、局部渐层与斜向截景 | Canvas / SVG / WebGL | 文化工艺、旅行片头、品牌故事 | 平和、有力 | 待验证 |
-| | `shadow-puppet.md` | 透光皮影：染色镂空、关节操纵与幕布背光，叠片加深 | Canvas / SVG / PixiJS | 文化宣传、故事讲解、Logo | 温暖、戏剧感 | 待验证 |
-| | `illuminated-manuscript.md` | 泥金手抄本：羊皮纸、墨字与金饰组成书页，装饰里发生局部故事 | Canvas / SVG / Three.js | 文学片头、文化工艺、短寓言 | 珍重、静谧 | 整片技术通过，待终审（[一页春生](../../../../motion-samples/gilded-garden/README.md)，15 秒；反光分区与局部动作已测） |
-| 电影感 | `cinematic-title.md` | 电影片头：宽银幕、胶片颗粒、慢推、衬线大字 | Canvas / DOM + WebGL | 片头、预告、Logo | 史诗、沉稳 | 成片 1（UMBRA） |
-| | `mixed-media-era.md` | 每个年代一种媒介，一根线串起整部片 | 混合 | 历史回顾、作品集 | 史诗、动人 | 成片 1（宣传片） |
+| 分组 | 文件 | 一句话 | 主要技术 | 常配用途 | 情绪 |
+| --- | --- | --- | --- | --- | --- |
+| 图形与排版 | `swiss-editorial.md` | 网格、一种字体、一个信号色，像印刷机一样精确 | Canvas / DOM | 作品集、Logo、数据 | 理性、克制 |
+|  | `kinetic-brutalist.md` | 巨字、硬切、高对比，字就是画面 | Canvas / DOM | 金句卡点、作品集 | 冲击、躁动 |
+|  | `risograph-print.md` | 孔版印刷：套色错位、半调网点、纸纹 | Canvas + WebGL | 宣传片、Logo、排版 | 温暖、手作 |
+|  | `editorial-collage.md` | 杂志拼贴：剪纸边、胶带、照片碎片、手写标注 | Canvas / DOM | 宣传片、金句 | 活泼、潮流 |
+|  | `art-deco.md` | 装饰艺术：阶梯、扇面、平行镶条，装饰组织构图与开合 | Canvas / SVG / Three.js | 品牌宣传、片头、Logo | 庄重、精致 |
+|  | `one-line.md` | 一笔线描：连续路径勾出轮廓，也串起事物之间的关系 | Canvas / SVG | 品牌故事、讲解、Logo、循环 | 简洁、轻巧 |
+|  | `concept-morph.md` | 数学／概念形变：保住对象对应关系，让推理在连续变化中可见 | Canvas / SVG / Manim | 数学讲解、科学概念、算法原理 | 清楚、专注 |
+| 界面与产品 | `minimal-ui.md` | 浅色、干净、弹簧手感的界面动效 | DOM / SVG / Canvas | UI 演示、宣传片 | 精致、友好 |
+|  | `dark-keynote.md` | 发布会：深色舞台、聚光、大数字、产品英雄镜头 | DOM / Canvas / Three.js | 宣传片、数据 | 隆重、高级 |
+|  | `isometric-infographic.md` | 等距视角的小世界，信息层层搭起来 | Canvas / SVG | 讲解、宣传片 | 清晰、俏皮 |
+|  | `data-motion.md` | 数字和图表本身就是主角 | Canvas / SVG | 数据爆点、宣传片 | 可信、利落 |
+|  | `blueprint.md` | 工程蓝图：投影、尺寸线、剖面与装配关系，逐层解释结构 | Canvas / SVG / Three.js | 原理讲解、产品结构、方案对比 | 精确、理性 |
+|  | `hologram-hud.md` | 全息空间界面：有深度的线框、扫描切面、锚定对象的标注 | Three.js + SVG / DOM | 技术概念、系统讲解、片头 | 冷静、未来感 |
+| 复古与屏幕 | `pixel-game.md` | 16-bit 像素：小画布放大、步进、调色板 | Canvas + WebGL | 作品集、循环、Logo | 怀旧、可爱 |
+|  | `pixel-diorama.md` | 像素立体场景：平面像素角色走入有光照、遮挡与纵深的布景 | Three.js + Canvas | 故事宣传、游戏概念、片头、循环 | 怀旧、沉浸 |
+|  | `crt-vhs.md` | 显像管和录像带：扫描线、色差、跟踪噪声 | Canvas + WebGL | 片头、怀旧主题 | 怀旧、诡异 |
+|  | `terminal-ascii.md` | 终端：等宽字符、光标、ASCII 图形 | Canvas | 开发者产品、片头 | 极客、冷静 |
+|  | `glitch-digital.md` | 数字故障：块状错位、像素排序、乱码重排，故障落在拍上 | Canvas + WebGL | 片头、金句卡点、电子音乐 | 叛逆、紧张 |
+|  | `synthwave-neon.md` | 合成波：80 年代想象的未来，夜色、霓虹、镀铬，信号按主题挑 | Canvas + WebGL / Three.js | 片头、音乐向 | 热烈、复古未来 |
+| 3D 与材质 | `glass-material.md` | 玻璃、金属和光，镜头在空间里慢慢运动 | Three.js | 产品宣传、Logo | 高级、精密 |
+|  | `soft-3d-toy.md` | 软萌 3D：圆润、哑光、黏土和玩具感 | Three.js | 宣传片、吉祥物、讲解 | 亲和、愉快 |
+|  | `liquid-shader.md` | 液态与流体：融球、金属液、噪声流动 | WebGL 着色器 | 片头、转场、Logo | 迷幻、流动 |
+|  | `stained-glass.md` | 彩色玻璃镶嵌：金属接缝分隔透光色片，彩光随背光落入空间 | Canvas / SVG / Three.js | 文化工艺、品牌情绪、Logo | 通透、静谧 |
+|  | `tilt-shift-miniature.md` | 移轴微缩：俯斜视角、选择性焦点和局部活动，缩小一个世界 | Three.js / 分层 Canvas | 服务流程、空间概览、循环 | 精巧、专注 |
+| 生成与抽象 | `generative-geometry.md` | 规则生成的阵列、波、对称图形 | Canvas / WebGL | 循环、作品集、片头 | 催眠、秩序 |
+|  | `particle-field.md` | 成千上万的点：流动、聚合、组字、炸开 | Canvas / WebGL / Three.js | 签名时刻、Logo | 宏大、科技 |
+|  | `soft-organic.md` | 柔光有机：颗粒渐变、慢慢变形的形状、衬线斜体 | WebGL / Canvas | 品牌情绪片、生活方式宣传 | 温暖、安静 |
+| 插画与漫画 | `comic-pop.md` | 漫画分格：粗墨线、网点、速度线、拟声大字 | Canvas | 金句卡点、游戏预告、功能演示 | 热血、幽默 |
+|  | `flat-vector.md` | 扁平插画：无描边色块的小世界，镜头在尺度之间穿行 | Canvas / SVG | 原理讲解、品牌故事 | 清晰、亲和 |
+|  | `guochao.md` | 国潮纹样：传统纹样和色彩，现代的版式和节奏 | Canvas / SVG | 节庆营销、国货宣传、Logo | 喜庆、雅致 |
+|  | `painterly.md` | 油画笔触：方向场笔触、区域色组，画是活的 | Canvas | 品牌情绪片、文化艺术、片头 | 浓烈、怀旧 |
+|  | `cel-anime-80s.md` | 80 年代赛璐璐动画：手绘背景、硬边色层、有限姿态与摄影台镜头 | Canvas / PixiJS / Three.js | 角色宣传、故事片头、预告 | 鲜明、戏剧感 |
+|  | `rubber-hose.md` | 橡皮管动画：连续曲肢、挤压伸展、蓄力与反应驱动表演 | Canvas / SVG | 吉祥物、轻喜剧讲解、Logo | 诙谐、活泼 |
+|  | `whiteboard-explainer.md` | 白板手绘解说：分笔绘制与箭头逐步说明关系，保留可回看的全局图 | Canvas / SVG | 原理讲解、流程说明、课程片段 | 亲近、清晰 |
+| 手作 | `crayon-storybook.md` | 蜡笔、彩铅、水彩的绘本 | p5.js + p5.brush | 故事向宣传、讲解 | 童趣、温暖 |
+|  | `ink-wash.md` | 水墨：晕染、飞白、留白 | Canvas / WebGL | 东方题材、片头 | 意境、沉静 |
+|  | `paper-cut.md` | 纸艺分层：剪纸、投影、纸纹、立体书 | Canvas / Three.js | 宣传片、节日、讲解 | 温暖、精巧 |
+|  | `copperplate-engraving.md` | 铜版雕刻：随形排线、交叉刻线、纸上图谱 | Canvas / SVG / WebGL | 工艺宣传、讲解、产品细节、片头 | 精细、沉静 |
+|  | `ukiyo-e.md` | 浮世绘木版：主版墨线、分版套色、局部渐层与斜向截景 | Canvas / SVG / WebGL | 文化工艺、旅行片头、品牌故事 | 平和、有力 |
+|  | `shadow-puppet.md` | 透光皮影：染色镂空、关节操纵与幕布背光，叠片加深 | Canvas / SVG / PixiJS | 文化宣传、故事讲解、Logo | 温暖、戏剧感 |
+|  | `illuminated-manuscript.md` | 泥金手抄本：羊皮纸、墨字与金饰组成书页，装饰里发生局部故事 | Canvas / SVG / Three.js | 文学片头、文化工艺、短寓言 | 珍重、静谧 |
+| 电影感 | `cinematic-title.md` | 电影片头：宽银幕、胶片颗粒、慢推、衬线大字 | Canvas / DOM + WebGL | 片头、预告、Logo | 史诗、沉稳 |
+|  | `mixed-media-era.md` | 每个年代一种媒介，一根线串起整部片 | 混合 | 历史回顾、作品集 | 史诗、动人 |
 
 ## 新增风格
 
-复制 `_template.md`，以 `<slug>.md` 命名，写完后在上面的目录表里加一行（实做记录先写「待验证」，渲过风格帧后改成「样帧」）。写规则的时候问自己：换三个完全不同的主题，这些规则还都成立吗？只适用于某一个主题的内容，不应该写进风格文件。
+复制 `_template.md`，以 `<slug>.md` 命名，写完后在上面的目录表里加一行。写规则的时候问自己：换三个完全不同的主题，这些规则还都成立吗？只适用于某一个主题的内容，不应该写进风格文件。

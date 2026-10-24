@@ -96,42 +96,48 @@ See [`references/narration.md`](./references/narration.md) for TTS, recording ti
 
 <table>
 <tr>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-ukiyo-e.webp" alt="ukiyo-e" /><br /><sub><code>ukiyo-e</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glass-material.webp" alt="glass-material" /><br /><sub><code>glass-material</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-kinetic-brutalist.webp" alt="kinetic-brutalist" /><br /><sub><code>kinetic-brutalist</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-swiss-editorial.webp" alt="swiss-editorial" /><br /><sub><code>swiss-editorial</code></sub></td>
+</tr>
+<tr>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-ink-wash.webp" alt="ink-wash" /><br /><sub><code>ink-wash</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-risograph-print.webp" alt="risograph-print" /><br /><sub><code>risograph-print</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-editorial-collage.webp" alt="editorial-collage" /><br /><sub><code>editorial-collage</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-isometric-infographic.webp" alt="isometric-infographic" /><br /><sub><code>isometric-infographic</code></sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-isometric-infographic.webp" alt="isometric-infographic" /><br /><sub><code>isometric-infographic</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-liquid-shader.webp" alt="liquid-shader" /><br /><sub><code>liquid-shader</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-data-motion.webp" alt="data-motion" /><br /><sub><code>data-motion</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-generative-geometry.webp" alt="generative-geometry" /><br /><sub><code>generative-geometry</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-pixel-game.webp" alt="pixel-game" /><br /><sub><code>pixel-game</code></sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-pixel-game.webp" alt="pixel-game" /><br /><sub><code>pixel-game</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-synthwave-neon.webp" alt="synthwave-neon" /><br /><sub><code>synthwave-neon</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-paper-cut.webp" alt="paper-cut" /><br /><sub><code>paper-cut</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-minimal-ui.webp" alt="minimal-ui" /><br /><sub><code>minimal-ui</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-comic-pop.webp" alt="comic-pop" /><br /><sub><code>comic-pop</code></sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-comic-pop.webp" alt="comic-pop" /><br /><sub><code>comic-pop</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-flat-vector.webp" alt="flat-vector" /><br /><sub><code>flat-vector</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-guochao.webp" alt="guochao" /><br /><sub><code>guochao</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-painterly.webp" alt="painterly" /><br /><sub><code>painterly</code></sub></td>
+<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glitch-digital.webp" alt="glitch-digital" /><br /><sub><code>glitch-digital</code></sub></td>
 </tr>
 <tr>
-<td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-glitch-digital.webp" alt="glitch-digital" /><br /><sub><code>glitch-digital</code></sub></td>
 <td align="center" width="25%"><img src="../../dist/imgs/motion-showreel/style-soft-organic.webp" alt="soft-organic" /><br /><sub><code>soft-organic</code></sub></td>
+<td width="25%"></td>
 <td width="25%"></td>
 <td width="25%"></td>
 </tr>
 </table>
 
-<sub>Also in the library: <code>kinetic-brutalist</code> · <code>dark-keynote</code> · <code>glass-material</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>. See <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a> for the directory, the three-direction rule and how to mix styles.</sub>
+<sub>Also in the library: <code>dark-keynote</code> · <code>soft-3d-toy</code> · <code>particle-field</code> · <code>crt-vhs</code> · <code>terminal-ascii</code> · <code>crayon-storybook</code> · <code>copperplate-engraving</code> · <code>cinematic-title</code> · <code>mixed-media-era</code>. See <a href="./references/styles/INDEX.md"><code>references/styles/INDEX.md</code></a> for the directory, the three-direction rule and how to mix styles.</sub>
 
-New style guides (awaiting visual validation): [Art Deco](./references/styles/art-deco.md), [One-Line](./references/styles/one-line.md), [Blueprint](./references/styles/blueprint.md), [Hologram HUD](./references/styles/hologram-hud.md), [Stained Glass](./references/styles/stained-glass.md), [Tilt-Shift Miniature](./references/styles/tilt-shift-miniature.md), [Pixel Diorama](./references/styles/pixel-diorama.md), [80s Cel Animation](./references/styles/cel-anime-80s.md), [Rubber Hose](./references/styles/rubber-hose.md), [Ukiyo-e](./references/styles/ukiyo-e.md), and [Shadow Puppet](./references/styles/shadow-puppet.md). Each follows the same template, with material and motion rules plus optional implementation directions.
+More style guides: [Art Deco](./references/styles/art-deco.md), [One-Line](./references/styles/one-line.md), [Blueprint](./references/styles/blueprint.md), [Hologram HUD](./references/styles/hologram-hud.md), [Stained Glass](./references/styles/stained-glass.md), [Tilt-Shift Miniature](./references/styles/tilt-shift-miniature.md), [Pixel Diorama](./references/styles/pixel-diorama.md), [80s Cel Animation](./references/styles/cel-anime-80s.md), [Rubber Hose](./references/styles/rubber-hose.md), and [Shadow Puppet](./references/styles/shadow-puppet.md). Each follows the same template, with material and motion rules plus optional implementation directions.
 
-Also available: [Whiteboard Explainer](./references/styles/whiteboard-explainer.md), [Math / Concept Morph](./references/styles/concept-morph.md), and [Illuminated Manuscript](./references/styles/illuminated-manuscript.md). Each has a complete 15-second validation sample; see the [style index](./references/styles/INDEX.md) for technical and review status.
+You can also use: [Whiteboard Explainer](./references/styles/whiteboard-explainer.md), [Math / Concept Morph](./references/styles/concept-morph.md), and [Illuminated Manuscript](./references/styles/illuminated-manuscript.md).
 
 ---
 
@@ -164,8 +170,7 @@ skills/motion-showreel/
 │   ├── stack.md             page contract, determinism, per-tech pitfalls, fonts, multi-format, performance
 │   ├── recipes.md           ready-made snippets (masked type, morph chains, particle type, seamless loops, WebGL post, canvas pseudo-3-D …)
 │   ├── brief-template.md    the structured prompt every piece starts from
-│   ├── review.md            technical checks, review sheet, independent review, common problems, delivery checklist
-│   └── field-notes.md       what proved to work in real pieces, with evidence (written back after each delivery)
+│   └── review.md            technical checks, review sheet, independent review, common problems, delivery checklist
 ├── scripts/
 │   ├── setup.sh · check-env.mjs · scaffold.sh
 │   ├── render.mjs           stills, sheets, three directions, poster, determinism, text framing, proxy, master

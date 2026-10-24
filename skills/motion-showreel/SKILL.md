@@ -200,7 +200,7 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 - 怎么重建（`sh build.sh`）、怎么只改一段。
 - 第三方素材（字体、用户素材、曲子）的来源和授权；事实类内容提醒用户再核对一遍。
 
-交付之后花几分钟回看：哪一招明显让片子变好了，有证据（数字、前后对比）就记进 `references/field-notes.md`；用到的风格在 `styles/INDEX.md` 的「实做记录」里加一笔，新发现的短板写进那个风格文件的「坑」。只记可复用的方法，用户的素材和私人信息留在项目里。
+复盘结论和复核证据保存在项目的 `qa/review_log.md`，与本次制作文件一起交付。
 
 ---
 
@@ -249,4 +249,3 @@ node <skill>/scripts/inspect.mjs qa <slug>/out/final.mp4 --out <slug>/qa/final \
 | `references/review.md` | 第 6 步：技术检查说明、审片表、独立审片、常见问题、交付清单 |
 | `references/narration.md` | 选择 TTS、用户口播、独立 BGM/音效混音时 |
 | `references/long-form.md` | 超过 2 分钟：章节规划、持久缓存、分段音频与断点续建 |
-| `references/field-notes.md` | 第 2 步想参考前人做法时；第 7 步交付后回写 |
