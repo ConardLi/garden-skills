@@ -8,7 +8,7 @@ export function setupProgress({ url, hasProject = false, revision = null, pause 
   const endpoint = new URL(url, location.href);
   if (endpoint.protocol !== 'http:' || !['127.0.0.1', 'localhost'].includes(endpoint.hostname) || endpoint.pathname !== '/api/progress') throw new Error('制作进度地址无效');
   const parentOrigin = endpoint.origin;
-  let stopped = false, timer, newest = null, state = null, stageSignature = '', lastArtifact = null, navigating = false;
+  let stopped = false, timer, newest = null, state = null, stageSignature = '', pickerSignature = '', lastArtifact = null, navigating = false;
   const auto = $('auto'), panel = $('progress-panel'), toggle = $('toggle-progress'), switchButton = $('switch');
   const finalRevision = !!revision?.final;
   auto.checked = !finalRevision && new URL(location.href).searchParams.get('follow') !== '0';
@@ -72,6 +72,18 @@ export function setupProgress({ url, hasProject = false, revision = null, pause 
     next.searchParams.set('follow', auto.checked && !preview.final ? '1' : '0');
     location.assign(next.href);
   }
+  async function openResult(id) {
+    const reason = deferReason();
+    if (reason) { $('progress-message').textContent = reason; setPanel(true); return; }
+    const response = await fetch(new URL(`/api/preview/${id}`, parentOrigin), { credentials: 'omit' });
+    if (!response.ok) throw new Error('这个阶段的预览暂时无法打开，当前版本保留');
+    navigate(await response.json(), true);
+  }
+  $('shot-picker').onchange = async event => {
+    try { await openResult(event.target.value); }
+    catch (error) { $('progress-message').textContent = error.message; setPanel(true); }
+    finally { $('shot-picker').value = revision?.id || ''; }
+  };
   function considerPreview() {
     if (!newest || isCurrent(newest)) { switchButton.hidden = true; return; }
     const reason = deferReason();
@@ -97,9 +109,9 @@ export function setupProgress({ url, hasProject = false, revision = null, pause 
       stageSignature = nextStageSignature;
       const resultButtons = stage => {
         const media = artifacts.filter(a => a.stage === stage.id).map(a => `<button class="stage-result" data-id="${esc(a.id)}"><span aria-hidden="true">${a.type === 'audio' ? '♫' : a.type === 'document' ? '▤' : '▧'}</span>${esc(a.name)}<span class="result-action">${a.type === 'audio' ? '试听' : '查看'}</span></button>`);
-        const sceneResults = stage.id === 'scenes' ? shots.map(shot => `<button class="stage-result shot-result" data-preview="${esc(shot.preview.id)}" data-shot="${esc(shot.id)}"><span aria-hidden="true">▶</span>${esc(shot.name)}<span class="result-action">${Number(shot.preview.options.duration).toFixed(1)}s</span></button>`) : [];
+        if (stage.id === 'scenes') return '';
         const versions = previews.filter(p => p.stage === stage.id && !p.shot).slice(-3).reverse().map((p, i) => `<button class="stage-result" data-preview="${esc(p.id)}"><span aria-hidden="true">▶</span>${esc(p.name || (p.final ? '最终预览' : '阶段动画'))}<span class="result-action">${isCurrent(p) ? '当前' : i ? '回看' : '播放'}</span></button>`);
-        return [...media, ...sceneResults, ...versions].join('');
+        return [...media, ...versions].join('');
       };
       $('stages').innerHTML = (data.stages || []).map((stage, index) => `<section class="stage ${esc(stage.status)} ${stage.id === data.current ? 'current' : ''}" data-stage="${esc(stage.id)}" aria-busy="${stage.status === 'running'}"><span class="stage-icon" aria-hidden="true">${stage.status === 'running' ? '' : stage.status === 'ready' ? '✓' : stage.status === 'waiting' ? '◷' : stage.status === 'failed' ? '!' : index + 1}</span><div class="stage-body"><div class="stage-heading"><span class="stage-name">${esc(stage.name)}</span><span class="stage-status">${esc(labels[stage.status] || '')}</span></div>${stage.total ? `<div class="stage-count">${stage.done} / ${stage.total} 已发布</div><progress max="${stage.total}" value="${stage.done}"></progress>` : ''}<div class="stage-results">${resultButtons(stage)}</div></div></section>`).join('');
       for (const button of $('stages').querySelectorAll('[data-id]')) button.onclick = () => showArtifact(state.artifacts.find(a => a.id === button.dataset.id));
@@ -107,13 +119,23 @@ export function setupProgress({ url, hasProject = false, revision = null, pause 
         const reason = deferReason(); if (reason) { $('progress-message').textContent = reason; return; }
         button.disabled = true;
         try {
-          const response = await fetch(new URL(`/api/preview/${button.dataset.preview}`, parentOrigin), { credentials: 'omit' });
-          if (!response.ok) throw new Error('这个阶段的预览暂时无法打开，当前版本保留');
-          navigate(await response.json(), true);
+          await openResult(button.dataset.preview);
         } catch (error) { $('progress-message').textContent = error.message; }
         finally { button.disabled = false; }
       };
     }
+    const whole = previews.filter(p => !p.shot).at(-1);
+    const choices = [...(whole ? [{ id: whole.id, name: `完整预览 · ${whole.name || '当前版本'}` }] : []), ...shots.map(shot => ({ id: shot.preview.id, name: shot.name, shot: shot.id }))];
+    if (revision?.id && !choices.some(p => p.id === revision.id)) choices.unshift({ id: revision.id, name: `当前版本 · ${revision.name || '预览'}` });
+    const signature = JSON.stringify(choices);
+    const picker = $('shot-picker');
+    if (signature !== pickerSignature) {
+      pickerSignature = signature;
+      picker.innerHTML = choices.map(p => `<option value="${esc(p.id)}"${p.shot ? ` data-shot="${esc(p.shot)}"` : ''}>${esc(p.name)}</option>`).join('');
+      picker.value = revision?.id || '';
+    }
+    picker.hidden = !shots.length;
+    $('stage-label').hidden = !!shots.length;
     const latest = artifacts.at(-1);
     if (!hasProject && latest && latest.id !== lastArtifact && !data.preview) { lastArtifact = latest.id; showArtifact(latest); }
     toggle.dataset.state = active?.status || 'pending';

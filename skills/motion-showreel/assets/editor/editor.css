@@ -23,3 +23,7 @@
 .top-actions{flex:1;justify-content:flex-end;min-width:0}.top-actions>button{flex:none}#toggle-progress{flex:0 1 auto;min-width:0}#current-stage{min-width:0}
 
 #toggle-progress[data-state=waiting] .status-dot{background:#e6c681}#toggle-progress[data-state=failed] .status-dot{background:#f4a78d}
+
+#shot-picker{min-width:0;width:185px;max-width:35%;height:25px;padding:2px 6px;font-size:11px;background:#20262d;border-color:#3d4954;text-overflow:ellipsis;color:#c7d6b7}
+@media(max-width:760px){#shot-picker{width:150px;max-width:36%;font-size:10px}.viewer-heading:has(#shot-picker:not([hidden])){gap:6px}}
+@media(max-width:430px){.viewer-heading:has(#shot-picker:not([hidden])):has(#switch:not([hidden])){flex-wrap:wrap;height:auto;min-height:32px;padding-block:3px}.viewer-heading:has(#shot-picker:not([hidden])) #switch:not([hidden]){order:3}}
