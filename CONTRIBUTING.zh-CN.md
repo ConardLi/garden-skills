@@ -229,17 +229,17 @@ npm run release:dry
 # 3. 正式发版
 npm run release
 # 确认 y。脚本会：不改 manifest（initial）、commit README sync、
-# 一口气打 4 个 tag、原子 push
+# 给每个 Skill 打 tag、原子 push
 
-# 4. 看 4 个 release-skill 工作流并行跑完（每个约 1 分钟）
+# 4. 看各个 release-skill 工作流并行跑完（每个约 1 分钟）
 gh run list --workflow=release-skill.yml
 
 # 5. 拉一下 main（bot 会 commit README 同步）
 git pull origin main
 ```
 
-跑完之后 `https://github.com/ConardLi/garden-skills/releases` 下面就有 4 个
-release，每个带 zip + sha256 + 自动 changelog，README 的下载链接也会指向它们。
+跑完之后 `https://github.com/ConardLi/garden-skills/releases` 下面会为每个 Skill 创建一个 release，
+带 zip + sha256 + 自动 changelog，README 的下载链接也会指向它们。
 
 ---
 

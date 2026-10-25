@@ -234,7 +234,7 @@ npm run release:dry
 # 3. リリースを切る。
 npm run release
 # `y` で確認し、スクリプトが何もバンプせず（initial）、README 同期をコミットし、
-# 4 つすべてにタグを付け、プッシュするのを見守ります。
+# 各スキルにタグを付けてプッシュするのを見守ります。
 
 # 4. 各スキルのリリースワークフローが並列で実行されるのを見守る。
 gh run list --workflow=release-skill.yml
@@ -243,7 +243,7 @@ gh run list --workflow=release-skill.yml
 git pull origin main
 ```
 
-これで、4 つのスキルそれぞれが GitHub 上に `releases/tag/<skill>-v1.0.0` エントリを持ち、
+これで、各スキルが GitHub 上に `releases/tag/<skill>-v1.0.0` エントリを持ち、
 ダウンロード可能な zip + sha256 が用意され、README のダウンロードリンクが
 それらを指すようになります。
 
