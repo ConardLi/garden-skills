@@ -78,6 +78,10 @@ python3 <path-to-beautiful-article>/scripts/source-to-markdown.py <input> -o sou
 打印安装建议并优雅降级。脚本只做**机械抽取**；正文清理、占位标注、风险记录仍由 agent 完成。
 URL 也可直接用 agent 的网页抓取能力获取正文，再清理。
 
+公开 URL 也可按需使用 [Parallel Search MCP 抽取脚本](parallel-search-mcp.md)：
+无需 API key，抓取完整正文作为草稿；只有用户要求补充研究时才使用其搜索命令。
+这是可选路径，抽取后仍须执行下方的五条自检并记录不确定项。
+
 ### 3. Agent 决策规则
 
 - PDF / DOCX / PPTX / 复杂 HTML：先尝试 MarkItDown。

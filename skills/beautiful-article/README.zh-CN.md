@@ -291,6 +291,10 @@ Phase 8  Delivery               （article.html，可选 article.pdf）
 
 ## Skill 目录结构
 
+公开 URL 可选用 [Parallel Search MCP 抽取脚本](./references/parallel-search-mcp.md)，
+无需账号或 API key 即可抓取正文 Markdown；用户要求补充研究时也可搜索来源。
+原有抽取路径和素材完整性自检仍适用；匿名使用有速率限制。安装与命令见参考文档。
+
 ```text
 skills/beautiful-article/
 ├── SKILL.md                            主 Skill 文件（frontmatter name: beautiful-article）
