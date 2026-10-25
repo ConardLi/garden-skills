@@ -14,7 +14,25 @@ window.READY = true;              // 字体、图片、模型、纹理全部加�
 
 - 渲染工具用 HTTP 服务项目目录（这样 ES module、字体、glTF 都能加载），视口 = `--size`，DPR = `--dpr`。页面通过 `stageSize()` 读 `?w=&h=`，按这个尺寸排版。
 - 页面里的 JS 报错、必需的脚本 404，工具都会立刻退出并打印错误；可选文件 404 只会警告。
+- `--out` 相对运行命令时的工作目录解析，与项目参数分别计算；没有先进入项目目录时，传 `<slug>/qa/...` 或绝对路径。
 - 预览：`npx serve <slug>` 或任意静态服务，打开 `index.html?w=1920&h=1080`，在控制台调用 `render(3.2)` 就能看第 3.2 秒。也可以临时加一个 `?play=1` 分支，用 rAF 驱动 `render(performance.now()/1000 % DUR)` 方便调试，但**渲染时这个分支不能运行**。
+
+### 子帧采样中的文字和硬切（可选）
+
+使用 `--subframes 2` 等运动模糊设置时，两个采样可能跨过文案切换点，把新旧文字混在一帧里。需要避免这种情况的项目可显式启用采样上下文：
+
+```js
+window.RENDER_CONTEXT = true;
+window.render = (t, frame = {}) => {
+  const copyTime = frame.frameTime ?? t;
+  // 文案内容、硬切状态由 copyTime 决定。
+  const caption = copyTime < 2 ? 'BEFORE' : 'AFTER';
+  // 物体运动、文字位移和有意的淡化仍用 t，保留运动模糊。
+  drawScene(t, caption);
+};
+```
+
+启用后，渲染器额外传入 `{ frameTime, fps }`：`t` 是当前子帧时间，`frameTime` 是这一输出帧的准确时间，包含分段导出的起点。普通预览和手动调用仍可只传 `t`，因此第二个参数应保留默认值和回退。未启用的旧项目仍按原来的一参数 `render(t)` 调用，不改变默认采样、帧率或效果。不要将所有动画时间取整，也不要把有意的交叉淡化改成硬切。
 
 ### 默认工作区与轻量调试预览
 

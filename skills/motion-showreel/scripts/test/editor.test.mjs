@@ -145,3 +145,26 @@ test('cancelled and failed exports never publish a video and leave the workspace
   await page.evaluate(() => window.__showreelEditor.seek(0.5));
   assert.equal(await page.evaluate(() => window.__showreelEditor.picture.lastRendered), 0.5, 'loaded preview remains usable after an external scene export fails');
 });
+
+test('workspace export keeps the project timeline and saves per-shot / intended-hold review output', async t => {
+  const { page, root } = await fixture(t, { audio: false, duration: 2 });
+  const file = path.join(root, 'index.html');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('window.lastRendered=t;', 'window.lastRendered=t;t=Math.min(t,0.9);'));
+  fs.writeFileSync(path.join(root, 'timeline.js'), `export const DUR=2;
+    export const SHOTS=[{id:'roll',t0:0,t1:1},{id:'hold',t0:1,t1:2}];
+    export const HOLDS=[[0.8,2]];
+  `);
+  await page.getByRole('button', { name: /导出视频/ }).click();
+  await page.waitForFunction(() => !window.__showreelEditor.busy && !document.getElementById('download').hidden, null, { timeout: 90000 });
+  const task = fs.readdirSync(path.join(root, '.showreel-editor/exports'))[0];
+  const dir = path.join(root, '.showreel-editor/exports', task);
+  const receipt = JSON.parse(fs.readFileSync(path.join(dir, 'receipt.json')));
+  assert.equal(receipt.timeline, 'timeline.js');
+  const review = fs.readFileSync(path.join(dir, receipt.qa), 'utf8');
+  assert.match(review, /All technical checks passed/);
+  assert.match(review, /motion per shot/);
+  assert.match(review, /roll\s+0\.00–1\.00s/);
+  assert.match(review, /hold\s+1\.00–2\.00s/);
+  assert.match(review, /intended hold: HOLDS/);
+  assert.doesNotMatch(review, /no timeline\.js found/);
+});

@@ -6,14 +6,19 @@ import { digest, localFile, isOriginalSession, sessionKey, validateSession, atom
 
 const SCRIPTS = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const q = n => String(+n.toFixed(6));
-export function runProcess(command, argv, job, { binary = false, maxBytes = 16 * 1024 * 1024 } = {}) {
+export function runProcess(command, argv, job, { binary = false, maxBytes = 16 * 1024 * 1024, stdoutFile = null } = {}) {
   if (job.cancelled) return Promise.reject(new Error('任务已取消'));
   return new Promise((resolve, reject) => {
+    if (stdoutFile) fs.writeFileSync(stdoutFile, '');
     const child = spawn(command, argv, { detached: process.platform !== 'win32', stdio: ['ignore', 'pipe', 'pipe'] });
     job.child = child;
     let chunks = [], bytes = 0, stderr = '', stdout = '', settled = false;
     const done = (error, data) => { if (settled) return; settled = true; if (job.child === child) job.child = null; error ? reject(error) : resolve(data); };
     child.stdout.on('data', b => {
+      if (stdoutFile && !settled) {
+        try { fs.appendFileSync(stdoutFile, b); }
+        catch (error) { stopProcess(child); return done(error); }
+      }
       if (binary) { bytes += b.length; if (bytes > maxBytes) { stopProcess(child); return done(new Error('Media output exceeded its limit')); } chunks.push(b); }
       else { stdout = (stdout + b.toString()).slice(-16000); job.log = (job.log + b.toString()).slice(-32000); }
     });
@@ -100,7 +105,7 @@ export async function exportEditor(root, project, session, job, quality = {}) {
   }
   const audio = await prepareEditorAudio(root, project, session, job);
   const common = [path.join(root, project.page), '--size', project.size, '--fps', String(project.fps)];
-  const call = (file, argv) => runProcess(process.execPath, [path.join(SCRIPTS, file), ...argv], job);
+  const call = (file, argv, options) => runProcess(process.execPath, [path.join(SCRIPTS, file), ...argv], job, options);
   job.phase = '确定性检查'; job.progress = 0.08;
   await call('render.mjs', [...common, '--determinism']);
   job.phase = '渲染画面'; job.progress = 0.15;
@@ -108,7 +113,10 @@ export async function exportEditor(root, project, session, job, quality = {}) {
   const options = Object.entries(quality).flatMap(([k, v]) => ['--' + k, String(v)]);
   await call('render.mjs', [...common, '--duration', String(project.duration), '--out', candidate, ...(audio.file ? ['--audio', localFile(root, audio.file)] : []), ...options]);
   job.phase = '技术验收'; job.progress = 0.9;
-  await call('inspect.mjs', ['qa', candidate, '--out', path.join(dir, 'qa'), '--expect-size', project.size, '--expect-fps', String(project.fps), '--expect-duration', String(project.duration), '--audio', audio.file ? 'required' : 'none']);
+  // The candidate lives below .showreel-editor/exports, outside inspect's usual
+  // <project>/out lookup. Keep the scene's actual clock for SHOTS / HOLDS / DROPS.
+  const timeline = fs.existsSync(path.join(root, 'timeline.js')) ? path.join(root, 'timeline.js') : null;
+  await call('inspect.mjs', ['qa', candidate, '--out', path.join(dir, 'qa'), '--expect-size', project.size, '--expect-fps', String(project.fps), '--expect-duration', String(project.duration), '--audio', audio.file ? 'required' : 'none', ...(timeline ? ['--timeline', timeline] : [])], { stdoutFile: path.join(dir, 'qa.log') });
   // Keep text framing as review material, exactly as in the existing build path.
   job.phase = '文字审片材料';
   try { await call('render.mjs', [...common, '--text-check', '--out', path.join(dir, 'text')]); }
@@ -116,7 +124,7 @@ export async function exportEditor(root, project, session, job, quality = {}) {
   if (job.cancelled) throw new Error('任务已取消');
   const relative = `out/editor-${job.id}.mp4`, output = path.join(root, relative);
   fs.mkdirSync(path.dirname(output), { recursive: true }); fs.renameSync(candidate, output);
-  atomicJSON(path.join(dir, 'receipt.json'), { version: 1, output: relative, audio: audio.file, session: 'session.json', size: project.size, fps: project.fps, duration: project.duration, quality, sourceSignature: project.sourceSignature, key: audio.key });
+  atomicJSON(path.join(dir, 'receipt.json'), { version: 1, output: relative, audio: audio.file, session: 'session.json', qa: 'qa.log', timeline: timeline ? 'timeline.js' : null, size: project.size, fps: project.fps, duration: project.duration, quality, sourceSignature: project.sourceSignature, key: audio.key });
   job.progress = 1;
   return { file: relative, audio: audio.file, key: audio.key, review: `.showreel-editor/exports/${job.id}`, session: `.showreel-editor/exports/${job.id}/session.json` };
 }

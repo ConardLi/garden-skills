@@ -3,6 +3,8 @@
 //   window.DUR = 15;              // seconds (optional if --duration is given)
 //   window.render = (t) => {...}; // draw the frame at t seconds; deterministic; may return a Promise
 //   window.READY = true;          // set once fonts / images / models are loaded
+// Optional: window.RENDER_CONTEXT = true lets render(t, { frameTime, fps }) keep
+// discrete copy/cuts on the output frame while motion uses sub-sample time t.
 //
 // Video
 //   node render.mjs <project> [--out out/video.mp4] [--size 1920x1080] [--fps 30] [--workers 3]
@@ -57,8 +59,10 @@ const open = (query = QUERY, init = null) => openPage(browser, { port, rel: targ
 const finish = async code => { await browser.close().catch(() => {}); server.close(); process.exit(code); };
 cleanups.push(() => server.close());
 
-async function shoot(page, t, type = fmt) {
-  await page.evaluate(t => window.render(t), t);
+async function shoot(page, t, type = fmt, frameTime = t) {
+  await page.evaluate(({ t, frameTime, fps }) => window.RENDER_CONTEXT === true
+    ? window.render(t, { frameTime, fps })
+    : window.render(t), { t, frameTime, fps: FPS });
   return await page.screenshot({ type, ...(type === 'jpeg' ? { quality: 95 } : {}), clip: { x: 0, y: 0, width: W, height: H } });
 }
 
@@ -345,7 +349,7 @@ async function video() {
     ff.stdin.on('error', () => { failed ??= 'ffmpeg closed its input early'; });
     for (let f = a; f < b && !failed && !aborted; f++) {
       for (let j = 0; j < SUB && !failed && !exited; j++) {
-        const buf = await shoot(page, sampleT(f, j));
+        const buf = await shoot(page, sampleT(f, j), fmt, start + f / FPS);
         if (!ff.stdin.write(buf)) await Promise.race([new Promise(r => ff.stdin.once('drain', r)), closed]);
       }
       if (exited && f < b - 1) failed ??= 'ffmpeg stopped before all frames were written';

@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { discoverEditorProject, initialSession, validateSession, digest, localFile } from '../lib/editor-model.mjs';
-import { prepareEditorAudio, waveform, newJob } from '../lib/editor-media.mjs';
+import { prepareEditorAudio, waveform, newJob, runProcess } from '../lib/editor-media.mjs';
 import { createEditorServer } from '../editor.mjs';
 
 function fixture(t, config = {}) {
@@ -21,6 +21,16 @@ const rms = (buffer, start, end) => {
   for (let i = Math.floor(start * 8000); i < Math.min(end * 8000, buffer.length / 4); i++) { sum += buffer.readFloatLE(i * 4) ** 2; count++; }
   return Math.sqrt(sum / count);
 };
+
+test('saved process reports keep the beginning and end while console capture stays bounded', async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'showreel-report-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const report = path.join(root, 'qa.log');
+  const expected = 'CHECKS\n' + 'x'.repeat(40000) + '\nREVIEW END\n';
+  const output = await runProcess(process.execPath, ['-e', `process.stdout.write(${JSON.stringify(expected)})`], newJob('report'), { stdoutFile: report });
+  assert.equal(fs.readFileSync(report, 'utf8'), expected);
+  assert.ok(output.length <= 16000, 'keeping a full report does not grow the in-memory console buffer');
+});
 
 test('original soundtrack is reused byte-for-byte; clip edits render only a cached audio file at the requested time', async t => {
   const root = fixture(t, { audio: 'audio/a.wav' }), project = await discoverEditorProject(root);

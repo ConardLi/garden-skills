@@ -58,6 +58,8 @@ node <skill>/scripts/editor.mjs <project> --size 1920x1080 --fps 30
 
 输出为新的 `out/editor-<task-id>.mp4`，不会覆盖 `out/final.mp4`。该任务使用的编辑快照、验收与审片材料保存在 `.showreel-editor/exports/<task-id>/`。原有 `build.sh` 不自动读取工作区编辑；重建该编辑版应在工作区再次导出。要把编辑混音用于其他构建，须同时同步音频路径和有效混音校验记录；仅改 `AUDIO_FILE` 会与原 `audio/mix.json` 不匹配，不能跳过校验。
 
+工作区导出会将项目的 `timeline.js` 显式交给验收工具，保留 `SHOTS`、`HOLDS` 和 `DROPS` 的审片依据。验收输出保存在任务目录的 `qa.log`，`receipt.json` 记录日志位置及是否使用了时间轴；没有时间轴的旧项目仍可按原方式导出。
+
 服务仅监听本机，关闭终端服务后停止访问。源文件、代码和编辑记录均留在项目目录，无远端账号或新 npm 包。回归测试：
 
 ```sh
