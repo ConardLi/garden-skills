@@ -43,12 +43,18 @@
 <br/><sub>本地知识库检索</sub>
 </td>
 </tr>
+<tr>
+<td colspan="2" align="center" valign="top">
+<a href="#agent-qa"><strong>agent-qa</strong></a>
+<br/><sub>应用 QA / 证据审查</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
-[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-7-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -339,6 +345,20 @@
 ---
 
 
+### [`agent-qa`](./skills/agent-qa)
+
+**分类：** 测试 / 应用 QA
+
+**适合：** 在现有 [agent-qa](https://github.com/vostride/agent-qa) 项目中执行选定的回归测试，依据证据审查失败原因。
+
+vostride 的自然语言 Web、Android 和 iOS 测试工具，具备先进的 memidex 记忆引擎与自我改进能力。此技能读取运行证据和知识来源，保留原始判定，仅对已授权目标运行选定测试。
+
+实验版 v0.1.0；需要 shell、Node.js 24+ 和已配置的 agent-qa 项目。实际执行需要目标应用及已配置的服务提供方，服务可能另行收费。外部运行时采用 FSL-1.1-ALv2 许可证，未随技能打包。尚未验证所有列出的智能体环境中的实际行为。
+
+链接：[README](./skills/agent-qa/README.zh-CN.md) · [SKILL.md](./skills/agent-qa/SKILL.md) · <!-- DOWNLOAD:agent-qa:start -->_（暂未发布）_<!-- DOWNLOAD:agent-qa:end -->
+
+---
+
 ## 安装
 
 总共支持 5 种安装方式，按你的工作流选一个即可：
@@ -412,6 +432,7 @@ npx skills remove kb-retriever  # 卸载
 /plugin install image-generation-skills@garden-skills
 /plugin install motion-showreel-skills@garden-skills
 /plugin install beautiful-article-skills@garden-skills
+/plugin install agent-qa-skills@garden-skills
 ```
 
 插件包定义在 [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)：
@@ -424,6 +445,7 @@ npx skills remove kb-retriever  # 卸载
 | `image-generation-skills` | `gpt-image-2` |
 | `motion-showreel-skills` | `motion-showreel` |
 | `beautiful-article-skills` | `beautiful-article` |
+| `agent-qa-skills` | `agent-qa` |
 
 ### 方式 C · Releases 钉版本 `.zip`
 

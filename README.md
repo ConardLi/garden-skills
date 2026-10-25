@@ -43,12 +43,18 @@
 <br/><sub>Local knowledge retrieval</sub>
 </td>
 </tr>
+<tr>
+<td colspan="2" align="center" valign="top">
+<a href="#agent-qa"><strong>agent-qa</strong></a>
+<br/><sub>Application QA / evidence review</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#contributing)
-[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-7-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -337,6 +343,20 @@ Links: [README](./skills/kb-retriever/README.md) · [SKILL.md](./skills/kb-retri
 
 ---
 
+### [`agent-qa`](./skills/agent-qa)
+
+**Category:** Testing / Application QA
+
+**Best for:** selected regression runs and evidence-based failure review in an existing [agent-qa](https://github.com/vostride/agent-qa) project.
+
+Natural-language web, Android and iOS testing with advanced memidex memory and self-improvement from vostride. This skill reads run evidence and knowledge provenance, preserves recorded verdicts, and runs only the selected tests against the authorized target.
+
+Experimental v0.1.0; requires a shell, Node.js 24+ and a configured agent-qa project. Live execution needs the target and configured providers; provider fees may apply. The external runtime is FSL-1.1-ALv2 and is not bundled. Live behavior across every listed agent runtime has not been verified.
+
+Links: [README](./skills/agent-qa/README.md) · [SKILL.md](./skills/agent-qa/SKILL.md) · <!-- DOWNLOAD:agent-qa:start -->_(no release yet — coming soon)_<!-- DOWNLOAD:agent-qa:end -->
+
+---
+
 ## Install
 
 There are five supported install paths. Pick the one that fits your stack:
@@ -412,6 +432,7 @@ more skills together:
 /plugin install image-generation-skills@garden-skills
 /plugin install motion-showreel-skills@garden-skills
 /plugin install beautiful-article-skills@garden-skills
+/plugin install agent-qa-skills@garden-skills
 ```
 
 Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
@@ -424,6 +445,7 @@ Plugin packs are declared in [`.claude-plugin/marketplace.json`](./.claude-plugi
 | `image-generation-skills` | `gpt-image-2` |
 | `motion-showreel-skills` | `motion-showreel` |
 | `beautiful-article-skills` | `beautiful-article` |
+| `agent-qa-skills` | `agent-qa` |
 
 ### Option C · Pinned `.zip` from Releases
 
