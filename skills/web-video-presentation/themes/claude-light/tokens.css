@@ -1,0 +1,105 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · claude-light
+ *   Anthropic 官方浅色色板。色值来自 Anthropic 公开的品牌规范与
+ *   claude.ai 线上设计 token，非凭印象取色。
+ *
+ *     ivory   #FAF9F5  主背景（纸感，不是纯白）
+ *     ink     #141413  正文与深色面（暖黑，不是纯黑）
+ *     clay    #D97757  主强调 / 边框（赤陶橙，Anthropic 品牌主色）
+ *     oat     #F0EEE6  面板、卡片填充
+ *     sand    #E3DACC  徽章、强调块
+ *     border  #D1CFC5  次级分隔线（暖灰）
+ *     blue    #6A9BCC  次级强调，少用
+ *     green   #788C5D  第三强调，少用
+ *
+ *   精致感来自三处，不靠噪点（噪点会在视频编码里放大成噪声）：
+ *     • 背景 = 极淡暖光 + 48px hairline 网格，压缩友好
+ *     • 圆角 = 24px，Claude 自己的卡片半径
+ *     • 排版 = 英文衬线 / 正文无衬线，Claude 的文档气质
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette: Anthropic official light ─── */
+  --shell:        #faf9f5;
+  --surface:      #ffffff;
+  --surface-2:    #f0eee6;
+  --surface-3:    #e3dacc;
+  --text:         #141413;
+  --text-2:       #3d3b36;
+  --text-mute:    #6e6a5e;
+  --text-faint:   #b0aea5;
+  --rule:         #d97757;        /* 橙描边 —— 主分隔 */
+  --rule-soft:    #d1cfc5;        /* 暖灰 —— 次级分隔 */
+
+  /* accent = Anthropic clay / terracotta */
+  --accent:       #d97757;
+  --accent-soft:  rgba(217, 119, 87, 0.12);
+  --accent-glow:  rgba(217, 119, 87, 0.34);
+
+  /* 语义色（章节用这些，别直接写色值，主题才能切换） */
+  --pos:          #788c5d;        /* 成功 / 通过 */
+  --neg:          #dc2626;        /* 错误 / 失败 */
+  --info:         #6a9bcc;        /* 中性强调 */
+  --warn:         #c08c3a;        /* 警示 */
+
+  /* ─── fonts: Claude 的文档气质 ─── */
+  --font-display-cn: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                     "Noto Sans SC", sans-serif;
+  --font-display-en: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+  --font-body:       "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                     "Noto Sans SC", sans-serif;
+  --font-mono:       "SF Mono", "JetBrains Mono", ui-monospace, Menlo,
+                     Consolas, "Liberation Mono", monospace;
+  --font-features:   "tnum";
+
+  /* ─── motion: 克制，像 UI 过渡 ─── */
+  --dur-base:       550ms;
+  --dur-slow:       900ms;
+  --dur-cinematic:  1300ms;
+
+  /* ─── design identity ─── */
+  --r-card:        24px;              /* Claude 卡片半径 */
+  --r-stage:       0;
+  --rule-w:        1px;               /* hairline，浅色下 0.5px 太虚 */
+  --rule-style:    solid;
+  --hero-num-font:   var(--font-mono);    /* 数字要整齐，不用衬线 */
+  --hero-num-style:  normal;
+  --hero-num-weight: 500;
+  --hero-num-track:  -0.02em;
+  --stage-pad-x:   120px;
+  --stage-pad-y:   88px;
+
+  /* ─── 精致背景：48px hairline 网格 + 两处暖光 ───
+   * 分层用模板预留的 --surface-pattern（图案层）与 --surface-vignette（光晕层），
+   * 两层都在 .scene(z-index:2) 之下，不会压到文字。
+   * 刻意不用噪点：噪点在视频编码里会被放大成可见噪声。 */
+  --surface-pattern:
+    repeating-linear-gradient(
+      0deg,
+      rgba(20, 20, 19, 0.038) 0px,
+      rgba(20, 20, 19, 0.038) 1px,
+      transparent 1px,
+      transparent 48px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(20, 20, 19, 0.038) 0px,
+      rgba(20, 20, 19, 0.038) 1px,
+      transparent 1px,
+      transparent 48px
+    );
+  --surface-pattern-size: auto;
+  --surface-pattern-blend: normal;
+  --surface-pattern-opacity: 1;
+
+  --surface-vignette:
+    radial-gradient(
+      ellipse 74% 52% at 50% 20%,
+      rgba(217, 119, 87, 0.075) 0%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 88% 58% at 82% 96%,
+      rgba(106, 155, 204, 0.048) 0%,
+      transparent 70%
+    );
+}
