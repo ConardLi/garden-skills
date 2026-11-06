@@ -48,7 +48,9 @@ export async function listSkills() {
     if (entry.name.startsWith(".")) continue;
     const dir = path.join(SKILLS_DIR, entry.name);
     const manifestPath = path.join(dir, "manifest.json");
-    if (!existsSync(manifestPath)) continue;
+    if (!existsSync(manifestPath)) {
+      throw new Error(`${entry.name}: missing required file manifest.json`);
+    }
     skills.push({ name: entry.name, dir, manifestPath });
   }
   skills.sort((a, b) => a.name.localeCompare(b.name));
