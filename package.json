@@ -21,6 +21,7 @@
     "pack:all": "node scripts/release/pack-skill.mjs --all",
     "readme:sync": "node scripts/release/update-readme.mjs",
     "readme:check": "node scripts/release/update-readme.mjs --check",
-    "validate": "npm run list && npm run pack:all && npm run readme:check"
+    "test:release": "node --test scripts/release/test/*.test.mjs",
+    "validate": "npm run test:release && npm run list && npm run pack:all && npm run readme:check"
   }
 }
