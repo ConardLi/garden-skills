@@ -55,6 +55,10 @@
 
 </div>
 
+> **🌸 模型 API 服务：[Token 秘密花园](https://gpt.mmh1.top/)**
+>
+> 提供 GPT、Claude、Gemini 等主流模型 API，低倍率计费、国内直连，支持支付宝充值和开票。
+
 ---
 
 ## 目录

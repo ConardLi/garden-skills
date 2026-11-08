@@ -55,6 +55,10 @@
 
 </div>
 
+> **🌸 Model API service: [Token Secret Garden](https://gpt.mmh1.top/)**
+>
+> API access to GPT, Claude, Gemini, and other leading models at discounted rates, with direct access from mainland China, Alipay top-ups, and invoicing.
+
 ---
 
 ## Table of contents
