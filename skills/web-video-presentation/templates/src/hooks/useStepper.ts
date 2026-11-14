@@ -38,7 +38,23 @@ function sanitize(cursor: Cursor, chapters: ChapterDef[]): Cursor {
   return { chapter, step };
 }
 
-export function useStepper(chapters: ChapterDef[]): StepperState {
+export interface UseStepperOptions {
+  /**
+   * While true, the keyboard-advance listener below is not registered at
+   * all. Needed because `AutoStartGate` also listens for the SAME
+   * space-press to release autoplay (browsers require a user gesture
+   * before audio can start) — without this, a single Space keydown would
+   * both start playback AND advance the cursor, silently skipping step 0.
+   * Pass `mode === "auto" && !autoStarted` from `useAutoMode()`.
+   */
+  paused?: boolean;
+}
+
+export function useStepper(
+  chapters: ChapterDef[],
+  options: UseStepperOptions = {},
+): StepperState {
+  const { paused = false } = options;
   const [cursor, setCursor] = useState<Cursor>(() => {
     const fallback = { chapter: 0, step: 0 };
     if (typeof window === "undefined") return fallback;
@@ -137,6 +153,7 @@ export function useStepper(chapters: ChapterDef[]): StepperState {
   );
 
   useEffect(() => {
+    if (paused) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return;
       if (e.key === "ArrowRight" || e.key === " ") {
@@ -157,7 +174,7 @@ export function useStepper(chapters: ChapterDef[]): StepperState {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, jumpToChapter, chapters]);
+  }, [next, prev, jumpToChapter, chapters, paused]);
 
   const ch = chapters[cursor.chapter]!;
   return {

@@ -55,6 +55,10 @@
 
 </div>
 
+> **🌸 模型 API 服务：[Token 秘密花园](https://gpt.mmh1.top/)**
+>
+> 提供 GPT、Claude、Gemini 等主流模型 API，低倍率计费、国内直连，支持支付宝充值和开票。
+
 ---
 
 ## 目录
@@ -96,7 +100,7 @@
 
 <sub>↑ 用这个 Skill 做的作品，各截 4 秒——<a href="./skills/motion-showreel/README.zh-CN.md#作品展示"><b>打开作品展示</b></a>，看全部作品（包括 Skill 自己的 80 秒宣传片）和风格画廊。</sub>
 
-链接：[README](./skills/motion-showreel/README.zh-CN.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[下载 v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
+链接：[README](./skills/motion-showreel/README.zh-CN.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[下载 v0.2.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.2.0/motion-showreel-0.2.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
 
 ---
 
@@ -132,7 +136,7 @@
 
 <sub>↑ 23 套主题一览 —— <a href="./skills/web-video-presentation/README.zh-CN.md#主题画廊"><b>打开完整画廊</b></a>，含真实预览图、设计签名与适合场景标签。</sub>
 
-链接：[README](./skills/web-video-presentation/README.zh-CN.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[下载 v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.2/web-video-presentation-1.2.2.zip)<!-- DOWNLOAD:web-video-presentation:end -->
+链接：[README](./skills/web-video-presentation/README.zh-CN.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[下载 v1.2.3 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.3/web-video-presentation-1.2.3.zip)<!-- DOWNLOAD:web-video-presentation:end -->
 
 ---
 

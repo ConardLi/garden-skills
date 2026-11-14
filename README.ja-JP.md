@@ -96,7 +96,7 @@
 
 <sub>↑ このスキルで作った作品の 4 秒の抜粋。スキル自身の 80 秒トレーラーやスタイルギャラリーを含む全作品は <a href="./skills/motion-showreel/README.md#showcase"><b>ショーケース</b></a> で。</sub>
 
-リンク: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.1.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.1.0/motion-showreel-0.1.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
+リンク: [README](./skills/motion-showreel/README.md) · [SKILL.md](./skills/motion-showreel/SKILL.md) · <!-- DOWNLOAD:motion-showreel:start -->[Download v0.2.0 .zip](https://github.com/ConardLi/garden-skills/releases/download/motion-showreel-v0.2.0/motion-showreel-0.2.0.zip)<!-- DOWNLOAD:motion-showreel:end -->
 
 ---
 
@@ -132,7 +132,7 @@
 
 <sub>↑ 23 種類のテーマを一望 — <a href="./skills/web-video-presentation/README.md#theme-gallery"><b>完全なギャラリーを開く</b></a>と、ライブ 16:9 プレビュー、デザインシグネチャ、用途タグ付きで閲覧できます。</sub>
 
-リンク: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[Download v1.2.2 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.2/web-video-presentation-1.2.2.zip)<!-- DOWNLOAD:web-video-presentation:end -->
+リンク: [README](./skills/web-video-presentation/README.md) · [SKILL.md](./skills/web-video-presentation/SKILL.md) · <!-- DOWNLOAD:web-video-presentation:start -->[Download v1.2.3 .zip](https://github.com/ConardLi/garden-skills/releases/download/web-video-presentation-v1.2.3/web-video-presentation-1.2.3.zip)<!-- DOWNLOAD:web-video-presentation:end -->
 
 ---
 
