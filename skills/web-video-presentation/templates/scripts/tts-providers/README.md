@@ -38,8 +38,9 @@ npm run synthesize-audio -- --force
 |---|---|---|---|
 | `minimax.sh` | MiniMax `mmx` CLI | `mmx auth login --api-key` | **默认**；中文口播质量稳 |
 | `openai.sh` | OpenAI Audio Speech API | `OPENAI_API_KEY` env var | curl-based；多数 agent 已有 key |
+| `cosyvoice.sh` | 阿里云百炼 CosyVoice REST API | `DASHSCOPE_API_KEY` env var | curl-based；中文音色丰富（v3 系列配 longanyang） |
 
-只内置这两个 —— 我们不替你做更多技术选型。其它后端的代码片段在下面，
+只内置这三个 —— 我们不替你做更多技术选型。其它后端的代码片段在下面，
 复制到 `tts-providers/<name>.sh` 即可启用。
 
 ---
