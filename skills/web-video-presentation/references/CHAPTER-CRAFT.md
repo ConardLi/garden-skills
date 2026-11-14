@@ -172,6 +172,17 @@ AI 生成的网页有几种共有的"视觉指纹"，**全部不要**：
   - 完全无音频的过场 step 用空串 `""`，Auto 模式会按字数估时撑过
   - 这是**音频合成 + Auto 模式自动推进的唯一真相源**，写错或漏写
     会让录屏对不上嘴
+- **每章可选 `slides.ts`**（与 narrations.ts 同目录）——声明每步的
+  通用 slide 类型 + 视觉字段，供 `npm run export-slide-data` 生成
+  `slide-data.json`（服务器通用网页查看器 / 编辑器用）：
+  - 导出 `slides: SlideStepMeta[]`，**长度必须 = narrations.length**
+    （不相等会直接报错，防止两文件漂移）
+  - 字段为宽松 `string | string[]`：`type` 取值见
+    `templates/src/registry/types.ts` 的 `SlideStepType`（hero / iarc /
+    headline / study / dose / azad / timeline / fact / confounding /
+    question / highlight / versus / pyramid / transition / custom）
+  - 不写 slides.ts 也可以：导出脚本会按口播自动推断粗粒度 step 类型，
+    不阻塞导出（但真实视觉结构需要手写才能被网页编辑器编辑）
 - **动画时长必须 ≤ 该 step 的口播时长**——Auto 模式严格按音频结束推进，
   没有"等动画跑完"的兜底。动画太长 → 三选一：**写更长口播 / 拆 step
   / 调动画速度**。详细机制见 [`AUDIO.md`](AUDIO.md)

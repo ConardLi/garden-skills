@@ -59,15 +59,19 @@ my-video/
     ├── src/chapters/<NN>-<id>/
     │   ├── <Chapter>.tsx     # 视觉实现
     │   ├── <Chapter>.css
-    │   └── narrations.ts     # ★ step 数 + 口播文本的唯一真相源
+    │   ├── narrations.ts     # ★ step 数 + 口播文本的唯一真相源
+    │   └── slides.ts         # 可选：每步的 slide 类型 + 视觉字段（长度= narrations.length）
     ├── scripts/
     │   ├── extract-narrations.ts   # 扫所有 narrations.ts → audio-segments.json
+    │   ├── export-slide-data.ts    # 可选：合并 chapters + slides + narrations → slide-data.json
     │   ├── synthesize-audio.sh     # provider-agnostic runner（循环 segments）
     │   └── tts-providers/          # 每 provider 一个 .sh（内置 2 个）
     │       ├── README.md           # 三函数契约 + 5 段现成代码片段（11labs / edge-tts / say / azure / gcloud）
     │       ├── minimax.sh          # 默认 provider，用 mmx-cli
     │       └── openai.sh           # 内置 OpenAI TTS（curl + OPENAI_API_KEY）
+    ├── src/registry/slide-config.ts # 可选：顶层 title / subtitle（导出用）
     ├── audio-segments.json         # extract 产出（合成前 review）
+    ├── slide-data.json             # export 产出（通用网页查看器 / 编辑器用）
     └── public/audio/<id>/<N>.mp3   # 可选：合成的音频
 ```
 
@@ -75,6 +79,11 @@ my-video/
 > 章节 `.tsx` 里的 `if (step === N)` 出现的最大 N + 1 必须等于
 > `narrations.length`。这保证 5 处地方（script / outline / 章节代码 /
 > chapters.ts / 音频文件）永远不会漂。
+>
+> **可选导出**：完成演示后跑 `npm run export-slide-data` 生成统一的
+> `slide-data.json`（网页查看器 / 编辑器通用格式）。每章若有
+> `slides.ts`（与 narrations.ts 同目录、长度必须相等）则用其真实视觉
+> 结构；没有则按口播自动推断粗粒度 step 类型，不阻塞导出。
 
 ---
 
@@ -385,6 +394,19 @@ npm run synthesize-audio                       # 默认 minimax provider，增�
 # 或用内置 openai (要 OPENAI_API_KEY):
 PRESENTATION_TTS=openai npm run synthesize-audio
 # 或自定义：写一个 scripts/tts-providers/<name>.sh，见该目录的 README.md
+```
+
+## 导出通用幻灯片数据（可选，网页查看器 / 编辑器用）
+
+完成演示后，可用一条命令导出统一的 `slide-data.json`，直接丢到服务器
+`presentations/<slug>/` 供通用的网页查看器 / 编辑器读取编辑：
+
+```bash
+cd presentation
+npm run export-slide-data
+# 每章若有 slides.ts（与 narrations.ts 同目录）则导出真实视觉结构；
+# 没有则自动推断粗粒度 step 类型，不阻塞导出。
+npm run export-slide-data -- --print   # 顺带打印到 stdout
 ```
 
 合成完告诉用户：输出位置 / 总段数 / 哪些段时长异常（太长 = 该 step 拆
