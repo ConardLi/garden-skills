@@ -63,4 +63,8 @@
     linear-gradient(rgba(190, 175, 150, 0.18) 1px, transparent 1px),
     linear-gradient(90deg, rgba(190, 175, 150, 0.18) 1px, transparent 1px);
   --surface-pattern-size: 40px 40px;
+  /* 底纹画在章节内容之上（z=3），避免章节铺不透明底后整片空色无纹理
+     （2026-10-19：治"大块空色显得空洞"）。淡淡一层网格 = 纸张质感。 */
+  --surface-pattern-z: 3;
+  --surface-pattern-opacity: 0.7;
 }

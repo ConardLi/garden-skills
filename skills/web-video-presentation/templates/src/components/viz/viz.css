@@ -1,0 +1,52 @@
+/**
+ * viz.css — 章节视觉元素库的共用样式与动作原语。
+ *
+ * 全部元素都是 **SVG**（viewBox 自适应缩放），颜色一律走主题 token
+ * （var(--surface-2) / var(--rule) / var(--text) / var(--accent)…），
+ * 因此换主题不破、任意尺寸不失真、无位图、无 emoji。
+ *
+ * 摆放：放进 `.band-main` 里（或任何定高盒），元素默认 100% 填满容器。
+ */
+.viz {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ── 动作原语（章节的"动起来的图"用它们，见 CHAPTER-CRAFT「视觉演示」）── */
+.viz-draw {
+  /* 默认值取一个大数：≥ 任意路径长度时，动画即"从起点画到终点"（见注释） */
+  --dash: 1600;
+  stroke-dasharray: var(--dash);
+  stroke-dashoffset: var(--dash);
+  animation: viz-draw 900ms var(--ease-expo) forwards;
+}
+@keyframes viz-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.viz-grow {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: viz-grow 700ms var(--ease-overshoot) both;
+}
+@keyframes viz-grow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+.viz-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scale-in 520ms var(--ease-overshoot) both;
+}
+
+.viz-rise { animation: rise-in var(--dur-base) var(--ease-quart) both; }
+
+/* 未点亮 / 已点亮（流程高亮、卡片聚焦用） */
+.viz-dim { opacity: 0.32; }
+.viz-on  { opacity: 1; }
+
+/* ListStack 的序号 / 数值列：等宽数字，缩放或字型回退时右对齐不跳动 */
+.viz-num { font-variant-numeric: tabular-nums; }

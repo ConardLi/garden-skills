@@ -1,0 +1,144 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · github-light
+ *   The real GitHub interface, in daylight. Every colour below was sampled
+ *   from live github.com computed styles with prefers-color-scheme:light —
+ *   NOT guessed from docs or from memory of the dark variant.
+ *
+ *   sampled 2026-10-11 · light scheme · /obra/superpowers
+ *     Primer CSS custom properties read straight off :root
+ *       --fgColor-default        #1f2328   fg.default        → text
+ *       --fgColor-muted          #59636e   fg.muted          → text muted
+ *       --bgColor-default        #ffffff   canvas.default    → shell
+ *       --bgColor-muted / inset  #f6f8fa   canvas.inset      → surface
+ *       --borderColor-default    #d1d9e0   border.default    → rule
+ *       --bgColor-neutral-muted  #818b981f neutral.muted     → pill
+ *       --fgColor-accent         #0969da   accent.fg         → accent
+ *       --fgColor-success        #1a7f37   success.fg        → green
+ *       --fgColor-danger         #d1242f   danger.fg         → red
+ *       --fgColor-attention      #9a6700   attention.fg      → yellow
+ *       --fgColor-done           #8250df   done.fg           → purple
+ *     body background  rgb(255,255,255)
+ *     body color       rgb(31,35,40)
+ *     font-family      "Mona Sans VF", -apple-system, BlinkMacSystemFont,
+ *                      "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif
+ *
+ *     tab nav (prc-UnderlineNav) ::after — the selected-tab underline:
+ *       background rgb(253,140,115) → #fd8c73, height 2px, inset bottom
+ *       NOTE: the dark scheme uses #f0883e for this; daylight is lighter.
+ *       item border-radius 6px
+ *
+ *   character knobs:
+ *     • accent      — GitHub link blue #0969da (daylight link colour)
+ *     • hero numbers — monospace, like code on screen
+ *     • card radius — 6px, exactly GitHub's own radius
+ *     • rule        — 1px hairline, GitHub's own border weight
+ *     • motion      — restrained & quick, like UI transitions, not film
+ *
+ *   NOTE compared with github-dark: this theme reuses the SAME variable
+ *   names (including --chrome-*), so every chapter component switches
+ *   scheme with a single file swap. Only the values differ.
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette: sampled from live github.com (light) ─── */
+  --shell:        #ffffff;
+  --surface:      #f6f8fa;
+  --surface-2:    #ffffff;
+  --surface-3:    #f6f8fa;
+  --text:         #1f2328;
+  --text-2:       #59636e;
+  --text-mute:    #59636e;
+  --text-faint:   #818b98;
+  --rule:         #d1d9e0;
+
+  /* accent = GitHub daylight link blue */
+  --accent:       #0969da;
+  --accent-soft:  rgba(9, 105, 218, 0.10);
+  --accent-glow:  rgba(9, 105, 218, 0.32);
+
+  /* GitHub semantic colours — daylight variants */
+  --gh-green:     #1a7f37;
+  --gh-purple:    #8250df;
+  --gh-yellow:    #9a6700;
+  --gh-red:       #d1242f;
+  --gh-pink:      #bf3989;
+  --gh-orange:    #bc4c00;
+
+  /* 通用语义名 —— 与 github-dark / claude-light 同名，
+     章节用这些名才能换主题不失效 */
+  --pos:          #1a7f37;
+  --neg:          #d1242f;
+  --info:         #8250df;
+  --warn:         #9a6700;
+
+  /* ─── interface chrome: 顶栏 / tab 栏 / 状态栏 / 窗口框 ───
+     Same structure as github-dark. In daylight the header is white with a
+     hairline bottom border (GitHub AppHeader), buttons sit on canvas.inset
+     #f6f8fa with a border.default outline, and counters use the translucent
+     neutral 818b981f — all verified against the live page.                 */
+  --chrome-frame:        #d1d9e0;   /* 窗口外框线 */
+  --chrome-line:         #d1d9e0;   /* chrome 内部分隔线 */
+  --chrome-bar:          #ffffff;   /* 顶栏底 = AppHeader 白 */
+  --chrome-btn:          #f6f8fa;   /* 图标按钮底 btn.default bg */
+  --chrome-btn-hi:       #eff2f5;   /* 图标按钮 hover */
+  --chrome-btn-border:   #d1d9e0;   /* 图标按钮描边 border.default */
+  --chrome-field:        #ffffff;   /* 搜索框底 */
+  --chrome-icon:         #1f2328;   /* 顶栏主图标 fg.default */
+  --chrome-icon-mute:    #59636e;   /* 顶栏次级图标 fg.muted */
+  --chrome-pill:         rgba(129, 139, 152, 0.12);  /* neutral.muted */
+  --chrome-tab-hi:       #1f2328;   /* 当前 tab 文字 */
+  --chrome-tab:          #59636e;   /* 非当前 tab 文字 */
+  --chrome-tab-underline:#fd8c73;   /* 当前 tab 橙下划线（实测 rgb253,140,115）*/
+  --chrome-avatar-a:     #0969da;
+  --chrome-avatar-b:     #8250df;
+  --chrome-avatar-fg:    #ffffff;
+  --chrome-highlight:    rgba(255, 255, 255, 0.9);  /* 窗口顶部高光 */
+
+  /* ─── 阴影：日间需要一点点高度感，深色版不需要 ─── */
+  --shadow-card:  0 1px 3px rgba(31, 35, 40, 0.07);
+  --shadow-window: 0 2px 10px rgba(31, 35, 40, 0.06);
+
+  /* ─── fonts: GitHub's own stack ─── */
+  --font-display-cn: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-display-en: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+                     Helvetica, Arial, sans-serif;
+  --font-body:       -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+                     "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono:       "SF Mono", "JetBrains Mono", ui-monospace, Menlo,
+                     Consolas, "Liberation Mono", monospace;
+  --font-features:   "tnum";
+
+  /* ─── motion: quick & restrained, like UI transitions ─── */
+  --dur-base:       550ms;
+  --dur-slow:       900ms;
+  --dur-cinematic:  1300ms;
+
+  /* ─── design identity ─── */
+  --r-card:        6px;              /* GitHub's own radius */
+  --r-btn:         6px;              /* GitHub button radius */
+  --r-pill:        999px;
+  --r-window:      14px;             /* 窗口外框圆角 */
+  --r-stage:       0;
+  --rule-w:        1px;              /* GitHub's own border weight */
+  --rule-style:    solid;
+  --hero-num-font:   var(--font-mono);   /* numbers read as code */
+  --hero-num-style:  normal;
+  --hero-num-weight: 500;
+  --hero-num-track:  -0.02em;
+  --stage-pad-x:   120px;
+  --stage-pad-y:   88px;
+  --chrome-pad:    44px;             /* 窗口距舞台边缘 */
+
+  /* ─── decoration: very faint daylight wash, no grain ─── */
+  --surface-vignette:
+    radial-gradient(ellipse 80% 46% at 50% 30%, rgba(9, 105, 218, 0.045) 0%, transparent 66%),
+    radial-gradient(ellipse 70% 40% at 84% 94%, rgba(130, 80, 223, 0.03) 0%, transparent 68%);
+
+  /* ─── 内容区质感：极淡点阵 + 柔光 ───
+     日间用**深色点**（在白纸上更自然），透明度压到 0.04 只做"纸纹"。
+     刻意不用噪点 —— 噪点在 H.264 里会被量化成可见的块状噪声（踩过画质坑）。 */
+  --canvas-dot:      rgba(31, 35, 40, 0.085);
+  --canvas-dot-size: 44px;
+  --canvas-glow:
+    radial-gradient(ellipse 72% 44% at 50% 24%, rgba(9, 105, 218, 0.065) 0%, transparent 68%),
+    radial-gradient(ellipse 64% 36% at 78% 92%, rgba(130, 80, 223, 0.042) 0%, transparent 70%);
+}

@@ -1,0 +1,126 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · github-dark
+ *   The real GitHub interface, on a video stage. Every colour below was
+ *   sampled from live github.com computed styles — NOT guessed from docs.
+ *
+ *   sampled 2026-10-10 · dark scheme · /obra/superpowers
+ *     body background  rgb(13, 17, 23)   → #0d1117  canvas.default
+ *     body color       rgb(240,246,252)  → #f0f6fc  fg.default
+ *     header           rgb(0, 0, 0)      → #000000  header
+ *     .Box background  rgb(1, 4, 9)      → #010409  canvas.inset
+ *     border           rgb(61, 68, 77)   → #3d444d  border.default
+ *     .color-fg-muted  rgb(145,152,161)  → #9198a1  fg.muted
+ *     headerSearch     rgb(33,38,45)     → #21262d  header.search
+ *     font-family      "Mona Sans VF", -apple-system, BlinkMacSystemFont,
+ *                      "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif
+ *
+ *   character knobs:
+ *     • accent      — GitHub link blue #2f81f7 (sits in the same family as
+ *                     the channel's Klein blue #2B5BFF, so brand stays intact)
+ *     • hero numbers — monospace, like code on screen
+ *     • card radius — 6px, exactly GitHub's own radius
+ *     • rule        — 1px hairline, GitHub's own border weight
+ *     • motion      — restrained & quick, like UI transitions, not film
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette: sampled from live github.com ─── */
+  --shell:        #0d1117;
+  --surface:      #010409;
+  --surface-2:    #161b22;
+  --surface-3:    #21262d;
+  --text:         #f0f6fc;
+  --text-2:       #c9d1d9;
+  --text-mute:    #9198a1;
+  --text-faint:   #6e7681;
+  --rule:         #3d444d;
+
+  /* accent = GitHub link blue; keeps Klein-blue brand continuity */
+  --accent:       #2f81f7;
+  --accent-soft:  rgba(47, 129, 247, 0.14);
+  --accent-glow:  rgba(47, 129, 247, 0.45);
+
+  /* GitHub semantic colours, for showing real interface meaning */
+  --gh-green:     #3fb950;
+  --gh-purple:    #a371f7;
+  --gh-yellow:    #d29922;
+  --gh-red:       #f85149;
+  --gh-pink:      #db61a2;
+  --gh-orange:    #f0883e;
+
+  /* 通用语义名 —— 与 claude-light 同名，章节用这些名才能换主题不失效 */
+  --pos:          #3fb950;
+  --neg:          #f85149;
+  --info:         #a371f7;
+  --warn:         #d29922;
+
+  /* ─── interface chrome: 顶栏 / tab 栏 / 状态栏 / 窗口框 ───
+     All sampled from the same live dump as the palette above. The
+     chapters draw a "GitHub repository window" around the content using
+     these — border-boxes, pill buttons, hairlines, mono labels.          */
+  --chrome-frame:        #21262d;   /* 窗口外框线（比内部 hairline 略亮）*/
+  --chrome-line:         #21262d;   /* chrome 内部分隔线 */
+  --chrome-bar:          #0d1117;   /* 顶栏底 = canvas.default */
+  --chrome-btn:          #21262d;   /* 图标按钮底 header.search */
+  --chrome-btn-hi:       #30363d;   /* 图标按钮 hover */
+  --chrome-btn-border:   #3d444d;   /* 图标按钮描边 border.default */
+  --chrome-field:        #010409;   /* 搜索框底 canvas.inset */
+  --chrome-icon:         #f0f6fc;   /* 顶栏主图标 fg.default */
+  --chrome-icon-mute:    #9198a1;   /* 顶栏次级图标 fg.muted */
+  --chrome-pill:         #21262d;   /* Public 徽章 / counter 底 */
+  --chrome-tab-hi:       #f0f6fc;   /* 当前 tab 文字 */
+  --chrome-tab:          #9198a1;   /* 非当前 tab 文字 */
+  --chrome-tab-underline:#f0883e;   /* GitHub 当前 tab 的橙下划线 */
+  --chrome-avatar-a:     #2f81f7;
+  --chrome-avatar-b:     #a371f7;
+  --chrome-avatar-fg:    #ffffff;
+  --chrome-highlight:    rgba(240, 246, 252, 0.09);  /* 窗口顶部高光 */
+
+  /* ─── 阴影：深色版不需要高度感，靠描边分层，给 0 值保持变量齐备 ─── */
+  --shadow-card:   0 1px 3px rgba(1, 4, 9, 0.4);
+  --shadow-window: 0 2px 10px rgba(1, 4, 9, 0.5);
+
+  /* ─── fonts: GitHub's own stack ─── */
+  --font-display-cn: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-display-en: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+                     Helvetica, Arial, sans-serif;
+  --font-body:       -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+                     "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono:       "SF Mono", "JetBrains Mono", ui-monospace, Menlo,
+                     Consolas, "Liberation Mono", monospace;
+  --font-features:   "tnum";
+
+  /* ─── motion: quick & restrained, like UI transitions ─── */
+  --dur-base:       550ms;
+  --dur-slow:       900ms;
+  --dur-cinematic:  1300ms;
+
+  /* ─── design identity ─── */
+  --r-card:        6px;              /* GitHub's own radius */
+  --r-btn:         6px;              /* GitHub button radius */
+  --r-pill:        999px;
+  --r-window:      14px;             /* 窗口外框圆角 */
+  --r-stage:       0;
+  --rule-w:        1px;              /* GitHub's own border weight */
+  --rule-style:    solid;
+  --hero-num-font:   var(--font-mono);   /* numbers read as code */
+  --hero-num-style:  normal;
+  --hero-num-weight: 500;
+  --hero-num-track:  -0.02em;
+  --stage-pad-x:   120px;
+  --stage-pad-y:   88px;
+  --chrome-pad:    44px;             /* 窗口距舞台边缘 */
+
+  /* ─── decoration: faint screen glow, no grain ─── */
+  --surface-vignette:
+    radial-gradient(ellipse 80% 46% at 50% 30%, rgba(47, 129, 247, 0.075) 0%, transparent 66%),
+    radial-gradient(ellipse 70% 40% at 84% 94%, rgba(163, 113, 247, 0.045) 0%, transparent 68%);
+
+  /* ─── 内容区质感：极淡点阵 + 柔光 ───
+     刻意不用噪点 —— 噪点在 H.264 里会被量化成可见的块状噪声（踩过画质坑）。
+     规则点阵是确定性图案，压缩友好，读起来像代码编辑器/终端的画布。      */
+  --canvas-dot:      rgba(240, 246, 252, 0.055);
+  --canvas-dot-size: 44px;
+  --canvas-glow:
+    radial-gradient(ellipse 72% 44% at 50% 24%, rgba(47, 129, 247, 0.075) 0%, transparent 68%),
+    radial-gradient(ellipse 64% 36% at 78% 92%, rgba(163, 113, 247, 0.04) 0%, transparent 70%);
+}

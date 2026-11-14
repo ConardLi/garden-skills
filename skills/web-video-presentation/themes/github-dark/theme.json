@@ -1,0 +1,28 @@
+{
+  "id": "github-dark",
+  "name": "GitHub Dark",
+  "nameZh": "GitHub 暗色",
+  "description": "Real GitHub interface colors, sampled from live github.com computed styles. Cold blue-grey canvas, hairline borders, system UI type, monospace numerals. Built for showing code, repos and developer tools on screen.",
+  "descriptionZh": "取自 github.com 实时页面计算样式的真实配色。冷蓝灰底 + 发丝描边 + 系统 UI 字体 + 等宽数字。专为展示代码、仓库与开发者工具设计。",
+  "mood": [
+    "dark",
+    "github",
+    "developer",
+    "technical",
+    "interface",
+    "cold"
+  ],
+  "bestFor": [
+    "GitHub 项目推荐",
+    "开源项目介绍",
+    "开发者工具评测",
+    "代码 / 仓库展示",
+    "技术日报 / 周报连载"
+  ],
+  "preview": {
+    "shell": "#0d1117",
+    "surface": "#010409",
+    "text": "#f0f6fc",
+    "accent": "#2f81f7"
+  }
+}
