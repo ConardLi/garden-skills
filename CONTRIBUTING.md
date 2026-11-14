@@ -235,7 +235,7 @@ npm run release:dry
 # 3. Cut the releases.
 npm run release
 # Confirm `y` and watch the script bump nothing (initial), commit the README
-# sync, tag all four, and push.
+# sync, tag every skill, and push.
 
 # 4. Watch the per-skill release workflows run in parallel.
 gh run list --workflow=release-skill.yml
@@ -244,7 +244,7 @@ gh run list --workflow=release-skill.yml
 git pull origin main
 ```
 
-After this, the four skills each have a `releases/tag/<skill>-v1.0.0` entry
+After this, every skill has a `releases/tag/<skill>-v1.0.0` entry
 on GitHub, with downloadable zip + sha256, and the README download links
 point at them.
 
