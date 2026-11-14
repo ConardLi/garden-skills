@@ -43,12 +43,18 @@
 <br/><sub>ローカルナレッジ検索</sub>
 </td>
 </tr>
+<tr>
+<td colspan="2" align="center" valign="top">
+<a href="#agent-qa"><strong>agent-qa</strong></a>
+<br/><sub>アプリケーション QA / 証拠レビュー</sub>
+</td>
+</tr>
 </table>
 
 [![License: MIT](https://img.shields.io/github/license/ConardLi/garden-skills?style=flat-square&color=blue)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ConardLi/garden-skills?style=flat-square)](https://github.com/ConardLi/garden-skills/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#コントリビュート)
-[![Skills count](https://img.shields.io/badge/skills-6-orange?style=flat-square)](#skills-gallery)
+[![Skills count](https://img.shields.io/badge/skills-7-orange?style=flat-square)](#skills-gallery)
 [![Spec](https://img.shields.io/badge/spec-SKILL.md-black?style=flat-square)](https://agentskills.io)
 
 [English](./README.md) · [中文文档](./README.zh-CN.md) · [日本語](./README.ja-JP.md)
@@ -337,6 +343,20 @@
 
 ---
 
+### [`agent-qa`](./skills/agent-qa)
+
+**カテゴリ:** テスト / アプリケーション QA
+
+**用途:** 設定済みの [agent-qa](https://github.com/vostride/agent-qa) プロジェクトで、選択した回帰テストを実行し、証拠に基づいて失敗をレビューします。
+
+高度な memidex メモリエンジンと自己改善機能を備えた、vostride の自然言語 Web、Android、iOS テストツールです。実行証拠と知識の出所を確認し、元の判定を維持して、許可された対象に選択したテストだけを実行します。
+
+実験版 v0.1.0。shell、Node.js 24+、設定済みの agent-qa プロジェクトが必要です。実行には対象アプリと設定済みプロバイダーが必要で、別途利用料が発生する場合があります。外部ランタイムは FSL-1.1-ALv2 で、同梱されていません。記載された全エージェント環境での実際の動作は未検証です。
+
+リンク: [README](./skills/agent-qa/README.ja-JP.md) · [SKILL.md](./skills/agent-qa/SKILL.md) · <!-- DOWNLOAD:agent-qa:start -->_（まだリリースされていません）_<!-- DOWNLOAD:agent-qa:end -->
+
+---
+
 ## インストール
 
 サポートされているインストール方法は 5 つあります。自分のスタックに合うものを選んでください:
@@ -409,6 +429,7 @@ npx skills remove kb-retriever  # アンインストール
 /plugin install image-generation-skills@garden-skills
 /plugin install motion-showreel-skills@garden-skills
 /plugin install beautiful-article-skills@garden-skills
+/plugin install agent-qa-skills@garden-skills
 ```
 
 プラグインパックは [`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json) で宣言されています:
@@ -421,6 +442,7 @@ npx skills remove kb-retriever  # アンインストール
 | `image-generation-skills` | `gpt-image-2` |
 | `motion-showreel-skills` | `motion-showreel` |
 | `beautiful-article-skills` | `beautiful-article` |
+| `agent-qa-skills` | `agent-qa` |
 
 ### 方法 C · Releases のバージョン固定 `.zip`
 
