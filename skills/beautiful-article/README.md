@@ -291,6 +291,12 @@ The agent owns a per-project workspace directory that is its **long-term memory*
 
 ## Skill structure
 
+For public URL sources, an optional [Parallel Search MCP helper](./references/parallel-search-mcp.md)
+fetches full-page Markdown without an account or API key. Run it with
+`uv run <skill-path>/scripts/source-to-markdown-parallel.py fetch <URL> -o source/source.md`.
+Its `search` command finds sources when the user requests research. Existing extraction
+paths and the source completeness review still apply; anonymous use has rate limits.
+
 ```text
 skills/beautiful-article/
 ├── SKILL.md                            Main skill (frontmatter name: beautiful-article)
