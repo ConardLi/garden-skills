@@ -1,13 +1,14 @@
 import process from "node:process";
 import { readFile } from "node:fs/promises";
 import {
-    DEFAULT_IMAGE_DIR,
+  DEFAULT_IMAGE_DIR,
   DEFAULT_MODEL,
   appendIfPresent,
   buildBaseUrl,
   buildDefaultImagePath,
   ensureFilesExist,
   extractGeneratedBytes,
+  imageProvider,
   loadAmbientEnv,
   mimeFor,
   postMultipart,
@@ -18,6 +19,13 @@ import {
   savePrompt,
   slugify,
 } from "./shared.js";
+import {
+  buildAtlasEditPayload,
+  downloadAtlasImage,
+  imageToDataUrl,
+  pollAtlasPrediction,
+  submitAtlasImage,
+} from "./atlas.js";
 
 function printHelp() {
   console.log(`Usage:
@@ -198,17 +206,45 @@ async function run() {
   const nameHint = slugify(prompt.split(/\s+/).slice(0, 8).join(" "), "edited-image");
   const promptPath = await savePrompt(prompt, cfg.promptOutput, nameHint);
   const outputPath = resolveOutput(cfg.output, buildDefaultImagePath("edit", nameHint));
-  const form = await buildForm(cfg, prompt);
-  const url = buildRequestUrl();
-  const json = await postMultipart(url, form);
-  const bytes = await extractGeneratedBytes(json);
+  const provider = imageProvider();
+  let model;
+  let url;
+  let json;
+  let bytes;
+
+  if (provider === "atlas") {
+    if (cfg.mask) throw new Error("The Atlas qwen-image edit model does not support mask input.");
+    if (cfg.quality || cfg.background || cfg.inputFidelity || cfg.outputFormat || cfg.outputCompression || cfg.moderation) {
+      throw new Error("The Atlas provider does not accept OpenAI-only edit options.");
+    }
+    const payload = buildAtlasEditPayload({
+      prompt,
+      model: cfg.model,
+      size: cfg.size,
+      n: cfg.n,
+      referenceImageUrl: await imageToDataUrl(cfg.image),
+    });
+    model = payload.model;
+    const submitted = await submitAtlasImage(payload);
+    const completed = await pollAtlasPrediction(submitted.prediction.id);
+    url = submitted.requestUrl;
+    json = completed.prediction;
+    bytes = await downloadAtlasImage(json.outputs[0]);
+  } else {
+    const form = await buildForm(cfg, prompt);
+    model = cfg.model || process.env.OPENAI_IMAGE_MODEL || DEFAULT_MODEL;
+    url = buildRequestUrl();
+    json = await postMultipart(url, form);
+    bytes = await extractGeneratedBytes(json);
+  }
   await saveImage(outputPath, bytes);
 
   if (cfg.json) {
     printJson({
       savedImage: outputPath,
       savedPrompt: promptPath,
-      model: cfg.model || process.env.OPENAI_IMAGE_MODEL || DEFAULT_MODEL,
+      provider,
+      model,
       requestUrl: url,
       apiResponse: json,
     });

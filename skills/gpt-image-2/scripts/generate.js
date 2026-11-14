@@ -6,6 +6,7 @@ import {
   buildDefaultImagePath,
   ensureFilesExist,
   extractGeneratedBytes,
+  imageProvider,
   loadAmbientEnv,
   printJson,
   readPromptInput,
@@ -15,6 +16,12 @@ import {
   postJson,
   slugify,
 } from "./shared.js";
+import {
+  buildAtlasGeneratePayload,
+  downloadAtlasImage,
+  pollAtlasPrediction,
+  submitAtlasImage,
+} from "./atlas.js";
 
 function printHelp() {
   console.log(`Usage:
@@ -164,16 +171,35 @@ async function run() {
   const outputPath = resolveOutput(cfg.imagePath, buildDefaultImagePath("generate", nameHint));
   await ensureFilesExist([], "input");
 
-  const payload = buildPayload(cfg, prompt);
-  const url = buildRequestUrl();
-  const json = await postJson(url, payload);
-  const bytes = await extractGeneratedBytes(json);
+  const provider = imageProvider();
+  let payload;
+  let url;
+  let json;
+  let bytes;
+
+  if (provider === "atlas") {
+    if (cfg.quality || cfg.background || cfg.moderation || cfg.outputFormat || cfg.outputCompression) {
+      throw new Error("The Atlas provider does not accept OpenAI-only quality, background, moderation, or output-format options.");
+    }
+    payload = buildAtlasGeneratePayload({ prompt, model: cfg.model, size: cfg.size, n: cfg.n });
+    const submitted = await submitAtlasImage(payload);
+    const completed = await pollAtlasPrediction(submitted.prediction.id);
+    url = submitted.requestUrl;
+    json = completed.prediction;
+    bytes = await downloadAtlasImage(json.outputs[0]);
+  } else {
+    payload = buildPayload(cfg, prompt);
+    url = buildRequestUrl();
+    json = await postJson(url, payload);
+    bytes = await extractGeneratedBytes(json);
+  }
   await saveImage(outputPath, bytes);
 
   if (cfg.json) {
     printJson({
       savedImage: outputPath,
       savedPrompt: promptPath,
+      provider,
       model: payload.model,
       requestUrl: url,
       apiResponse: json,
