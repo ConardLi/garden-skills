@@ -32,6 +32,7 @@ async function main() {
 
   if (json) {
     console.log(JSON.stringify(rows, null, 2));
+    if (rows.some((r) => !r.ok)) process.exitCode = 1;
     return;
   }
 
