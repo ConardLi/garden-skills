@@ -7,7 +7,46 @@
 
 ---
 
-## 推荐流程：Auto 模式一镜到底
+## 自动渲染（可选，替代 OBS/QuickTime）
+
+`scripts/render/` 提供了一条命令自动出片：Playwright 打开 `?auto=1`、
+按 SPACE 启动、录 1920×1080 webm，再用 ffmpeg 把 narration 按真实 mp3
+时长切成 SRT/ASS 字幕烧进 MP4。适合批量出片 / CI，不需要手动开录屏工具。
+
+### 前置
+
+- 已跑过 `npm run extract-narrations` + `npm run synthesize-audio`
+- 本机装了 `ffmpeg` + `ffprobe`（PATH 里）
+- 一次性装好渲染依赖：
+
+  ```bash
+  npm run render:setup     # = npm i -D playwright + npx playwright install chromium
+  ```
+
+### 一键出片
+
+```bash
+npm run render:check       # 自检 node / ffmpeg / playwright / 音频文件
+npm run render             # 自动录屏 + 烧字幕 → out/final/video.mp4
+```
+
+产物：
+
+```
+out/final/video.mp4              # 1920×1080 H.264/AAC，字幕已烧入
+out/subtitles/subtitles.srt      # 外挂字幕（可二次编辑）
+out/subtitles/subtitles.ass
+```
+
+加 `--keep-raw` 可保留 `out/raw/*.webm` 用于排查录屏问题。
+
+> 自动渲染和下面的手动 Auto 模式是**同一条播放路径**（都是 `?auto=1`
+> 按 SPACE），只是录屏执行者从 OBS 换成 Playwright。音画同步由页面
+> 音频驱动，字幕按真实 mp3 时长生成，不需要后期对轨。
+
+---
+
+## 推荐流程：Auto 模式一镜到底（手动录屏）
 
 ### 前置
 
