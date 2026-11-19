@@ -1,6 +1,6 @@
 {
   "name": "motion-showreel",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "category": "Motion Graphics / Code Video",
   "description": "Make code-rendered motion videos and narrated explainers up to 20 minutes, with MP4 and editable source. Confirm requirements and style frames before production. Preserve the 40-style library, deterministic render(t), beat tools, built-in synthesis and Tone.js; add independent music/SFX sources, Gemini/MiniMax TTS using user-supplied scripts, recording timestamps, voice-first mixing, persistent chapter builds and technical acceptance separate from human review.",
   "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/motion-showreel",
