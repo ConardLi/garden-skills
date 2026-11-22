@@ -41,6 +41,10 @@
 | macOS | QuickTime → 文件 → 新建屏幕录制 | 同上 |
 | 跨平台 | OBS Studio | 窗口捕获，Canvas 1920×1080，60fps |
 
+> **竖版（小红书 3:4）**：脚手架加 `--ratio=3:4` 后舞台变为 1080×1440。
+> 录屏时把浏览器视口 / OBS 窗口捕获尺寸设为 **1080×1440**（不是 1920×1080），
+> `?auto=1` 录出来的成片即为竖版。音频合成与横版完全一致。
+
 ### 模式速查
 
 | URL / 快捷键 | 行为 |
@@ -51,6 +55,45 @@
 | Auto 模式下首次按 `Space` | 启动 Auto 播放（绕过浏览器自动播放限制） |
 
 也可以鼠标移到右上角，会出现一个隐藏的模式切换按钮。
+
+---
+
+## 方案 C：无头自动成片（截图定格，零抖动，全自动）
+
+不想手动开 OBS 录屏时，用脚手架自带的 `scripts/record.mjs` + `scripts/build_from_shots.py`
+全自动出片。**这条路径专门根治「无头录屏音画不同步」这个已踩过的坑**——
+
+> ⚠️ 已踩坑：无头 Chrome 录 webm 时，每帧时间戳相对页面事件会随机抖 **±0.9s**
+> （无净漂移）。重定时 / 改 CFR / 压动画都救不回，因为「录制帧的采样点」根本不在
+> 事件上。方案 C 不依赖录制帧时序，改用「逐步截图 + 干净累积音轨」彻底绕开。
+
+### 前置
+
+```bash
+cd <project>
+npm i -D playwright-core
+npx playwright-core install chromium   # 或设 CHROME=系统Chrome路径
+# 并确保 ffmpeg 在 PATH（或设 FFMPEG 环境变量指向可执行文件）
+```
+
+### 步骤
+
+```bash
+npm run dev                      # vite 跑在 5174
+npm run extract-narrations       # → audio-segments.json
+npm run synthesize-audio         # → public/audio/<chapter>/<step>.mp3
+node scripts/record.mjs          # 抓 raw/shots/step-<ch>-<step>.png + raw/marks.json
+python scripts/build_from_shots.py   # → <项目名>-final.mp4
+```
+
+`record.mjs` 会自动从 `src/hooks/useStepper.ts`、`src/stage.config.ts` 探测
+`STORAGE_KEY` 与舞台尺寸，无需手填。成片比例由 `stage.config.ts` 决定（竖版即 1080×1440）。
+
+### 原理（为什么同步）
+
+- 每步切换后 ~200ms（入场动画已定格）截一张图，抓取时刻是已知页面时钟、内容绝对对应「第 i 步」。
+- 音频按「干净累积时长」`offset[i] = Σ(durs[j] + 0.2)` 摆放，与截图共用同一时间轴 → 逐帧对齐。
+- 实测残差 std < 0.02s，人眼不可察。
 
 ---
 

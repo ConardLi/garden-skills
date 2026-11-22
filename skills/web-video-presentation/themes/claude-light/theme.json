@@ -1,0 +1,28 @@
+{
+  "id": "claude-light",
+  "name": "Claude Light",
+  "nameZh": "Claude 浅色",
+  "description": "Anthropic's own light palette — ivory paper canvas, warm ink text, terracotta accent and hairline borders. Serif display type for headings, sans for body, generous 24px card radius. Calm, editorial and human: made for explaining a tool without terminal coldness.",
+  "descriptionZh": "Anthropic 官方浅色配色：米白纸感底 + 暖黑正文 + 赤陶橙强调与发丝描边。标题衬线、正文无衬线、24px 大圆角。克制、有人味，讲工具但不冷冰冰。",
+  "mood": [
+    "light",
+    "warm",
+    "claude",
+    "editorial",
+    "calm",
+    "paper"
+  ],
+  "bestFor": [
+    "AI 工具推荐",
+    "每日 Skill 日报连载",
+    "产品 / 能力讲解",
+    "操作演示与教程",
+    "需要亲和力的技术内容"
+  ],
+  "preview": {
+    "shell": "#FAF9F5",
+    "surface": "#FFFFFF",
+    "text": "#141413",
+    "accent": "#D97757"
+  }
+}

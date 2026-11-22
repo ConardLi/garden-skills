@@ -1,20 +1,41 @@
 /* ─────────────────────────────────────────────────────────────────────
  * Example chapter — uses ONLY semantic tokens from the active theme.
  * Replace this file freely; it's just demo content.
+ *
+ * 版式契约（2026-10-19 起）：根节点用 `.stage-3band`（顶部钩子行 / 中部
+ * 主视觉 ≥55% 舞台高 / 底部注释行）；中部必挂 `components/viz` 具象元素。
+ * 「整章只有标题 + 一段文字」= 验收不过，见 CHAPTER-CRAFT.md。
  * ───────────────────────────────────────────────────────────────────── */
 
 .ex-scene { color: var(--text); }
 
 .ex-em { color: var(--accent); }
 
-/* ─── step 0: cover ─── */
-.ex-cover-body {
+/* ─── 顶部钩子行 ─── */
+.band-top .ex-h2 {
+  font-size: var(--t-h1);
+  line-height: 1.12;
+  margin: 0;
+  /* 占满剩余宽度、允许在内部换行（而不是把 kicker 挤成竖排） */
   flex: 1;
-  display: flex;
+  min-width: 0;
+}
+
+/* ─── 底部注释行 ─── */
+.band-foot .ex-p {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--text-mute);
+  margin: 0;
+  max-width: 56ch;
+}
+
+/* ─── step 0: 封面（顶部大标题 + 中部浏览器窗撑满，画面不空）─── */
+.ex-cover-top {
   flex-direction: column;
-  justify-content: center;
-  gap: var(--space-5);
-  padding-top: var(--space-7);
+  align-items: flex-start;
+  gap: var(--space-3);
 }
 .ex-cover-h {
   font-size: var(--t-display-2);
@@ -22,59 +43,20 @@
   margin: 0;
   max-width: 24ch;
 }
-.ex-cover-foot {
-  margin-top: var(--space-7);
-  display: flex;
-  align-items: center;
+
+/* ─── step 1: 主视觉 = viz 元素（见 Example.tsx 的 FolderTree）─── */
+
+/* ─── step 2: 收尾（引文进顶部行，流程图独占中部）─── */
+.ex-close-top {
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-3);
 }
-
-/* ─── step 1: split ─── */
-.ex-split {
-  flex: 1;
-  display: grid;
-  grid-template-columns: minmax(240px, 320px) 1fr;
-  gap: var(--space-9);
-  padding-top: var(--space-7);
-  align-items: start;
-}
-.ex-split-num {
-  font-size: var(--t-display-1);
-}
-.ex-split-body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.ex-split-h {
-  font-size: var(--t-h1);
-  line-height: 1.1;
-  margin: 0;
-}
-.ex-split-p {
-  font-family: var(--font-body);
-  font-size: var(--t-body);
-  line-height: 1.6;
-  color: var(--text-2);
-  max-width: 56ch;
-  margin: 0;
-}
-
-/* ─── step 2: close pull-quote ─── */
-.ex-close { padding: 0; }
-.ex-close-inner {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--stage-pad-y) var(--stage-pad-x);
-  gap: var(--space-5);
-}
+/* 引文字号 --t-h1（display-2 在 1080 宽竖版下是 132px，几行就吃掉整屏） */
 .ex-quote {
-  font-size: var(--t-display-2);
-  line-height: 1.15;
-  max-width: 22ch;
-}
-.ex-close-foot {
-  margin-top: var(--space-7);
+  font-size: var(--t-h1);
+  line-height: 1.2;
+  max-width: 26ch;
+  margin: 0;
+  text-align: left;
 }

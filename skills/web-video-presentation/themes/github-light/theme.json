@@ -1,0 +1,28 @@
+{
+  "id": "github-light",
+  "name": "GitHub Light",
+  "nameZh": "GitHub 日间",
+  "description": "Real GitHub interface colors, sampled from live github.com computed styles in light scheme (Primer tokens). White canvas, grey-inset panels, hairline borders, system UI type, monospace numerals. The daylight counterpart of github-dark.",
+  "descriptionZh": "取自 github.com 日间模式实时页面计算样式的真实配色（Primer 官方 token）。纯白画布 + 浅灰内嵌面板 + 发丝描边 + 系统 UI 字体 + 等宽数字。github-dark 的日间对照版。",
+  "mood": [
+    "light",
+    "github",
+    "developer",
+    "technical",
+    "interface",
+    "clean"
+  ],
+  "bestFor": [
+    "GitHub 项目推荐",
+    "开源项目介绍",
+    "开发者工具评测",
+    "代码 / 仓库展示",
+    "技术日报 / 周报连载"
+  ],
+  "preview": {
+    "shell": "#ffffff",
+    "surface": "#f6f8fa",
+    "text": "#1f2328",
+    "accent": "#0969da"
+  }
+}

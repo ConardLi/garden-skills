@@ -3,13 +3,20 @@
 # scaffold.sh —— 一键脚手架，创建一个 video-presentation 项目。
 #
 # 用法：
-#   bash scripts/scaffold.sh <target-dir> [--theme=<id>]
+#   bash scripts/scaffold.sh <target-dir> [--theme=<id>] [--ratio=W:H]
 #   bash scripts/scaffold.sh --list-themes
 #
 # 例子：
 #   bash <path-to-web-video-presentation>/scripts/scaffold.sh ./presentation
 #   bash <path-to-web-video-presentation>/scripts/scaffold.sh ./talk --theme=paper-press
+#   bash <path-to-web-video-presentation>/scripts/scaffold.sh ./xhs --ratio=3:4
 #   bash <path-to-web-video-presentation>/scripts/scaffold.sh --list-themes
+#
+# 比例（--ratio，默认 16:9）：
+#   16:9  (默认) 1920×1080  —— B站 / YouTube / 抖音
+#   3:4          1080×1440  —— 小红书竖版
+#   9:16         1080×1920  —— 小红书 / 视频号竖版
+#   任意 W:H     以 1080 为基准宽推算高
 #
 # 跑完后，看 SKILL.md "Phase 2.4 实现单章" + references/CHAPTER-CRAFT.md
 # 了解每章怎么写。卡壳时翻 references/EXAMPLES/ 找完整章节 anchor。
@@ -45,6 +52,7 @@ list_themes() {
 # ── 解析参数 ──
 TARGET=""
 THEME="$DEFAULT_THEME"
+RATIO=""
 for arg in "$@"; do
   case "$arg" in
     --list-themes)
@@ -53,6 +61,12 @@ for arg in "$@"; do
       ;;
     --theme=*)
       THEME="${arg#--theme=}"
+      ;;
+    --ratio=*)
+      RATIO="${arg#--ratio=}"
+      ;;
+    --portrait|--vertical)
+      RATIO="3:4"
       ;;
     --*)
       echo "✗ 未知参数: $arg" >&2
@@ -65,6 +79,25 @@ for arg in "$@"; do
 done
 
 TARGET="${TARGET:-presentation}"
+
+# ── 解析舞台比例 → STAGE_W / STAGE_H ──
+if [[ -z "$RATIO" || "$RATIO" == "16:9" || "$RATIO" == "16x9" ]]; then
+  STAGE_W=1920; STAGE_H=1080
+elif [[ "$RATIO" == "3:4" || "$RATIO" == "3x4" ]]; then
+  STAGE_W=1080; STAGE_H=1440
+elif [[ "$RATIO" == "9:16" || "$RATIO" == "9x16" ]]; then
+  STAGE_W=1080; STAGE_H=1920
+else
+  aw="${RATIO%%:*}"; ah="${RATIO##*:}"
+  [[ "$RATIO" == *x* ]] && { aw="${RATIO%%x*}"; ah="${RATIO##x*}"; }
+  if [[ ! "$aw" =~ ^[0-9]+$ || ! "$ah" =~ ^[0-9]+$ ]]; then
+    echo "✗ 无法解析 --ratio=$RATIO（用 W:H，如 3:4 / 9:16）" >&2
+    exit 1
+  fi
+  STAGE_W=1080
+  STAGE_H=$(( STAGE_W * ah / aw ))
+fi
+
 THEME_DIR="$THEMES_DIR/$THEME"
 THEME_TOKENS="$THEME_DIR/tokens.css"
 
@@ -90,6 +123,7 @@ fi
 
 echo "▸ 在 $TARGET 创建 Vite + React + TS 项目"
 echo "▸ 使用主题：$THEME"
+echo "▸ 舞台比例：${RATIO:-16:9} (${STAGE_W}×${STAGE_H})"
 npm create vite@latest "$TARGET" -- --template react-ts >/dev/null
 
 cd "$TARGET"
@@ -121,6 +155,7 @@ cp "$TEMPLATES/index.html" .
 
 cp "$TEMPLATES/src/main.tsx" src/main.tsx
 cp "$TEMPLATES/src/App.tsx"  src/App.tsx
+cp "$TEMPLATES/src/stage.config.ts"  src/stage.config.ts
 
 # tokens.css 来自所选主题
 cp "$THEME_TOKENS"                          src/styles/tokens.css
@@ -145,6 +180,13 @@ cp "$TEMPLATES/src/components/AutoToggle.css"     src/components/AutoToggle.css
 cp "$TEMPLATES/src/registry/types.ts"    src/registry/types.ts
 cp "$TEMPLATES/src/registry/chapters.ts" src/registry/chapters.ts
 
+# 章节视觉元素库（具象元素：浏览器窗 / 文件夹 / 终端 / 文档堆 / 流程…）
+mkdir -p src/components/viz
+cp "$TEMPLATES/src/components/viz/Viz.tsx"   src/components/viz/Viz.tsx
+cp "$TEMPLATES/src/components/viz/viz.css"   src/components/viz/viz.css
+cp "$TEMPLATES/src/components/viz/index.ts"  src/components/viz/index.ts
+cp "$TEMPLATES/src/components/viz/README.md" src/components/viz/README.md
+
 cp "$TEMPLATES/src/chapters/01-example/Example.tsx"     src/chapters/01-example/Example.tsx
 cp "$TEMPLATES/src/chapters/01-example/Example.css"     src/chapters/01-example/Example.css
 cp "$TEMPLATES/src/chapters/01-example/narrations.ts"   src/chapters/01-example/narrations.ts
@@ -160,6 +202,24 @@ cp "$TEMPLATES/scripts/tts-providers/README.md"   scripts/tts-providers/README.m
 cp "$TEMPLATES/scripts/tts-providers/minimax.sh"  scripts/tts-providers/minimax.sh
 cp "$TEMPLATES/scripts/tts-providers/openai.sh"   scripts/tts-providers/openai.sh
 
+# 无头截图录制（方案 C：零抖动全自动成片，根治 webm 帧抖动）
+cp "$SKILL_DIR/scripts/record.mjs"          scripts/record.mjs
+cp "$SKILL_DIR/scripts/build_from_shots.py" scripts/build_from_shots.py
+chmod +x scripts/record.mjs
+
+# 非 16:9 时把舞台尺寸写进 stage.config.ts（单一真相源）
+if [[ "$STAGE_W" != "1920" || "$STAGE_H" != "1080" ]]; then
+  echo "▸ 应用舞台尺寸 ${STAGE_W}×${STAGE_H} (--ratio=${RATIO:-自定义})"
+  node -e '
+    const fs = require("fs");
+    const f = "src/stage.config.ts";
+    let s = fs.readFileSync(f, "utf8");
+    s = s.replace(/export const STAGE_W = [0-9]+;/, "export const STAGE_W = '"$STAGE_W"';");
+    s = s.replace(/export const STAGE_H = [0-9]+;/, "export const STAGE_H = '"$STAGE_H"';");
+    fs.writeFileSync(f, s);
+  '
+fi
+
 # Wire the audio scripts into npm so contributors don't have to remember
 # the exact command. Uses node to merge into the existing package.json.
 node -e '
@@ -168,6 +228,8 @@ const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
 p.scripts = Object.assign({}, p.scripts, {
   "extract-narrations": "tsx scripts/extract-narrations.ts",
   "synthesize-audio":   "bash scripts/synthesize-audio.sh",
+  "record": "node scripts/record.mjs",
+  "build:video": "python scripts/build_from_shots.py",
 });
 fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
 '
@@ -214,6 +276,8 @@ cat <<EOF
   • 半自动：URL 加 ?audio=1 — 音频跟 step 切，但你手动推进
   • 全自动录屏：URL 加 ?auto=1 — 按一次 SPACE 启动，整片自动播 + 推进
                 按 M 键随时切换三种模式。
+  • 录制视口 = 舞台尺寸 ${STAGE_W}×${STAGE_H}：浏览器全屏 / 录屏窗口设成
+    这个数，?auto=1 录出来的成片就是该比例（16:9 即 1920×1080；竖版 3:4 即 1080×1440）。
 
 音频合成（可选，录制前做）：
 
@@ -231,6 +295,11 @@ cat <<EOF
   • $SKILL_DIR/themes/$THEME/theme.json
       看 descriptionZh / mood / bestFor —— 参考主题气质
       （动画 / 时长 / 字号 / emoji 由 chapter agent 在每章自由决定）
+  • 具象元素库 src/components/viz/（已拷入本工程，含 README.md 选用手册）
+      12 个纯 SVG 元素（浏览器窗 / 终端 / 文件夹 / 文档堆 / 对话气泡 /
+      卡片网格 / 流程管道 / 时间轴 / 数据条 / 循环箭头 / 检索放大镜 / 竖版清单）
+      ★ 每个 step 至少挂 1 个与当拍口播相关的元素；中部主视觉占舞台高
+        ≥55%（治"画面空洞 / 内容只占屏幕三分之一"）
 
 卡壳时可翻：
 
