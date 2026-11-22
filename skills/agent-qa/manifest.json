@@ -1,0 +1,14 @@
+{
+  "name": "agent-qa",
+  "version": "0.1.0",
+  "category": "Testing / Application QA",
+  "description": "Run selected web, Android and iOS regression tests with agent-qa, review recorded evidence, and inspect advanced memidex memory and self-improvement provenance.",
+  "homepage": "https://github.com/ConardLi/garden-skills/tree/main/skills/agent-qa",
+  "compat": [
+    "claude-code",
+    "cursor",
+    "codex-cli",
+    "gemini-cli",
+    "opencode"
+  ]
+}
