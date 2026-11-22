@@ -38,13 +38,13 @@ function normalized(input, out) { ffmpeg(['-i', input, '-map', '0:a:0', '-ac', '
 export function splitScript(text, maxChars = 500) {
   if (!Number.isInteger(maxChars) || maxChars < 20 || maxChars > 3000) throw new Error('--max-chars must be an integer from 20 to 3000');
   // Split only; never summarize, translate, add words, or generate a script.
-  const units = String(text).match(/[^。！？!?\n]+[。！？!?]*|[。！？!?]+/gu) || [];
+  const units = String(text).match(/[^。！？!?؟\n]+[。！？!?؟]*|[。！？!?؟]+/gu) || [];
   const result = [];
   for (let unit of units) {
     unit = unit.trim();
     while (Array.from(unit).length > maxChars) {
       const chars = Array.from(unit), head = chars.slice(0, maxChars).join('');
-      const boundary = Math.max(head.lastIndexOf(' '), head.lastIndexOf('，'), head.lastIndexOf(','), head.lastIndexOf('；'), head.lastIndexOf(';'), head.lastIndexOf('. '));
+      const boundary = Math.max(head.lastIndexOf(' '), head.lastIndexOf('，'), head.lastIndexOf(','), head.lastIndexOf('،'), head.lastIndexOf('；'), head.lastIndexOf(';'), head.lastIndexOf('؛'), head.lastIndexOf('. '));
       const cut = boundary > head.length / 2 ? Array.from(head.slice(0, boundary + 1)).length : maxChars;
       result.push(chars.slice(0, cut).join('').trim()); unit = chars.slice(cut).join('').trim();
     }
