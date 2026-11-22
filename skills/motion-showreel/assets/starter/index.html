@@ -24,7 +24,8 @@ const ctx = setupCanvas(document.getElementById('c'), W, H);
 const U = Math.min(W, H) / 1080;                      // layout unit: design at 1080 short side, scales to any aspect
 const C = { paper: '#ECE8E1', ink: '#121212', accent: '#FF4A1C' };
 const WORD = 'MOTION';
-const FONT = s => `800 ${s}px "Archivo Black", "Arial Black", "Helvetica Neue", sans-serif`;
+const IS_ARABIC = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/u.test(WORD);
+const FONT = s => `800 ${s}px "Archivo Black", "Arial Black", "Geeza Pro", "SF Arabic", "Arial", "Helvetica Neue", sans-serif`;
 const shot = id => SHOTS.find(s => s.id === id);
 const ticks = CUES.filter(c => c.sfx === 'tick').map(c => c.t);
 const HIT = CUES.find(c => c.sfx === 'impact').t;
@@ -41,7 +42,8 @@ window.render = t => {
 
   const cx = W / 2, cy = H / 2, size = 230 * U;
   ctx.font = FONT(size); ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
-  const widths = [...WORD].map(ch => ctx.measureText(ch).width), total = widths.reduce((a, v) => a + v, 0);
+  const units = IS_ARABIC ? WORD.trim().split(/\s+/) : [...WORD];
+  const widths = units.map(ch => ctx.measureText(ch).width), total = widths.reduce((a, v) => a + v, 0);
 
   if (t < shot('word').t0) {
     // HOOK: a dot pops on the first upbeat, then stretches into a bar (leading edge faster than trailing)
@@ -51,26 +53,32 @@ window.render = t => {
     ctx.fillStyle = C.accent;
     roundRect(cx + trail - r, cy - r, lead - trail + 2 * r, 2 * r, r);
   } else if (t < HIT) {
-    // WORD: the bar wipes upward and each letter springs out from under it, one per tick
+    // WORD: the bar wipes upward and each unit springs out from under it, preserving Arabic cursive joins
     const wipe = snap(seg(t, b(4), b(5)));
-    let x = cx - total / 2;
-    [...WORD].forEach((ch, i) => {
-      const k = spring(t - (ticks[i] ?? b(4.5) + stagger(i, WORD.length, b(2.5))), { freq: 2.6, damp: 0.7 });
+    let x = IS_ARABIC ? cx + total / 2 : cx - total / 2;
+    units.forEach((ch, i) => {
+      if (IS_ARABIC) x -= widths[i];
+      const k = spring(t - (ticks[i] ?? b(4.5) + stagger(i, units.length, b(2.5))), { freq: 2.6, damp: 0.7 });
       ctx.save(); ctx.beginPath(); ctx.rect(x - 4 * U, cy - size * 0.55, widths[i] + 8 * U, size * 0.97); ctx.clip();
+      if (IS_ARABIC) ctx.direction = 'rtl';
       ctx.fillStyle = fg; ctx.fillText(ch, x, cy + size * 0.36 + (1 - k) * size * 1.1);
-      ctx.restore(); x += widths[i];
+      ctx.restore();
+      if (!IS_ARABIC) x += widths[i];
     });
     const barY = lerp(cy, cy - size * 0.75, wipe), barH = lerp(52 * U, 10 * U, glide(seg(t, b(4), b(6))));
     ctx.fillStyle = C.accent; ctx.fillRect(cx - total / 2, barY - barH / 2, total, barH);
   } else {
-    // RESOLVE: letters drop back out of their windows from the centre outwards, an accent disc swells
+    // RESOLVE: units drop back out of their windows from the centre outwards, an accent disc swells
     // from the gap and shrinks to nothing on the last beat = the empty first frame (seamless loop)
-    let x = cx - total / 2;
-    [...WORD].forEach((ch, i) => {
-      const k = ease.inBack(seg(t - stagger(i, WORD.length, b(1), { from: 'center' }), HIT + b(1), HIT + b(2)));
+    let x = IS_ARABIC ? cx + total / 2 : cx - total / 2;
+    units.forEach((ch, i) => {
+      if (IS_ARABIC) x -= widths[i];
+      const k = ease.inBack(seg(t - stagger(i, units.length, b(1), { from: 'center' }), HIT + b(1), HIT + b(2)));
       ctx.save(); ctx.beginPath(); ctx.rect(x - 4 * U, cy - size * 0.55, widths[i] + 8 * U, size * 0.97); ctx.clip();
+      if (IS_ARABIC) ctx.direction = 'rtl';
       ctx.fillStyle = fg; ctx.fillText(ch, x, cy + size * 0.36 + k * size * 1.1);
-      ctx.restore(); x += widths[i];
+      ctx.restore();
+      if (!IS_ARABIC) x += widths[i];
     });
     const grow = spring(t - (HIT + b(2.5)), { freq: 1.8, damp: 0.6 }), shrink = ease.inBack(seg(t, b(15), b(16)));
     const r = lerp(size * 0.62 * grow, 0, shrink);   // ends at 0 = the empty first frame

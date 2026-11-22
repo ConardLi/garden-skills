@@ -13,7 +13,7 @@
 //   anchors: [{text, start, end, occurrence?: 1}, ...] // explicit manual marks
 
 const EPS = 0.000002;
-const ignored = /[\p{P}\p{Z}\s]/u;
+const ignored = /[\p{P}\p{Z}\s\u061C\u200C-\u200F\u202A-\u202E\u2066-\u2069\u0640\u064B-\u065F\u0670]/u;
 const fail = message => { throw new Error(`Narration clock: ${message}`); };
 
 // Punctuation and spacing can differ between the ASR tokenizer and the script.
