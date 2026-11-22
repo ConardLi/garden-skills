@@ -144,14 +144,17 @@ cp "$TEMPLATES/src/components/AutoToggle.css"     src/components/AutoToggle.css
 
 cp "$TEMPLATES/src/registry/types.ts"    src/registry/types.ts
 cp "$TEMPLATES/src/registry/chapters.ts" src/registry/chapters.ts
+cp "$TEMPLATES/src/registry/slide-config.ts" src/registry/slide-config.ts
 
 cp "$TEMPLATES/src/chapters/01-example/Example.tsx"     src/chapters/01-example/Example.tsx
 cp "$TEMPLATES/src/chapters/01-example/Example.css"     src/chapters/01-example/Example.css
 cp "$TEMPLATES/src/chapters/01-example/narrations.ts"   src/chapters/01-example/narrations.ts
+cp "$TEMPLATES/src/chapters/01-example/slides.ts"       src/chapters/01-example/slides.ts
 
 # Audio pipeline scripts (extract-narrations + synthesize-audio runner +
-# pluggable TTS providers under tts-providers/).
+# pluggable TTS providers under tts-providers/) + generic slide-data export.
 cp "$TEMPLATES/scripts/extract-narrations.ts"  scripts/extract-narrations.ts
+cp "$TEMPLATES/scripts/export-slide-data.ts"   scripts/export-slide-data.ts
 cp "$TEMPLATES/scripts/synthesize-audio.sh"    scripts/synthesize-audio.sh
 chmod +x scripts/synthesize-audio.sh
 
@@ -167,6 +170,7 @@ const fs = require("fs");
 const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
 p.scripts = Object.assign({}, p.scripts, {
   "extract-narrations": "tsx scripts/extract-narrations.ts",
+  "export-slide-data":  "tsx scripts/export-slide-data.ts",
   "synthesize-audio":   "bash scripts/synthesize-audio.sh",
 });
 fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
@@ -206,6 +210,10 @@ cat <<EOF
   • 在 src/registry/chapters.ts 注册每个新章节。
   • **每章必须有 narrations.ts**（与 Example.tsx 同目录），
     数组长度 = step 数，是音频合成 + Auto 模式的唯一真相源。
+  • **可选：每章写 slides.ts**（与 narrations.ts 同目录），声明每步
+    的 slide 类型 + 视觉字段（长度必须 = narrations.length）。
+    写完跑 npm run export-slide-data 生成 slide-data.json，
+    可直接丢到服务器 presentations/<slug>/ 供网页查看器/编辑器用。
   • 章节改了就 bump src/hooks/useStepper.ts 的 STORAGE_KEY 末尾版本号。
 
 录制：
@@ -221,6 +229,12 @@ cat <<EOF
   npm run synthesize-audio      # 默认 minimax provider 合成 → public/audio/<id>/<step>.mp3
                                 # 换 provider：PRESENTATION_TTS=<name> npm run synthesize-audio
                                 # 自定义 / 没装 mmx 见 scripts/tts-providers/README.md
+
+导出通用幻灯片数据（网页查看器/编辑器用）：
+
+  npm run export-slide-data     # 合并 chapters + slides.ts + narrations → slide-data.json
+                                # 每章没写 slides.ts 会自动推断 type，不会报错
+  npm run export-slide-data -- --print   # 顺带打印到 stdout
 
 写章节时必读（单一入口，路径在 SKILL 仓库内）：
 
