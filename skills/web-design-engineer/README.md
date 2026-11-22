@@ -88,7 +88,7 @@ The agent will automatically pick up the skill when your request involves visual
 3. Produce a Design Read    →  Five dials connect the brief to visible decisions
 4. Declare design system    →  Colors, fonts, spacing, motion — in Markdown, before code
 5. Show v0 draft early      →  Placeholders + layout + tokens; let the user course-correct
-6. Full build               →  Components, states, motion; pause at key decision points
+6. Full build               →  Components, states, motion; pause only at decisions the accepted design doesn't settle
 7. Verify                   →  Lightweight self-check; browser harness only on explicit request
 ```
 

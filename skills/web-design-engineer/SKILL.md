@@ -129,7 +129,7 @@ The system that follows must serve these answers. Picking aesthetics in a vacuum
 
 ### Step 3: Declare the Design System Before Writing Code
 
-**Before writing the first line of code**, articulate the design system in Markdown and let the user confirm before proceeding:
+**Before writing the first line of code**, articulate the design system in Markdown. When the system is taken from an accepted reference (the user's design system, codebase, brand guidelines, or an approved design), state it and proceed; ask the user to confirm only when material design decisions remain open or the user asked to explore directions:
 
 ```markdown
 Design Decisions:
@@ -145,7 +145,7 @@ Design Decisions:
 
 > If you picked a recipe from `references/style-recipes/`, paste its concrete palette / typography / spacing / radius / shadow / motion values straight into the block above — that catalog exists so you don't have to invent these on the fly, which is the leading cause of AI-default Inter + #3b82f6 mush. **Load only the one recipe file you're using**, not the whole catalog.
 
-🛑 **Checkpoint 1**: After articulating Steps 3a + 3, stop. Tell the user "I plan to use this system. Confirm and I'll start the v0." Then **actually wait** — don't say it and immediately start coding.
+🛑 **Checkpoint 1**: When material design decisions remain open or the user asked for design exploration, stop after articulating Steps 3a + 3. Tell the user "I plan to use this system. Confirm and I'll start the v0." Then **actually wait** — don't say it and immediately start coding. When the system is fully determined by an accepted reference, present it and continue without waiting.
 
 ### Step 4: Show a v0 Draft Early
 
@@ -157,13 +157,13 @@ Design Decisions:
 
 A v0 with assumptions and placeholders is more valuable than a "perfect v1" that took 3x the time — if the direction is wrong, the latter has to be scrapped entirely.
 
-🛑 **Checkpoint 2**: Push v0 to the user before continuing. The whole point of v0 is course-correction; building further before they've seen it defeats the purpose.
+🛑 **Checkpoint 2**: When design exploration is requested or material decisions remain open, push v0 to the user before continuing — the whole point of v0 is course-correction, and building further before they've seen it defeats the purpose. When v0 only demonstrates the faithful implementation of an accepted design, share it as a progress update and keep building unless the user flags a divergence.
 
 ### Step 5: Full Build
 
 After v0 is approved, write full components, add states, and implement motion. Follow the technical specifications and design principles below.
 
-🛑 **Checkpoint 3**: When you hit a non-trivial decision point during the build (interaction approach choice, content variant, fundamental layout shift), pause and confirm again — don't silently push through.
+🛑 **Checkpoint 3**: When you hit a non-trivial decision point that the accepted design or an established interaction pattern doesn't already settle (interaction approach choice, content variant, fundamental layout shift), pause and confirm — don't silently push through and don't override an accepted pattern.
 
 ### Step 6: Verification
 
@@ -353,7 +353,7 @@ CSS, HTML, JS, and SVG are far more capable than most people realize — **use t
 - **No title screen / cover page** — prototypes should center in the viewport or fill it (with sensible margins), letting the user see the product immediately
 - Use device frames (iPhone / Android / browser window) to enhance realism (see references file)
 - Implement key interaction paths so the user can click through them
-- At least 3 variants, toggled via the Tweaks panel
+- When the user asks for design exploration, provide multiple variants toggled via the Tweaks panel; when an accepted design or reference exists, implement that single design with its complete state coverage instead
 - Complete state coverage: default / hover / active / focus / disabled / loading / empty / error
 
 ### HTML Slide Decks / Presentations
@@ -394,7 +394,7 @@ Choose animation approach by complexity, from simplest to heaviest — don't rea
 
 ## Variant Exploration Philosophy
 
-Providing multiple variants is about **exhausting possibilities so the user can mix and match**, not about delivering the perfect option.
+Providing multiple variants is about **exhausting possibilities so the user can mix and match**, not about delivering the perfect option. Reach for this philosophy when the user asks for design exploration or the visual direction is still open; when the user has accepted a design or reference, implement it directly instead of generating variants.
 
 Explore "atomic variants" across at least these dimensions — mixing conservative, safe options with bold, novel ones:
 
@@ -416,7 +416,7 @@ Design guidelines:
 - Title consistently labeled **"Tweaks"**
 - **Completely hidden** when closed, ensuring the design looks final during presentations
 - In multi-variant scenarios, expose variants as dropdowns/toggles within Tweaks instead of creating multiple files
-- Even if the user doesn't ask for tweaks, add 1–2 creative ones by default (to expose the user to interesting possibilities)
+- Add tweak controls only when the user asks for live parameter adjustment or design exploration — don't add unrequested tweak controls to a finished or accepted design
 
 ---
 
@@ -468,7 +468,7 @@ Complete this lightweight self-check before delivery. It does **not** require la
 - **Show work-in-progress early**: a v0 with assumptions + placeholders is more valuable than a polished v1 — the user can course-correct sooner
 - Explain decisions using **design language** ("I tightened the spacing to create a tool-like feel"), not technical language
 - When user feedback is ambiguous, **proactively ask for clarification** — don't guess
-- Offer plenty of variants and creative options so the user sees the boundaries of what's possible
+- When design exploration is in scope, offer plenty of variants and creative options so the user sees the boundaries of what's possible
 - When summarizing, **only mention important caveats and next steps** — don't recap what you did; the code speaks for itself
 - **Honor checkpoints**: when you say "I'll wait for your confirmation," actually wait — don't say it and immediately keep working
 
